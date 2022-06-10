@@ -447,7 +447,7 @@ ADV: LIME Ranks and Pct Occurances:
      ('c_charge_degree_M', 0.05501618122977346),
      ('length_of_stay', 0.11165048543689321),
      ('priors_count', 0.13754045307443366),
-     ('race', 0.05663430420711974),
+     ('race', c),
      ('sex_Female', 0.024271844660194174),
      ('sex_Male', 0.022653721682847898),
      ('two_year_recid', 0.06634304207119741),
