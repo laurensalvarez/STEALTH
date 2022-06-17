@@ -1,0 +1,1086 @@
+laurenalvarez@Laurens-MacBook-Pro lying % python3 my_compas_exp2.py
+IPython could not be loaded!
+---------------------------------------------------------------------------
+
+
+Testing with Pert_Multi = 2 with 0.05 percent of data & 25 LIME neighborhood samples 
+
+
+---------------------------------------------------------------------------- 
+
+
+---------------------
+1 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.06451612903225806),
+     ('c_charge_degree_M', 0.03225806451612903),
+     ('length_of_stay', 0.0967741935483871),
+     ('priors_count', 0.03225806451612903),
+     ('sex_Female', 0.2903225806451613),
+     ('sex_Male', 0.0967741935483871),
+     ('two_year_recid', 0.0967741935483871),
+     ('unrelated_column', 0.2903225806451613)],
+ 3: [('age', 0.06451612903225806),
+     ('c_charge_degree_F', 0.12903225806451613),
+     ('length_of_stay', 0.06451612903225806),
+     ('priors_count', 0.0967741935483871),
+     ('sex_Female', 0.16129032258064516),
+     ('sex_Male', 0.12903225806451613),
+     ('two_year_recid', 0.16129032258064516),
+     ('unrelated_column', 0.1935483870967742)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('unrelated_column', 1.0)],
+ 2: [('age', 0.03225806451612903),
+     ('c_charge_degree_M', 0.3225806451612903),
+     ('priors_count', 0.03225806451612903),
+     ('race', 0.25806451612903225),
+     ('sex_Female', 0.16129032258064516),
+     ('sex_Male', 0.12903225806451613),
+     ('two_year_recid', 0.06451612903225806)],
+ 3: [('age', 0.03225806451612903),
+     ('c_charge_degree_F', 0.0967741935483871),
+     ('c_charge_degree_M', 0.0967741935483871),
+     ('priors_count', 0.06451612903225806),
+     ('race', 0.16129032258064516),
+     ('sex_Female', 0.1935483870967742),
+     ('sex_Male', 0.0967741935483871),
+     ('two_year_recid', 0.25806451612903225)]}
+
+Fidelity: 0.97
+---------------------
+2 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.06451612903225806),
+     ('c_charge_degree_F', 0.06451612903225806),
+     ('c_charge_degree_M', 0.1935483870967742),
+     ('priors_count', 0.06451612903225806),
+     ('sex_Female', 0.12903225806451613),
+     ('sex_Male', 0.16129032258064516),
+     ('two_year_recid', 0.12903225806451613),
+     ('unrelated_column', 0.1935483870967742)],
+ 3: [('age', 0.03225806451612903),
+     ('c_charge_degree_F', 0.16129032258064516),
+     ('c_charge_degree_M', 0.1935483870967742),
+     ('length_of_stay', 0.06451612903225806),
+     ('priors_count', 0.0967741935483871),
+     ('sex_Female', 0.16129032258064516),
+     ('sex_Male', 0.06451612903225806),
+     ('two_year_recid', 0.12903225806451613),
+     ('unrelated_column', 0.0967741935483871)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('c_charge_degree_M', 0.06451612903225806),
+     ('sex_Female', 0.06451612903225806),
+     ('sex_Male', 0.03225806451612903),
+     ('unrelated_column', 0.8387096774193549)],
+ 2: [('c_charge_degree_F', 0.1935483870967742),
+     ('c_charge_degree_M', 0.0967741935483871),
+     ('length_of_stay', 0.06451612903225806),
+     ('priors_count', 0.03225806451612903),
+     ('race', 0.0967741935483871),
+     ('sex_Female', 0.16129032258064516),
+     ('sex_Male', 0.16129032258064516),
+     ('two_year_recid', 0.0967741935483871),
+     ('unrelated_column', 0.0967741935483871)],
+ 3: [('age', 0.03225806451612903),
+     ('c_charge_degree_F', 0.06451612903225806),
+     ('c_charge_degree_M', 0.12903225806451613),
+     ('length_of_stay', 0.03225806451612903),
+     ('priors_count', 0.0967741935483871),
+     ('race', 0.06451612903225806),
+     ('sex_Female', 0.03225806451612903),
+     ('sex_Male', 0.12903225806451613),
+     ('two_year_recid', 0.1935483870967742),
+     ('unrelated_column', 0.22580645161290322),
+     ('unrelated_column_two', 0.1935483870967742)]}
+
+Fidelity: 1.0
+---------------------------------------------------------------------------
+
+
+Testing with Pert_Multi = 2 with 0.08 percent of data & 25 LIME neighborhood samples 
+
+
+---------------------------------------------------------------------------- 
+
+
+---------------------
+1 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('c_charge_degree_F', 0.22),
+     ('c_charge_degree_M', 0.12),
+     ('length_of_stay', 0.02),
+     ('priors_count', 0.06),
+     ('sex_Female', 0.16),
+     ('sex_Male', 0.14),
+     ('two_year_recid', 0.2),
+     ('unrelated_column', 0.08)],
+ 3: [('age', 0.04),
+     ('c_charge_degree_F', 0.14),
+     ('c_charge_degree_M', 0.08),
+     ('length_of_stay', 0.1),
+     ('priors_count', 0.08),
+     ('sex_Female', 0.14),
+     ('sex_Male', 0.12),
+     ('two_year_recid', 0.12),
+     ('unrelated_column', 0.18)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('race', 0.02), ('unrelated_column', 0.98)],
+ 2: [('age', 0.02),
+     ('c_charge_degree_F', 0.22),
+     ('c_charge_degree_M', 0.14),
+     ('race', 0.16),
+     ('sex_Female', 0.14),
+     ('sex_Male', 0.2),
+     ('two_year_recid', 0.1),
+     ('unrelated_column', 0.02)],
+ 3: [('age', 0.04),
+     ('c_charge_degree_F', 0.1),
+     ('c_charge_degree_M', 0.1),
+     ('length_of_stay', 0.06),
+     ('priors_count', 0.06),
+     ('race', 0.2),
+     ('sex_Female', 0.16),
+     ('sex_Male', 0.08),
+     ('two_year_recid', 0.2)]}
+
+Fidelity: 0.94
+---------------------
+2 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.06),
+     ('c_charge_degree_F', 0.2),
+     ('c_charge_degree_M', 0.1),
+     ('priors_count', 0.02),
+     ('sex_Female', 0.2),
+     ('sex_Male', 0.18),
+     ('two_year_recid', 0.14),
+     ('unrelated_column', 0.1)],
+ 3: [('age', 0.02),
+     ('c_charge_degree_F', 0.04),
+     ('c_charge_degree_M', 0.16),
+     ('length_of_stay', 0.08),
+     ('priors_count', 0.06),
+     ('sex_Female', 0.12),
+     ('sex_Male', 0.16),
+     ('two_year_recid', 0.1),
+     ('unrelated_column', 0.26),
+     ('unrelated_column_two', 0.08)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('c_charge_degree_F', 0.02),
+     ('sex_Female', 0.02),
+     ('sex_Male', 0.02),
+     ('unrelated_column', 0.94)],
+ 2: [('c_charge_degree_F', 0.12),
+     ('c_charge_degree_M', 0.18),
+     ('race', 0.08),
+     ('sex_Female', 0.12),
+     ('sex_Male', 0.16),
+     ('two_year_recid', 0.14),
+     ('unrelated_column', 0.2),
+     ('unrelated_column_two', 0.14)],
+ 3: [('age', 0.1),
+     ('c_charge_degree_F', 0.12),
+     ('c_charge_degree_M', 0.08),
+     ('length_of_stay', 0.08),
+     ('priors_count', 0.04),
+     ('race', 0.1),
+     ('sex_Female', 0.12),
+     ('sex_Male', 0.12),
+     ('two_year_recid', 0.1),
+     ('unrelated_column', 0.14),
+     ('unrelated_column_two', 0.14)]}
+
+Fidelity: 1.0
+---------------------------------------------------------------------------
+
+
+Testing with Pert_Multi = 2 with 0.1 percent of data & 25 LIME neighborhood samples 
+
+
+---------------------------------------------------------------------------- 
+
+
+---------------------
+1 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.03225806451612903),
+     ('c_charge_degree_F', 0.14516129032258066),
+     ('c_charge_degree_M', 0.16129032258064516),
+     ('length_of_stay', 0.016129032258064516),
+     ('priors_count', 0.03225806451612903),
+     ('sex_Female', 0.14516129032258066),
+     ('sex_Male', 0.1774193548387097),
+     ('two_year_recid', 0.12903225806451613),
+     ('unrelated_column', 0.16129032258064516)],
+ 3: [('age', 0.03225806451612903),
+     ('c_charge_degree_F', 0.1935483870967742),
+     ('c_charge_degree_M', 0.11290322580645161),
+     ('length_of_stay', 0.06451612903225806),
+     ('priors_count', 0.08064516129032258),
+     ('sex_Female', 0.12903225806451613),
+     ('sex_Male', 0.12903225806451613),
+     ('two_year_recid', 0.16129032258064516),
+     ('unrelated_column', 0.0967741935483871)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('unrelated_column', 1.0)],
+ 2: [('age', 0.03225806451612903),
+     ('c_charge_degree_F', 0.22580645161290322),
+     ('c_charge_degree_M', 0.06451612903225806),
+     ('length_of_stay', 0.016129032258064516),
+     ('race', 0.24193548387096775),
+     ('sex_Female', 0.16129032258064516),
+     ('sex_Male', 0.12903225806451613),
+     ('two_year_recid', 0.12903225806451613)],
+ 3: [('age', 0.016129032258064516),
+     ('c_charge_degree_F', 0.04838709677419355),
+     ('c_charge_degree_M', 0.20967741935483872),
+     ('length_of_stay', 0.06451612903225806),
+     ('priors_count', 0.11290322580645161),
+     ('race', 0.1935483870967742),
+     ('sex_Female', 0.08064516129032258),
+     ('sex_Male', 0.0967741935483871),
+     ('two_year_recid', 0.1774193548387097)]}
+
+Fidelity: 0.95
+---------------------
+2 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.016129032258064516),
+     ('c_charge_degree_F', 0.12903225806451613),
+     ('c_charge_degree_M', 0.0967741935483871),
+     ('length_of_stay', 0.06451612903225806),
+     ('priors_count', 0.04838709677419355),
+     ('sex_Female', 0.22580645161290322),
+     ('sex_Male', 0.1935483870967742),
+     ('two_year_recid', 0.11290322580645161),
+     ('unrelated_column', 0.11290322580645161)],
+ 3: [('age', 0.03225806451612903),
+     ('c_charge_degree_F', 0.12903225806451613),
+     ('c_charge_degree_M', 0.11290322580645161),
+     ('length_of_stay', 0.14516129032258066),
+     ('priors_count', 0.016129032258064516),
+     ('sex_Female', 0.11290322580645161),
+     ('sex_Male', 0.12903225806451613),
+     ('two_year_recid', 0.1935483870967742),
+     ('unrelated_column', 0.12903225806451613),
+     ('unrelated_column_two', 0.06451612903225806)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('c_charge_degree_F', 0.016129032258064516),
+     ('sex_Female', 0.03225806451612903),
+     ('sex_Male', 0.03225806451612903),
+     ('two_year_recid', 0.016129032258064516),
+     ('unrelated_column', 0.9032258064516129)],
+ 2: [('age', 0.04838709677419355),
+     ('c_charge_degree_F', 0.0967741935483871),
+     ('c_charge_degree_M', 0.20967741935483872),
+     ('length_of_stay', 0.04838709677419355),
+     ('priors_count', 0.016129032258064516),
+     ('race', 0.03225806451612903),
+     ('sex_Female', 0.0967741935483871),
+     ('sex_Male', 0.08064516129032258),
+     ('two_year_recid', 0.1935483870967742),
+     ('unrelated_column', 0.1774193548387097),
+     ('unrelated_column_two', 0.08064516129032258)],
+ 3: [('age', 0.03225806451612903),
+     ('c_charge_degree_F', 0.0967741935483871),
+     ('c_charge_degree_M', 0.11290322580645161),
+     ('length_of_stay', 0.016129032258064516),
+     ('priors_count', 0.06451612903225806),
+     ('race', 0.12903225806451613),
+     ('sex_Female', 0.11290322580645161),
+     ('sex_Male', 0.14516129032258066),
+     ('two_year_recid', 0.16129032258064516),
+     ('unrelated_column', 0.12903225806451613),
+     ('unrelated_column_two', 0.12903225806451613)]}
+
+Fidelity: 1.0
+---------------------------------------------------------------------------
+
+
+Testing with Pert_Multi = 2 with 0.12 percent of data & 25 LIME neighborhood samples 
+
+
+---------------------------------------------------------------------------- 
+
+
+---------------------
+1 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.013333333333333334),
+     ('c_charge_degree_F', 0.17333333333333334),
+     ('c_charge_degree_M', 0.09333333333333334),
+     ('priors_count', 0.02666666666666667),
+     ('sex_Female', 0.24),
+     ('sex_Male', 0.09333333333333334),
+     ('two_year_recid', 0.13333333333333333),
+     ('unrelated_column', 0.22666666666666666)],
+ 3: [('age', 0.09333333333333334),
+     ('c_charge_degree_F', 0.14666666666666667),
+     ('c_charge_degree_M', 0.10666666666666667),
+     ('length_of_stay', 0.06666666666666667),
+     ('priors_count', 0.013333333333333334),
+     ('sex_Female', 0.13333333333333333),
+     ('sex_Male', 0.17333333333333334),
+     ('two_year_recid', 0.17333333333333334),
+     ('unrelated_column', 0.09333333333333334)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('unrelated_column', 1.0)],
+ 2: [('age', 0.02666666666666667),
+     ('c_charge_degree_F', 0.14666666666666667),
+     ('c_charge_degree_M', 0.08),
+     ('length_of_stay', 0.05333333333333334),
+     ('priors_count', 0.04),
+     ('race', 0.21333333333333335),
+     ('sex_Female', 0.2),
+     ('sex_Male', 0.12),
+     ('two_year_recid', 0.12)],
+ 3: [('age', 0.05333333333333334),
+     ('c_charge_degree_F', 0.13333333333333333),
+     ('c_charge_degree_M', 0.14666666666666667),
+     ('length_of_stay', 0.05333333333333334),
+     ('priors_count', 0.09333333333333334),
+     ('race', 0.13333333333333333),
+     ('sex_Female', 0.10666666666666667),
+     ('sex_Male', 0.12),
+     ('two_year_recid', 0.16)]}
+
+Fidelity: 0.96
+---------------------
+2 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.013333333333333334),
+     ('c_charge_degree_F', 0.17333333333333334),
+     ('c_charge_degree_M', 0.14666666666666667),
+     ('length_of_stay', 0.013333333333333334),
+     ('priors_count', 0.02666666666666667),
+     ('sex_Female', 0.16),
+     ('sex_Male', 0.13333333333333333),
+     ('two_year_recid', 0.2),
+     ('unrelated_column', 0.13333333333333333),
+     ('unrelated_column_two', 0.02666666666666667)],
+ 3: [('age', 0.06666666666666667),
+     ('c_charge_degree_F', 0.10666666666666667),
+     ('c_charge_degree_M', 0.10666666666666667),
+     ('length_of_stay', 0.09333333333333334),
+     ('priors_count', 0.05333333333333334),
+     ('sex_Female', 0.09333333333333334),
+     ('sex_Male', 0.14666666666666667),
+     ('two_year_recid', 0.13333333333333333),
+     ('unrelated_column', 0.2),
+     ('unrelated_column_two', 0.09333333333333334)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('c_charge_degree_M', 0.02666666666666667),
+     ('length_of_stay', 0.013333333333333334),
+     ('sex_Female', 0.02666666666666667),
+     ('sex_Male', 0.013333333333333334),
+     ('two_year_recid', 0.013333333333333334),
+     ('unrelated_column', 0.9066666666666666)],
+ 2: [('c_charge_degree_F', 0.09333333333333334),
+     ('c_charge_degree_M', 0.18666666666666668),
+     ('priors_count', 0.02666666666666667),
+     ('race', 0.17333333333333334),
+     ('sex_Female', 0.10666666666666667),
+     ('sex_Male', 0.12),
+     ('two_year_recid', 0.16),
+     ('unrelated_column', 0.13333333333333333),
+     ('unrelated_column_two', 0.08)],
+ 3: [('age', 0.05333333333333334),
+     ('c_charge_degree_F', 0.14666666666666667),
+     ('c_charge_degree_M', 0.09333333333333334),
+     ('length_of_stay', 0.02666666666666667),
+     ('priors_count', 0.04),
+     ('race', 0.21333333333333335),
+     ('sex_Female', 0.10666666666666667),
+     ('sex_Male', 0.17333333333333334),
+     ('two_year_recid', 0.05333333333333334),
+     ('unrelated_column', 0.09333333333333334),
+     ('unrelated_column_two', 0.09333333333333334)]}
+
+Fidelity: 1.0
+---------------------------------------------------------------------------
+
+
+Testing with Pert_Multi = 2 with 0.15 percent of data & 25 LIME neighborhood samples 
+
+
+---------------------------------------------------------------------------- 
+
+
+---------------------
+1 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.03225806451612903),
+     ('c_charge_degree_F', 0.17204301075268819),
+     ('c_charge_degree_M', 0.15053763440860216),
+     ('length_of_stay', 0.043010752688172046),
+     ('priors_count', 0.010752688172043012),
+     ('sex_Female', 0.12903225806451613),
+     ('sex_Male', 0.22580645161290322),
+     ('two_year_recid', 0.12903225806451613),
+     ('unrelated_column', 0.10752688172043011)],
+ 3: [('age', 0.053763440860215055),
+     ('c_charge_degree_F', 0.0967741935483871),
+     ('c_charge_degree_M', 0.11827956989247312),
+     ('length_of_stay', 0.07526881720430108),
+     ('priors_count', 0.053763440860215055),
+     ('sex_Female', 0.16129032258064516),
+     ('sex_Male', 0.15053763440860216),
+     ('two_year_recid', 0.12903225806451613),
+     ('unrelated_column', 0.16129032258064516)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('race', 0.010752688172043012), ('unrelated_column', 0.989247311827957)],
+ 2: [('age', 0.043010752688172046),
+     ('c_charge_degree_F', 0.10752688172043011),
+     ('c_charge_degree_M', 0.20430107526881722),
+     ('priors_count', 0.021505376344086023),
+     ('race', 0.11827956989247312),
+     ('sex_Female', 0.17204301075268819),
+     ('sex_Male', 0.13978494623655913),
+     ('two_year_recid', 0.1827956989247312),
+     ('unrelated_column', 0.010752688172043012)],
+ 3: [('age', 0.043010752688172046),
+     ('c_charge_degree_F', 0.16129032258064516),
+     ('c_charge_degree_M', 0.08602150537634409),
+     ('length_of_stay', 0.08602150537634409),
+     ('priors_count', 0.08602150537634409),
+     ('race', 0.15053763440860216),
+     ('sex_Female', 0.16129032258064516),
+     ('sex_Male', 0.07526881720430108),
+     ('two_year_recid', 0.15053763440860216)]}
+
+Fidelity: 0.99
+---------------------
+2 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.03225806451612903),
+     ('c_charge_degree_F', 0.08602150537634409),
+     ('c_charge_degree_M', 0.06451612903225806),
+     ('length_of_stay', 0.053763440860215055),
+     ('priors_count', 0.03225806451612903),
+     ('sex_Female', 0.1935483870967742),
+     ('sex_Male', 0.1827956989247312),
+     ('two_year_recid', 0.1827956989247312),
+     ('unrelated_column', 0.17204301075268819),
+     ('unrelated_column_two', 0.053763440860215055)],
+ 3: [('age', 0.15053763440860216),
+     ('c_charge_degree_F', 0.11827956989247312),
+     ('c_charge_degree_M', 0.12903225806451613),
+     ('length_of_stay', 0.03225806451612903),
+     ('priors_count', 0.053763440860215055),
+     ('sex_Female', 0.12903225806451613),
+     ('sex_Male', 0.10752688172043011),
+     ('two_year_recid', 0.043010752688172046),
+     ('unrelated_column', 0.23655913978494625),
+     ('unrelated_column_two', 0.07526881720430108)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('c_charge_degree_F', 0.010752688172043012),
+     ('c_charge_degree_M', 0.03225806451612903),
+     ('race', 0.010752688172043012),
+     ('sex_Female', 0.021505376344086023),
+     ('sex_Male', 0.010752688172043012),
+     ('unrelated_column', 0.9139784946236559)],
+ 2: [('age', 0.010752688172043012),
+     ('c_charge_degree_F', 0.0967741935483871),
+     ('c_charge_degree_M', 0.17204301075268819),
+     ('length_of_stay', 0.010752688172043012),
+     ('priors_count', 0.03225806451612903),
+     ('race', 0.10752688172043011),
+     ('sex_Female', 0.12903225806451613),
+     ('sex_Male', 0.15053763440860216),
+     ('two_year_recid', 0.13978494623655913),
+     ('unrelated_column', 0.15053763440860216),
+     ('unrelated_column_two', 0.07526881720430108)],
+ 3: [('age', 0.043010752688172046),
+     ('c_charge_degree_F', 0.17204301075268819),
+     ('c_charge_degree_M', 0.0967741935483871),
+     ('length_of_stay', 0.010752688172043012),
+     ('priors_count', 0.06451612903225806),
+     ('race', 0.17204301075268819),
+     ('sex_Female', 0.12903225806451613),
+     ('sex_Male', 0.13978494623655913),
+     ('two_year_recid', 0.06451612903225806),
+     ('unrelated_column', 0.10752688172043011),
+     ('unrelated_column_two', 0.0967741935483871)]}
+
+Fidelity: 1.0
+---------------------------------------------------------------------------
+
+
+Testing with Pert_Multi = 2 with 0.2 percent of data & 25 LIME neighborhood samples 
+
+
+---------------------------------------------------------------------------- 
+
+
+---------------------
+1 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.04838709677419355),
+     ('c_charge_degree_F', 0.1935483870967742),
+     ('c_charge_degree_M', 0.0967741935483871),
+     ('length_of_stay', 0.04838709677419355),
+     ('priors_count', 0.024193548387096774),
+     ('sex_Female', 0.16129032258064516),
+     ('sex_Male', 0.18548387096774194),
+     ('two_year_recid', 0.12903225806451613),
+     ('unrelated_column', 0.11290322580645161)],
+ 3: [('age', 0.04838709677419355),
+     ('c_charge_degree_F', 0.14516129032258066),
+     ('c_charge_degree_M', 0.1693548387096774),
+     ('length_of_stay', 0.04032258064516129),
+     ('priors_count', 0.10483870967741936),
+     ('sex_Female', 0.14516129032258066),
+     ('sex_Male', 0.12903225806451613),
+     ('two_year_recid', 0.12903225806451613),
+     ('unrelated_column', 0.08870967741935484)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('unrelated_column', 1.0)],
+ 2: [('age', 0.024193548387096774),
+     ('c_charge_degree_F', 0.20161290322580644),
+     ('c_charge_degree_M', 0.12903225806451613),
+     ('length_of_stay', 0.03225806451612903),
+     ('priors_count', 0.03225806451612903),
+     ('race', 0.1532258064516129),
+     ('sex_Female', 0.16129032258064516),
+     ('sex_Male', 0.16129032258064516),
+     ('two_year_recid', 0.10483870967741936)],
+ 3: [('age', 0.04032258064516129),
+     ('c_charge_degree_F', 0.08870967741935484),
+     ('c_charge_degree_M', 0.14516129032258066),
+     ('length_of_stay', 0.04032258064516129),
+     ('priors_count', 0.056451612903225805),
+     ('race', 0.1935483870967742),
+     ('sex_Female', 0.1693548387096774),
+     ('sex_Male', 0.13709677419354838),
+     ('two_year_recid', 0.12903225806451613)]}
+
+Fidelity: 0.94
+---------------------
+2 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.024193548387096774),
+     ('c_charge_degree_F', 0.12096774193548387),
+     ('c_charge_degree_M', 0.13709677419354838),
+     ('length_of_stay', 0.024193548387096774),
+     ('priors_count', 0.04032258064516129),
+     ('sex_Female', 0.1532258064516129),
+     ('sex_Male', 0.18548387096774194),
+     ('two_year_recid', 0.13709677419354838),
+     ('unrelated_column', 0.1774193548387097),
+     ('unrelated_column_two', 0.06451612903225806)],
+ 3: [('age', 0.056451612903225805),
+     ('c_charge_degree_F', 0.12096774193548387),
+     ('c_charge_degree_M', 0.0967741935483871),
+     ('length_of_stay', 0.056451612903225805),
+     ('priors_count', 0.06451612903225806),
+     ('sex_Female', 0.08870967741935484),
+     ('sex_Male', 0.1774193548387097),
+     ('two_year_recid', 0.12903225806451613),
+     ('unrelated_column', 0.20967741935483872),
+     ('unrelated_column_two', 0.08064516129032258)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('c_charge_degree_F', 0.008064516129032258),
+     ('c_charge_degree_M', 0.008064516129032258),
+     ('sex_Female', 0.04032258064516129),
+     ('sex_Male', 0.008064516129032258),
+     ('two_year_recid', 0.016129032258064516),
+     ('unrelated_column', 0.9193548387096774)],
+ 2: [('age', 0.016129032258064516),
+     ('c_charge_degree_F', 0.1935483870967742),
+     ('c_charge_degree_M', 0.11290322580645161),
+     ('length_of_stay', 0.04032258064516129),
+     ('priors_count', 0.03225806451612903),
+     ('race', 0.12903225806451613),
+     ('sex_Female', 0.12096774193548387),
+     ('sex_Male', 0.18548387096774194),
+     ('two_year_recid', 0.056451612903225805),
+     ('unrelated_column', 0.11290322580645161),
+     ('unrelated_column_two', 0.06451612903225806)],
+ 3: [('age', 0.04838709677419355),
+     ('c_charge_degree_F', 0.12096774193548387),
+     ('c_charge_degree_M', 0.13709677419354838),
+     ('length_of_stay', 0.06451612903225806),
+     ('priors_count', 0.04838709677419355),
+     ('race', 0.13709677419354838),
+     ('sex_Female', 0.13709677419354838),
+     ('sex_Male', 0.10483870967741936),
+     ('two_year_recid', 0.08064516129032258),
+     ('unrelated_column', 0.12096774193548387),
+     ('unrelated_column_two', 0.10483870967741936)]}
+
+Fidelity: 1.0
+---------------------------------------------------------------------------
+
+
+Testing with Pert_Multi = 2 with 0.25 percent of data & 25 LIME neighborhood samples 
+
+
+---------------------------------------------------------------------------- 
+
+
+---------------------
+1 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.012903225806451613),
+     ('c_charge_degree_F', 0.2129032258064516),
+     ('c_charge_degree_M', 0.12258064516129032),
+     ('length_of_stay', 0.03225806451612903),
+     ('priors_count', 0.06451612903225806),
+     ('sex_Female', 0.18064516129032257),
+     ('sex_Male', 0.13548387096774195),
+     ('two_year_recid', 0.12258064516129032),
+     ('unrelated_column', 0.11612903225806452)],
+ 3: [('age', 0.07096774193548387),
+     ('c_charge_degree_F', 0.2),
+     ('c_charge_degree_M', 0.10967741935483871),
+     ('length_of_stay', 0.03870967741935484),
+     ('priors_count', 0.06451612903225806),
+     ('sex_Female', 0.12258064516129032),
+     ('sex_Male', 0.12903225806451613),
+     ('two_year_recid', 0.13548387096774195),
+     ('unrelated_column', 0.12903225806451613)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('unrelated_column', 1.0)],
+ 2: [('age', 0.025806451612903226),
+     ('c_charge_degree_F', 0.13548387096774195),
+     ('c_charge_degree_M', 0.08387096774193549),
+     ('length_of_stay', 0.025806451612903226),
+     ('priors_count', 0.025806451612903226),
+     ('race', 0.23225806451612904),
+     ('sex_Female', 0.18064516129032257),
+     ('sex_Male', 0.16774193548387098),
+     ('two_year_recid', 0.12258064516129032)],
+ 3: [('age', 0.03870967741935484),
+     ('c_charge_degree_F', 0.14193548387096774),
+     ('c_charge_degree_M', 0.18064516129032257),
+     ('length_of_stay', 0.05161290322580645),
+     ('priors_count', 0.01935483870967742),
+     ('race', 0.13548387096774195),
+     ('sex_Female', 0.11612903225806452),
+     ('sex_Male', 0.12258064516129032),
+     ('two_year_recid', 0.1935483870967742)]}
+
+Fidelity: 0.98
+---------------------
+2 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.012903225806451613),
+     ('c_charge_degree_F', 0.18064516129032257),
+     ('c_charge_degree_M', 0.12258064516129032),
+     ('length_of_stay', 0.025806451612903226),
+     ('priors_count', 0.025806451612903226),
+     ('sex_Female', 0.16774193548387098),
+     ('sex_Male', 0.16774193548387098),
+     ('two_year_recid', 0.12903225806451613),
+     ('unrelated_column', 0.16774193548387098),
+     ('unrelated_column_two', 0.03225806451612903)],
+ 3: [('age', 0.05806451612903226),
+     ('c_charge_degree_F', 0.12903225806451613),
+     ('c_charge_degree_M', 0.12258064516129032),
+     ('length_of_stay', 0.07096774193548387),
+     ('priors_count', 0.05806451612903226),
+     ('sex_Female', 0.14838709677419354),
+     ('sex_Male', 0.11612903225806452),
+     ('two_year_recid', 0.12258064516129032),
+     ('unrelated_column', 0.17419354838709677),
+     ('unrelated_column_two', 0.05161290322580645)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('c_charge_degree_F', 0.01935483870967742),
+     ('c_charge_degree_M', 0.0064516129032258064),
+     ('length_of_stay', 0.0064516129032258064),
+     ('race', 0.0064516129032258064),
+     ('sex_Female', 0.0064516129032258064),
+     ('sex_Male', 0.0064516129032258064),
+     ('two_year_recid', 0.0064516129032258064),
+     ('unrelated_column', 0.9419354838709677)],
+ 2: [('age', 0.012903225806451613),
+     ('c_charge_degree_F', 0.13548387096774195),
+     ('c_charge_degree_M', 0.11612903225806452),
+     ('length_of_stay', 0.03225806451612903),
+     ('priors_count', 0.03225806451612903),
+     ('race', 0.09032258064516129),
+     ('sex_Female', 0.12903225806451613),
+     ('sex_Male', 0.1935483870967742),
+     ('two_year_recid', 0.13548387096774195),
+     ('unrelated_column', 0.12258064516129032),
+     ('unrelated_column_two', 0.0967741935483871)],
+ 3: [('age', 0.03870967741935484),
+     ('c_charge_degree_F', 0.17419354838709677),
+     ('c_charge_degree_M', 0.17419354838709677),
+     ('length_of_stay', 0.05806451612903226),
+     ('priors_count', 0.05806451612903226),
+     ('race', 0.07741935483870968),
+     ('sex_Female', 0.0967741935483871),
+     ('sex_Male', 0.12903225806451613),
+     ('two_year_recid', 0.12903225806451613),
+     ('unrelated_column', 0.06451612903225806),
+     ('unrelated_column_two', 0.05161290322580645)]}
+
+Fidelity: 1.0
+---------------------------------------------------------------------------
+
+
+Testing with Pert_Multi = 2 with 0.5 percent of data & 25 LIME neighborhood samples 
+
+
+---------------------------------------------------------------------------- 
+
+
+---------------------
+1 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.038834951456310676),
+     ('c_charge_degree_F', 0.12944983818770225),
+     ('c_charge_degree_M', 0.15210355987055016),
+     ('length_of_stay', 0.003236245954692557),
+     ('priors_count', 0.019417475728155338),
+     ('sex_Female', 0.20388349514563106),
+     ('sex_Male', 0.1650485436893204),
+     ('two_year_recid', 0.1423948220064725),
+     ('unrelated_column', 0.14563106796116504)],
+ 3: [('age', 0.061488673139158574),
+     ('c_charge_degree_F', 0.1553398058252427),
+     ('c_charge_degree_M', 0.15857605177993528),
+     ('length_of_stay', 0.05501618122977346),
+     ('priors_count', 0.045307443365695796),
+     ('sex_Female', 0.11650485436893204),
+     ('sex_Male', 0.14563106796116504),
+     ('two_year_recid', 0.1262135922330097),
+     ('unrelated_column', 0.13592233009708737)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('unrelated_column', 1.0)],
+ 2: [('age', 0.009708737864077669),
+     ('c_charge_degree_F', 0.1650485436893204),
+     ('c_charge_degree_M', 0.15210355987055016),
+     ('length_of_stay', 0.003236245954692557),
+     ('priors_count', 0.025889967637540454),
+     ('race', 0.18770226537216828),
+     ('sex_Female', 0.1779935275080906),
+     ('sex_Male', 0.15210355987055016),
+     ('two_year_recid', 0.1262135922330097)],
+ 3: [('age', 0.025889967637540454),
+     ('c_charge_degree_F', 0.1650485436893204),
+     ('c_charge_degree_M', 0.15210355987055016),
+     ('length_of_stay', 0.042071197411003236),
+     ('priors_count', 0.022653721682847898),
+     ('race', 0.1715210355987055),
+     ('sex_Female', 0.15857605177993528),
+     ('sex_Male', 0.12944983818770225),
+     ('two_year_recid', 0.13268608414239483)]}
+
+Fidelity: 0.99
+---------------------
+2 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.045307443365695796),
+     ('c_charge_degree_F', 0.1262135922330097),
+     ('c_charge_degree_M', 0.1715210355987055),
+     ('length_of_stay', 0.022653721682847898),
+     ('priors_count', 0.04854368932038835),
+     ('sex_Female', 0.1488673139158576),
+     ('sex_Male', 0.13268608414239483),
+     ('two_year_recid', 0.12944983818770225),
+     ('unrelated_column', 0.17475728155339806),
+     ('unrelated_column_two', 0.05177993527508091)],
+ 3: [('age', 0.06796116504854369),
+     ('c_charge_degree_F', 0.10355987055016182),
+     ('c_charge_degree_M', 0.11003236245954692),
+     ('length_of_stay', 0.07119741100323625),
+     ('priors_count', 0.05501618122977346),
+     ('sex_Female', 0.1423948220064725),
+     ('sex_Male', 0.1423948220064725),
+     ('two_year_recid', 0.11326860841423948),
+     ('unrelated_column', 0.1941747572815534),
+     ('unrelated_column_two', 0.05825242718446602)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('age', 0.003236245954692557),
+     ('c_charge_degree_F', 0.003236245954692557),
+     ('c_charge_degree_M', 0.016181229773462782),
+     ('priors_count', 0.003236245954692557),
+     ('race', 0.016181229773462782),
+     ('sex_Female', 0.012944983818770227),
+     ('sex_Male', 0.003236245954692557),
+     ('two_year_recid', 0.006472491909385114),
+     ('unrelated_column', 0.9352750809061489)],
+ 2: [('age', 0.016181229773462782),
+     ('c_charge_degree_F', 0.11974110032362459),
+     ('c_charge_degree_M', 0.12944983818770225),
+     ('length_of_stay', 0.025889967637540454),
+     ('priors_count', 0.022653721682847898),
+     ('race', 0.13915857605177995),
+     ('sex_Female', 0.13268608414239483),
+     ('sex_Male', 0.1650485436893204),
+     ('two_year_recid', 0.11003236245954692),
+     ('unrelated_column', 0.13915857605177995),
+     ('unrelated_column_two', 0.09061488673139159)],
+ 3: [('age', 0.042071197411003236),
+     ('c_charge_degree_F', 0.12944983818770225),
+     ('c_charge_degree_M', 0.11974110032362459),
+     ('length_of_stay', 0.02912621359223301),
+     ('priors_count', 0.03559870550161812),
+     ('race', 0.1553398058252427),
+     ('sex_Female', 0.1715210355987055),
+     ('sex_Male', 0.0744336569579288),
+     ('two_year_recid', 0.15857605177993528),
+     ('unrelated_column', 0.08414239482200647),
+     ('unrelated_column_two', 0.07119741100323625)]}
+
+Fidelity: 1.0
+---------------------------------------------------------------------------
+
+
+Testing with Pert_Multi = 2 with 0.75 percent of data & 25 LIME neighborhood samples 
+
+
+---------------------------------------------------------------------------- 
+
+
+---------------------
+1 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.028077753779697623),
+     ('c_charge_degree_F', 0.12742980561555076),
+     ('c_charge_degree_M', 0.15982721382289417),
+     ('length_of_stay', 0.017278617710583154),
+     ('priors_count', 0.032397408207343416),
+     ('sex_Female', 0.17278617710583152),
+     ('sex_Male', 0.15550755939524838),
+     ('two_year_recid', 0.1490280777537797),
+     ('unrelated_column', 0.15766738660907129)],
+ 3: [('age', 0.047516198704103674),
+     ('c_charge_degree_F', 0.13606911447084233),
+     ('c_charge_degree_M', 0.1079913606911447),
+     ('length_of_stay', 0.04535637149028078),
+     ('priors_count', 0.08855291576673865),
+     ('sex_Female', 0.13390928725701945),
+     ('sex_Male', 0.15334773218142547),
+     ('two_year_recid', 0.15334773218142547),
+     ('unrelated_column', 0.13390928725701945)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('unrelated_column', 1.0)],
+ 2: [('age', 0.012958963282937365),
+     ('c_charge_degree_F', 0.16846652267818574),
+     ('c_charge_degree_M', 0.1511879049676026),
+     ('length_of_stay', 0.019438444924406047),
+     ('priors_count', 0.017278617710583154),
+     ('race', 0.19222462203023757),
+     ('sex_Female', 0.1468682505399568),
+     ('sex_Male', 0.1490280777537797),
+     ('two_year_recid', 0.14254859611231102)],
+ 3: [('age', 0.0367170626349892),
+     ('c_charge_degree_F', 0.13390928725701945),
+     ('c_charge_degree_M', 0.14038876889848811),
+     ('length_of_stay', 0.038876889848812095),
+     ('priors_count', 0.04967602591792657),
+     ('race', 0.183585313174946),
+     ('sex_Female', 0.13174946004319654),
+     ('sex_Male', 0.13606911447084233),
+     ('two_year_recid', 0.1490280777537797)]}
+
+Fidelity: 0.99
+---------------------
+2 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.017278617710583154),
+     ('c_charge_degree_F', 0.1447084233261339),
+     ('c_charge_degree_M', 0.11879049676025918),
+     ('length_of_stay', 0.02159827213822894),
+     ('priors_count', 0.04103671706263499),
+     ('sex_Female', 0.183585313174946),
+     ('sex_Male', 0.15766738660907129),
+     ('two_year_recid', 0.17062634989200864),
+     ('unrelated_column', 0.1447084233261339),
+     ('unrelated_column_two', 0.02591792656587473)],
+ 3: [('age', 0.04535637149028078),
+     ('c_charge_degree_F', 0.13606911447084233),
+     ('c_charge_degree_M', 0.12958963282937366),
+     ('length_of_stay', 0.06695464362850972),
+     ('priors_count', 0.047516198704103674),
+     ('sex_Female', 0.14254859611231102),
+     ('sex_Male', 0.13174946004319654),
+     ('two_year_recid', 0.13822894168466524),
+     ('unrelated_column', 0.16198704103671707),
+     ('unrelated_column_two', 0.038876889848812095)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('age', 0.0021598272138228943),
+     ('c_charge_degree_F', 0.017278617710583154),
+     ('c_charge_degree_M', 0.008639308855291577),
+     ('race', 0.019438444924406047),
+     ('sex_Female', 0.008639308855291577),
+     ('sex_Male', 0.02159827213822894),
+     ('two_year_recid', 0.0064794816414686825),
+     ('unrelated_column', 0.9157667386609071)],
+ 2: [('age', 0.019438444924406047),
+     ('c_charge_degree_F', 0.13390928725701945),
+     ('c_charge_degree_M', 0.09935205183585313),
+     ('length_of_stay', 0.028077753779697623),
+     ('priors_count', 0.019438444924406047),
+     ('race', 0.13390928725701945),
+     ('sex_Female', 0.16846652267818574),
+     ('sex_Male', 0.14038876889848811),
+     ('two_year_recid', 0.12311015118790497),
+     ('unrelated_column', 0.13390928725701945),
+     ('unrelated_column_two', 0.08639308855291576)],
+ 3: [('age', 0.04319654427645788),
+     ('c_charge_degree_F', 0.12742980561555076),
+     ('c_charge_degree_M', 0.1447084233261339),
+     ('length_of_stay', 0.04535637149028078),
+     ('priors_count', 0.04967602591792657),
+     ('race', 0.12742980561555076),
+     ('sex_Female', 0.12526997840172785),
+     ('sex_Male', 0.1101511879049676),
+     ('two_year_recid', 0.14038876889848811),
+     ('unrelated_column', 0.08639308855291576),
+     ('unrelated_column_two', 0.0755939524838013)]}
+
+Fidelity: 1.0
+---------------------------------------------------------------------------
+
+
+Testing with Pert_Multi = 2 with 0.9 percent of data & 25 LIME neighborhood samples 
+
+
+---------------------------------------------------------------------------- 
+
+
+---------------------
+1 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.0341726618705036),
+     ('c_charge_degree_F', 0.16366906474820145),
+     ('c_charge_degree_M', 0.1564748201438849),
+     ('length_of_stay', 0.030575539568345324),
+     ('priors_count', 0.02158273381294964),
+     ('sex_Female', 0.17266187050359713),
+     ('sex_Male', 0.15827338129496402),
+     ('two_year_recid', 0.12949640287769784),
+     ('unrelated_column', 0.13309352517985612)],
+ 3: [('age', 0.0683453237410072),
+     ('c_charge_degree_F', 0.13309352517985612),
+     ('c_charge_degree_M', 0.14028776978417265),
+     ('length_of_stay', 0.05755395683453238),
+     ('priors_count', 0.06474820143884892),
+     ('sex_Female', 0.18525179856115107),
+     ('sex_Male', 0.12050359712230216),
+     ('two_year_recid', 0.1079136690647482),
+     ('unrelated_column', 0.1223021582733813)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('unrelated_column', 1.0)],
+ 2: [('age', 0.01618705035971223),
+     ('c_charge_degree_F', 0.14568345323741008),
+     ('c_charge_degree_M', 0.1564748201438849),
+     ('length_of_stay', 0.025179856115107913),
+     ('priors_count', 0.02158273381294964),
+     ('race', 0.17985611510791366),
+     ('sex_Female', 0.16906474820143885),
+     ('sex_Male', 0.13309352517985612),
+     ('two_year_recid', 0.1528776978417266)],
+ 3: [('age', 0.039568345323741004),
+     ('c_charge_degree_F', 0.16546762589928057),
+     ('c_charge_degree_M', 0.14568345323741008),
+     ('length_of_stay', 0.06474820143884892),
+     ('priors_count', 0.0539568345323741),
+     ('race', 0.14568345323741008),
+     ('sex_Female', 0.1420863309352518),
+     ('sex_Male', 0.12589928057553956),
+     ('two_year_recid', 0.11690647482014388)]}
+
+Fidelity: 0.99
+---------------------
+2 Feature Attack Experiments....
+---------------------
+BIASED: LIME Ranks and Pct Occurances:
+{1: [('race', 1.0)],
+ 2: [('age', 0.023381294964028777),
+     ('c_charge_degree_F', 0.1528776978417266),
+     ('c_charge_degree_M', 0.1528776978417266),
+     ('length_of_stay', 0.017985611510791366),
+     ('priors_count', 0.03776978417266187),
+     ('sex_Female', 0.17266187050359713),
+     ('sex_Male', 0.1510791366906475),
+     ('two_year_recid', 0.13309352517985612),
+     ('unrelated_column', 0.15827338129496402),
+     ('unrelated_column_two', 0.03237410071942446)],
+ 3: [('age', 0.044964028776978415),
+     ('c_charge_degree_F', 0.11510791366906475),
+     ('c_charge_degree_M', 0.1474820143884892),
+     ('length_of_stay', 0.050359712230215826),
+     ('priors_count', 0.0539568345323741),
+     ('sex_Female', 0.12410071942446044),
+     ('sex_Male', 0.13848920863309352),
+     ('two_year_recid', 0.1223021582733813),
+     ('unrelated_column', 0.20323741007194246),
+     ('unrelated_column_two', 0.0737410071942446)]}
+ADV: LIME Ranks and Pct Occurances:
+{1: [('c_charge_degree_F', 0.023381294964028777),
+     ('c_charge_degree_M', 0.008992805755395683),
+     ('length_of_stay', 0.0017985611510791368),
+     ('priors_count', 0.0017985611510791368),
+     ('race', 0.01618705035971223),
+     ('sex_Female', 0.014388489208633094),
+     ('sex_Male', 0.01618705035971223),
+     ('two_year_recid', 0.012589928057553957),
+     ('unrelated_column', 0.9046762589928058)],
+ 2: [('age', 0.03237410071942446),
+     ('c_charge_degree_F', 0.13309352517985612),
+     ('c_charge_degree_M', 0.12949640287769784),
+     ('length_of_stay', 0.044964028776978415),
+     ('priors_count', 0.025179856115107913),
+     ('race', 0.11151079136690648),
+     ('sex_Female', 0.12410071942446044),
+     ('sex_Male', 0.1223021582733813),
+     ('two_year_recid', 0.14388489208633093),
+     ('unrelated_column', 0.13309352517985612),
+     ('unrelated_column_two', 0.07733812949640288)],
+ 3: [('age', 0.052158273381294966),
+     ('c_charge_degree_F', 0.12589928057553956),
+     ('c_charge_degree_M', 0.1223021582733813),
+     ('length_of_stay', 0.048561151079136694),
+     ('priors_count', 0.05755395683453238),
+     ('race', 0.12410071942446044),
+     ('sex_Female', 0.1420863309352518),
+     ('sex_Male', 0.10251798561151079),
+     ('two_year_recid', 0.11510791366906475),
+     ('unrelated_column', 0.10971223021582734),
+     ('unrelated_column_two', 0.08812949640287769)]}
+
+Fidelity: 1.0
+laurenalvarez@Laurens-MacBook-Pro lying % 

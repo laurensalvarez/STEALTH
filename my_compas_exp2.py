@@ -28,6 +28,9 @@ from copy import deepcopy
 
 import pprint
 
+#Lauren's imports
+from fcols_LIME import Table, Col, Sym, Num
+
 ###
 ## The models f and psi for COMPAS.  We discriminate based on race for f and concider two RANDOMLY DRAWN features to display in psi
 #
@@ -61,7 +64,7 @@ class innocuous_model_psi_two:
 ##
 ###
 
-def experiment_main(X, y, p, s, categorical_feature_indcs, features):
+def experiment_main(inoc_model, X, y, p, s, categorical_feature_indcs, features):
     # """
     # Run through experiments for LIME/SHAP on compas using both one and two unrelated features.
     # * This may take some time given that we iterate through every point in the test set
@@ -79,10 +82,10 @@ def experiment_main(X, y, p, s, categorical_feature_indcs, features):
     # print ('---------------------')
 
     # Train the adversarial model for LIME with f and psi
-    adv_lime = Adversarial_Lime_Model(racist_model_f(), innocuous_model_psi()).train(xtrain, ytrain, categorical_features=categorical_feature_indcs, feature_names=features, perturbation_multiplier=p)
+    adv_lime = Adversarial_Lime_Model(racist_model_f(), inoc_model ).train(xtrain, ytrain, categorical_features=categorical_feature_indcs, feature_names=features, perturbation_multiplier=p)
 
     # To get a baseline, we'll look at LIME applied to the biased model f
-    biased_explainer = lime.lime_tabular.LimeTabularExplainer(xtrain,feature_names=adv_lime.get_column_names(),
+    biased_explainer = lime.lime_tabular.LimeTabularExplainer(xtrain, sample_around_instance=True, feature_names=adv_lime.get_column_names(),
                                                               discretize_continuous=False,
                                                               categorical_features=categorical_feature_indcs)
     biased_explanations = []
@@ -132,6 +135,7 @@ if __name__ == "__main__":
     np.random.seed(params.seed)
     X, y, cols = get_and_preprocess_compas_data(params)
 
+
     # add unrelated columns, setup
     X2 = deepcopy(X)
     X['unrelated_column'] = np.random.choice([0,1],size=X.shape[0])
@@ -154,24 +158,35 @@ if __name__ == "__main__":
     unrelated_indcs = features2.index('unrelated_column')
     unrelated_indcs1 = features2.index('unrelated_column_two')
 
-    X = X.values
-    X2 = X2.values
+    X["Y"] = y.tolist()
+    X2["Y"] = y.tolist()
 
-    per_mul = [1, 2, 5, 10, 30]
-    num_samples = [2, 3, 4, 5, 10, 25,50, 625, 1250, 2500, 3750, 5000]
+    Xcopy = deepcopy(X)
+    X2copy = deepcopy(X2)
+    #subset experiments
+    for p in [0.05, 0.08, 0.10, 0.12, 0.15, 0.20, 0.25, 0.50, 0.75, 0.90]:
+        Xsub = Xcopy.sample(frac= p)
+        X2sub = X2copy.sample(frac= p) #randomly select percentage of rows; no repeats
 
-    for p in per_mul:
-        for s in num_samples:
-            print("---------------------------------------------------------------------------- \n\n")
-            print("Testing with perturbation_multiplier = " , p , " with", s ,"LIME neighborhood samples \n\n")
-            print("---------------------------------------------------------------------------- \n\n")
-            print ('---------------------')
-            print ("1 Feature Attack Experiments....")
-            print ('---------------------')
-            experiment_main(X, y, p, s, categorical_feature_indcs, features)
+        ynew = Xsub["Y"].to_numpy()
+        y2new = X2sub["Y"].to_numpy()
 
-            print ('---------------------')
-            print ("2 Feature Attack Experiments....")
-            print ('---------------------')
+        Xsub = Xsub.drop(columns = ["Y"])
+        X2sub = X2sub.drop(columns = ["Y"])
 
-            experiment_main(X2, y, p, s, categorical_feature_indcs, features2)
+        Xnew = Xsub.values
+        X2new = X2sub.values
+
+        print("-" * 75 + "\n\n")
+        print("Testing with Pert_Multi = 1 with" , p , "percent of data & 25 LIME neighborhood samples \n\n")
+        print("---------------------------------------------------------------------------- \n\n")
+        print ('---------------------')
+        print ("1 Feature Attack Experiments....")
+        print ('---------------------')
+        experiment_main(innocuous_model_psi(), Xnew, ynew, 1 , 25, categorical_feature_indcs, features)
+
+        print ('---------------------')
+        print ("2 Feature Attack Experiments....")
+        print ('---------------------')
+
+        experiment_main(innocuous_model_psi_two(), X2new, y2new, 1, 25, categorical_feature_indcs, features2)
