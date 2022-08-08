@@ -4,7 +4,7 @@ from utils import Params
 
 def get_and_preprocess_compas_data(params):
 	"""Handle processing of COMPAS according to: https://github.com/propublica/compas-analysis
-	
+
 	Parameters
 	----------
 	params : Params
@@ -40,7 +40,7 @@ def get_and_preprocess_compas_data(params):
 	# make sure everything is lining up
 	assert all((sens == 'African-American') == (X['race'] == PROTECTED_CLASS))
 	cols = [col for col in X]
-	
+
 	return X, y, cols
 
 def get_and_preprocess_cc(params):
@@ -61,7 +61,7 @@ def get_and_preprocess_cc(params):
 	NEGATIVE_OUTCOME = params.negative_outcome
 
 	X = pd.read_csv("data/communities_and_crime_new_version.csv", index_col=0)
-	
+
 	# everything over 50th percentil gets negative outcome (lots of crime is bad)
 	high_violent_crimes_threshold = 50
 	y_col = 'ViolentCrimesPerPop numeric'
@@ -69,11 +69,11 @@ def get_and_preprocess_cc(params):
 	X = X[X[y_col] != "?"]
 	X[y_col] = X[y_col].values.astype('float32')
 
-	# just dump all x's that have missing values 
+	# just dump all x's that have missing values
 	cols_with_missing_values = []
 	for col in X:
 	    if len(np.where(X[col].values == '?')[0]) >= 1:
-	        cols_with_missing_values.append(col)    
+	        cols_with_missing_values.append(col)
 
 	y = X[y_col]
 	y_cutoff = np.percentile(y, high_violent_crimes_threshold)
@@ -101,14 +101,14 @@ def get_and_preprocess_german(params):
 	PROTECTED_CLASS = params.protected_class
 	UNPROTECTED_CLASS = params.unprotected_class
 	POSITIVE_OUTCOME = params.positive_outcome
-	NEGATIVE_OUTCOME = params.negative_outcome	
+	NEGATIVE_OUTCOME = params.negative_outcome
 
 	X = pd.read_csv("data/german_processed.csv")
-	y = X["GoodCustomer"]
+	y = X["GoodCustomer!"]
 
-	X = X.drop(["GoodCustomer", "PurposeOfLoan"], axis=1)
-	X['Gender'] = [1 if v == "Male" else 0 for v in X['Gender'].values]
+	X = X.drop(["GoodCustomer!", "purposeOfLoan"], axis=1)
+	X['gender('] = [1 if v == "Male" else 0 for v in X['gender('].values]
 
 	y = np.array([POSITIVE_OUTCOME if p == 1 else NEGATIVE_OUTCOME for p in y.values])
 
-	return X, y, [c for c in X] 
+	return X, y, [c for c in X]
