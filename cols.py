@@ -638,6 +638,23 @@ def getXY(table):
         y.append(y_row)
     return X,y
 
+def getXY2(table):
+    X = []
+    y = []
+    y_index = table.y[-1].uid
+
+    for row in table.rows:
+        X_row = []
+        y_row = -1
+        for i, val in enumerate(row):
+            if i == y_index:  # for multiple y if i in y_indexes:
+                y_row = val
+            else:
+                X_row.append(val)
+        X.append(X_row)
+        y.append(y_row)
+    return X,y
+
 
 def classify(table, df, X_test, y_test, samples, total_pts, f, enough_multiplier):
     # i = 1

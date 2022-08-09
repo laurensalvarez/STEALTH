@@ -10,6 +10,7 @@ from get_data import *
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import confusion_matrix, classification_report
 
 import math, re, random, statistics, sys
 import numpy as np
@@ -23,7 +24,7 @@ from sklearn.cluster import KMeans
 
 from copy import deepcopy
 
-from cols import Table, Col, Sym, Num, leafmedians2, getLeafData2, getXY
+from cols import Table, Col, Sym, Num, leafmedians2, getLeafData2, getXY2
 
 # Set up experiment parameters
 params = Params("model_configurations/experiment_params.json")
@@ -37,14 +38,50 @@ loan_rate_indc = features.index('LoanRateAsPercentOfIncome')
 X = Xdf.values
 
 xtrain,xtest,ytrain,ytest = train_test_split(X,y,test_size=0.2)
-ss = StandardScaler().fit(xtrain)
-xtrain = ss.transform(xtrain)
-xtest = ss.transform(xtest)
 
 xtraindf = pd.DataFrame(xtrain, columns = features)
 xtraindf["GoodCustomer!"]= ytrain
 
+ss = StandardScaler().fit(xtrain)
+xtrain = ss.transform(xtrain)
+xtest = ss.transform(xtest)
+
+table = Table(11111)
+xrows = xtraindf.values
+header = deepcopy(list(xtraindf.columns.values))
+table + header
+for r in xrows:
+    table + r
+
+enough = int(math.sqrt(len(table.rows)))
+root = Table.clusters(table.rows, table, enough)
+
+MedianTable = leafmedians2(root)
+mX, my = getXY2(MedianTable)
+mX = ss.transform(mX)
+mdf = pd.DataFrame(mX, columns=features)
+
+
+EDT = getLeafData2(root, 5)
+X5, y5 = getXY2(EDT)
+X5 = ss.transform(X5)
+df5 = pd.DataFrame(X5, columns=features)
+
+
+print("--------sizes----------")
+print("--------Xdf----------")
+print(Xdf.index, len(Xdf.columns.values))
+# print(Xdf.head)
+print("--------xtraindf----------")
+print(xtraindf.index, len(xtraindf.columns.values), "(has y col)")
 # print(xtraindf.head)
+print("--------mdf----------")
+print(mdf.index, len(mdf.columns.values))
+# print(mdf.head)
+print("--------df5----------")
+print(df5.index, len(df5.columns.values))
+# print(df5.head)
+print("--------sizes----------")
 
 mean_lrpi = np.mean(xtrain[:,loan_rate_indc])
 
@@ -83,91 +120,52 @@ def experiment_main():
     * This may take some time given that we iterate through every point in the test set
     * We print out the rate at which features occur in the top three features
     """
-
+    full_df = pd.DataFrame(columns=features)
     # Train the adversarial model for LIME with f and psi
     adv_lime = Adversarial_Lime_Model(racist_model_f(), innocuous_model_psi()).train(xtrain, ytrain, feature_names=features, perturbation_multiplier=2, categorical_features=categorical)
+    median_pred = adv_lime.predict(mdf.to_numpy())
 
-    table = Table(11111)
-    xrows = xtraindf.values
-    header = deepcopy(list(xtraindf.columns.values))
-    print(header)
-    table + header
-    for r in xrows:
-        table + r
+    values = mdf.values
+    svalues = ss.inverse_transform(values)
+    sdf = pd.DataFrame(svalues, columns=features)
 
-    enough = int(math.sqrt(len(table.rows)))
-    root = Table.clusters(table.rows, table, enough)
+    col = [sdf.index.size] * sdf.index.size
+    sdf["samples"] = col
+    sdf["predicted"] = median_pred
+    sdf["!Probability"] = my
 
-    tcols = deepcopy(table.header)
-    tcols.append("predicted")
-    tcols.append("samples")
-    tcols.append("total_pts")
-    full_df = pd.DataFrame(columns=tcols)
-    mdf = pd.DataFrame(columns=tcols)
-    df5 = pd.DataFrame(columns=tcols)
-    df7 = pd.DataFrame(columns=tcols)
+    full_df = full_df.append(sdf)
 
-    treatments = [1,5,7]
-    for samples in treatments:
-        if samples == 1:
-            MedianTable = leafmedians2(root)
-            total_pts = len(MedianTable.rows)
-            print(total_pts)
-            full = []
-            xm, ym = getXY(MedianTable)
-            xm = np.array(xm)
+    pred5 = adv_lime.predict(df5.to_numpy())
 
-            y_pred = adv_lime.predict(xm)
+    values = df5.values
+    svalues = ss.inverse_transform(values)
+    sdf5 = pd.DataFrame(svalues, columns=features)
 
-            y_pred_list = y_pred.tolist()
-            print(y_pred_list)
-            for x in xm:
-                full.append(deepcopy(x))
-            for j in range(len(ym)):
-                full[j] = np.append(full[j],ym[j])
-                full[j] = np.append(full[j],y_pred_list[j])
-                full[j] = np.append(full[j], samples)
-                full[j] = np.append(full[j], total_pts)
-            for row in full:
-                a_series = pd.Series(row, index= mdf.columns)
-                mdf = mdf.append(a_series, ignore_index=True)
+    col = [sdf5.index.size] * sdf5.index.size
+    sdf5["samples"] = col
+    sdf5["predicted"] = pred5
+    sdf5["!Probability"] = y5
 
-        else:
-            EDT = getLeafData2(root, samples)
+    full_df = full_df.append(sdf5)
 
-            total_pts = len(EDT.rows)
-            print(total_pts)
-            full = []
-            x, y = getXY(EDT)
-            x = np.array(x)
-
-            y_pred = adv_lime.predict(x)
-
-            y_pred_list = y_pred.tolist()
-            print(y_pred_list)
-            for x in x:
-                full.append(deepcopy(x))
-            for j in range(len(y)):
-                full[j] = np.append(full[j],y[j])
-                full[j] = np.append(full[j],y_pred_list[j])
-                full[j] = np.append(full[j], samples)
-                full[j] = np.append(full[j], total_pts)
-            for row in full:
-                a_series = pd.Series(row, index= mdf.columns)
-                df5 = df5.append(a_series, ignore_index=True)
-
-
-        full_df = full_df.append(mdf)
-        full_df = full_df.append(df5)
-        # full_df = full_df.append(df7)
 
     final_columns = []
     final_columns.append("gender(")
     final_columns.append("predicted")
+    final_columns.append("!Probability")
     final_columns.append("samples")
-    final_columns.append("total_pts")
     output_df = full_df[final_columns]
-    output_df.to_csv("./output/" + "german_test2.csv", index=False)
+    print(output_df.index, len(output_df.columns.values))
+    output_df.to_csv("./output/" + "german_mdf2.csv", index=False, float_format = "%g")
+
+    y_pred = np.append(median_pred, pred5)
+    y_true = my + y5
+    cm = confusion_matrix(y_true, y_pred)
+    print(classification_report(y_true, y_pred))
+    # print(cm)
+
+
 
     print ('---------------------')
 
@@ -206,4 +204,5 @@ def experiment_main():
 
 
 if __name__ == "__main__":
+    random.seed(10039)
     experiment_main()
