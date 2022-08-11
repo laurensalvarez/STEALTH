@@ -1,6 +1,4 @@
-import copy
-import math
-import sys, random
+import copy, math, sys, random
 from tqdm import tqdm
 import pandas as pd
 import numpy as np
@@ -23,79 +21,86 @@ def trim(df, dataset):
     if dataset == "compas":
         X = X.loc[(X['Days_b_screening_arrest'] <= 30) & (X['Days_b_screening_arrest'] >= -30) & (X['is_recid'] != -1) & (X['c_charge_degree'] != "O") & (X['!probability'] != "NA")]
         X['Length_of_stay'] = (pd.to_datetime(X['c_jail_out']) - pd.to_datetime(X['c_jail_in'])).dt.days
-        X = X[['Age(','c_charge_degree', 'race(', 'sex(', 'Priors_count', 'Length_of_stay', "!probability", "!Probability"]]
+        X = X[['Age(','c_charge_degree', 'race(', 'sex(', 'Priors_count', 'Length_of_stay', "!Probability"]]
 
     if dataset == "communities":
         X['!Probability'] = X['!Probability'].values.astype('float32')
         X = X.drop(['communityname', ':Fold', ':County', ':Community', 'State'], axis=1)
 
-    if dataset == "germancredit":
-        X = X.drop(["purposeOfLoan"], axis=1)
-
     return X
 
 
-def unifyOutcomes(df, dataset):
-    if dataset == "adultscensusincome":
-        df['!probability'] = np.where((df['!probability'] == " >50K"), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
-
-    if dataset == "bankmarketing":
-        df['!probability'] = np.where((df['!probability'] == "yes" ), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
-
-    if dataset == "compas":
-        df['!probability'] = np.where((df['!probability'] == "High"), NEGATIVE_OUTCOME, POSITIVE_OUTCOME)
-        # df['!Probability'] = np.where((df['!Probability'] == "1"), NEGATIVE_OUTCOME, POSITIVE_OUTCOME)
-
-    if dataset == "defaultcredit":
-        df['!Probability'] = np.where((df['!Probability'] == 0), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
-
-    if dataset == "diabetes":
-        df['!probability'] = np.where((df['!probability'] == "negative" ), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
-
-    if dataset == "germancredit":
-        df['!Probability'] = np.where((df['!Probability'] == 1), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
-
-    if dataset == "heart":
-        df['!Probability'] = np.where((df['!Probability'] == 0), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
-
-    if dataset == "studentperformance":
-        df['!Probability'] = np.where((df['!Probability'] > 14), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
-
-    return df
-
 def makeBinary(df, dataset):
     """turning sensitive features binary."""
-    if dataset == "diabetes" or "heart":
-        df['Age('] = np.where((df['Age('] > 25), 0, 1)
+    if dataset == "adultscensusincome":
+        df['sex('] = np.where((df['sex('] == "Female"), 0, 1)
+        df['race('] = np.where((df['race('] == "White"), 1, 0)
+        df['!probability'] = np.where((df['!probability'] == " >50K"), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
+
+    if dataset == "diabetes":
+        mean = df.loc[:,'Age('].mean()
+        df['Age('] = np.where((df['Age('] >= mean), 0, 1)
+        df['!probability'] = np.where((df['!probability'] == "negative" ), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
 
     if dataset == "compas":
-        df['race('] = np.where((df['race('] == 2), 1, 0)
-        df['sex('] = np.where((df['sex('] == 1), 0, 1)
-        df['Age('] = np.where((df['Age('] > 25), 0, 1)
+        df['race('] = np.where((df['race('] != 'Caucasian'), 0, 1)
+        df['sex('] = np.where((df['sex('] == 'Female'), 1, 0)
+        # df['!probability'] = np.where((df['!probability'] == "High"), NEGATIVE_OUTCOME, POSITIVE_OUTCOME)
+        df['!Probability'] = np.where((df['!Probability'] == 0), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
 
     if dataset == "germancredit":
-        df['sav('] = np.where((df['sav('] == 0) | (df['sav('] == 1) | (df['sav('] ==  4), 0, 1)
-        df['Age('] = np.where((df['Age('] > 25), 0, 1)
-        df['sex('] = np.where((df['sex('] == 1), 0, 1)
+        ## Change symbolics to numerics
+        df = df.drop(['status_of_existing_account','Duration_month','purpose','Install_rate_percentage_disposalble','debtors','Present_residence','property','installment_plans','housing','Num_existng_credits','job','Num_people_liable_maintenance','telephone'],axis=1)
+        df['sex('] = np.where((df['sex('] == 'A92') | (df['sex('] == 'A95'), 0, 1)
+        df['sav('] = np.where((df['sav('] == 'A63') | (df['sav('] == 'A64'), 1, 0)
+        df['Age('] = np.where(df['Age('] >= 25, 1, 0)
+        df['f_w('] = np.where((df['f_w('] == 'A201'), 0, 1)
 
-    if dataset == "adultscensusincome":
-        df['sex('] = np.where((df['sex('] == 1), 0, 1)
-        df['race('] = np.where((df['race('] == 5), 1, 0)
+        df['credit_history'] = np.where(df['credit_history'] == 'A30', 1, df['credit_history'])
+        df['credit_history'] = np.where(df['credit_history'] == 'A31', 1, df['credit_history'])
+        df['credit_history'] = np.where(df['credit_history'] == 'A32', 1, df['credit_history'])
+        df['credit_history'] = np.where(df['credit_history'] == 'A33', 2, df['credit_history'])
+        df['credit_history'] = np.where(df['credit_history'] == 'A34', 3, df['credit_history'])
+
+
+
+        df['employment'] = np.where(df['employment'] == 'A72', 1, df['employment'])
+        df['employment'] = np.where(df['employment'] == 'A73', 1, df['employment'])
+        df['employment'] = np.where(df['employment'] == 'A74', 2, df['employment'])
+        df['employment'] = np.where(df['employment'] == 'A75', 2, df['employment'])
+        df['employment'] = np.where(df['employment'] == 'A71', 3, df['employment'])
+
+        df['!Probability'] = np.where(df['!Probability'] == 2, NEGATIVE_OUTCOME, POSITIVE_OUTCOME)
+
+    if dataset == "heart":
+        mean = df.loc[:,'Age('].mean()
+        df['Age('] = np.where((df['Age('] >= mean), 0, 1)
+        df['!Probability'] = np.where((df['!Probability'] == 0), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
 
     if dataset == "studentperformance":
-        df['sex('] = np.where((df['sex('] == 1), 0, 1)
+        df['sex('] = np.where(df['sex('] == 'M', 1, 0)
+        df['schoolsup'] = np.where(df['schoolsup'] == 'yes', 1, 0)
+        df['famsup'] = np.where(df['famsup'] == 'yes', 1, 0)
+        df['paid'] = np.where(df['paid'] == 'yes', 1, 0)
+        df['activities'] = np.where(df['activities'] == 'yes', 1, 0)
+        df['nursery'] = np.where(df['nursery'] == 'yes', 1, 0)
+        df['higher'] = np.where(df['higher'] == 'yes', 1, 0)
+        df['internet'] = np.where(df['internet'] == 'yes', 1, 0)
+        df['romantic'] = np.where(df['romantic'] == 'yes', 1, 0)
+        df['!Probability'] = np.where((df['!Probability'] > 12), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
 
     if dataset == "bankmarketing":
         df['Age('] = np.where((df['Age('] > 25), 0, 1)
         df['marital('] = np.where((df['marital('] == 3), 1, 0)
         df['education('] = np.where((df['education('] == 6) | (df['education('] == 7), 1, 0)
+        df['!probability'] = np.where((df['!probability'] == "yes" ), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
 
     if dataset == "defaultcredit":
-        df['SEX('] = np.where((df['SEX('] == 1), 1, 0)
+        df['SEX('] = np.where((df['SEX('] == 2), 0, 1)
         df['MARRIAGE('] = np.where((df['MARRIAGE('] == 1), 1, 0)
         df['EDUCATION('] = np.where((df['EDUCATION('] == 1) | (df['EDUCATION('] == 2), 1, 0)
-        df['AGE('] = np.where((df['AGE('] > 25), 0, 1)
         df['LIMIT_BAL('] = np.where((df['LIMIT_BAL('] > 25250), 1, 0)
+        df['!Probability'] = np.where((df['!Probability'] == 1), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
 
     return df
 
@@ -110,17 +115,15 @@ def preprocess(path,dataset):
 
     """1b: remove unwanted features or do recommended trimming."""
     trimmeddf = trim(raw_copy, dataset)
-    """2: change cont. to categorical (i.e. age >= 25 = old; age < 25 is young)."""
-    """3: change non-numerical to numerical (i.e. female = 0; male = 1)."""
-    """4: make y's binary (i.e. 0 is neg outcome; 1 is pos outcome)."""
-    prettydf = unifyOutcomes(trimmeddf, dataset)
+    """2: change cont. to categorical (i.e. age >= 25 = old; age < 25 is young) & non-numerical to numerical (i.e. female = 0; male = 1).  make y's binary (i.e. 0 is neg outcome; 1 is pos outcome)."""
+    bindf = makeBinary(trimmeddf, dataset)
 
-    return prettydf
+    return bindf
 
 
 
 if __name__ == "__main__":
-    datasets = ["adultscensusincome.csv","bankmarketing.csv", "compas.csv", "communities.csv", "defaultcredit.csv", "diabetes.csv",  "germancredit.csv", "heart.csv", "studentperformance.csv"]
+    datasets = ["compas.csv"]#["adultscensusincome.csv","bankmarketing.csv", "compas.csv", "communities.csv", "defaultcredit.csv", "diabetes.csv",  "germancredit.csv", "heart.csv", "studentperformance.csv"]
     pbar = tqdm(datasets)
 
     for dataset in pbar:
