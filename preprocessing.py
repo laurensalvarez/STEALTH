@@ -48,6 +48,13 @@ def makeBinary(df, dataset):
         # df['!probability'] = np.where((df['!probability'] == "High"), NEGATIVE_OUTCOME, POSITIVE_OUTCOME)
         df['!Probability'] = np.where((df['!Probability'] == 0), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
 
+    if dataset == "communities":
+        high_vcrime_threshold = 50
+        y = df['!Probability']
+        y_cutoff = np.percentile(y, high_vcrime_threshold)
+        df['!Probability'] = np.where((df['!Probability'] > y_cutoff), NEGATIVE_OUTCOME, POSITIVE_OUTCOME)
+
+
     if dataset == "germancredit":
         ## Change symbolics to numerics
         df = df.drop(['status_of_existing_account','Duration_month','purpose','Install_rate_percentage_disposalble','debtors','Present_residence','property','installment_plans','housing','Num_existng_credits','job','Num_people_liable_maintenance','telephone'],axis=1)
