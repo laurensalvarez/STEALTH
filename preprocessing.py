@@ -50,10 +50,13 @@ def makeBinary(df, dataset):
 
     if dataset == "communities":
         high_vcrime_threshold = 50
+        majority = 53
+        m = df['Racepctwhite(']
+        majority_cutoff = np.percentile(m, majority)
         y = df['!Probability']
         y_cutoff = np.percentile(y, high_vcrime_threshold)
         df['!Probability'] = np.where((df['!Probability'] > y_cutoff), NEGATIVE_OUTCOME, POSITIVE_OUTCOME)
-
+        df['Racepctwhite('] = np.where(df['Racepctwhite('] > majority_cutoff, 1, 0)
 
     if dataset == "germancredit":
         ## Change symbolics to numerics
@@ -130,7 +133,7 @@ def preprocess(path,dataset):
 
 
 if __name__ == "__main__":
-    datasets = ["compas.csv"]#["adultscensusincome.csv","bankmarketing.csv", "compas.csv", "communities.csv", "defaultcredit.csv", "diabetes.csv",  "germancredit.csv", "heart.csv", "studentperformance.csv"]
+    datasets = ["communities.csv"]#["adultscensusincome.csv","bankmarketing.csv", "compas.csv", "communities.csv", "defaultcredit.csv", "diabetes.csv",  "germancredit.csv", "heart.csv", "studentperformance.csv"]
     pbar = tqdm(datasets)
 
     for dataset in pbar:

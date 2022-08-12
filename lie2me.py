@@ -36,7 +36,7 @@ params = Params("model_configurations/experiment_params.json")
 class biased_model_f():
     def __init__(self, sensa_indc):
         self.sensa_indc = sensa_indc
-    # Decision rule: classify negative outcome if female
+    # Decision rule: classify negative outcome if underrepresented class
     def predict(self,X):
         return np.array([params.negative_outcome if x[self.sensa_indc] == 0 else params.positive_outcome for x in X])
 
@@ -158,8 +158,8 @@ def pred(adv_lime,ss,features,xtest, ytest, yname):
     pred = adv_lime.predict(xtest)
 
     # values = xtest.values
-    scaled_values = ss.inverse_transform(xtest)
-    sdf = pd.DataFrame(scaled_values, columns=features)
+    # scaled_values = ss.inverse_transform(xtest)
+    sdf = pd.DataFrame(xtest, columns=features)
 
     samples_col = [sdf.index.size] * sdf.index.size
     sdf["predicted"] = pred
@@ -175,11 +175,30 @@ def newTraining(df, yname):
 
     return df_copy, new_y
 
+def transformed(df, cols, yname, categorical,labelenc, ss):
+    df_copy = df.copy()
+    df_copy.drop(["predicted", yname ,"samples"], axis=1, inplace=True)
+
+    values = df_copy.values
+    unscaled_values = ss.inverse_transform(values)
+    tdf = pd.DataFrame(unscaled_values, columns=cols)
+    # for col in categorical:
+    #     tdf[col] = labelenc.inverse_transform(tdf[:,col])
+
+    tdf["predicted"] = df["predicted"].values
+    tdf[yname] = df[yname].values
+    tdf["samples"] = df["samples"].values
+
+
+    return tdf
+
+
+
 
 
 def main():
     random.seed(10039)
-    datasets = ["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+    datasets = ["compas"]#["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
     pbar = tqdm(datasets)
 
     for dataset in pbar:
@@ -197,7 +216,7 @@ def main():
         trainingdf = pd.DataFrame(xtrain, columns = cols)
         trainingdf[yname]= ytrain
 
-        ss = MinMaxScaler().fit(xtrain)
+        ss = StandardScaler().fit(xtrain)
         xtrain = ss.transform(xtrain)
         xtest = ss.transform(xtest)
 
@@ -207,29 +226,36 @@ def main():
         adv_lime = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
 
         exp_df = pred(adv_lime, ss, cols, mdf.to_numpy(), my, yname)
+
+        t_df = transformed(exp_df, cols, yname, categorical,le, ss)
+        t_df.astype(int)
+        t_df.to_csv("./output/cluster_preds/" +  dataset + "_medians.csv", index=False, float_format = "%.f")
+
         medianX, mediany = newTraining(exp_df, yname)
         adv_lime_m = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(medianX, mediany, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
 
-        exp_df.astype(int)
-        exp_df.to_csv("./output/cluster_preds/" +  dataset + "_medians.csv", index=False, float_format = "%.f")
-
         exp_df5 = pred(adv_lime, ss, cols, df5.to_numpy(), y5, yname)
-        X5, y5 = newTraining(exp_df5, yname)
-        adv_lime_5 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(X5, y5, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
 
-        exp_df5.astype(int)
-        exp_df5.to_csv("./output/cluster_preds/" +  dataset + "_5.csv", index=False, float_format = "%.f")
+        texp_df5 = transformed(exp_df5, cols, yname, categorical,le, ss)
+        texp_df5.astype(int)
+        texp_df5.to_csv("./output/cluster_preds/" +  dataset + "_5.csv", index=False, float_format = "%.f")
+
+        X5, Y5 = newTraining(exp_df5, yname)
+        adv_lime_5 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(X5, Y5, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
 
         #Test & Compare M_0, M_m, M_5
         M0 = pred(adv_lime,ss,cols,xtest, ytest, "ytest")
+        M0 = transformed(M0, cols, "ytest", categorical,le, ss)
         M0.astype(int)
         M0.to_csv("./output/clones/" +  dataset + "_M0.csv", index=False, float_format = "%.f")
 
         Mm = pred(adv_lime_m,ss,cols,xtest, ytest, "ytest")
+        Mm = transformed(Mm, cols, "ytest", categorical,le, ss)
         Mm.astype(int)
         Mm.to_csv("./output/clones/" +  dataset + "_Mm.csv", index=False, float_format = "%.f")
 
         M5 = pred(adv_lime_5,ss,cols,xtest, ytest, "ytest")
+        M5 = transformed(M5, cols, "ytest", categorical,le, ss)
         M5.astype(int)
         M5.to_csv("./output/clones/" +  dataset + "_M5.csv", index=False, float_format = "%.f")
 
