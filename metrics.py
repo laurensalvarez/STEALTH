@@ -106,11 +106,10 @@ def main():
 
         for s in sortedsamples:
             print("Metrics for", s, "samples: \n")
-            dfs = copy.deepcopy(bintdf)
+            dfs = copy.deepcopy(preddf)
             dfs.drop(dfs.loc[dfs['samples']!= s].index, inplace=True)
             list = []
             for i in range(1,21):
-
                 dfr = copy.deepcopy(dfs)
                 dfr.drop(dfs.loc[dfs['run_num']!= i].index, inplace=True)
                 if '!probability' in dfr.columns:

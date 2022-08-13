@@ -182,8 +182,6 @@ def transformed(df, cols, yname, categorical,labelenc, ss):
     values = df_copy.values
     unscaled_values = ss.inverse_transform(values)
     tdf = pd.DataFrame(unscaled_values, columns=cols, dtype = 'int64', index = df.index)
-
-
     for col in categorical:
         tdf.iloc[:,col] = labelenc.inverse_transform(tdf.iloc[:,col])
 
@@ -229,22 +227,20 @@ def main():
         # Train the adversarial model for LIME with f and psi
         adv_lime = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
 
-        finalcols = cols + ["predicted", yname, "samples", "fold", "model_num"]
-        full_df = pd.DataFrame(columns = finalcols)
+        # finalcols = cols + ["predicted", "samples", "fold", "model_num"]
         exp_df = pred(adv_lime, ss, cols, mdf.to_numpy(), my, yname, f, 0)
-
         t_df = transformed(exp_df, cols, yname, categorical,le, ss)
-        full_df = full_df.append(t_df)
+        clusters_df = pd.DataFrame(columns = t_df.columns)
+        clusters_df = clusters_df.append(t_df)
         # t_df.to_csv("./output/cluster_preds/" +  dataset + "_medians.csv", index=False)
 
         medianX, mediany = newTraining(exp_df, yname)
         adv_lime_m = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(medianX, mediany, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
 
         exp_df5 = pred(adv_lime, ss, cols, df5.to_numpy(), y5, yname, f, 0)
-
         texp_df5 = transformed(exp_df5, cols, yname, categorical,le, ss)
-        full_df = full_df.append(texp_df5)
-        full_df.to_csv("./output/cluster_preds/" +  dataset + ".csv", index=False)
+        clusters_df = clusters_df.append(texp_df5)
+        clusters_df.to_csv("./output/cluster_preds/" +  dataset + ".csv", index=False)
 
         X5, Y5 = newTraining(exp_df5, yname)
         adv_lime_5 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(X5, Y5, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
@@ -252,15 +248,21 @@ def main():
         #Test & Compare M_0, M_m, M_5
         M0 = pred(adv_lime,ss,cols,xtest, ytest, "ytest", f, 0)
         M0 = transformed(M0, cols, "ytest", categorical,le, ss)
+
+        all_models_test = pd.DataFrame(columns = M0.columns)
+        all_models_test = all_models_test.append(M0)
         M0.to_csv("./output/clones/" +  dataset + "_M0.csv", index=False)
 
         Mm = pred(adv_lime_m,ss,cols,xtest, ytest, "ytest", f, 1)
         Mm = transformed(Mm, cols, "ytest", categorical,le, ss)
+        all_models_test = all_models_test.append(Mm)
         Mm.to_csv("./output/clones/" +  dataset + "_Mm.csv", index=False)
 
         M5 = pred(adv_lime_5,ss,cols,xtest, ytest, "ytest", f, 5)
         M5 = transformed(M5, cols, "ytest", categorical,le, ss)
+        all_models_test = all_models_test.append(M5)
         M5.to_csv("./output/clones/" +  dataset + "_M5.csv", index=False)
+        all_models_test.to_csv("./output/clones/" +  dataset + "_all.csv", index=False)
 
 
 
