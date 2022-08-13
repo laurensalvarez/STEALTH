@@ -133,7 +133,7 @@ def preprocess(path,dataset):
 
 
 if __name__ == "__main__":
-    datasets = ["communities.csv"]#["adultscensusincome.csv","bankmarketing.csv", "compas.csv", "communities.csv", "defaultcredit.csv", "diabetes.csv",  "germancredit.csv", "heart.csv", "studentperformance.csv"]
+    datasets = ["adultscensusincome.csv","bankmarketing.csv", "compas.csv", "communities.csv", "defaultcredit.csv", "diabetes.csv",  "germancredit.csv", "heart.csv", "studentperformance.csv"]
     pbar = tqdm(datasets)
 
     for dataset in pbar:

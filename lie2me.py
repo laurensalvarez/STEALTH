@@ -9,7 +9,7 @@ from utils import *
 from get_data import *
 
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, LabelEncoder, MinMaxScaler
+from sklearn.preprocessing import StandardScaler, LabelEncoder, MinMaxScaler, OneHotEncoder
 from sklearn.metrics import confusion_matrix, classification_report
 
 import math, re, random, statistics, sys
@@ -95,7 +95,7 @@ def explain(xtrain, xtest, adv_lime, categorical, features):
     # print (experiment_summary(explanations, features))
     # print ("Fidelity:", round(adv_lime.fidelity(xtest),2))
 
-def splitUp(path, dataset, labelenc):
+def splitUp(path, dataset):
     lilprobs = ["adultscensusincome", "diabetes", "bankmarketing"]
     X = pd.read_csv(path)
     y_s = [col for col in X.columns if "!" in col]
@@ -113,22 +113,24 @@ def splitUp(path, dataset, labelenc):
     # X['unrelated_column_two'] = np.random.choice([0,1],size=X.shape[0])
     cols = [c for c in X]
 
+    le = LabelEncoder()
+
     inno_indc = cols.index('unrelated_column_one')
 
     non_numeric_columns = list(X.select_dtypes(exclude=[np.number]).columns)
-
     for col in non_numeric_columns:
-        X[col] = labelenc.fit_transform(X[col])
+        X[col] = le.fit_transform(X[col])
 
     categorical = [cols.index(c) for c in non_numeric_columns]
+
+
 
     sensitive_features = [col for col in X.columns if "(" in col]
     sorted(sensitive_features)
     # print("sensitive_features:", sensitive_features)
     sensa_indc = [cols.index(col) for col in sensitive_features]
 
-    return X, y, yname, cols, inno_indc, categorical, sensitive_features, sensa_indc
-
+    return X, y, yname, cols, inno_indc, categorical, sensitive_features, sensa_indc, le
 def clusterGroups(trainingdf, ss, features):
     table = Table(11111)
     rows = trainingdf.values
@@ -177,13 +179,18 @@ def newTraining(df, yname):
 
 def transformed(df, cols, yname, categorical,labelenc, ss):
     df_copy = df.copy()
+    # print("df_copy", df_copy.head(10))
     df_copy.drop(["predicted", yname ,"samples", "fold", "model_num"], axis=1, inplace=True)
 
     values = df_copy.values
     unscaled_values = ss.inverse_transform(values)
-    tdf = pd.DataFrame(unscaled_values, columns=cols, dtype = 'int64', index = df.index)
+    tdf = pd.DataFrame(unscaled_values, columns=cols, dtype = 'int64')
+    # print("tdf", tdf.head(10))
+    # print("categorical", categorical)
     for col in categorical:
+        # print("col", col)
         tdf.iloc[:,col] = labelenc.inverse_transform(tdf.iloc[:,col])
+    # sys.exit()
 
     tdf["predicted"] = df["predicted"].values
     values = df[yname].values
@@ -199,17 +206,17 @@ def transformed(df, cols, yname, categorical,labelenc, ss):
     return tdf
 
 def main():
-    random.seed(10039)
-    datasets = ["compas"]#["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+    # random.seed(10039)
+    datasets = ["communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"] #["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
     pbar = tqdm(datasets)
 
     for dataset in pbar:
         pbar.set_description("Processing %s" % dataset)
         path =  "./datasets/processed/" + dataset + "_p.csv"
 
-        le = LabelEncoder()
 
-        X, y, yname, cols, inno_indc, categorical, sensitive_features, sensa_indc = splitUp(path, dataset, le)
+
+        X, y, yname, cols, inno_indc, categorical, sensitive_features, sensa_indc, le = splitUp(path, dataset)
         Xvals = X.values
 
 

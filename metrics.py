@@ -6,7 +6,7 @@ from tqdm import tqdm
 import pandas as pd
 import numpy as np
 from sklearn.metrics import confusion_matrix,classification_report
-from measure import measure_final_score,calculate_recall,calculate_precision,calculate_accuracy
+from class0measure import measure_final_score,calculate_recall,calculate_precision,calculate_accuracy
 from cols import Table, Col, Sym, Num
 
 
@@ -16,7 +16,7 @@ from cols import Table, Col, Sym, Num
 ###############################################
 
 # normal matrix
-def getMetrics(test_df, y_true, y_pred, biased_col, samples, fold):
+def getMetrics(test_df, y_true, y_pred, biased_col, samples, fold, model_num):
 
     recall = measure_final_score(test_df, y_true, y_pred, biased_col, 'recall')
     precision = measure_final_score(test_df, y_true, y_pred, biased_col, 'precision')
@@ -28,7 +28,7 @@ def getMetrics(test_df, y_true, y_pred, biased_col, samples, fold):
     FA0 = measure_final_score(test_df, y_true, y_pred, biased_col, 'FA0')
     FA1 = measure_final_score(test_df, y_true, y_pred, biased_col, 'FA1')
 
-    return [recall, precision, accuracy, F1, AOD, EOD, SPD, FA0, FA1, biased_col, samples, fold]
+    return [recall, precision, accuracy, F1, AOD, EOD, SPD, FA0, FA1, biased_col, samples, fold, model_num]
 
 def getBiasCols(dataset):
     bias_cols = []
@@ -78,62 +78,71 @@ def getBiasCols2(dataset):
     return bias_cols
 
 
-def sampleMetrics(test_df, y_true, y_pred, biased_cols, samples, f):
+def sampleMetrics(test_df, y_true, y_pred, biased_cols, samples, f, model_num):
     colmetrics = {}
     for i in biased_cols:
-        colmetrics[i] = getMetrics(test_df, y_true, y_pred, i, samples, f)
+        colmetrics[i] = getMetrics(test_df, y_true, y_pred, i, samples, f, model_num)
     return colmetrics
 
 ###############################################
 ###
 ###############################################
 def main():
-    datasets = ["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+    datasets = ["compas"]#["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
     pbar = tqdm(datasets)
     for dataset in pbar:
         pbar.set_description("Processing %s" % dataset)
 
-        filepath = r'./output/clones/' + filename + "_M0.csv"
+        filepath = r'./output/clones/' + dataset + "_all.csv"
 
         preddf = pd.read_csv(filepath)
 
-        biased_cols = getBiasCols(filename)
+        biased_cols = getBiasCols(dataset)
 
-        samples = copy.deepcopy(bintdf["samples"].tolist())
+        samples = copy.deepcopy(preddf["samples"].tolist())
         sortedsamples = sorted(set(samples), key = lambda ele: samples.count(ele))
+
+        models = copy.deepcopy(preddf["model_num"].tolist())
+        sortedmodels = sorted(set(models), key = lambda ele: models.count(ele))
         all_metrics = {}
         rows = []
 
-        for s in sortedsamples:
-            print("Metrics for", s, "samples: \n")
+        for m in sortedmodels:
+            print("Metrics for model num:", m, "\n")
             dfs = copy.deepcopy(preddf)
-            dfs.drop(dfs.loc[dfs['samples']!= s].index, inplace=True)
+            dfs.drop(dfs.loc[dfs['model_num']!= m].index, inplace=True)
             list = []
-            for i in range(1,21):
+            for s in sortedsamples:
                 dfr = copy.deepcopy(dfs)
-                dfr.drop(dfs.loc[dfs['run_num']!= i].index, inplace=True)
-                if '!probability' in dfr.columns:
-                    y_true = dfr["!probability"]
-                else:
-                    y_true = dfr["!Probability"]
-                y_pred = dfr["predicted"]
-                # print(dfr)
-                # rnum = dfs["run_num"]
-                list.insert(i, sampleMetrics(dfr, y_true, y_pred, biased_cols, s, i))
-            all_metrics[s] = list
+                dfr.drop(dfs.loc[dfs['samples']!= s].index, inplace=True)
+
+                for f in [1]:
+                    dfr = copy.deepcopy(dfs)
+                    dfr.drop(dfs.loc[dfs['fold']!= f].index, inplace=True)
+
+                    if '!probability' in dfr.columns:
+                        y_true = dfr["!probability"]
+                    elif '!Probability' in dfr.columns:
+                        y_true = dfr["!Probability"]
+                    else:
+                        y_true = dfr["ytest"]
+                    y_pred = dfr["predicted"]
+                    list.insert(f, sampleMetrics(dfr, y_true, y_pred, biased_cols, s, f, m))
+            all_metrics[m] = list
             # print("all_metrics:", all_metrics)
 
-        for key, v in all_metrics.items():
-            # print("data dict: " , key, "v:", v)
-            for i in range(len(v)):
-                for key2, v2 in v[i].items():
-                    tmp = v2
-                    # print(tmp)
+        for model, fold_list in all_metrics.items():
+            # print("model_num: ", model, "fold_list:", fold_list)
+            for i in range(len(fold_list)):
+                for biased_col, metric_row in fold_list[i].items():
+                    tmp = metric_row
                     rows.append(tmp)
 
-        fulldf = pd.DataFrame(rows, columns = ['recall+', 'precision+', 'accuracy+', 'F1_Score+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'feature', 'sample_size', 'fold'])
+        # sys.exit()
 
-        fulldf.to_csv("./metrics/M0/" + filename + "_metrics.csv", index=False)
+        fulldf = pd.DataFrame(rows, columns = ['recall+', 'precision+', 'accuracy+', 'F1_Score+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'feature', 'sample_size', 'fold', 'model_num'])
+
+        fulldf.to_csv("./metrics/all_models/" + dataset + ".csv", index=False)
 
 
 
