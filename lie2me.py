@@ -29,6 +29,7 @@ from cols import Table, Col, Sym, Num, leafmedians2, getLeafData2, getXY2
 
 
 params = Params("model_configurations/experiment_params.json")
+np.random.seed(params.seed)
 ###
 ## The models f and psi for GERMAN.  We discriminate based on gender for f and consider loan rate % income for explanation
 #
@@ -126,11 +127,12 @@ def splitUp(path, dataset, labelenc):
     # print("sensitive_features:", sensitive_features)
     sensa_indc = [cols.index(col) for col in sensitive_features]
 
-    return X, y, yname, cols, inno_indc, non_numeric_columns, categorical, sensitive_features, sensa_indc
+    return X, y, yname, cols, inno_indc, categorical, sensitive_features, sensa_indc
 
 def clusterGroups(trainingdf, ss, features):
     table = Table(11111)
     rows = trainingdf.values
+    # print("rows:", type(rows[0][0]))
     header = deepcopy(list(trainingdf.columns.values))
     table + header
     for r in rows:
@@ -141,60 +143,62 @@ def clusterGroups(trainingdf, ss, features):
 
     MedianTable = leafmedians2(root)
     mX, my = getXY2(MedianTable)
-    mX = ss.transform(mX)
     mdf = pd.DataFrame(mX, columns=features)
-
 
     EDT = getLeafData2(root, 5)
     X5, y5 = getXY2(EDT)
-    X5 = ss.transform(X5)
     df5 = pd.DataFrame(X5, columns=features)
+
 
     return my, mdf, y5, df5
 
-def pred(adv_lime,ss,features,xtest, ytest, yname):
+def pred(adv_lime,ss,features,xtest, ytest, yname, f, model_num):
     """ returing sensitive feat and predictions from ADV model (y vals) """
-
     pred = adv_lime.predict(xtest)
-
-    # values = xtest.values
-    # scaled_values = ss.inverse_transform(xtest)
     sdf = pd.DataFrame(xtest, columns=features)
 
     samples_col = [sdf.index.size] * sdf.index.size
+    fold_col = [f] * sdf.index.size
+    model_col = [model_num] * sdf.index.size
     sdf["predicted"] = pred
     sdf[yname] = ytest
     sdf["samples"] = samples_col
+    sdf["fold"] = fold_col
+    sdf["model_num"] = model_col
 
     return sdf
 
 def newTraining(df, yname):
     df_copy = df.copy()
     new_y = df_copy["predicted"]
-    df_copy.drop(["predicted", yname ,"samples"], axis=1, inplace=True)
+    df_copy.drop(["predicted", yname ,"samples", "fold", "model_num"], axis=1, inplace=True)
 
     return df_copy, new_y
 
 def transformed(df, cols, yname, categorical,labelenc, ss):
     df_copy = df.copy()
-    df_copy.drop(["predicted", yname ,"samples"], axis=1, inplace=True)
+    df_copy.drop(["predicted", yname ,"samples", "fold", "model_num"], axis=1, inplace=True)
 
     values = df_copy.values
     unscaled_values = ss.inverse_transform(values)
-    tdf = pd.DataFrame(unscaled_values, columns=cols)
-    # for col in categorical:
-    #     tdf[col] = labelenc.inverse_transform(tdf[:,col])
+    tdf = pd.DataFrame(unscaled_values, columns=cols, dtype = 'int64', index = df.index)
+
+
+    for col in categorical:
+        tdf.iloc[:,col] = labelenc.inverse_transform(tdf.iloc[:,col])
 
     tdf["predicted"] = df["predicted"].values
-    tdf[yname] = df[yname].values
-    tdf["samples"] = df["samples"].values
+    values = df[yname].values
+    int_vals = []
+    for v in values:
+        int_vals.append(int(v))
 
+    tdf[yname] = int_vals
+    tdf["samples"] = df["samples"].values
+    tdf["fold"] = df["fold"].values
+    tdf["model_num"] = df["model_num"].values
 
     return tdf
-
-
-
-
 
 def main():
     random.seed(10039)
@@ -207,57 +211,56 @@ def main():
 
         le = LabelEncoder()
 
-        X, y, yname, cols, inno_indc, non_numeric_columns, categorical, sensitive_features, sensa_indc = splitUp(path, dataset, le)
-
+        X, y, yname, cols, inno_indc, categorical, sensitive_features, sensa_indc = splitUp(path, dataset, le)
         Xvals = X.values
 
+
         xtrain,xtest,ytrain,ytest = train_test_split(Xvals,y,test_size=0.2, shuffle = True)
+        f = 1
 
-        trainingdf = pd.DataFrame(xtrain, columns = cols)
-        trainingdf[yname]= ytrain
-
-        ss = StandardScaler().fit(xtrain)
+        ss = MinMaxScaler().fit(xtrain)
         xtrain = ss.transform(xtrain)
         xtest = ss.transform(xtest)
+        trainingdf = pd.DataFrame(xtrain, columns = cols)
+        trainingdf[yname]= ytrain
 
         my, mdf, y5, df5 = clusterGroups(trainingdf, ss, cols)
 
         # Train the adversarial model for LIME with f and psi
         adv_lime = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
 
-        exp_df = pred(adv_lime, ss, cols, mdf.to_numpy(), my, yname)
+        finalcols = cols + ["predicted", yname, "samples", "fold", "model_num"]
+        full_df = pd.DataFrame(columns = finalcols)
+        exp_df = pred(adv_lime, ss, cols, mdf.to_numpy(), my, yname, f, 0)
 
         t_df = transformed(exp_df, cols, yname, categorical,le, ss)
-        t_df.astype(int)
-        t_df.to_csv("./output/cluster_preds/" +  dataset + "_medians.csv", index=False, float_format = "%.f")
+        full_df = full_df.append(t_df)
+        # t_df.to_csv("./output/cluster_preds/" +  dataset + "_medians.csv", index=False)
 
         medianX, mediany = newTraining(exp_df, yname)
         adv_lime_m = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(medianX, mediany, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
 
-        exp_df5 = pred(adv_lime, ss, cols, df5.to_numpy(), y5, yname)
+        exp_df5 = pred(adv_lime, ss, cols, df5.to_numpy(), y5, yname, f, 0)
 
         texp_df5 = transformed(exp_df5, cols, yname, categorical,le, ss)
-        texp_df5.astype(int)
-        texp_df5.to_csv("./output/cluster_preds/" +  dataset + "_5.csv", index=False, float_format = "%.f")
+        full_df = full_df.append(texp_df5)
+        full_df.to_csv("./output/cluster_preds/" +  dataset + ".csv", index=False)
 
         X5, Y5 = newTraining(exp_df5, yname)
         adv_lime_5 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(X5, Y5, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
 
         #Test & Compare M_0, M_m, M_5
-        M0 = pred(adv_lime,ss,cols,xtest, ytest, "ytest")
+        M0 = pred(adv_lime,ss,cols,xtest, ytest, "ytest", f, 0)
         M0 = transformed(M0, cols, "ytest", categorical,le, ss)
-        M0.astype(int)
-        M0.to_csv("./output/clones/" +  dataset + "_M0.csv", index=False, float_format = "%.f")
+        M0.to_csv("./output/clones/" +  dataset + "_M0.csv", index=False)
 
-        Mm = pred(adv_lime_m,ss,cols,xtest, ytest, "ytest")
+        Mm = pred(adv_lime_m,ss,cols,xtest, ytest, "ytest", f, 1)
         Mm = transformed(Mm, cols, "ytest", categorical,le, ss)
-        Mm.astype(int)
-        Mm.to_csv("./output/clones/" +  dataset + "_Mm.csv", index=False, float_format = "%.f")
+        Mm.to_csv("./output/clones/" +  dataset + "_Mm.csv", index=False)
 
-        M5 = pred(adv_lime_5,ss,cols,xtest, ytest, "ytest")
+        M5 = pred(adv_lime_5,ss,cols,xtest, ytest, "ytest", f, 5)
         M5 = transformed(M5, cols, "ytest", categorical,le, ss)
-        M5.astype(int)
-        M5.to_csv("./output/clones/" +  dataset + "_M5.csv", index=False, float_format = "%.f")
+        M5.to_csv("./output/clones/" +  dataset + "_M5.csv", index=False)
 
 
 

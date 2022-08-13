@@ -515,7 +515,7 @@ def leafmedians2(root, how=None):  # for all of the leaves from smallest to larg
     MedianTable + header
     for leaf in sorted(nodes(root), key=how or rowSize):
         t = leaf.leftTable
-        mid = [col.mid() for col in t.cols]
+        mid = [float(col.mid()) for col in t.cols]
         MedianTable + mid
         # print(len(t.rows), [col.mid() for col in t.cols], t.cols[-1].count)
     # MedianTable.encode_lines()
