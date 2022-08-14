@@ -16,31 +16,40 @@ def trim(df, dataset):
     X = df.copy()
 
     if dataset == "adultscensusincome":
-        X = X.drop(['fnlwgt', 'education'], axis=1)
+        X = X.drop(['fnlwgt', 'education', 'workclass', 'marital_status', 'occupation', 'relationship', 'native_country'], axis=1)
+
+    if dataset == "bankmarketing":
+        X = X.drop(['job', 'education', 'marital', 'education', 'contact', 'month', 'poutcome'], axis=1)
 
     if dataset == "compas":
         X = X.loc[(X['Days_b_screening_arrest'] <= 30) & (X['Days_b_screening_arrest'] >= -30) & (X['is_recid'] != -1) & (X['c_charge_degree'] != "O") & (X['!probability'] != "NA")]
         X['Length_of_stay'] = (pd.to_datetime(X['c_jail_out']) - pd.to_datetime(X['c_jail_in'])).dt.days
-        X = X[['Age(','c_charge_degree', 'race(', 'sex(', 'Priors_count', 'Length_of_stay', "!Probability"]]
+        X = X[['Age','c_charge_degree', 'race(', 'sex(', 'Priors_count', 'Length_of_stay', "!Probability"]]
 
     if dataset == "communities":
         X['!Probability'] = X['!Probability'].values.astype('float32')
         X = X.drop(['communityname', ':Fold', ':County', ':Community', 'State'], axis=1)
 
+    if dataset == "germancredit":
+        df = df.drop(['status_of_existing_account','Duration_month', 'Credit_amount','purpose','Install_rate_percentage_disposalble',
+          'debtors','Present_residence','property','installment_plans','housing',
+          'Num_existng_credits','job','Num_people_liable_maintenance','telephone'],axis=1)
+
     return X
 
 
 def makeBinary(df, dataset):
-    """turning sensitive features binary."""
+    """encode sensitive & categorical features as numeric."""
     if dataset == "adultscensusincome":
         df['sex('] = np.where((df['sex('] == "Female"), 0, 1)
         df['race('] = np.where((df['race('] == "White"), 1, 0)
         df['!probability'] = np.where((df['!probability'] == " >50K"), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
 
-    if dataset == "diabetes":
-        mean = df.loc[:,'Age('].mean()
-        df['Age('] = np.where((df['Age('] >= mean), 0, 1)
-        df['!probability'] = np.where((df['!probability'] == "negative" ), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
+    if dataset == "bankmarketing":
+        df['Age('] = np.where((df['Age('] > 25), 0, 1)
+        # df['marital('] = np.where((df['marital('] == 3), 1, 0)
+        # df['education('] = np.where((df['education('] == 6) | (df['education('] == 7), 1, 0)
+        df['!probability'] = np.where((df['!probability'] == "yes" ), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
 
     if dataset == "compas":
         df['race('] = np.where((df['race('] != 'Caucasian'), 0, 1)
@@ -58,21 +67,33 @@ def makeBinary(df, dataset):
         df['!Probability'] = np.where((df['!Probability'] > y_cutoff), NEGATIVE_OUTCOME, POSITIVE_OUTCOME)
         df['Racepctwhite('] = np.where(df['Racepctwhite('] > majority_cutoff, 1, 0)
 
+    if dataset == "defaultcredit":
+        df['SEX('] = np.where((df['SEX('] == 2), 0, 1)
+        # df['MARRIAGE('] = np.where((df['MARRIAGE('] == 1), 1, 0)
+        # df['EDUCATION('] = np.where((df['EDUCATION('] == 1) | (df['EDUCATION('] == 2), 1, 0)
+        # df['LIMIT_BAL('] = np.where((df['LIMIT_BAL('] > 25250), 1, 0)
+        df['!Probability'] = np.where((df['!Probability'] == 1), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
+
+    if dataset == "diabetes":
+        mean = df.loc[:,'Age('].mean()
+        df['Age('] = np.where((df['Age('] >= mean), 0, 1)
+        df['!probability'] = np.where((df['!probability'] == "negative" ), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
+
     if dataset == "germancredit":
         ## Change symbolics to numerics
-        df = df.drop(['status_of_existing_account','Duration_month','purpose','Install_rate_percentage_disposalble','debtors','Present_residence','property','installment_plans','housing','Num_existng_credits','job','Num_people_liable_maintenance','telephone'],axis=1)
         df['sex('] = np.where((df['sex('] == 'A92') | (df['sex('] == 'A95'), 0, 1)
-        df['sav('] = np.where((df['sav('] == 'A63') | (df['sav('] == 'A64'), 1, 0)
-        df['Age('] = np.where(df['Age('] >= 25, 1, 0)
-        df['f_w('] = np.where((df['f_w('] == 'A201'), 0, 1)
+        df['Age'] = np.where(df['Age'] >= 25, 1, 0)
+        df['foreign_worker'] = np.where((df['foreign_worker'] == 'A201'), 0, 1)
+
+        df['savings'] = np.where((df['savings'] == 'A61') | (df['savings'] == 'A62'), 1, df['savings'])
+        df['savings'] = np.where((df['savings'] == 'A63') | (df['savings'] == 'A64'), 2, df['savings'])
+        df['savings'] = np.where((df['savings'] == 'A65'), 3, df['savings'])
 
         df['credit_history'] = np.where(df['credit_history'] == 'A30', 1, df['credit_history'])
         df['credit_history'] = np.where(df['credit_history'] == 'A31', 1, df['credit_history'])
         df['credit_history'] = np.where(df['credit_history'] == 'A32', 1, df['credit_history'])
         df['credit_history'] = np.where(df['credit_history'] == 'A33', 2, df['credit_history'])
         df['credit_history'] = np.where(df['credit_history'] == 'A34', 3, df['credit_history'])
-
-
 
         df['employment'] = np.where(df['employment'] == 'A72', 1, df['employment'])
         df['employment'] = np.where(df['employment'] == 'A73', 1, df['employment'])
@@ -98,19 +119,6 @@ def makeBinary(df, dataset):
         df['internet'] = np.where(df['internet'] == 'yes', 1, 0)
         df['romantic'] = np.where(df['romantic'] == 'yes', 1, 0)
         df['!Probability'] = np.where((df['!Probability'] > 12), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
-
-    if dataset == "bankmarketing":
-        df['Age('] = np.where((df['Age('] > 25), 0, 1)
-        df['marital('] = np.where((df['marital('] == 3), 1, 0)
-        df['education('] = np.where((df['education('] == 6) | (df['education('] == 7), 1, 0)
-        df['!probability'] = np.where((df['!probability'] == "yes" ), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
-
-    if dataset == "defaultcredit":
-        df['SEX('] = np.where((df['SEX('] == 2), 0, 1)
-        df['MARRIAGE('] = np.where((df['MARRIAGE('] == 1), 1, 0)
-        df['EDUCATION('] = np.where((df['EDUCATION('] == 1) | (df['EDUCATION('] == 2), 1, 0)
-        df['LIMIT_BAL('] = np.where((df['LIMIT_BAL('] > 25250), 1, 0)
-        df['!Probability'] = np.where((df['!Probability'] == 1), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
 
     return df
 
