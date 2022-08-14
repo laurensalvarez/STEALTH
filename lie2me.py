@@ -111,7 +111,7 @@ def splitUp(path, dataset):
     # add unrelated columns
     X['Unrelated_column_one'] = np.random.choice([0,1],size=X.shape[0])
     # X['unrelated_column_two'] = np.random.choice([0,1],size=X.shape[0])
-    # print(X.head())
+
     sensitive_features = [col for col in X.columns if "(" in col]
     sorted(sensitive_features)
 
@@ -122,12 +122,11 @@ def splitUp(path, dataset):
 
     X = pd.get_dummies(data=X, columns=cat_features_not_encoded)
     cols = [c for c in X]
-    # print(X.head())
+
     cat_features_encoded = []
     for col in X.columns:
         if col not in sensitive_features and col[0].islower():
             cat_features_encoded.append(col)
-
 
     sensa_indc = [cols.index(col) for col in sensitive_features]
     inno_indc = cols.index('Unrelated_column_one')
@@ -138,7 +137,6 @@ def splitUp(path, dataset):
 def clusterGroups(trainingdf, ss, features):
     table = Table(11111)
     rows = trainingdf.values
-    # print("rows:", type(rows[0][0]))
     header = deepcopy(list(trainingdf.columns.values))
     table + header
     for r in rows:
@@ -155,8 +153,12 @@ def clusterGroups(trainingdf, ss, features):
     X5, y5 = getXY2(EDT)
     df5 = pd.DataFrame(X5, columns=features)
 
+    EDT7 = getLeafData2(root, 7)
+    X7, y7 = getXY2(EDT7)
+    df7 = pd.DataFrame(X7, columns=features)
 
-    return my, mdf, y5, df5
+
+    return my, mdf, y5, df5, y7, df7
 
 def pred(adv_lime,ss,features,xtest, ytest, yname, f, model_num):
     """ returing sensitive feat and predictions from ADV model (y vals) """
@@ -183,19 +185,11 @@ def newTraining(df, yname):
 
 def transformed(df, cols, yname, categorical, ss):
     df_copy = df.copy()
-    # print("df_copy", df_copy.head(10))
     df_copy.drop(["predicted", yname ,"samples", "fold", "model_num"], axis=1, inplace=True)
 
     values = df_copy.values
     unscaled_values = ss.inverse_transform(values)
     tdf = pd.DataFrame(unscaled_values, columns=cols, dtype = 'int64')
-    # print("tdf", tdf.head(10))
-    # print("categorical", categorical)
-    # for col in categorical:
-    #     # print("col", col)
-    #     tdf.iloc[:,col] = labelenc.inverse_transform(tdf.iloc[:,col])
-    # sys.exit()
-
     tdf["predicted"] = df["predicted"].values
     values = df[yname].values
     int_vals = []
@@ -211,19 +205,16 @@ def transformed(df, cols, yname, categorical, ss):
 
 def main():
     # random.seed(10039)
-    datasets = ["studentperformance"] #["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+    datasets = ["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
     pbar = tqdm(datasets)
 
     for dataset in pbar:
         pbar.set_description("Processing %s" % dataset)
         path =  "./datasets/processed/" + dataset + "_p.csv"
 
-
-
         X, y, yname, cols, inno_indc, categorical, sensitive_features, sensa_indc = splitUp(path, dataset)
         # print(le.classes_)
         Xvals = X.values
-
 
         xtrain,xtest,ytrain,ytest = train_test_split(Xvals,y,test_size=0.2, shuffle = True)
         f = 1
@@ -234,7 +225,7 @@ def main():
         trainingdf = pd.DataFrame(xtrain, columns = cols)
         trainingdf[yname]= ytrain
 
-        my, mdf, y5, df5 = clusterGroups(trainingdf, ss, cols)
+        my, mdf, y5, df5, y7, df7 = clusterGroups(trainingdf, ss, cols)
 
         # Train the adversarial model for LIME with f and psi
         adv_lime = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
@@ -252,10 +243,17 @@ def main():
         exp_df5 = pred(adv_lime, ss, cols, df5.to_numpy(), y5, yname, f, 0)
         texp_df5 = transformed(exp_df5, cols, yname, categorical, ss)
         clusters_df = clusters_df.append(texp_df5)
-        clusters_df.to_csv("./output/cluster_preds/" +  dataset + ".csv", index=False)
 
         X5, Y5 = newTraining(exp_df5, yname)
         adv_lime_5 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(X5, Y5, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
+
+        exp_df7 = pred(adv_lime, ss, cols, df7.to_numpy(), y7, yname, f, 0)
+        texp_df7 = transformed(exp_df7, cols, yname, categorical, ss)
+        clusters_df = clusters_df.append(texp_df7)
+        clusters_df.to_csv("./output/cluster_preds/" +  dataset + ".csv", index=False)
+
+        X7, Y7 = newTraining(exp_df7, yname)
+        adv_lime_7 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(X7, Y7, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
 
         #Test & Compare M_0, M_m, M_5
         M0 = pred(adv_lime,ss,cols,xtest, ytest, "ytest", f, 0)
@@ -274,8 +272,12 @@ def main():
         M5 = transformed(M5, cols, "ytest", categorical, ss)
         all_models_test = all_models_test.append(M5)
         M5.to_csv("./output/clones/" +  dataset + "_M5.csv", index=False)
-        all_models_test.to_csv("./output/clones/" +  dataset + "_all.csv", index=False)
 
+        M7 = pred(adv_lime_7,ss,cols,xtest, ytest, "ytest", f, 7)
+        M7 = transformed(M7, cols, "ytest", categorical, ss)
+        all_models_test = all_models_test.append(M7)
+        M7.to_csv("./output/clones/" +  dataset + "_M7.csv", index=False)
+        all_models_test.to_csv("./output/clones/" +  dataset + "_all.csv", index=False)
 
 
 
@@ -285,9 +287,9 @@ def main():
 
         # explain(xtrain, xtest, adv_lime, categorical, features)
 
-        print ('-'*55)
-        print("Finished " + dataset + " ; biased_model's FEATURE: ", str(sensitive_features[0]))
-        print ('-'*55)
+        # print ('-'*55)
+        # print("Finished " + dataset + " ; biased_model's FEATURE: ", str(sensitive_features[0]))
+        # print ('-'*55)
 
 
 
