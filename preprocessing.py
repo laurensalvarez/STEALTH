@@ -31,9 +31,7 @@ def trim(df, dataset):
         X = X.drop(['communityname', ':Fold', ':County', ':Community', 'State'], axis=1)
 
     if dataset == "germancredit":
-        df = df.drop(['status_of_existing_account','Duration_month', 'Credit_amount','purpose','Install_rate_percentage_disposalble',
-          'debtors','Present_residence','property','installment_plans','housing',
-          'Num_existng_credits','job','Num_people_liable_maintenance','telephone'],axis=1)
+        X = X.drop(['status_of_existing_account','Duration_month', 'Credit_amount','purpose','Install_rate_percentage_disposalble','debtors','Present_residence','property','installment_plans','housing','Num_existng_credits','job','Num_people_liable_maintenance','telephone'],axis=1)
 
     return X
 

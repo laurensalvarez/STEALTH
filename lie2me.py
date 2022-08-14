@@ -111,23 +111,27 @@ def splitUp(path, dataset):
     # add unrelated columns
     X['Unrelated_column_one'] = np.random.choice([0,1],size=X.shape[0])
     # X['unrelated_column_two'] = np.random.choice([0,1],size=X.shape[0])
-    cols = [c for c in X]
-
+    # print(X.head())
     sensitive_features = [col for col in X.columns if "(" in col]
     sorted(sensitive_features)
+
+    cat_features_not_encoded = []
+    for col in X.columns:
+        if col not in sensitive_features and col[0].islower():
+            cat_features_not_encoded.append(col)
+
+    X = pd.get_dummies(data=X, columns=cat_features_not_encoded)
+    cols = [c for c in X]
+    # print(X.head())
+    cat_features_encoded = []
+    for col in X.columns:
+        if col not in sensitive_features and col[0].islower():
+            cat_features_encoded.append(col)
+
+
     sensa_indc = [cols.index(col) for col in sensitive_features]
-
-    # le = LabelEncoder()
-
     inno_indc = cols.index('Unrelated_column_one')
-
-    non_numeric_columns = list(X.select_dtypes(exclude=[np.number]).columns)
-    # for col in non_numeric_columns:
-    #     X[col] = le.fit_transform(X[col])
-
-    categorical = [cols.index(c) for c in non_numeric_columns]
-
-
+    categorical = [cols.index(c) for c in cat_features_encoded]
 
     return X, y, yname, cols, inno_indc, categorical, sensitive_features, sensa_indc
 
@@ -207,7 +211,7 @@ def transformed(df, cols, yname, categorical, ss):
 
 def main():
     # random.seed(10039)
-    datasets = ["bankmarketing"] #["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+    datasets = ["studentperformance"] #["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
     pbar = tqdm(datasets)
 
     for dataset in pbar:

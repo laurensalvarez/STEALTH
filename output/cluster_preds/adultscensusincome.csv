@@ -1,1537 +1,1537 @@
-Age,workclass,Education_num,marital_status,occupation,relationship,race(,sex(,Capital_gain,Capital_loss,Hours_per_week,native_country,unrelated_column_one,predicted,!probability,samples,fold,model_num
-17, Cambodia,1, Ecuador, Haiti, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,1,0,1,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,1,0,1,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,1,0,1,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,1,0,1,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,0,0,1,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,0,0,1,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,0,0,1,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,0,0,1,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,0,0,1,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Haiti, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Cambodia,0,1,0,0,1, Cambodia,1,0,0,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,1,0,1,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,1,0,1,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,1,0,1,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,0,0,1,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,0,0,1,256,1,0
-17, Cambodia,1, Cambodia, Cambodia, Dominican-Republic,0,1,0,0,1, Cambodia,0,0,0,256,1,0
-58, Cambodia,9, China, Haiti, Cambodia,0,1,0,0,70, United-States,0,0,0,1280,1,0
-90, China,9, Ecuador, Haiti, Cuba,0,1,0,0,99, United-States,1,0,0,1280,1,0
-79, Columbia,8, Ecuador, Greece, Canada,0,1,18481,0,45, United-States,0,0,1,1280,1,0
-65, Canada,10, Ecuador, Cambodia, Canada,0,1,0,0,35, United-States,0,0,0,1280,1,0
-54, China,9, Ecuador, Haiti, Canada,0,1,0,0,45, United-States,0,0,0,1280,1,0
-46, China,9, Cuba, Haiti, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-27, Cuba,9, China, Haiti, Cambodia,0,1,0,0,50, United-States,0,0,0,1280,1,0
-54, Canada,9, China, Haiti, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-62, China,9, Ecuador, El-Salvador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-29, China,9, China, Haiti, China,0,1,0,0,40, United-States,0,0,0,1280,1,0
-45, China,9, Ecuador, China, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-42, Dominican-Republic,10, Cambodia, Haiti, Cuba,0,1,0,0,38, United-States,0,0,0,1280,1,0
-56, China,10, China, Haiti, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-54, China,9, China, Haiti, Cambodia,0,1,0,0,59, United-States,0,0,0,1280,1,0
-36, China,7, Ecuador, Cambodia, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-26, China,9, Cuba, Haiti, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-26, China,9, Cuba, Haiti, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-62, Cuba,10, Ecuador, France, Cuba,0,1,0,0,20, United-States,0,0,0,1280,1,0
-46, China,9, China, Haiti, Cambodia,0,1,7688,0,55, United-States,0,0,1,1280,1,0
-30, China,11, China, Haiti, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-58, China,9, Ecuador, France, Canada,0,1,0,0,18, United-States,0,0,0,1280,1,0
-64, China,9, China, Haiti, Cambodia,0,1,0,0,45, United-States,0,0,0,1280,1,0
-41, China,4, China, Haiti, Cambodia,0,1,0,0,40, Italy,0,0,0,1280,1,0
-57, China,9, China, Haiti, Cambodia,0,1,0,0,50, United-States,0,0,0,1280,1,0
-37, China,9, China, Haiti, Cambodia,0,1,0,0,55, United-States,0,0,1,1280,1,0
-66, Cuba,7, Ecuador, Columbia, Canada,0,1,0,0,84, United-States,0,0,1,1280,1,0
-36, China,7, China, Haiti, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-67, China,10, Ecuador, Greece, Canada,0,1,0,0,18, United-States,0,0,0,1280,1,0
-23, China,9, Cuba, Haiti, Canada,0,1,0,0,38, United-States,0,0,0,1280,1,0
-38, China,9, Ecuador, El-Salvador, Cuba,0,1,0,0,20, United-States,0,0,0,1280,1,0
-73, China,9, Ecuador, El-Salvador, China,0,1,0,0,32, United-States,1,0,0,1280,1,0
-28, China,10, China, Haiti, Cambodia,0,1,0,0,40, El-Salvador,1,0,0,1280,1,0
-31, China,6, China, Haiti, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-35, Dominican-Republic,12, Ecuador, Columbia, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-29, Cuba,9, Columbia, Haiti, China,0,1,0,1564,50, India,1,0,1,1280,1,0
-36, China,9, Cuba, Haiti, China,0,1,0,0,50, United-States,1,0,0,1280,1,0
-24, China,7, China, Haiti, Cambodia,0,1,0,0,40, Vietnam,1,0,0,1280,1,0
-70, China,6, Ecuador, Cambodia, China,0,1,0,0,20, United-States,1,0,0,1280,1,0
-46, China,6, Cambodia, Haiti, Canada,0,1,0,0,50, United-States,1,0,0,1280,1,0
-46, China,13, Cambodia, Haiti, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-48, China,10, Ecuador, Cambodia, Cuba,0,1,0,0,40, United-States,0,0,1,1280,1,0
-40, China,12, Cambodia, Haiti, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-45, China,10, China, Haiti, Cambodia,0,1,0,0,59, United-States,0,0,1,1280,1,0
-22, China,9, China, Haiti, China,0,1,0,0,80, United-States,0,0,0,1280,1,0
-50, China,7, China, Haiti, Cambodia,0,1,0,0,70, United-States,0,0,1,1280,1,0
-30, China,9, China, Haiti, Cambodia,0,1,0,2057,40, United-States,1,0,0,1280,1,0
-53, China,10, Ecuador, Columbia, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-35, China,10, Ecuador, Cambodia, Cuba,0,1,0,0,29, United-States,1,0,0,1280,1,0
-28, China,9, China, Haiti, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-50, China,8, Dominican-Republic, Haiti, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-40, China,6, Cambodia, Haiti, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-62, Cuba,4, Ecuador, Cuba, Cuba,0,1,0,0,10, United-States,1,0,0,1280,1,0
-80, Cuba,4, Ecuador, Cuba, Canada,0,1,0,0,35, United-States,1,0,0,1280,1,0
-54, China,13, China, Haiti, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-38, Canada,10, China, Haiti, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-46, Cambodia,10, Cambodia, Haiti, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-20, China,10, Cuba, Haiti, Columbia,0,1,0,1602,40, United-States,1,0,0,1280,1,0
-67, China,10, China, Haiti, Cambodia,0,1,10605,0,10, United-States,1,0,1,1280,1,0
-56, China,5, Ecuador, Ecuador, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-34, China,10, Cambodia, Haiti, Canada,0,1,0,0,66, United-States,1,0,0,1280,1,0
-42, Canada,13, Cambodia, Haiti, Canada,0,1,0,0,33, United-States,1,0,0,1280,1,0
-66, China,9, Ecuador, England, Cuba,0,1,0,0,25, United-States,1,0,0,1280,1,0
-46, China,9, Cambodia, Haiti, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-50, China,9, China, Haiti, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-41, Canada,9, China, Haiti, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-46, China,2, Ecuador, El-Salvador, Cuba,0,1,0,0,40, Puerto-Rico,1,0,0,1280,1,0
-46, China,9, China, Haiti, Cambodia,0,1,0,0,85, United-States,1,0,1,1280,1,0
-41, China,9, China, Haiti, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-60, Canada,7, China, Haiti, Cambodia,0,1,0,0,20, United-States,1,0,0,1280,1,0
-41, China,10, China, Haiti, Cambodia,0,1,0,1848,65, United-States,1,0,1,1280,1,0
-19, China,10, Cuba, El-Salvador, Canada,0,1,0,0,29, United-States,0,0,0,1280,1,0
-50, China,13, China, France, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-24, China,13, Cuba, Greece, Canada,0,1,0,0,55, Jamaica,0,0,0,1280,1,0
-42, China,10, Cambodia, Cambodia, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-41, China,13, Cambodia, France, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-32, China,9, Cambodia, Ecuador, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-52, China,10, Cambodia, Columbia, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-40, Columbia,13, China, China, Cambodia,0,1,0,0,14, United-States,0,0,0,1280,1,0
-54, China,9, Dominican-Republic, Cambodia, Canada,0,1,0,0,45, United-States,0,0,0,1280,1,0
-33, China,13, Cuba, Greece, Canada,0,1,0,0,45, United-States,0,0,1,1280,1,0
-46, China,13, China, France, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-34, Cuba,9, Columbia, China, Canada,0,1,0,0,50, United-States,0,0,1,1280,1,0
-29, China,10, China, China, Cambodia,0,1,0,0,50, United-States,0,0,0,1280,1,0
-21, Columbia,10, Cuba, China, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-23, China,10, Cuba, El-Salvador, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-58, China,9, Dominican-Republic, El-Salvador, Canada,0,1,2907,0,43, United-States,0,0,0,1280,1,0
-50, China,13, China, France, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-26, Canada,14, Cuba, France, Canada,0,1,0,0,50, United-States,0,0,0,1280,1,0
-44, China,13, China, Columbia, Cambodia,0,1,0,1902,50, United-States,0,0,1,1280,1,0
-52, China,9, China, Ecuador, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-41, Canada,13, Dominican-Republic, France, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-34, China,9, China, Dominican-Republic, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-23, China,10, Dominican-Republic, Cuba, China,0,1,0,0,40, United-States,0,0,0,1280,1,0
-23, China,10, Dominican-Republic, Cuba, China,0,1,0,0,40, United-States,0,0,0,1280,1,0
-67, Dominican-Republic,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-60, China,4, China, Ecuador, Cambodia,0,1,3137,0,40, Poland,0,0,0,1280,1,0
-48, China,9, Cambodia, El-Salvador, Canada,0,1,0,0,38, United-States,0,0,0,1280,1,0
-18, China,8, Cuba, El-Salvador, Columbia,0,1,0,0,25, United-States,0,0,0,1280,1,0
-44, Cambodia,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-34, China,9, Cuba, China, China,0,1,0,0,40, United-States,0,0,0,1280,1,0
-30, Cambodia,10, Cuba, China, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-35, China,10, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-41, China,9, China, Dominican-Republic, Cambodia,0,1,7688,0,40, United-States,0,0,1,1280,1,0
-37, China,9, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-50, Canada,10, Cambodia, Germany, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-40, China,9, China, Dominican-Republic, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-60, Canada,9, China, El-Salvador, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-54, China,14, China, Greece, Cambodia,0,1,0,0,68, United-States,0,0,1,1280,1,0
-42, China,9, Cambodia, Cuba, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-30, China,10, Cuba, Greece, Canada,0,1,0,0,50, United-States,0,0,0,1280,1,0
-19, China,9, Cuba, Cambodia, Columbia,0,1,0,0,16, United-States,0,0,0,1280,1,0
-37, China,9, China, Germany, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-41, China,9, Cuba, Columbia, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-50, Columbia,14, Dominican-Republic, Columbia, Cuba,0,1,0,0,45, China,0,0,0,1280,1,0
-57, Cambodia,10, Cambodia, El-Salvador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-32, China,13, China, Columbia, China,0,1,0,0,40, China,0,0,1,1280,1,0
-29, Cuba,10, Cuba, China, Canada,0,1,0,0,45, United-States,0,0,0,1280,1,0
-41, China,13, Cuba, Cambodia, Columbia,0,1,0,0,40, Philippines,0,0,0,1280,1,0
-68, China,10, China, China, Cambodia,0,1,0,1735,48, United-States,0,0,0,1280,1,0
-45, Cuba,13, China, Cuba, Cambodia,0,1,0,1485,70, United-States,0,0,1,1280,1,0
-30, China,13, Cuba, Columbia, Canada,0,1,0,0,70, United-States,0,0,1,1280,1,0
-45, Canada,10, China, France, Cambodia,0,1,0,1887,47, United-States,0,0,1,1280,1,0
-18, China,5, Cuba, Greece, Columbia,0,1,0,0,32, United-States,0,0,0,1280,1,0
-50, China,6, Dominican-Republic, Cambodia, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-31, China,14, Cuba, France, Canada,0,1,14084,0,50, United-States,0,0,1,1280,1,0
-38, China,13, Cuba, Columbia, Canada,0,1,0,0,38, United-States,0,0,0,1280,1,0
-28, China,10, China, Greece, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-52, Dominican-Republic,4, China, El-Salvador, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-56, Cuba,9, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-18, China,6, Cuba, El-Salvador, Columbia,0,1,0,0,14, United-States,0,0,0,1280,1,0
-26, China,10, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-29, Canada,13, Cuba, France, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-50, China,9, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-29, Cuba,10, China, Cuba, Cambodia,0,1,0,0,55, United-States,0,0,0,1280,1,0
-72, Cuba,4, China, El-Salvador, Cambodia,0,1,2290,0,45, United-States,0,0,0,1280,1,0
-19, China,10, Cuba, Cambodia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-54, China,13, China, Guatemala, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-46, China,7, Cambodia, Greece, Cuba,0,1,0,0,28, United-States,0,0,0,1280,1,0
-42, China,9, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-35, China,13, China, Guatemala, Cambodia,0,1,0,1887,40, United-States,0,0,1,1280,1,0
-31, China,9, Cuba, Cambodia, Canada,0,1,0,0,50, United-States,0,0,0,1280,1,0
-28, China,13, China, Greece, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-42, Cuba,10, China, China, Cambodia,0,1,0,0,52, United-States,0,0,0,1280,1,0
-53, China,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-38, China,10, Dominican-Republic, Cambodia, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-22, China,9, Cuba, Cambodia, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-21, China,10, Cuba, Greece, Columbia,0,1,0,0,45, United-States,0,0,0,1280,1,0
-36, China,13, China, Greece, Cambodia,0,1,0,1902,40, United-States,0,0,1,1280,1,0
-20, China,9, Cuba, Ecuador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-36, China,9, China, China, Columbia,0,1,0,2002,40, United-States,0,0,0,1280,1,0
-50, China,10, China, Ecuador, Cambodia,0,1,4386,0,40, United-States,0,0,0,1280,1,0
-19, China,9, Cuba, Ecuador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-23, China,13, Cuba, Cambodia, Columbia,0,1,0,0,38, United-States,0,0,0,1280,1,0
-20, China,10, Cuba, France, Columbia,0,1,0,0,25, United-States,0,0,0,1280,1,0
-23, China,13, Cuba, Columbia, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-19, China,9, Cuba, Greece, China,0,1,0,1719,29, United-States,0,0,0,1280,1,0
-37, China,9, Cuba, Ecuador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-46, China,14, China, Columbia, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-26, China,10, Cuba, Cambodia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-27, China,13, Cuba, Cambodia, Cuba,0,1,0,0,55, United-States,0,0,0,1280,1,0
-18, China,10, Cuba, El-Salvador, Columbia,0,1,0,0,25, United-States,0,0,0,1280,1,0
-46, China,7, Cambodia, Dominican-Republic, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-18, China,8, Cuba, El-Salvador, Canada,0,1,0,0,25, United-States,0,0,0,1280,1,0
-24, China,10, Cuba, El-Salvador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-46, Cuba,13, China, Greece, Cambodia,0,1,0,1902,40, United-States,0,0,1,1280,1,0
-38, Cuba,12, China, China, Cambodia,0,1,0,0,35, United-States,0,0,1,1280,1,0
-25, China,9, Cuba, China, Columbia,0,1,0,0,28, United-States,0,0,0,1280,1,0
-45, Columbia,15, China, France, Cambodia,0,1,0,0,35, United-States,0,0,1,1280,1,0
-44, Dominican-Republic,13, China, France, Cambodia,0,1,0,0,38, United-States,0,0,1,1280,1,0
-28, Cambodia,12, China, Cambodia, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-62, China,14, China, Columbia, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-37, China,10, Cambodia, Cambodia, Cuba,0,1,0,0,35, United-States,0,0,0,1280,1,0
-44, China,13, China, Greece, Cambodia,0,1,0,0,59, United-States,0,0,1,1280,1,0
-21, Cuba,10, Cuba, Cuba, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-38, China,13, China, Greece, Cambodia,0,1,15024,0,50, United-States,0,0,1,1280,1,0
-61, China,10, Cuba, Guatemala, Columbia,0,1,0,0,16, United-States,0,0,0,1280,1,0
-38, China,15, Cambodia, Columbia, Canada,0,1,0,0,50, United-States,0,0,0,1280,1,0
-46, China,9, China, China, Cambodia,0,1,0,0,35, United-States,0,0,0,1280,1,0
-40, China,9, Dominican-Republic, El-Salvador, Cuba,0,1,0,0,47, United-States,0,0,0,1280,1,0
-21, China,9, Cuba, Ecuador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-30, China,10, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-36, China,10, Cambodia, Cambodia, Canada,0,1,0,0,55, United-States,0,0,0,1280,1,0
-28, China,7, Cuba, China, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-35, Canada,9, Cuba, Germany, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-38, China,9, Cambodia, El-Salvador, China,0,1,0,0,40, United-States,0,0,0,1280,1,0
-54, China,13, Cambodia, Greece, Canada,0,1,0,0,8, United-States,0,0,0,1280,1,0
-30, China,9, China, Columbia, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-23, China,9, Cuba, El-Salvador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-37, China,10, Cambodia, Guatemala, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-46, China,10, Columbia, China, Canada,0,1,0,0,40, Philippines,0,0,0,1280,1,0
-35, China,10, China, Ecuador, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-36, China,9, China, China, Cambodia,0,1,7298,0,40, United-States,0,0,1,1280,1,0
-38, China,13, Cambodia, Greece, Canada,0,1,0,0,59, United-States,0,0,0,1280,1,0
-38, China,11, China, Ecuador, Cambodia,0,1,5178,0,40, United-States,0,0,1,1280,1,0
-50, China,13, China, Columbia, Cambodia,0,1,0,1902,40, United-States,0,0,1,1280,1,0
-24, China,3, Cuba, Ecuador, China,0,1,0,0,40, Mexico,0,0,0,1280,1,0
-28, China,9, Cuba, Dominican-Republic, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-49, Columbia,14, China, Columbia, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-28, China,9, Cuba, China, Canada,0,1,0,0,35, United-States,0,0,0,1280,1,0
-26, China,9, Cuba, China, Canada,0,1,0,0,25, United-States,0,0,0,1280,1,0
-38, Cuba,10, China, Cuba, Cambodia,0,1,0,0,59, United-States,0,0,0,1280,1,0
-34, China,10, Dominican-Republic, Greece, Canada,0,1,0,0,45, United-States,0,0,0,1280,1,0
-64, Columbia,13, China, France, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-23, China,13, Cuba, France, Canada,0,1,0,0,29, United-States,0,0,0,1280,1,0
-30, China,13, China, Greece, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-46, Canada,14, Cambodia, France, Cuba,0,1,5455,0,45, United-States,0,0,0,1280,1,0
-46, China,9, Cambodia, Cambodia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-29, Canada,9, Dominican-Republic, Germany, China,0,1,0,0,40, United-States,0,0,0,1280,1,0
-40, China,12, China, Columbia, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-28, China,13, Cuba, Cambodia, Canada,0,1,10520,0,59, United-States,0,0,1,1280,1,0
-42, China,9, China, Cambodia, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-21, China,9, Cuba, Greece, Columbia,0,1,0,0,35, United-States,0,0,0,1280,1,0
-22, China,9, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-28, China,13, Columbia, Greece, Canada,0,1,0,0,50, United-States,0,0,0,1280,1,0
-41, China,9, Cuba, Ecuador, Canada,0,1,2174,0,41, United-States,0,0,0,1280,1,0
-32, China,10, China, China, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-72, Cuba,13, China, Columbia, Cambodia,0,1,0,0,40, Scotland,0,0,0,1280,1,0
-52, China,10, China, Columbia, Cambodia,0,1,0,1740,59, United-States,0,0,0,1280,1,0
-45, Cuba,14, Cambodia, China, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-23, China,10, Cuba, Greece, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-28, China,9, China, Cambodia, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-32, Dominican-Republic,9, Cuba, Cambodia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-41, Columbia,14, China, Columbia, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-52, China,13, China, Columbia, Cambodia,0,1,0,0,48, United-States,0,0,1,1280,1,0
-32, Columbia,13, China, Greece, Cambodia,0,1,7688,0,55, Mexico,0,0,1,1280,1,0
-42, Cuba,7, China, Cuba, Cambodia,0,1,0,0,59, United-States,0,0,0,1280,1,0
-40, China,14, Cuba, Greece, Canada,0,1,0,0,50, United-States,0,0,1,1280,1,0
-40, China,14, Cuba, Greece, Canada,0,1,0,0,50, United-States,0,0,1,1280,1,0
-24, China,11, Cuba, El-Salvador, Cuba,0,1,0,0,32, United-States,0,0,0,1280,1,0
-50, Columbia,15, China, France, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-38, China,11, Cuba, China, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-28, China,10, China, Greece, Cambodia,0,1,0,0,50, United-States,0,0,0,1280,1,0
-46, China,9, China, Dominican-Republic, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-40, Columbia,13, Cambodia, Columbia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-45, China,10, China, China, Cambodia,0,1,0,0,40, Vietnam,0,0,0,1280,1,0
-45, Canada,14, China, France, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-41, China,6, Cambodia, Dominican-Republic, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-62, Cuba,15, China, France, Cambodia,0,1,0,0,16, United-States,0,0,0,1280,1,0
-35, China,9, China, Greece, Cambodia,0,1,0,0,45, United-States,0,0,0,1280,1,0
-17, China,5, Cuba, Dominican-Republic, Columbia,0,1,0,0,12, United-States,0,0,0,1280,1,0
-17, Canada,8, Cuba, Cambodia, Columbia,0,1,0,0,14, United-States,0,0,0,1280,1,0
-54, Canada,9, China, China, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-27, China,15, Cuba, France, China,0,1,0,0,40, United-States,0,0,0,1280,1,0
-21, China,10, Cuba, El-Salvador, Columbia,0,1,0,0,10, United-States,0,0,0,1280,1,0
-20, China,10, Cuba, El-Salvador, Canada,0,1,0,0,25, United-States,0,0,0,1280,1,0
-18, China,9, Cuba, Columbia, China,0,1,0,0,40, United-States,0,0,0,1280,1,0
-45, Canada,12, China, Columbia, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-44, China,9, Cuba, El-Salvador, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-36, China,14, China, France, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-42, Cambodia,13, Cuba, Cambodia, Canada,0,1,6849,0,50, United-States,0,0,0,1280,1,0
-42, Cuba,13, China, Columbia, Cambodia,0,1,0,0,50, Germany,0,0,0,1280,1,0
-50, Cuba,12, Cuba, Cuba, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-23, China,13, Cuba, El-Salvador, Columbia,0,1,0,0,25, United-States,0,0,0,1280,1,0
-42, China,10, China, France, Cambodia,0,1,0,0,48, United-States,0,0,1,1280,1,0
-54, China,9, China, Columbia, Cambodia,0,1,0,0,50, United-States,0,0,0,1280,1,0
-65, China,9, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-20, China,9, Cuba, El-Salvador, Columbia,0,1,0,0,38, United-States,0,0,0,1280,1,0
-35, Dominican-Republic,10, Cuba, France, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-17, China,7, Cuba, Greece, Columbia,0,1,0,0,16, United-States,0,0,0,1280,1,0
-31, China,9, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-61, Dominican-Republic,13, Cambodia, Columbia, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-54, China,9, China, Greece, Cambodia,0,1,15024,0,50, United-States,0,0,1,1280,1,0
-36, Dominican-Republic,10, Cambodia, Columbia, Canada,0,1,0,0,39, United-States,0,0,0,1280,1,0
-33, China,11, Cuba, El-Salvador, Cuba,0,1,0,0,10, United-States,0,0,0,1280,1,0
-19, China,10, Cuba, Cambodia, Columbia,0,1,0,0,20, United-States,0,0,0,1280,1,0
-35, Cuba,9, Cuba, China, China,0,1,0,0,59, United-States,0,0,0,1280,1,0
-35, China,13, Cuba, France, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-28, China,4, China, Ecuador, China,0,1,0,0,48, China,0,0,0,1280,1,0
-75, Cuba,9, China, Cuba, Cambodia,0,1,0,0,14, United-States,0,0,0,1280,1,0
-26, China,13, Cuba, Cambodia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-22, China,10, Cuba, Greece, Columbia,0,1,0,0,20, United-States,0,0,0,1280,1,0
-44, Columbia,13, China, Greece, Cambodia,0,1,0,0,29, United-States,0,0,0,1280,1,0
-27, China,3, Cuba, El-Salvador, Canada,0,1,0,0,59, El-Salvador,0,0,0,1280,1,0
-52, China,2, China, Cuba, Cambodia,0,1,0,0,56, Mexico,0,0,1,1280,1,0
-24, China,9, Cambodia, Ecuador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-26, China,9, Cuba, El-Salvador, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-42, China,9, Dominican-Republic, China, Canada,0,1,0,0,35, United-States,0,0,0,1280,1,0
-42, China,10, China, Ecuador, Cambodia,0,1,3908,0,40, United-States,0,0,0,1280,1,0
-32, Cuba,11, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-38, China,10, Cambodia, Ecuador, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-32, Cambodia,15, China, France, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-20, China,9, Cuba, Ecuador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-45, China,10, Cuba, El-Salvador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-41, China,15, China, France, Cambodia,0,1,0,0,80, United-States,0,0,1,1280,1,0
-31, China,13, China, France, Cambodia,0,1,5013,0,32, United-States,0,0,0,1280,1,0
-36, China,12, China, France, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-45, China,10, Cuba, Columbia, Canada,0,1,13549,0,59, India,0,0,1,1280,1,0
-42, China,10, China, Columbia, Cambodia,0,1,0,0,65, United-States,0,0,0,1280,1,0
-45, Canada,14, Cuba, France, Canada,0,1,0,0,50, United-States,0,0,1,1280,1,0
-42, China,13, China, Dominican-Republic, Cambodia,0,1,0,0,38, United-States,0,0,0,1280,1,0
-30, China,12, Cuba, Guatemala, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-45, Columbia,14, China, Greece, Cambodia,0,1,0,1902,40, Hong,0,0,1,1280,1,0
-38, China,7, Cuba, China, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-48, China,14, Cambodia, France, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-50, Cuba,13, China, Columbia, Cambodia,0,1,0,0,25, United-States,0,0,0,1280,1,0
-21, Cambodia,10, Cuba, Guatemala, Columbia,0,1,0,0,20, United-States,0,0,0,1280,1,0
-32, China,9, Cuba, Ecuador, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-46, Canada,9, Cuba, China, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-36, China,4, China, Dominican-Republic, Cambodia,0,1,0,0,40, El-Salvador,0,0,0,1280,1,0
-28, China,10, Cuba, Cambodia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-29, Dominican-Republic,9, Cuba, Cambodia, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-26, China,9, Cuba, Dominican-Republic, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-28, Cambodia,13, Cuba, France, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-45, Cambodia,10, China, Columbia, Cambodia,0,1,7688,0,40, United-States,0,0,1,1280,1,0
-38, China,11, Cuba, Cuba, Canada,0,1,0,0,59, United-States,0,0,0,1280,1,0
-61, Cambodia,10, China, Columbia, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-23, China,12, Cuba, France, Canada,0,1,0,0,29, Vietnam,0,0,0,1280,1,0
-27, China,10, China, Dominican-Republic, Cambodia,0,1,0,0,45, United-States,0,0,0,1280,1,0
-20, China,10, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-30, China,10, Cuba, China, Canada,0,1,0,0,45, United-States,0,0,0,1280,1,0
-23, China,9, Cuba, China, Columbia,0,1,2597,0,40, United-States,0,0,0,1280,1,0
-32, Canada,14, Cuba, France, Canada,0,1,4865,0,40, United-States,0,0,0,1280,1,0
-42, China,9, China, China, Cambodia,0,1,2885,0,40, United-States,0,0,0,1280,1,0
-46, China,11, Columbia, Ecuador, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-21, China,9, Cuba, Greece, Columbia,0,1,4101,0,40, United-States,0,0,0,1280,1,0
-23, Dominican-Republic,13, Cuba, France, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-21, Dominican-Republic,10, Cuba, Cambodia, Columbia,0,1,0,0,20, United-States,0,0,0,1280,1,0
-54, China,10, China, China, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-46, China,14, China, France, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-30, China,9, China, Ecuador, Cambodia,0,1,0,0,40, Mexico,0,0,0,1280,1,0
-65, China,9, Cambodia, Cambodia, Cuba,0,1,0,2206,59, Canada,0,0,0,1280,1,0
-17, China,7, Cuba, El-Salvador, Columbia,0,1,0,0,14, United-States,0,0,0,1280,1,0
-42, China,13, Cuba, Greece, Cuba,0,1,0,0,35, United-States,0,0,1,1280,1,0
-18, China,10, Cuba, Greece, Columbia,0,1,0,0,14, United-States,0,0,0,1280,1,0
-45, China,9, China, Ecuador, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-31, China,10, China, Greece, Cambodia,0,1,0,0,43, United-States,0,0,0,1280,1,0
-22, China,9, Columbia, Cambodia, China,0,1,0,0,40, United-States,0,0,0,1280,1,0
-41, China,3, China, Cuba, Cambodia,0,1,0,0,29, Mexico,0,0,0,1280,1,0
-41, China,11, Cuba, France, Canada,0,1,0,0,59, United-States,0,0,0,1280,1,0
-41, China,9, Columbia, Cambodia, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-36, China,9, China, China, Cambodia,0,1,0,0,40, Poland,0,0,1,1280,1,0
-52, China,9, Cambodia, Columbia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-69, Cuba,4, China, El-Salvador, Cambodia,0,1,0,0,35, United-States,0,0,0,1280,1,0
-31, China,9, Cambodia, Columbia, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-28, China,5, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-45, China,9, China, Dominican-Republic, Cambodia,0,1,7298,0,40, United-States,0,0,1,1280,1,0
-44, China,9, China, Cuba, Cambodia,0,1,0,0,70, United-States,0,0,0,1280,1,0
-58, Cuba,11, Cuba, Columbia, Canada,0,1,0,0,35, United-States,0,0,1,1280,1,0
-28, China,10, Cuba, El-Salvador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-36, China,13, China, Greece, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-27, Cambodia,13, Cuba, Cambodia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-28, China,10, China, Columbia, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-46, China,9, Dominican-Republic, Ecuador, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-24, China,9, China, El-Salvador, Cambodia,0,1,2885,0,45, United-States,0,0,0,1280,1,0
-25, China,9, China, Ecuador, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-42, China,10, Cuba, Cambodia, Canada,0,1,0,0,55, United-States,0,0,0,1280,1,0
-54, China,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-18, China,10, Cuba, Greece, Columbia,0,1,0,0,16, United-States,0,0,0,1280,1,0
-29, China,10, Cuba, France, Canada,0,1,0,0,45, United-States,0,0,0,1280,1,0
-31, China,11, Cambodia, Dominican-Republic, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-36, Cuba,10, China, Columbia, Cambodia,0,1,0,0,55, United-States,0,0,1,1280,1,0
-22, China,5, Cuba, El-Salvador, Columbia,0,1,0,0,50, United-States,0,0,0,1280,1,0
-20, China,10, Cuba, China, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-31, China,11, Cuba, Cambodia, Canada,0,1,0,0,45, United-States,0,0,0,1280,1,0
-53, Canada,10, China, El-Salvador, Cambodia,0,1,0,0,35, United-States,0,0,0,1280,1,0
-42, China,10, Cambodia, El-Salvador, Canada,0,1,8614,0,52, United-States,0,0,1,1280,1,0
-23, Dominican-Republic,13, Cuba, France, Columbia,0,1,0,0,20, United-States,0,0,0,1280,1,0
-50, China,9, Cambodia, China, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-67, China,9, China, Cambodia, Cambodia,0,1,0,0,35, United-States,0,0,0,1280,1,0
-61, China,6, Cuba, El-Salvador, Columbia,0,1,4416,0,38, United-States,0,0,0,1280,1,0
-27, China,9, Cuba, Greece, Columbia,0,1,0,0,45, Mexico,0,0,0,1280,1,0
-38, China,10, Cuba, Greece, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-17, China,6, Cuba, El-Salvador, Columbia,0,1,0,0,14, United-States,0,0,0,1280,1,0
-36, China,9, Cambodia, Greece, Cuba,0,1,0,0,25, United-States,0,0,0,1280,1,0
-34, China,13, China, Columbia, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-54, Cuba,9, China, China, Cambodia,0,1,0,0,50, United-States,0,0,0,1280,1,0
-29, China,6, Cuba, China, Canada,0,1,0,0,43, United-States,0,0,0,1280,1,0
-23, China,10, Cuba, Greece, Columbia,0,1,0,0,45, United-States,0,0,0,1280,1,0
-23, China,10, Cuba, Ecuador, Cuba,0,1,0,0,40, Vietnam,0,0,0,1280,1,0
-46, China,9, Cambodia, Columbia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-22, China,10, Cuba, France, Columbia,0,1,0,0,10, United-States,0,0,0,1280,1,0
-25, Canada,13, Cuba, Guatemala, Cuba,0,1,0,0,40, Vietnam,0,0,0,1280,1,0
-22, China,5, Cuba, Dominican-Republic, China,0,1,0,0,29, United-States,0,0,0,1280,1,0
-38, China,9, China, Ecuador, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-37, China,13, China, Columbia, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-42, China,10, Cambodia, Ecuador, Canada,0,1,0,0,45, United-States,0,0,0,1280,1,0
-45, Cuba,13, Cambodia, Columbia, Cuba,0,1,0,0,50, United-States,0,0,0,1280,1,0
-33, China,13, China, Columbia, Cambodia,0,1,0,0,45, United-States,0,0,0,1280,1,0
-58, China,9, Cambodia, Cambodia, Canada,0,1,0,0,40, Canada,0,0,0,1280,1,0
-54, China,13, China, Columbia, Cambodia,0,1,0,0,45, United-States,0,0,1,1280,1,0
-45, Dominican-Republic,10, Cuba, Cambodia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-28, China,9, China, Columbia, Cambodia,0,1,4386,0,45, United-States,0,0,1,1280,1,0
-22, China,10, China, Ecuador, Cambodia,0,1,2105,0,40, United-States,0,0,0,1280,1,0
-27, China,13, Cuba, Columbia, Canada,0,1,0,0,45, United-States,0,0,0,1280,1,0
-23, China,6, China, Dominican-Republic, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-34, China,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-45, China,10, China, Guatemala, Cambodia,0,1,0,0,55, United-States,0,0,1,1280,1,0
-21, China,9, Cuba, Dominican-Republic, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-40, China,10, China, Ecuador, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-45, China,6, China, Greece, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-62, Cuba,9, China, Columbia, Cambodia,0,1,0,0,59, Ecuador,0,0,0,1280,1,0
-28, China,9, Cuba, China, Columbia,0,1,0,0,45, United-States,0,0,0,1280,1,0
-22, China,13, Cuba, Columbia, Columbia,0,1,0,0,50, United-States,0,0,0,1280,1,0
-22, China,9, Cuba, Ecuador, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-21, China,10, Cuba, France, China,0,1,0,0,20, South,0,0,0,1280,1,0
-40, China,14, China, France, Cambodia,0,1,7688,0,40, United-States,0,0,1,1280,1,0
-17, China,6, Cuba, El-Salvador, Columbia,0,1,0,0,12, United-States,0,0,0,1280,1,0
-38, China,11, China, El-Salvador, Cambodia,0,1,0,0,70, Iran,0,0,0,1280,1,0
-21, China,9, Cuba, China, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-37, China,13, China, Greece, Cambodia,0,1,0,0,55, United-States,0,0,1,1280,1,0
-37, Canada,9, China, Dominican-Republic, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-35, China,9, Dominican-Republic, China, Canada,0,1,0,0,50, United-States,0,0,0,1280,1,0
-46, China,1, Cuba, Greece, Cuba,0,1,0,0,40, Haiti,0,0,0,1280,1,0
-33, China,9, Cambodia, Greece, Canada,0,1,0,0,50, United-States,0,0,0,1280,1,0
-45, China,13, Cambodia, Greece, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-19, China,10, Cuba, Dominican-Republic, Columbia,0,1,0,0,20, United-States,0,0,0,1280,1,0
-19, China,10, Cuba, Dominican-Republic, Columbia,0,1,0,0,20, United-States,0,0,0,1280,1,0
-41, China,10, Cambodia, China, Canada,0,1,0,0,50, United-States,0,0,0,1280,1,0
-27, Dominican-Republic,14, Cuba, France, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-35, China,13, Cambodia, El-Salvador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-34, Dominican-Republic,14, China, Columbia, Cambodia,0,1,0,0,38, United-States,0,0,0,1280,1,0
-38, China,15, China, France, Cambodia,0,1,0,0,50, United-States,0,0,0,1280,1,0
-22, Cambodia,9, Cuba, Dominican-Republic, Columbia,0,1,0,0,43, United-States,0,0,0,1280,1,0
-24, China,13, Cuba, Ecuador, Canada,0,1,0,0,45, China,0,0,0,1280,1,0
-24, China,9, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-21, Dominican-Republic,10, Cuba, France, Columbia,0,1,0,0,16, United-States,0,0,0,1280,1,0
-23, China,13, Cuba, Columbia, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-35, China,9, Cuba, El-Salvador, Canada,0,1,3325,0,50, United-States,0,0,0,1280,1,0
-18, China,6, Cuba, Greece, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-24, China,10, Cuba, Cambodia, Canada,0,1,0,2205,24, United-States,0,0,0,1280,1,0
-19, China,10, Cuba, Greece, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-38, China,9, China, China, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-25, China,13, Cuba, Columbia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-26, China,4, Cuba, Dominican-Republic, Cuba,0,1,0,0,40, Guatemala,0,0,0,1280,1,0
-33, China,7, Dominican-Republic, Ecuador, China,0,1,0,0,29, United-States,0,0,0,1280,1,0
-32, China,9, Cuba, China, Columbia,0,1,0,0,50, United-States,0,0,0,1280,1,0
-33, Canada,13, Cambodia, Germany, Cuba,0,1,0,0,59, Germany,0,0,0,1280,1,0
-34, China,10, Cuba, Columbia, Canada,0,1,0,0,50, United-States,0,0,0,1280,1,0
-20, China,9, Cuba, Greece, Columbia,0,1,0,0,20, United-States,0,0,0,1280,1,0
-37, Dominican-Republic,10, Cambodia, El-Salvador, Canada,0,1,0,0,65, United-States,0,0,0,1280,1,0
-49, China,10, China, China, Cambodia,0,1,0,1887,40, United-States,0,0,1,1280,1,0
-48, Cuba,9, China, China, Cambodia,0,1,0,1902,40, United-States,0,0,1,1280,1,0
-17, China,7, Cuba, Dominican-Republic, Columbia,0,1,0,0,14, United-States,0,0,0,1280,1,0
-46, China,9, China, El-Salvador, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-56, Columbia,9, China, Greece, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-62, Cuba,9, China, China, Cambodia,0,1,10566,0,40, United-States,0,0,0,1280,1,0
-66, China,13, China, France, Cambodia,0,1,10605,0,40, United-States,0,0,1,1280,1,0
-28, China,9, China, Cambodia, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-46, China,11, China, Dominican-Republic, Cambodia,0,1,0,0,48, United-States,0,0,1,1280,1,0
-40, Columbia,13, Dominican-Republic, China, Columbia,0,1,0,0,50, United-States,0,0,0,1280,1,0
-22, Columbia,13, Cuba, Dominican-Republic, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-75, Cuba,13, Ecuador, France, Cuba,0,1,0,0,48, United-States,1,0,1,1280,1,0
-60, China,9, Ecuador, Ecuador, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-38, China,9, China, Haiti, Cambodia,0,1,0,0,50, United-States,1,0,1,1280,1,0
-56, China,9, China, El-Salvador, Cambodia,0,1,0,0,50, Yugoslavia,1,0,0,1280,1,0
-38, China,9, Cuba, Ecuador, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-45, Cambodia,13, Cuba, Germany, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-45, China,14, China, Columbia, Cambodia,0,1,15024,0,50, United-States,1,0,1,1280,1,0
-36, China,13, China, Dominican-Republic, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-30, China,11, China, Ecuador, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-61, Canada,9, China, France, Cambodia,0,1,0,0,29, United-States,1,0,1,1280,1,0
-64, China,9, Cuba, Cambodia, Canada,0,1,0,0,25, United-States,1,0,0,1280,1,0
-50, Cambodia,9, Cambodia, Cambodia, Canada,0,1,0,0,8, United-States,1,0,0,1280,1,0
-46, China,11, China, Guatemala, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-21, China,12, Cuba, El-Salvador, China,0,1,0,0,14, United-States,1,0,0,1280,1,0
-30, China,10, Cambodia, Greece, Canada,0,1,0,0,58, United-States,1,0,0,1280,1,0
-38, Columbia,13, Columbia, Greece, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-41, China,3, Columbia, England, Canada,0,1,0,0,32, Mexico,1,0,0,1280,1,0
-21, China,9, Cuba, Ecuador, Canada,0,1,0,0,50, United-States,1,0,0,1280,1,0
-38, China,10, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-38, Dominican-Republic,12, China, Germany, Cambodia,0,1,0,0,52, United-States,1,0,0,1280,1,0
-49, Cuba,12, China, Columbia, Cambodia,0,1,0,0,35, Germany,1,0,0,1280,1,0
-45, Canada,9, China, Germany, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-50, China,9, China, Greece, Cambodia,0,1,0,0,65, United-States,1,0,1,1280,1,0
-50, Columbia,10, China, Greece, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-48, Cambodia,9, Columbia, Cambodia, Cuba,0,1,1471,0,40, United-States,1,0,0,1280,1,0
-41, China,9, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-21, China,6, China, El-Salvador, Cambodia,0,1,3908,0,40, United-States,1,0,0,1280,1,0
-38, Dominican-Republic,13, Cuba, France, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-60, China,9, China, El-Salvador, Cambodia,0,1,0,0,29, Philippines,1,0,0,1280,1,0
-27, China,9, Cuba, Cambodia, Canada,0,1,0,0,8, United-States,1,0,0,1280,1,0
-53, China,13, Cambodia, Guatemala, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-33, Cuba,10, Cuba, Greece, Canada,0,1,0,0,65, United-States,1,0,0,1280,1,0
-18, China,9, Cuba, Greece, Canada,0,1,0,1721,40, United-States,1,0,0,1280,1,0
-52, China,14, Cambodia, France, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-29, China,9, China, Ecuador, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-45, Columbia,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-49, China,14, Cuba, Greece, Canada,0,1,0,0,35, United-States,1,0,0,1280,1,0
-42, China,13, China, France, Cambodia,0,1,0,0,48, United-States,1,0,1,1280,1,0
-36, China,9, China, China, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-40, China,9, Cuba, El-Salvador, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-53, China,4, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-36, Cuba,9, China, Cuba, Cambodia,0,1,0,0,59, United-States,1,0,0,1280,1,0
-30, China,9, China, Ecuador, China,0,1,0,2057,48, United-States,1,0,0,1280,1,0
-21, China,9, Cuba, Dominican-Republic, Columbia,0,1,0,0,35, United-States,1,0,0,1280,1,0
-32, China,13, China, Greece, Cambodia,0,1,0,0,59, United-States,1,0,1,1280,1,0
-40, China,9, Cambodia, Cambodia, Cuba,0,1,0,625,40, United-States,1,0,0,1280,1,0
-46, China,13, China, El-Salvador, Cambodia,0,1,0,0,40, El-Salvador,1,0,0,1280,1,0
-33, China,9, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-37, China,9, Cambodia, Columbia, Canada,0,1,0,0,35, United-States,1,0,0,1280,1,0
-50, China,12, Cambodia, Greece, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-45, China,9, Cambodia, Cambodia, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-56, China,3, Dominican-Republic, Ecuador, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-49, Cuba,9, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-34, China,10, Cuba, Cambodia, China,0,1,0,0,40, United-States,1,0,0,1280,1,0
-46, Cuba,13, China, Greece, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-17, China,9, Cuba, El-Salvador, China,0,1,0,0,35, Mexico,1,0,0,1280,1,0
-54, Dominican-Republic,10, Cambodia, Cambodia, Canada,0,1,0,0,38, United-States,1,0,0,1280,1,0
-23, China,10, Cuba, Cambodia, Columbia,0,1,0,0,20, United-States,1,0,0,1280,1,0
-23, China,9, Cuba, China, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-45, China,10, Cuba, Columbia, Canada,0,1,0,0,45, United-States,1,0,0,1280,1,0
-38, China,9, China, Cambodia, Cambodia,0,1,0,0,55, United-States,1,0,0,1280,1,0
-29, Cuba,9, Cuba, China, Canada,0,1,0,0,50, United-States,1,0,0,1280,1,0
-44, China,9, Cuba, El-Salvador, Cuba,0,1,0,0,32, United-States,1,0,0,1280,1,0
-54, China,9, China, El-Salvador, Cambodia,0,1,0,0,50, United-States,1,0,0,1280,1,0
-28, China,10, Cuba, China, Cuba,0,1,0,0,48, United-States,1,0,0,1280,1,0
-29, China,13, Cambodia, France, Canada,0,1,0,0,52, United-States,1,0,0,1280,1,0
-45, China,10, Cuba, Cuba, China,0,1,0,0,50, United-States,1,0,0,1280,1,0
-26, China,9, Dominican-Republic, Cuba, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-48, Cambodia,13, China, France, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-48, China,10, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-33, China,10, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-33, China,9, China, Columbia, Cambodia,0,1,0,0,50, United-States,1,0,0,1280,1,0
-27, China,13, Cuba, Columbia, Canada,0,1,0,0,50, United-States,1,0,0,1280,1,0
-23, Dominican-Republic,13, Cuba, France, Canada,0,1,0,0,7, United-States,1,0,0,1280,1,0
-29, Dominican-Republic,11, Cambodia, Cambodia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-54, China,9, Cambodia, Cambodia, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-46, China,10, Cuba, Dominican-Republic, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-60, China,13, Cambodia, Columbia, Canada,0,1,0,0,40, Hungary,1,0,1,1280,1,0
-54, China,9, China, Cuba, Cambodia,0,1,0,0,45, United-States,1,0,1,1280,1,0
-29, China,9, Cambodia, Cambodia, Cuba,0,1,0,0,29, United-States,1,0,0,1280,1,0
-44, Cuba,10, Cuba, China, Canada,0,1,0,0,20, United-States,1,0,0,1280,1,0
-52, China,14, China, Greece, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-38, Columbia,12, China, Greece, Cambodia,0,1,5178,0,48, United-States,1,0,1,1280,1,0
-29, China,13, Cuba, France, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-50, China,9, Cambodia, El-Salvador, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-33, China,13, Cuba, France, Canada,0,1,0,0,40, Canada,1,0,0,1280,1,0
-56, China,10, Cambodia, Cambodia, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-19, China,9, Cuba, Cambodia, Canada,0,1,0,0,29, United-States,1,0,0,1280,1,0
-32, China,12, China, Ecuador, Cambodia,0,1,0,0,62, United-States,1,0,0,1280,1,0
-36, Cuba,13, Cuba, France, Canada,0,1,0,0,29, United-States,1,0,0,1280,1,0
-23, China,9, Cuba, El-Salvador, Canada,0,1,0,0,25, United-States,1,0,0,1280,1,0
-42, China,10, Cuba, Cuba, Canada,0,1,0,0,28, United-States,1,0,0,1280,1,0
-20, China,10, Cuba, Ecuador, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-20, China,9, Cuba, Greece, Columbia,0,1,0,0,40, Puerto-Rico,1,0,0,1280,1,0
-50, China,9, Cambodia, Cambodia, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-45, Cuba,6, China, China, Cambodia,0,1,0,0,70, United-States,1,0,0,1280,1,0
-30, China,9, Cambodia, Dominican-Republic, China,0,1,0,0,40, United-States,1,0,0,1280,1,0
-41, China,9, Columbia, China, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-27, Cambodia,12, China, Cambodia, Cambodia,0,1,4064,0,40, El-Salvador,1,0,0,1280,1,0
-42, Cuba,9, China, China, Cambodia,0,1,0,0,20, United-States,1,0,0,1280,1,0
-38, China,9, Cambodia, Columbia, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-37, China,10, Cambodia, Greece, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-54, China,9, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-32, Cambodia,11, Cuba, France, China,0,1,0,0,40, United-States,1,0,0,1280,1,0
-18, China,7, Cuba, El-Salvador, Columbia,0,1,0,0,16, United-States,1,0,0,1280,1,0
-32, Cuba,9, Cambodia, Columbia, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-58, China,13, China, France, Cambodia,0,1,5013,0,40, United-States,1,0,0,1280,1,0
-28, China,10, Cuba, Guatemala, Canada,0,1,0,0,54, United-States,1,0,0,1280,1,0
-38, Cuba,14, Cuba, France, Canada,0,1,0,0,50, Columbia,1,0,0,1280,1,0
-28, China,13, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-34, China,10, Cuba, El-Salvador, Columbia,0,1,0,0,35, United-States,1,0,0,1280,1,0
-58, China,9, China, China, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-54, Cuba,13, China, Cuba, Cambodia,0,1,0,0,50, United-States,1,0,0,1280,1,0
-49, China,9, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-34, China,9, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-64, China,6, China, Cambodia, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-31, China,12, China, Cambodia, Cambodia,0,1,0,0,40, Italy,1,0,0,1280,1,0
-42, China,13, Cambodia, France, Cuba,0,1,0,0,24, Outlying-US(Guam-USVI-etc),1,0,0,1280,1,0
-49, China,15, Cuba, Cuba, China,0,1,0,0,48, United-States,1,0,0,1280,1,0
-30, China,9, China, Columbia, Cambodia,0,1,0,0,50, United-States,1,0,0,1280,1,0
-46, China,9, Cambodia, China, Canada,0,1,0,0,55, United-States,1,0,0,1280,1,0
-30, China,9, Cuba, Cambodia, Canada,0,1,0,0,20, United-States,1,0,0,1280,1,0
-30, China,9, China, Columbia, Cambodia,0,1,0,0,50, United-States,1,0,0,1280,1,0
-68, Columbia,7, China, Greece, Cambodia,0,1,0,1258,40, United-States,1,0,0,1280,1,0
-31, China,9, Dominican-Republic, Greece, Cuba,0,1,0,0,40, Mexico,1,0,0,1280,1,0
-26, Canada,13, Cuba, Germany, Canada,0,1,0,0,48, United-States,1,0,0,1280,1,0
-50, China,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-50, China,2, China, Cuba, China,0,1,0,0,40, Mexico,1,0,0,1280,1,0
-37, China,9, China, China, Cambodia,0,1,0,0,45, United-States,1,0,0,1280,1,0
-71, Cuba,2, Cambodia, China, Canada,0,1,0,0,28, United-States,1,0,0,1280,1,0
-25, Dominican-Republic,13, Columbia, Dominican-Republic, Canada,0,1,0,1719,14, United-States,1,0,0,1280,1,0
-28, China,9, Cuba, Cambodia, China,0,1,0,0,38, United-States,1,0,0,1280,1,0
-46, China,13, Cuba, Columbia, Canada,0,1,0,0,55, United-States,1,0,1,1280,1,0
-52, China,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-45, China,15, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-41, China,13, Dominican-Republic, Greece, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-23, China,10, Cuba, Dominican-Republic, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-18, China,7, Cuba, El-Salvador, Columbia,0,1,0,0,7, United-States,1,0,0,1280,1,0
-23, Dominican-Republic,11, Cuba, Guatemala, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-28, Dominican-Republic,9, Dominican-Republic, El-Salvador, Columbia,0,1,0,0,11, United-States,1,0,0,1280,1,0
-26, China,10, Cuba, China, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-41, China,9, Cambodia, Columbia, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-24, China,13, Cuba, China, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-28, Cambodia,10, China, Cambodia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-53, China,10, China, China, Cambodia,0,1,0,0,47, United-States,1,0,1,1280,1,0
-34, Dominican-Republic,10, China, France, Cambodia,0,1,4386,0,40, United-States,1,0,1,1280,1,0
-20, China,10, Cuba, Cuba, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-24, China,9, Cuba, Dominican-Republic, Cuba,0,1,0,0,45, United-States,1,0,0,1280,1,0
-19, China,9, Cuba, Dominican-Republic, Columbia,0,1,0,0,16, United-States,1,0,0,1280,1,0
-20, China,9, Cuba, Dominican-Republic, China,0,1,0,0,40, United-States,1,0,0,1280,1,0
-29, China,14, Cuba, Columbia, Canada,0,1,0,0,59, United-States,1,0,0,1280,1,0
-54, China,10, China, Guatemala, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-41, China,9, China, China, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-26, China,9, Cuba, Ecuador, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-35, China,10, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-24, China,9, China, Ecuador, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-25, China,10, Cuba, Greece, Columbia,0,1,3418,0,29, United-States,1,0,0,1280,1,0
-25, China,13, Cuba, France, Columbia,0,1,0,0,55, United-States,1,0,0,1280,1,0
-40, China,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-62, China,9, Cuba, Cambodia, Canada,0,1,0,0,32, United-States,1,0,0,1280,1,0
-33, China,9, Cuba, El-Salvador, Canada,0,1,0,0,32, United-States,1,0,0,1280,1,0
-35, China,9, Dominican-Republic, El-Salvador, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-30, China,13, Cuba, France, Canada,0,1,0,0,50, United-States,1,0,0,1280,1,0
-25, China,14, Cuba, France, Columbia,0,1,0,0,35, United-States,1,0,0,1280,1,0
-52, Columbia,13, China, Columbia, Cambodia,0,1,0,0,59, United-States,1,0,0,1280,1,0
-32, China,14, Cuba, France, Canada,0,1,0,0,20, United-States,1,0,0,1280,1,0
-40, China,9, Cambodia, Dominican-Republic, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-50, Cambodia,10, China, France, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-52, China,10, China, China, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-46, China,10, China, Columbia, Cambodia,0,1,0,0,37, Ecuador,1,0,1,1280,1,0
-38, China,9, China, Greece, Cambodia,0,1,0,0,55, United-States,1,0,0,1280,1,0
-22, China,10, Cuba, Guatemala, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-54, Cambodia,10, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-23, China,10, Dominican-Republic, Greece, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-35, China,7, China, Cuba, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-65, China,9, China, Cambodia, Cambodia,0,1,0,0,20, United-States,1,0,0,1280,1,0
-46, China,9, Cambodia, Greece, China,0,1,0,0,40, United-States,1,0,0,1280,1,0
-33, China,9, China, China, Cambodia,0,1,0,0,45, United-States,1,0,0,1280,1,0
-54, China,13, Cuba, France, Canada,0,1,0,0,50, United-States,1,0,0,1280,1,0
-21, China,9, Cuba, China, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-22, China,11, Cuba, El-Salvador, Columbia,0,1,0,0,36, United-States,1,0,0,1280,1,0
-35, China,9, Cambodia, Columbia, Cuba,0,1,0,0,55, United-States,1,0,0,1280,1,0
-22, China,10, Cuba, El-Salvador, Cuba,0,1,0,0,29, United-States,1,0,0,1280,1,0
-38, Dominican-Republic,10, China, Germany, Cambodia,0,1,7688,0,40, United-States,1,0,1,1280,1,0
-23, China,9, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-44, China,9, Cambodia, China, Canada,0,1,0,0,45, United-States,1,0,0,1280,1,0
-52, China,9, China, Greece, Cambodia,0,1,0,0,8, United-States,1,0,0,1280,1,0
-34, China,6, Dominican-Republic, El-Salvador, Cuba,0,1,0,0,4, United-States,1,0,0,1280,1,0
-23, China,11, Cuba, Ecuador, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-17, China,8, Cuba, Cambodia, Columbia,0,1,0,0,25, United-States,1,0,0,1280,1,0
-30, China,10, China, France, Cambodia,0,1,0,0,68, United-States,1,0,0,1280,1,0
-19, China,9, Cuba, Dominican-Republic, Columbia,0,1,0,0,16, United-States,1,0,0,1280,1,0
-42, China,10, China, France, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-42, China,10, China, France, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-60, China,5, China, Greece, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-28, China,11, Cambodia, Guatemala, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-34, China,11, China, China, Cambodia,0,1,0,0,48, United-States,1,0,0,1280,1,0
-50, China,10, Cambodia, Greece, Cuba,0,1,0,0,45, United-States,1,0,0,1280,1,0
-42, Cuba,10, China, China, Cambodia,0,1,0,0,45, United-States,1,0,1,1280,1,0
-46, China,11, Cambodia, Columbia, Cuba,0,1,0,0,45, United-States,1,0,0,1280,1,0
-34, China,9, Cuba, Cambodia, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-46, China,10, China, France, Cambodia,0,1,0,0,70, United-States,1,0,0,1280,1,0
-21, China,10, Cuba, Cambodia, Canada,0,1,0,0,29, United-States,1,0,0,1280,1,0
-35, China,11, China, Greece, Cambodia,0,1,0,0,40, Dominican-Republic,1,0,1,1280,1,0
-40, China,13, Cuba, France, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-56, Cambodia,10, Cambodia, Cambodia, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-54, China,14, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-36, China,13, China, Greece, Cambodia,0,1,0,0,50, United-States,1,0,1,1280,1,0
-40, China,13, Cuba, Greece, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-71, Cuba,9, China, Cuba, Cambodia,0,1,0,0,35, United-States,1,0,0,1280,1,0
-33, Cambodia,13, Cuba, France, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-38, China,12, Cambodia, Cambodia, Cuba,0,1,0,0,40, United-States,1,0,1,1280,1,0
-28, China,7, China, China, Cambodia,0,1,0,0,45, United-States,1,0,0,1280,1,0
-41, Dominican-Republic,9, Cambodia, Cambodia, Cuba,0,1,0,0,45, United-States,1,0,0,1280,1,0
-33, China,9, Cambodia, Columbia, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-46, China,12, Cuba, France, Cuba,0,1,0,0,36, United-States,1,0,0,1280,1,0
-29, China,13, Cuba, France, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-34, Cuba,6, China, Cuba, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-26, China,10, Cuba, China, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-50, China,9, China, Ecuador, Cambodia,0,1,0,1848,48, United-States,1,0,1,1280,1,0
-27, China,13, Cuba, Columbia, China,0,1,0,0,40, United-States,1,0,0,1280,1,0
-41, China,10, China, China, Cambodia,0,1,0,1977,59, United-States,1,0,1,1280,1,0
-58, China,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-23, China,13, Cuba, Columbia, Canada,0,1,0,0,35, Canada,1,0,0,1280,1,0
-40, Dominican-Republic,13, China, France, Cambodia,0,1,0,0,59, United-States,1,0,1,1280,1,0
-34, China,9, Cuba, El-Salvador, Canada,0,1,0,0,35, United-States,1,0,0,1280,1,0
-26, China,9, China, Dominican-Republic, China,0,1,0,0,40, United-States,1,0,0,1280,1,0
-22, China,13, Cuba, Guatemala, Canada,0,1,0,2339,40, India,1,0,0,1280,1,0
-20, China,10, Cuba, France, Columbia,0,1,0,0,14, United-States,1,0,0,1280,1,0
-38, China,9, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-33, China,10, China, Cambodia, Cambodia,0,1,0,0,45, United-States,1,0,0,1280,1,0
-33, China,13, Cuba, Ecuador, Canada,0,1,0,0,46, United-States,1,0,0,1280,1,0
-22, China,10, Cuba, Greece, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-24, China,10, Cuba, Cambodia, Columbia,0,1,0,0,25, United-States,1,0,0,1280,1,0
-31, China,9, Cambodia, Cambodia, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-54, China,5, China, Ecuador, China,0,1,0,0,40, Philippines,1,0,0,1280,1,0
-28, China,11, Cuba, Dominican-Republic, Canada,0,1,0,0,45, United-States,1,0,0,1280,1,0
-34, Cuba,10, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-33, Cambodia,13, China, France, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-46, Canada,10, Cambodia, Cambodia, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-48, Dominican-Republic,13, China, Columbia, Cambodia,0,1,5178,0,40, United-States,1,0,1,1280,1,0
-67, Cuba,9, China, Cuba, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-21, China,10, Cuba, Greece, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-58, China,9, China, Cambodia, Cambodia,0,1,0,0,45, United-States,1,0,1,1280,1,0
-33, China,9, Cambodia, Greece, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-22, China,10, Cuba, Greece, Columbia,0,1,0,0,35, United-States,1,0,0,1280,1,0
-30, China,9, China, Ecuador, Cambodia,0,1,5013,0,40, United-States,1,0,0,1280,1,0
-27, Cuba,14, Cuba, France, Canada,0,1,0,0,40, United-States,1,0,1,1280,1,0
-60, Canada,13, China, Germany, Cambodia,0,1,7298,0,48, United-States,1,0,1,1280,1,0
-36, China,8, China, Ecuador, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-52, Canada,6, China, China, Cambodia,0,1,5013,0,40, United-States,1,0,0,1280,1,0
-32, China,10, China, China, Cambodia,0,1,0,0,36, United-States,1,0,0,1280,1,0
-31, China,9, Cuba, Cambodia, Cuba,0,1,0,3770,37, Puerto-Rico,1,0,0,1280,1,0
-17, China,7, Cuba, Dominican-Republic, Columbia,0,1,0,0,20, United-States,1,0,0,1280,1,0
-34, Dominican-Republic,11, Cuba, France, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-35, China,9, Cuba, Ecuador, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-52, China,13, Cambodia, France, Cuba,0,1,0,1755,40, United-States,1,0,1,1280,1,0
-26, China,9, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-40, China,11, Cambodia, El-Salvador, Canada,0,1,0,0,32, United-States,1,0,0,1280,1,0
-54, Columbia,11, China, Columbia, Cambodia,0,1,0,0,48, United-States,1,0,1,1280,1,0
-40, China,6, China, Ecuador, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-30, Cambodia,13, Cuba, France, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-62, China,9, Cuba, Cambodia, Canada,0,1,0,0,38, United-States,1,0,0,1280,1,0
-22, Canada,10, Cuba, France, Canada,0,1,0,0,20, United-States,1,0,0,1280,1,0
-38, China,13, China, France, Cambodia,0,1,7688,0,45, United-States,1,0,1,1280,1,0
-35, China,9, Cambodia, El-Salvador, Canada,0,1,0,0,35, United-States,1,0,0,1280,1,0
-33, China,15, China, Columbia, Cambodia,0,1,0,0,65, Japan,1,0,1,1280,1,0
-19, China,9, Cuba, El-Salvador, Columbia,0,1,0,0,13, United-States,1,0,0,1280,1,0
-34, China,9, China, Greece, Cambodia,0,1,0,0,50, United-States,1,0,1,1280,1,0
-53, Canada,9, China, El-Salvador, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-30, China,9, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-26, China,13, Cuba, Cambodia, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-49, Canada,9, China, El-Salvador, China,0,1,0,0,40, Italy,1,0,0,1280,1,0
-35, Canada,9, China, El-Salvador, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-19, China,9, Cuba, El-Salvador, Columbia,0,1,0,0,37, United-States,1,0,0,1280,1,0
-49, China,9, China, China, Cambodia,0,1,0,0,43, United-States,1,0,0,1280,1,0
-23, China,13, China, France, Cambodia,0,1,2407,0,6, Canada,1,0,0,1280,1,0
-49, Canada,9, China, Ecuador, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-36, China,10, China, China, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-33, Columbia,9, China, Columbia, Cambodia,0,1,0,0,84, Taiwan,1,0,1,1280,1,0
-38, China,13, China, Columbia, Cambodia,0,1,0,0,50, United-States,1,0,1,1280,1,0
-38, China,13, China, Columbia, Cambodia,0,1,0,0,50, United-States,1,0,1,1280,1,0
-36, China,15, Cuba, Columbia, Canada,0,1,27828,0,50, United-States,1,0,1,1280,1,0
-32, China,6, Cuba, Cuba, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-33, China,10, Cuba, Columbia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-50, Canada,12, Cambodia, France, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-28, China,8, Cambodia, Cuba, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-41, China,10, Cambodia, Guatemala, Cuba,0,1,0,0,36, United-States,1,0,0,1280,1,0
-44, Cuba,13, Cuba, Greece, Canada,0,1,0,0,42, United-States,1,0,0,1280,1,0
-50, Columbia,13, China, Germany, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-58, Dominican-Republic,13, China, Columbia, Cambodia,0,1,0,1977,40, United-States,1,0,1,1280,1,0
-44, China,10, China, France, Cambodia,0,1,0,0,35, United-States,1,0,1,1280,1,0
-57, China,13, China, Columbia, Cambodia,0,1,15024,0,50, United-States,1,0,1,1280,1,0
-21, China,9, Cuba, El-Salvador, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-34, China,9, Cambodia, Cambodia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-67, Columbia,10, China, Greece, Cambodia,0,1,20051,0,40, United-States,1,0,1,1280,1,0
-28, China,10, China, Cambodia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-45, Cambodia,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-18, China,10, Cuba, Greece, Columbia,0,1,2176,0,35, United-States,1,0,0,1280,1,0
-42, China,9, China, Dominican-Republic, Cambodia,0,1,3908,0,40, United-States,1,0,0,1280,1,0
-28, China,11, China, Cambodia, Cambodia,0,1,2407,0,40, United-States,1,0,0,1280,1,0
-64, China,14, China, France, Cambodia,0,1,0,2057,59, China,1,0,0,1280,1,0
-37, China,13, China, France, Cambodia,0,1,7688,0,50, United-States,1,0,1,1280,1,0
-17, China,7, Cuba, Greece, Columbia,0,1,0,0,20, United-States,1,0,0,1280,1,0
-33, China,13, China, Columbia, Cambodia,0,1,15024,0,50, United-States,1,0,1,1280,1,0
-50, Dominican-Republic,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-73, China,4, China, Greece, Cambodia,0,1,0,0,29, United-States,1,0,1,1280,1,0
-30, China,13, Cuba, Greece, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-30, China,9, China, El-Salvador, Cambodia,0,1,0,0,52, China,1,0,0,1280,1,0
-42, China,9, Cuba, El-Salvador, China,0,1,0,0,40, United-States,1,0,0,1280,1,0
-40, Dominican-Republic,11, China, Ecuador, Cambodia,0,1,0,0,38, United-States,1,0,1,1280,1,0
-58, Canada,5, China, El-Salvador, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-50, Cambodia,9, Cuba, El-Salvador, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-42, China,9, Cuba, El-Salvador, China,0,1,0,0,40, United-States,1,0,0,1280,1,0
-45, Cuba,4, China, China, Cambodia,0,1,0,0,10, United-States,1,0,0,1280,1,0
-25, China,9, Cuba, Greece, Canada,0,1,0,0,35, United-States,1,0,0,1280,1,0
-29, China,12, Cambodia, Columbia, Cuba,0,1,0,0,37, United-States,1,0,0,1280,1,0
-22, China,9, Cuba, Cambodia, Cuba,0,1,0,0,40, Mexico,1,0,0,1280,1,0
-33, Canada,13, Cuba, Columbia, Canada,0,1,0,0,50, United-States,1,0,0,1280,1,0
-37, China,9, Cuba, Cambodia, Columbia,0,1,0,0,38, United-States,1,0,0,1280,1,0
-48, China,10, China, Greece, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-29, China,9, China, Germany, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-30, Canada,6, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-31, China,10, China, Greece, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-37, China,9, China, Ecuador, Cambodia,0,1,0,1848,48, United-States,1,0,1,1280,1,0
-31, China,12, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-42, China,9, Cuba, China, Canada,0,1,0,0,45, United-States,1,0,0,1280,1,0
-46, Cuba,16, China, Haiti, Cambodia,0,1,0,2002,45, United-States,1,0,0,1280,1,0
-19, China,10, Cuba, Ecuador, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-42, Canada,13, Cambodia, France, Cuba,0,1,0,0,42, United-States,1,0,0,1280,1,0
-52, Cuba,11, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-37, China,7, Cambodia, Dominican-Republic, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-38, China,14, China, Guatemala, Cambodia,0,1,15024,0,50, United-States,1,0,1,1280,1,0
-27, China,10, Cuba, El-Salvador, Canada,0,1,0,0,25, United-States,1,0,0,1280,1,0
-18, Canada,9, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-21, China,11, Cuba, El-Salvador, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-42, Cambodia,11, Cambodia, Columbia, Cuba,0,1,0,323,40, United-States,1,0,0,1280,1,0
-27, Canada,9, Cuba, Cuba, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-32, China,9, Cambodia, Cambodia, China,0,1,0,0,40, United-States,1,0,0,1280,1,0
-54, China,9, Columbia, China, China,0,1,0,0,40, Poland,1,0,0,1280,1,0
-64, Dominican-Republic,10, Dominican-Republic, Cambodia, Canada,0,1,0,0,65, United-States,1,0,0,1280,1,0
-54, China,9, China, Greece, Cambodia,0,1,0,1848,40, United-States,1,0,1,1280,1,0
-60, China,11, China, France, Cambodia,0,1,7688,0,40, United-States,1,0,1,1280,1,0
-46, China,9, China, Columbia, Cambodia,0,1,3103,0,50, United-States,1,0,1,1280,1,0
-46, China,10, Cambodia, Cambodia, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-46, China,13, China, Columbia, Cambodia,0,1,0,0,38, United-States,1,0,1,1280,1,0
-26, China,7, Cuba, Cuba, Canada,0,1,0,0,50, United-States,1,0,0,1280,1,0
-24, China,13, China, Ecuador, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-38, China,9, China, Columbia, Cambodia,0,1,0,0,45, United-States,1,0,0,1280,1,0
-50, Canada,6, Cuba, El-Salvador, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-42, Canada,13, China, Germany, Cambodia,0,1,0,1902,40, United-States,1,0,1,1280,1,0
-58, China,10, China, Ecuador, Cambodia,0,1,0,0,50, United-States,1,0,0,1280,1,0
-23, Canada,13, Cuba, France, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-56, Cuba,10, China, China, Cambodia,0,1,0,0,70, United-States,1,0,0,1280,1,0
-19, China,9, Cuba, El-Salvador, Columbia,0,1,0,0,32, United-States,1,0,0,1280,1,0
-22, China,9, Cuba, El-Salvador, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-38, China,7, China, El-Salvador, Cambodia,0,1,2635,0,37, United-States,1,0,0,1280,1,0
-29, Canada,6, Cuba, Cuba, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-17, China,6, Cuba, Greece, Columbia,0,1,0,0,20, United-States,1,0,0,1280,1,0
-31, China,9, Cambodia, Ecuador, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-42, Dominican-Republic,9, Cambodia, Columbia, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-36, Cuba,9, Cuba, China, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-66, Cuba,9, Cuba, Cuba, China,0,1,0,0,20, United-States,1,0,0,1280,1,0
-22, China,9, China, Greece, Cambodia,0,1,0,0,50, United-States,1,0,0,1280,1,0
-42, China,9, Cambodia, El-Salvador, Cuba,0,1,5721,0,40, Philippines,0,0,0,1280,1,0
-18, China,10, Cuba, Greece, Columbia,0,1,0,0,35, United-States,1,0,0,1280,1,0
-45, Dominican-Republic,9, Cambodia, Germany, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-40, China,10, Cuba, China, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-33, Columbia,9, China, Greece, Cambodia,0,1,0,0,45, South,1,0,0,1280,1,0
-23, China,9, China, Ecuador, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-38, Columbia,9, China, Columbia, Cambodia,0,1,3137,0,42, United-States,0,0,0,1280,1,0
-33, China,8, Cambodia, Columbia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-24, China,9, Cuba, Cambodia, Cuba,0,1,0,0,59, United-States,0,0,0,1280,1,0
-22, China,9, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-22, China,10, China, Columbia, Cambodia,0,1,0,0,55, United-States,1,0,0,1280,1,0
-22, China,10, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-37, Dominican-Republic,10, Cambodia, Cambodia, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-46, China,9, Cambodia, Greece, Canada,0,1,0,0,33, United-States,1,0,0,1280,1,0
-61, China,13, China, Ecuador, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-38, China,9, China, El-Salvador, Cambodia,0,1,0,0,59, United-States,1,0,1,1280,1,0
-33, Canada,14, Cuba, France, Canada,0,1,0,0,50, United-States,1,0,0,1280,1,0
-31, China,11, Cuba, Germany, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-40, China,9, Cambodia, Cambodia, Canada,0,1,0,0,32, United-States,1,0,0,1280,1,0
-62, Cambodia,2, China, Cambodia, Cambodia,0,1,0,0,40, Puerto-Rico,1,0,0,1280,1,0
-45, China,16, Cambodia, France, Cuba,0,1,0,3004,35, United-States,1,0,1,1280,1,0
-41, China,16, China, Columbia, Dominican-Republic,0,1,0,1902,40, United-States,1,0,1,1280,1,0
-46, Dominican-Republic,16, Cambodia, France, Cuba,0,1,0,0,50, France,1,0,1,1280,1,0
-28, China,5, China, Germany, Dominican-Republic,0,1,0,0,40, United-States,1,0,0,1280,1,0
-60, China,7, China, Ecuador, Dominican-Republic,0,1,0,0,29, Hong,1,0,0,1280,1,0
-34, China,14, China, France, Dominican-Republic,0,1,0,0,40, United-States,1,0,1,1280,1,0
-46, China,14, China, Columbia, Cambodia,0,1,99999,0,50, United-States,1,0,1,1280,1,0
-48, China,13, China, Cambodia, Dominican-Republic,0,1,0,0,50, United-States,1,0,1,1280,1,0
-57, Cuba,16, China, France, Cambodia,0,1,0,1887,70, United-States,1,0,1,1280,1,0
-26, China,10, China, Ecuador, Dominican-Republic,0,1,0,0,40, United-States,1,0,0,1280,1,0
-31, China,9, China, Greece, Dominican-Republic,0,1,0,0,18, United-States,1,0,0,1280,1,0
-24, China,11, China, Cambodia, Dominican-Republic,0,1,0,0,40, United-States,1,0,0,1280,1,0
-41, China,3, China, Cuba, Dominican-Republic,0,1,0,0,40, Mexico,1,0,0,1280,1,0
-46, China,9, China, El-Salvador, Dominican-Republic,0,1,0,0,38, United-States,1,0,0,1280,1,0
-64, Cuba,16, China, Columbia, Cambodia,0,1,0,0,25, United-States,1,0,1,1280,1,0
-38, China,9, China, El-Salvador, Dominican-Republic,0,1,0,1902,40, Puerto-Rico,1,0,1,1280,1,0
-53, China,13, China, Columbia, Cambodia,0,1,99999,0,50, India,1,0,1,1280,1,0
-50, China,9, China, Cambodia, Dominican-Republic,0,1,0,0,40, United-States,1,0,0,1280,1,0
-31, Canada,16, Cuba, France, Canada,0,1,0,0,50, Mexico,1,0,1,1280,1,0
-31, Canada,13, China, France, Dominican-Republic,0,1,0,0,40, United-States,1,0,1,1280,1,0
-45, China,16, China, France, Cambodia,0,1,0,0,45, China,1,0,1,1280,1,0
-28, China,10, China, Greece, Dominican-Republic,0,1,0,0,40, United-States,1,0,0,1280,1,0
-33, China,16, China, France, Cambodia,0,1,0,0,59, United-States,1,0,1,1280,1,0
-38, China,10, China, El-Salvador, Dominican-Republic,0,1,0,0,40, United-States,1,0,0,1280,1,0
-38, China,15, China, France, Cambodia,0,1,99999,0,70, United-States,1,0,1,1280,1,0
-36, China,13, China, Columbia, Dominican-Republic,0,1,0,0,40, United-States,0,0,1,1280,1,0
-33, China,16, China, France, Cambodia,0,1,15024,0,50, United-States,0,0,1,1280,1,0
-31, China,13, China, Columbia, Dominican-Republic,0,1,0,0,50, United-States,0,0,1,1280,1,0
-48, Dominican-Republic,9, China, China, Dominican-Republic,0,1,0,0,40, United-States,0,0,1,1280,1,0
-44, China,10, China, Cambodia, Dominican-Republic,0,1,0,0,45, United-States,0,0,1,1280,1,0
-29, Cuba,7, China, El-Salvador, Dominican-Republic,0,1,0,0,5, United-States,0,0,0,1280,1,0
-42, China,3, China, Ecuador, Dominican-Republic,0,1,0,0,38, Mexico,0,0,0,1280,1,0
-46, China,9, China, Germany, Dominican-Republic,0,1,0,0,40, United-States,0,0,0,1280,1,0
-18, China,9, China, Greece, Dominican-Republic,0,1,0,0,36, United-States,0,0,0,1280,1,0
-54, China,10, China, France, Dominican-Republic,0,1,0,0,40, United-States,0,0,0,1280,1,0
-40, China,16, China, Columbia, Cambodia,0,1,3103,0,40, India,0,0,1,1280,1,0
-54, China,16, China, France, Cambodia,0,1,0,0,56, United-States,0,0,1,1280,1,0
-77, Cuba,13, Cuba, Columbia, Canada,0,1,99999,0,20, United-States,0,0,1,1280,1,0
-48, Cambodia,9, China, Cambodia, Dominican-Republic,0,1,0,0,40, United-States,0,0,1,1280,1,0
-28, China,13, China, Columbia, Dominican-Republic,0,1,0,0,40, United-States,0,0,0,1280,1,0
-28, Dominican-Republic,14, China, France, Dominican-Republic,0,1,0,0,50, United-States,0,0,1,1280,1,0
-34, China,10, China, Columbia, Dominican-Republic,0,1,0,0,45, United-States,0,0,1,1280,1,0
-34, China,13, China, England, Dominican-Republic,0,1,0,0,20, United-States,0,0,1,1280,1,0
-37, Canada,13, China, France, Dominican-Republic,0,1,15024,0,50, United-States,0,0,1,1280,1,0
-42, China,10, China, El-Salvador, Dominican-Republic,0,1,0,0,29, United-States,0,0,0,1280,1,0
-46, China,10, China, Cambodia, Dominican-Republic,0,1,0,0,40, United-States,0,0,0,1280,1,0
-56, China,14, China, Columbia, Dominican-Republic,0,1,0,0,50, United-States,0,0,0,1280,1,0
-37, China,13, China, France, Dominican-Republic,0,1,15024,0,40, United-States,0,0,1,1280,1,0
-57, Columbia,10, China, Columbia, Cambodia,0,1,99999,0,59, United-States,0,0,1,1280,1,0
-42, China,14, China, Columbia, Dominican-Republic,0,1,0,1977,50, United-States,0,0,1,1280,1,0
-77, China,9, Ecuador, El-Salvador, Canada,0,1,2964,0,40, United-States,0,0,0,1280,1,0
-54, China,9, Ecuador, El-Salvador, Cuba,0,1,0,0,32, United-States,0,0,0,1280,1,0
-45, China,9, Ecuador, Cambodia, Cuba,0,1,0,0,35, United-States,0,0,0,1280,1,0
-48, China,9, Ecuador, Ecuador, Canada,0,1,0,0,10, United-States,0,0,0,1280,1,0
-65, China,9, Ecuador, El-Salvador, Canada,0,1,2538,0,50, United-States,0,0,0,1280,1,0
-23, China,7, Cuba, Haiti, Columbia,0,1,0,0,38, United-States,0,0,0,1280,1,0
-73, Cuba,9, Ecuador, China, Canada,0,1,0,0,24, United-States,0,0,0,1280,1,0
-56, China,9, China, Haiti, Cambodia,0,1,0,0,50, United-States,0,0,0,1280,1,0
-34, China,9, Cambodia, Haiti, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-32, China,10, China, Haiti, Cambodia,0,1,0,0,59, United-States,0,0,0,1280,1,0
-62, China,5, Ecuador, El-Salvador, Cuba,0,1,0,0,25, United-States,0,0,0,1280,1,0
-90, Canada,12, China, Cambodia, Cambodia,0,1,0,0,20, Philippines,0,0,0,1280,1,0
-62, Cambodia,9, Ecuador, Columbia, Canada,0,1,0,0,36, United-States,0,0,0,1280,1,0
-40, Columbia,10, China, Haiti, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-90, China,12, Cuba, Columbia, Canada,0,1,6097,0,45, United-States,0,0,1,1280,1,0
-35, China,9, China, Haiti, Cambodia,0,1,5178,0,90, United-States,1,0,1,1280,1,0
-58, China,4, Ecuador, El-Salvador, Canada,0,1,0,0,29, United-States,1,0,0,1280,1,0
-42, Canada,10, China, Haiti, Cambodia,0,1,0,0,17, United-States,1,0,0,1280,1,0
-49, China,9, Cambodia, Haiti, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-38, China,7, China, Haiti, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-54, China,4, Ecuador, England, Cuba,0,1,0,0,29, United-States,1,0,0,1280,1,0
-44, China,9, China, Haiti, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-25, China,10, China, Haiti, Cambodia,0,1,0,0,35, United-States,1,0,0,1280,1,0
-61, China,9, Ecuador, Greece, Canada,0,1,0,0,50, United-States,1,0,0,1280,1,0
-50, Canada,4, China, Haiti, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-52, China,9, Ecuador, China, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-37, China,9, Cuba, Haiti, Canada,0,1,0,0,50, United-States,1,0,0,1280,1,0
-32, Dominican-Republic,9, China, Haiti, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-62, China,9, Ecuador, Greece, Canada,0,1,0,0,43, United-States,1,0,0,1280,1,0
-25, China,10, Cuba, Ecuador, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-42, Columbia,14, China, Columbia, Cambodia,0,1,5013,0,45, United-States,0,0,0,1280,1,0
-30, China,10, Cambodia, France, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-23, China,10, Cuba, Dominican-Republic, Columbia,0,1,2597,0,50, United-States,0,0,0,1280,1,0
-20, China,10, Cuba, El-Salvador, Columbia,0,1,0,0,18, United-States,0,0,0,1280,1,0
-31, China,13, Dominican-Republic, Columbia, Canada,0,1,0,0,70, United-States,0,0,0,1280,1,0
-50, Canada,14, China, Cambodia, China,0,1,0,2415,50, United-States,0,0,1,1280,1,0
-33, China,10, Cuba, China, Canada,0,1,8614,0,40, United-States,0,0,1,1280,1,0
-21, China,10, Cuba, Cambodia, Columbia,0,1,0,0,20, United-States,0,0,0,1280,1,0
-35, China,9, Cambodia, Dominican-Republic, Canada,0,1,0,0,25, United-States,0,0,0,1280,1,0
-31, China,10, Cambodia, Cambodia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-31, China,9, Cambodia, Cambodia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-50, China,10, Cambodia, Dominican-Republic, Canada,0,1,0,0,40, Ireland,0,0,0,1280,1,0
-50, China,14, China, Columbia, Cambodia,0,1,0,0,59, United-States,0,0,1,1280,1,0
-57, Dominican-Republic,9, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-42, China,13, Cuba, Greece, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-40, China,10, Cuba, China, China,0,1,0,0,29, United-States,0,0,0,1280,1,0
-42, Cuba,9, China, Greece, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-19, China,10, Cuba, El-Salvador, Columbia,0,1,0,0,20, United-States,0,0,0,1280,1,0
-23, China,9, Columbia, Ecuador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-46, China,11, China, Greece, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-46, Cambodia,11, China, Cambodia, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-32, China,9, China, China, Cambodia,0,1,7298,0,46, United-States,0,0,1,1280,1,0
-20, China,10, Cuba, Guatemala, Canada,0,1,0,0,10, United-States,0,0,0,1280,1,0
-32, China,9, China, China, Cambodia,0,1,7298,0,46, United-States,0,0,1,1280,1,0
-42, Cambodia,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-48, China,10, China, El-Salvador, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-35, Canada,10, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-52, Cuba,9, China, Cuba, Cambodia,0,1,0,0,98, United-States,0,0,1,1280,1,0
-42, China,9, Cuba, Dominican-Republic, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-30, China,9, Cuba, Dominican-Republic, Cuba,0,1,0,0,55, United-States,0,0,0,1280,1,0
-36, Cambodia,13, China, Cambodia, Cambodia,0,1,0,1848,55, United-States,0,0,1,1280,1,0
-17, China,6, Cuba, El-Salvador, Columbia,0,1,0,0,14, United-States,0,0,0,1280,1,0
-44, China,13, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-61, Cuba,13, China, France, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-35, China,13, China, France, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-44, China,13, China, France, Cambodia,0,1,0,0,45, United-States,0,0,1,1280,1,0
-22, China,10, Cuba, Cambodia, Columbia,0,1,0,0,10, United-States,0,0,0,1280,1,0
-41, Cambodia,13, Cuba, Columbia, Canada,0,1,0,0,40, United-States,0,0,1,1280,1,0
-62, Cuba,9, China, Cuba, Cambodia,0,1,0,0,80, United-States,0,0,0,1280,1,0
-27, China,9, Cambodia, China, Canada,0,1,0,0,50, United-States,0,0,0,1280,1,0
-32, China,9, Cambodia, France, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-54, China,6, Cuba, El-Salvador, Canada,0,1,0,0,29, United-States,0,0,0,1280,1,0
-56, China,9, Cambodia, Cambodia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-41, China,9, China, China, Cambodia,0,1,0,1887,40, United-States,0,0,1,1280,1,0
-44, Canada,14, China, France, Cambodia,0,1,0,0,44, United-States,0,0,1,1280,1,0
-38, China,9, Cuba, China, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-31, China,11, Cuba, El-Salvador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-58, China,10, China, Columbia, Cambodia,0,1,0,1848,45, United-States,0,0,1,1280,1,0
-40, China,13, China, Columbia, Cambodia,0,1,0,1902,32, United-States,0,0,1,1280,1,0
-58, China,10, China, Columbia, Cambodia,0,1,0,1848,45, United-States,0,0,1,1280,1,0
-72, Cuba,14, China, China, Cambodia,0,1,0,0,29, United-States,0,0,0,1280,1,0
-41, Dominican-Republic,14, Cuba, France, Columbia,0,1,0,0,35, United-States,0,0,0,1280,1,0
-30, China,13, Cambodia, Greece, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-48, China,14, China, France, Cambodia,0,1,0,0,40, El-Salvador,0,0,1,1280,1,0
-37, China,10, China, Columbia, Cambodia,0,1,0,0,80, United-States,0,0,1,1280,1,0
-50, China,10, China, Greece, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-28, China,13, China, Columbia, Cambodia,0,1,5178,0,50, United-States,0,0,1,1280,1,0
-48, China,10, Cuba, France, Cuba,0,1,0,0,45, United-States,0,0,0,1280,1,0
-34, China,13, China, Greece, Cambodia,0,1,0,0,45, United-States,0,0,1,1280,1,0
-23, Cuba,11, Cuba, China, Canada,0,1,0,0,45, United-States,0,0,0,1280,1,0
-66, Cuba,9, China, Cuba, Cambodia,0,1,1409,0,40, United-States,0,0,0,1280,1,0
-38, China,15, China, France, Cambodia,0,1,0,0,59, United-States,0,0,1,1280,1,0
-23, Cuba,10, Cuba, Cuba, Columbia,0,1,0,0,35, United-States,0,0,0,1280,1,0
-56, China,10, China, Greece, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-45, China,10, Cambodia, China, Canada,0,1,27828,0,56, United-States,0,0,1,1280,1,0
-46, China,13, China, Columbia, Cambodia,0,1,0,1902,50, United-States,0,0,1,1280,1,0
-29, Cambodia,9, Cambodia, Cambodia, Canada,0,1,0,0,45, United-States,0,0,0,1280,1,0
-32, China,9, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-52, Cuba,15, China, France, Cambodia,0,1,0,0,70, United-States,0,0,1,1280,1,0
-40, China,9, Cuba, Cambodia, Canada,0,1,0,0,70, United-States,0,0,0,1280,1,0
-49, Cuba,9, China, China, Cambodia,0,1,5013,0,50, United-States,0,0,0,1280,1,0
-70, Cuba,10, China, Cuba, Cambodia,0,1,2653,0,70, United-States,0,0,0,1280,1,0
-66, China,13, China, Cambodia, Cambodia,0,1,0,0,40, Philippines,0,0,0,1280,1,0
-50, Dominican-Republic,10, Columbia, Cambodia, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-20, Dominican-Republic,9, Cuba, Guatemala, Columbia,0,1,0,0,24, United-States,0,0,0,1280,1,0
-30, China,7, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-65, Cuba,10, China, Ecuador, Cambodia,0,1,6514,0,40, United-States,0,0,1,1280,1,0
-25, China,13, Cuba, France, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-29, China,11, Dominican-Republic, Cambodia, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-22, China,9, Cuba, Cambodia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-24, China,10, Cuba, Greece, Canada,0,1,0,0,33, United-States,0,0,0,1280,1,0
-41, China,7, China, China, Cambodia,0,1,0,1485,50, United-States,0,0,1,1280,1,0
-46, China,9, China, Greece, Cambodia,0,1,0,0,40, Portugal,0,0,0,1280,1,0
-25, China,10, Cuba, France, Canada,0,1,0,0,65, United-States,0,0,0,1280,1,0
-56, China,13, China, France, Cambodia,0,1,0,1902,65, United-States,0,0,1,1280,1,0
-53, China,9, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-53, China,9, China, China, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-18, China,7, Cuba, El-Salvador, Columbia,0,1,0,0,14, Peru,0,0,0,1280,1,0
-48, China,9, Cambodia, Ecuador, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-49, China,13, China, Greece, Cambodia,0,1,0,0,59, United-States,0,0,0,1280,1,0
-24, China,13, China, Cuba, Cambodia,0,1,0,0,35, United-States,0,0,1,1280,1,0
-53, Cuba,13, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-42, China,13, China, Columbia, Cambodia,0,1,7688,0,40, United-States,0,0,1,1280,1,0
-27, Dominican-Republic,13, Cuba, France, Cuba,0,1,0,0,50, United-States,0,0,0,1280,1,0
-40, China,10, China, Columbia, Cambodia,0,1,0,0,45, United-States,0,0,1,1280,1,0
-41, China,10, Cambodia, Columbia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-21, China,10, Cuba, Greece, Columbia,0,1,0,0,25, United-States,0,0,0,1280,1,0
-46, China,9, China, China, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-42, China,10, China, Columbia, Cambodia,0,1,15024,0,50, United-States,0,0,1,1280,1,0
-35, China,9, Cambodia, China, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-36, China,9, China, China, Cambodia,0,1,4064,0,40, United-States,0,0,0,1280,1,0
-31, China,13, Cuba, Columbia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-58, China,13, Cambodia, Columbia, Canada,0,1,0,0,38, United-States,0,0,0,1280,1,0
-32, China,5, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-38, China,10, China, Greece, Cambodia,0,1,0,0,55, United-States,0,0,1,1280,1,0
-60, China,9, China, France, Cambodia,0,1,5013,0,40, United-States,0,0,0,1280,1,0
-38, Cambodia,13, Cuba, Guatemala, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-54, China,10, China, Columbia, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-54, China,13, China, Columbia, Cambodia,0,1,0,0,45, United-States,0,0,1,1280,1,0
-18, China,7, Cuba, France, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-18, China,5, Cuba, Dominican-Republic, Columbia,0,1,594,0,40, United-States,0,0,0,1280,1,0
-34, China,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-40, Cambodia,13, China, France, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-32, China,3, China, Ecuador, Cambodia,0,1,0,0,40, Mexico,0,0,0,1280,1,0
-50, Cuba,9, China, Greece, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-42, China,6, China, Columbia, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-19, China,9, Cuba, China, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-30, China,14, Cambodia, France, Cuba,0,1,0,1726,40, United-States,0,0,0,1280,1,0
-58, Cuba,9, China, Dominican-Republic, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-28, China,13, China, Cambodia, Cambodia,0,1,0,1887,40, United-States,0,0,1,1280,1,0
-54, China,13, China, Greece, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-37, China,9, China, China, Cambodia,0,1,0,0,44, United-States,0,0,0,1280,1,0
-28, China,2, Cuba, Ecuador, Canada,0,1,0,0,40, Mexico,0,0,0,1280,1,0
-28, China,2, Cuba, Ecuador, Canada,0,1,0,0,40, Mexico,0,0,0,1280,1,0
-18, China,7, Cuba, Dominican-Republic, Columbia,0,1,0,1602,40, United-States,0,0,0,1280,1,0
-27, China,3, Cuba, Cuba, Canada,0,1,0,0,35, Mexico,0,0,0,1280,1,0
-58, China,13, Cambodia, France, Canada,0,1,0,0,50, United-States,0,0,0,1280,1,0
-41, China,9, Cambodia, Ecuador, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-50, China,9, China, Greece, Cambodia,0,1,0,0,50, United-States,0,0,1,1280,1,0
-42, Cuba,13, China, Columbia, Cambodia,0,1,0,1977,50, United-States,0,0,1,1280,1,0
-28, China,12, Cuba, Cambodia, Columbia,0,1,0,0,32, United-States,0,0,0,1280,1,0
-36, China,7, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-38, China,10, China, France, Cambodia,0,1,0,0,50, United-States,0,0,0,1280,1,0
-54, China,9, Dominican-Republic, Greece, Cuba,0,1,0,0,35, United-States,0,0,0,1280,1,0
-19, China,9, Cuba, El-Salvador, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-49, Canada,9, China, China, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-17, China,7, Cuba, Cambodia, Columbia,0,1,0,0,32, United-States,0,0,0,1280,1,0
-52, China,9, Cambodia, Cambodia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-40, Canada,11, China, China, Cambodia,0,1,0,0,35, United-States,0,0,0,1280,1,0
-40, China,13, China, France, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-31, China,10, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-73, Canada,14, China, France, Cambodia,0,1,0,0,10, Poland,0,0,1,1280,1,0
-41, China,9, Cuba, Columbia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-23, China,4, Cuba, Ecuador, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-40, China,7, Cambodia, El-Salvador, China,0,1,0,0,20, United-States,0,0,0,1280,1,0
-42, Canada,10, China, Germany, Cambodia,0,1,0,1887,40, United-States,0,0,1,1280,1,0
-23, China,10, Cuba, Greece, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-31, China,7, Cuba, Ecuador, Canada,0,1,0,0,36, United-States,0,0,0,1280,1,0
-33, China,9, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-42, China,10, China, China, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-57, Cuba,14, China, France, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-42, Canada,9, China, China, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-42, China,4, China, Dominican-Republic, Cambodia,0,1,0,0,99, United-States,0,0,0,1280,1,0
-20, China,10, Cuba, Germany, Columbia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-21, China,10, Cuba, Columbia, Columbia,0,1,0,0,25, United-States,0,0,0,1280,1,0
-37, Dominican-Republic,11, Cuba, France, Cuba,0,1,5455,0,40, United-States,0,0,0,1280,1,0
-25, China,10, Cuba, Guatemala, Columbia,0,1,0,0,14, Mexico,0,0,0,1280,1,0
-28, China,9, Cuba, Columbia, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-22, China,7, Cuba, China, Columbia,0,1,0,0,29, United-States,0,0,0,1280,1,0
-36, China,12, Cambodia, Greece, Canada,0,1,0,0,40, United-States,0,0,1,1280,1,0
-34, China,9, Cuba, Dominican-Republic, Columbia,0,1,2174,0,40, United-States,0,0,0,1280,1,0
-46, Cuba,10, China, Greece, Cambodia,0,1,0,0,40, United-States,0,0,0,1280,1,0
-36, China,9, Cuba, Ecuador, China,0,1,0,0,40, United-States,0,0,0,1280,1,0
-60, China,13, Cambodia, Columbia, Columbia,0,1,0,0,59, United-States,0,0,0,1280,1,0
-36, Canada,13, Cambodia, France, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-40, China,4, China, China, Cambodia,0,1,0,0,40, El-Salvador,0,0,0,1280,1,0
-42, China,3, China, Ecuador, Cambodia,0,1,0,0,40, Mexico,0,0,0,1280,1,0
-50, China,10, Cuba, Cuba, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-46, China,13, Cuba, France, Canada,0,1,0,0,40, United-States,0,0,0,1280,1,0
-45, China,12, China, China, Cambodia,0,1,0,0,45, United-States,0,0,0,1280,1,0
-36, China,14, China, Columbia, Cambodia,0,1,0,0,40, Taiwan,1,0,1,1280,1,0
-56, China,4, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-50, Cuba,9, China, Cuba, Cambodia,0,1,0,0,84, United-States,1,0,0,1280,1,0
-28, China,13, Cuba, Columbia, Canada,0,1,6849,0,59, United-States,1,0,0,1280,1,0
-49, Dominican-Republic,13, China, Columbia, Cambodia,0,1,0,0,45, United-States,1,0,1,1280,1,0
-46, China,3, China, Dominican-Republic, Cambodia,0,1,0,0,40, Mexico,1,0,0,1280,1,0
-33, Columbia,9, Cuba, El-Salvador, Cuba,0,1,0,0,40, Vietnam,1,0,0,1280,1,0
-41, China,10, Cuba, Cambodia, Canada,0,1,0,1617,35, United-States,1,0,0,1280,1,0
-24, China,9, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-46, China,13, China, Guatemala, Cambodia,0,1,0,0,59, United-States,1,0,1,1280,1,0
-42, China,9, China, Ecuador, Cambodia,0,1,0,0,42, United-States,1,0,1,1280,1,0
-69, Cuba,11, China, Columbia, Cambodia,0,1,0,0,20, United-States,1,0,0,1280,1,0
-22, China,9, Cuba, Ecuador, Canada,0,1,0,0,48, United-States,1,0,0,1280,1,0
-56, Dominican-Republic,13, China, France, Cambodia,0,1,0,1902,48, United-States,1,0,1,1280,1,0
-49, Cambodia,10, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-42, Cambodia,9, China, Ecuador, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-50, China,9, China, Dominican-Republic, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-25, China,13, Cuba, Greece, Columbia,0,1,0,0,50, United-States,1,0,0,1280,1,0
-41, Dominican-Republic,9, China, Cambodia, Cambodia,0,1,3464,0,40, United-States,1,0,0,1280,1,0
-37, China,14, China, France, Cambodia,0,1,0,0,50, United-States,1,0,1,1280,1,0
-61, Canada,9, China, Cuba, Cambodia,0,1,0,0,48, United-States,1,0,0,1280,1,0
-31, Cuba,10, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-23, China,13, Cuba, Cambodia, Columbia,0,1,0,0,24, United-States,1,0,0,1280,1,0
-18, China,7, Cuba, El-Salvador, Columbia,0,1,0,0,16, United-States,1,0,0,1280,1,0
-42, Cuba,10, China, France, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-49, China,13, Cuba, Guatemala, Canada,0,1,0,1564,40, Canada,1,0,1,1280,1,0
-25, China,10, Cuba, Dominican-Republic, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-57, China,15, China, China, Cambodia,0,1,0,1902,40, Philippines,1,0,1,1280,1,0
-29, Cuba,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-49, Columbia,9, Dominican-Republic, El-Salvador, Canada,0,1,0,0,45, United-States,1,0,0,1280,1,0
-48, China,10, Cuba, Cambodia, Canada,0,1,0,0,43, United-States,1,0,0,1280,1,0
-25, China,13, Cuba, France, Columbia,0,1,0,0,50, United-States,1,0,0,1280,1,0
-58, China,9, Cambodia, Columbia, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-32, China,10, Cambodia, El-Salvador, Cuba,0,1,0,0,29, United-States,1,0,0,1280,1,0
-31, China,9, Cuba, Cuba, Canada,0,1,0,0,40, Ireland,1,0,0,1280,1,0
-38, China,10, China, Greece, Cambodia,0,1,0,0,59, United-States,1,0,0,1280,1,0
-32, China,9, China, Dominican-Republic, Cambodia,0,1,0,0,45, United-States,1,0,0,1280,1,0
-35, China,9, China, Ecuador, Cambodia,0,1,5013,0,40, United-States,1,0,0,1280,1,0
-41, China,9, Dominican-Republic, China, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-30, China,13, Cuba, France, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-71, Cuba,9, China, Greece, Cambodia,0,1,0,2392,52, United-States,1,0,1,1280,1,0
-40, China,14, Cambodia, Columbia, Cuba,0,1,0,0,38, United-States,1,0,0,1280,1,0
-46, China,13, China, Columbia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-30, China,13, China, Cambodia, Cambodia,0,1,7298,0,40, United-States,1,0,1,1280,1,0
-31, China,10, Cuba, El-Salvador, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-44, China,10, Cambodia, Ecuador, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-38, Dominican-Republic,13, China, France, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-58, China,9, China, China, Cambodia,0,1,0,0,42, United-States,1,0,1,1280,1,0
-25, China,9, China, Greece, Cambodia,0,1,0,0,50, United-States,1,0,0,1280,1,0
-25, Cuba,5, Cuba, China, Canada,0,1,0,0,14, United-States,1,0,0,1280,1,0
-44, China,10, China, Ecuador, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-37, Canada,14, Cuba, France, Canada,0,1,0,0,45, United-States,1,0,0,1280,1,0
-46, China,10, China, France, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-23, China,10, Cuba, Columbia, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-46, China,10, China, France, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-50, Cuba,9, China, China, Cambodia,0,1,0,0,70, United-States,1,0,0,1280,1,0
-24, China,9, Cuba, Greece, Columbia,0,1,0,1762,32, United-States,1,0,0,1280,1,0
-46, China,9, China, El-Salvador, Cambodia,0,1,0,0,59, United-States,1,0,1,1280,1,0
-17, China,7, Cuba, Greece, Columbia,0,1,0,0,35, United-States,1,0,0,1280,1,0
-60, China,3, China, Cuba, Cambodia,0,1,0,0,44, Mexico,1,0,0,1280,1,0
-38, Cuba,4, China, Cuba, Cambodia,0,1,0,0,56, United-States,1,0,0,1280,1,0
-33, China,14, Cuba, Greece, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-60, China,8, Cambodia, Cuba, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-30, China,9, China, Greece, Cambodia,0,1,0,0,42, United-States,1,0,0,1280,1,0
-19, China,10, Cuba, El-Salvador, Canada,0,1,0,0,75, United-States,1,0,0,1280,1,0
-44, China,14, Cuba, China, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-36, Cambodia,9, Cambodia, Cambodia, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-58, China,11, China, Ecuador, Cambodia,0,1,0,0,45, United-States,1,0,1,1280,1,0
-36, China,9, China, China, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-27, China,9, China, China, Cambodia,0,1,3137,0,45, United-States,1,0,0,1280,1,0
-19, China,10, Cuba, El-Salvador, Columbia,0,1,0,0,29, United-States,1,0,0,1280,1,0
-30, China,10, China, Ecuador, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-56, China,9, China, Cuba, Cambodia,0,1,0,0,20, United-States,1,0,0,1280,1,0
-22, China,7, China, Ecuador, Canada,0,1,0,0,40, Mexico,1,0,0,1280,1,0
-30, China,9, China, Columbia, Cambodia,0,1,0,0,50, United-States,1,0,0,1280,1,0
-58, Cuba,9, Cambodia, France, Canada,0,1,0,0,20, England,1,0,0,1280,1,0
-32, China,10, Cuba, China, Cuba,0,1,0,0,72, Mexico,1,0,0,1280,1,0
-29, Dominican-Republic,12, Cuba, Guatemala, Canada,0,1,0,0,45, United-States,1,0,0,1280,1,0
-26, Dominican-Republic,13, Cuba, France, Columbia,0,1,0,0,38, United-States,1,0,0,1280,1,0
-58, Dominican-Republic,9, China, El-Salvador, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-34, China,11, Cuba, China, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-25, China,9, China, Ecuador, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-76, Cuba,5, China, Cuba, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-23, China,6, Cuba, El-Salvador, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-21, China,11, Cuba, China, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-42, China,9, Dominican-Republic, Cambodia, Cuba,0,1,0,0,35, Scotland,1,0,0,1280,1,0
-41, China,11, China, Ecuador, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-24, China,10, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-45, China,11, Cambodia, Cambodia, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-28, China,8, Cuba, Greece, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-67, China,9, China, Germany, Cambodia,0,1,0,0,24, United-States,1,0,0,1280,1,0
-35, China,9, Cambodia, El-Salvador, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-35, China,9, Cambodia, El-Salvador, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-22, China,9, Cuba, Cambodia, Columbia,0,1,0,0,28, United-States,1,0,0,1280,1,0
-38, Columbia,13, China, Columbia, Cambodia,0,1,15024,0,80, United-States,1,0,1,1280,1,0
-22, China,9, Cuba, China, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-58, Columbia,10, China, Haiti, Dominican-Republic,0,1,0,0,40, United-States,1,0,1,1280,1,0
-31, China,9, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-32, China,9, China, Ecuador, Cambodia,0,1,0,0,42, United-States,1,0,0,1280,1,0
-40, China,7, China, Cuba, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-28, Cuba,9, Cambodia, China, Canada,0,1,0,0,35, United-States,1,0,0,1280,1,0
-46, China,13, China, France, Cambodia,0,1,0,0,50, United-States,1,0,0,1280,1,0
-44, China,9, Cuba, Cambodia, Columbia,0,1,0,1504,50, United-States,1,0,0,1280,1,0
-26, China,14, Cuba, France, Canada,0,1,0,2001,40, United-States,1,0,0,1280,1,0
-19, China,10, Cuba, Greece, Columbia,0,1,0,0,20, United-States,1,0,0,1280,1,0
-35, China,13, China, France, Cambodia,0,1,0,0,16, United-States,1,0,1,1280,1,0
-34, China,9, China, China, Cambodia,0,1,0,0,40, Nicaragua,1,0,0,1280,1,0
-33, China,9, Cambodia, Cambodia, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-28, China,9, Cuba, El-Salvador, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-22, China,13, Cuba, Cambodia, Columbia,0,1,0,0,35, United-States,1,0,0,1280,1,0
-23, China,9, Cuba, China, Columbia,0,1,0,1594,20, United-States,1,0,0,1280,1,0
-42, China,13, China, Guatemala, Cambodia,0,1,0,0,50, United-States,1,0,1,1280,1,0
-30, China,10, Cuba, Columbia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-48, Canada,12, China, Germany, Cambodia,0,1,0,0,56, United-States,1,0,1,1280,1,0
-42, Cuba,15, Cambodia, France, Cuba,0,1,7430,0,40, United-States,1,0,1,1280,1,0
-22, Cambodia,10, Cuba, Columbia, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-36, China,13, China, Columbia, Cambodia,0,1,7688,0,40, United-States,1,0,1,1280,1,0
-45, China,4, Cuba, Cambodia, Columbia,0,1,0,0,20, United-States,1,0,0,1280,1,0
-25, China,13, China, China, Cambodia,0,1,0,0,59, United-States,1,0,1,1280,1,0
-38, China,10, China, Greece, Cambodia,0,1,0,0,59, United-States,1,0,1,1280,1,0
-19, China,10, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-26, Canada,13, Cuba, France, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-19, China,10, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-36, China,10, Cuba, Germany, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-26, Canada,13, Cuba, France, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-22, China,9, Cuba, Greece, Columbia,0,1,0,0,40, Vietnam,1,0,0,1280,1,0
-24, Cuba,9, Cuba, China, Canada,0,1,0,0,35, United-States,1,0,0,1280,1,0
-32, China,9, China, China, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-41, Cuba,10, Cuba, China, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-37, China,11, Cambodia, El-Salvador, Canada,0,1,0,0,4, United-States,1,0,0,1280,1,0
-45, China,10, China, Greece, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-49, China,13, Cuba, Columbia, Canada,0,1,0,0,40, United-States,1,0,1,1280,1,0
-35, China,11, China, El-Salvador, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-24, China,11, Cuba, Columbia, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-24, Canada,9, Cuba, Cambodia, Canada,0,1,0,0,38, United-States,1,0,0,1280,1,0
-21, China,10, Cuba, Dominican-Republic, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-45, Dominican-Republic,13, Cambodia, Cambodia, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-45, Canada,9, China, Germany, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-34, China,7, Cambodia, El-Salvador, Canada,0,1,0,0,70, United-States,1,0,0,1280,1,0
-45, Cuba,9, China, China, Cambodia,0,1,0,0,59, United-States,1,0,0,1280,1,0
-42, Cuba,10, China, China, Cambodia,0,1,0,0,59, United-States,1,0,0,1280,1,0
-24, China,13, Cuba, France, Columbia,0,1,0,0,14, United-States,1,0,0,1280,1,0
-52, China,9, Cuba, Dominican-Republic, Cuba,0,1,0,0,40, United-States,1,0,0,1280,1,0
-36, China,10, Cuba, Greece, Canada,0,1,0,0,35, United-States,1,0,0,1280,1,0
-25, China,13, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-38, China,11, China, Guatemala, Cambodia,0,1,0,0,50, United-States,1,0,1,1280,1,0
-28, China,13, Cuba, Greece, Columbia,0,1,0,0,2, United-States,1,0,0,1280,1,0
-36, Cuba,13, Cambodia, El-Salvador, Cuba,0,1,0,0,45, United-States,1,0,1,1280,1,0
-36, China,9, China, El-Salvador, China,0,1,0,0,40, Philippines,1,0,0,1280,1,0
-69, China,9, Cambodia, El-Salvador, Canada,0,1,0,0,32, United-States,1,0,0,1280,1,0
-42, Canada,9, China, Germany, Cambodia,0,1,0,0,45, United-States,1,0,1,1280,1,0
-44, China,10, China, Greece, Cambodia,0,1,0,0,50, United-States,1,0,1,1280,1,0
-28, China,9, Cuba, China, Cuba,0,1,2354,0,40, United-States,1,0,0,1280,1,0
-22, China,13, Cuba, Cambodia, Columbia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-38, Cuba,9, Columbia, Cuba, Cuba,0,1,0,0,59, United-States,1,0,0,1280,1,0
-54, China,5, Cambodia, Ecuador, Canada,0,1,10520,0,59, United-States,1,0,1,1280,1,0
-38, Dominican-Republic,13, Cuba, Greece, Canada,0,1,0,0,20, United-States,1,0,0,1280,1,0
-57, China,10, Cambodia, Guatemala, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-56, China,9, China, Ecuador, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-23, Dominican-Republic,13, Cuba, Cambodia, Columbia,0,1,0,0,52, United-States,1,0,0,1280,1,0
-21, China,9, Cuba, China, Canada,0,1,0,0,35, Mexico,0,0,0,1280,1,0
-22, China,13, Cuba, Cambodia, Canada,0,1,0,0,35, United-States,0,0,0,1280,1,0
-20, China,10, Cuba, Columbia, Cuba,0,1,0,0,40, United-States,0,0,0,1280,1,0
-49, China,9, Cambodia, Cambodia, China,0,1,0,0,40, United-States,0,0,0,1280,1,0
-22, China,10, Cuba, Cambodia, Columbia,0,1,0,0,50, United-States,0,0,0,1280,1,0
-58, China,9, China, Cambodia, Cambodia,0,1,0,0,40, United-States,1,0,1,1280,1,0
-28, China,9, Cambodia, Dominican-Republic, Cuba,0,1,0,0,36, United-States,1,0,0,1280,1,0
-23, China,9, Dominican-Republic, China, Columbia,0,1,0,0,53, United-States,1,0,0,1280,1,0
-22, China,10, Cuba, Greece, Columbia,0,1,0,0,20, United-States,1,0,0,1280,1,0
-49, China,8, Cambodia, Ecuador, Canada,0,1,0,0,40, United-States,1,0,0,1280,1,0
-62, Dominican-Republic,14, China, France, Cambodia,0,1,0,0,59, United-States,1,0,1,1280,1,0
-52, China,15, China, France, Cambodia,0,1,15024,0,40, United-States,1,0,1,1280,1,0
-58, China,9, China, Greece, Cambodia,0,1,0,0,40, United-States,1,0,0,1280,1,0
-54, China,10, China, Greece, Cambodia,0,1,0,0,45, United-States,1,0,1,1280,1,0
-46, China,9, China, China, Cambodia,0,1,0,0,46, United-States,1,0,0,1280,1,0
-30, China,13, China, Guatemala, Dominican-Republic,0,1,0,0,16, United-States,1,0,1,1280,1,0
-50, Canada,9, China, Cambodia, Dominican-Republic,0,1,0,0,40, United-States,1,0,0,1280,1,0
-50, Canada,9, China, Cambodia, Dominican-Republic,0,1,7298,0,29, United-States,1,0,1,1280,1,0
-29, China,13, China, France, Dominican-Republic,0,1,0,0,35, United-States,1,0,1,1280,1,0
-46, China,4, China, Greece, Dominican-Republic,0,1,0,0,29, United-States,1,0,0,1280,1,0
-30, China,7, China, El-Salvador, Dominican-Republic,0,1,0,0,29, United-States,1,0,0,1280,1,0
-45, China,10, China, Guatemala, Dominican-Republic,0,1,0,0,40, United-States,1,0,0,1280,1,0
-41, Canada,13, China, France, Dominican-Republic,0,1,0,0,52, United-States,1,0,0,1280,1,0
-54, Columbia,15, China, France, Cambodia,0,1,99999,0,59, United-States,1,0,1,1280,1,0
-37, Cuba,16, Cuba, France, Canada,0,1,14084,0,45, United-States,1,0,1,1280,1,0
-46, Canada,13, Cambodia, Cambodia, Canada,0,1,99999,0,40, United-States,1,0,1,1280,1,0
-33, Columbia,16, China, France, Cambodia,0,1,0,0,40, Cuba,1,0,1,1280,1,0
-42, China,10, China, Guatemala, Dominican-Republic,0,1,0,0,40, United-States,1,0,0,1280,1,0
-48, China,9, China, Columbia, Dominican-Republic,0,1,0,0,40, United-States,1,0,0,1280,1,0
-42, China,10, China, France, Dominican-Republic,0,1,0,0,40, United-States,1,0,1,1280,1,0
-27, China,10, China, Cambodia, Dominican-Republic,0,1,0,1579,40, United-States,0,0,0,1280,1,0
-61, Cuba,14, China, France, Cambodia,0,1,99999,0,29, United-States,0,0,1,1280,1,0
-46, Dominican-Republic,16, China, France, Cambodia,0,1,0,0,40, United-States,0,0,1,1280,1,0
-54, Dominican-Republic,16, China, France, Cambodia,0,1,0,0,46, England,0,0,1,1280,1,0
-38, China,9, China, Greece, Dominican-Republic,0,1,0,0,40, United-States,0,0,0,1280,1,0
-54, Canada,9, China, El-Salvador, Dominican-Republic,0,1,0,0,35, United-States,0,0,0,1280,1,0
-35, China,16, China, Columbia, Cambodia,0,1,0,0,45, United-States,0,0,1,1280,1,0
-32, China,9, China, Guatemala, Dominican-Republic,0,1,0,0,36, United-States,0,0,0,1280,1,0
-53, China,9, China, Columbia, Cambodia,0,1,99999,0,40, United-States,0,0,1,1280,1,0
-52, China,9, China, Cambodia, Dominican-Republic,0,1,7688,0,40, United-States,0,0,1,1280,1,0
-41, China,13, China, France, Dominican-Republic,0,1,0,0,35, Haiti,0,0,1,1280,1,0
-36, China,11, China, Columbia, Dominican-Republic,0,1,7298,0,55, United-States,1,0,1,1280,1,0
-36, Cuba,10, China, Greece, Cambodia,0,1,99999,0,20, United-States,0,0,1,1280,1,0
-30, Cuba,4, China, Cuba, Cambodia,0,1,0,0,40, Mexico,0,0,0,1280,1,0
-54, China,13, China, Cambodia, Dominican-Republic,0,1,3464,0,40, United-States,0,0,0,1280,1,0
+Age,Education_num,race(,sex(,Capital_gain,Capital_loss,Hours_per_week,Unrelated_column_one,predicted,!probability,samples,fold,model_num
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,16,0,1,0,0,1,1,0,1,256,1,0
+17,16,0,1,0,0,1,0,0,1,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,1,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,1,0,1,0,0,1,0,0,0,256,1,0
+17,16,0,1,0,0,1,1,0,1,256,1,0
+17,1,0,1,99999,0,1,1,0,1,256,1,0
+90,10,0,1,0,1944,12,1,0,0,1280,1,0
+28,13,0,1,0,0,40,1,0,0,1280,1,0
+34,12,0,1,0,0,35,1,0,0,1280,1,0
+20,5,0,1,0,0,40,1,0,0,1280,1,0
+44,9,0,1,2829,0,42,1,0,0,1280,1,0
+24,10,0,1,0,0,40,1,0,1,1280,1,0
+19,10,0,1,0,0,20,1,0,0,1280,1,0
+35,9,0,1,0,0,40,1,0,0,1280,1,0
+17,7,0,1,0,0,25,1,0,0,1280,1,0
+62,11,0,1,0,0,24,1,0,0,1280,1,0
+50,13,0,1,15024,0,59,1,0,1,1280,1,0
+52,10,0,1,5013,0,40,1,0,0,1280,1,0
+60,9,0,1,0,0,35,1,0,0,1280,1,0
+20,10,0,1,0,0,36,1,0,0,1280,1,0
+27,13,0,1,0,0,40,1,0,0,1280,1,0
+48,9,0,1,0,0,50,1,0,0,1280,1,0
+18,8,0,1,0,0,14,1,0,0,1280,1,0
+50,6,0,1,0,0,40,1,0,0,1280,1,0
+32,10,0,1,0,0,40,1,0,0,1280,1,0
+24,10,0,1,0,0,35,1,0,0,1280,1,0
+31,9,0,1,0,0,20,1,0,0,1280,1,0
+54,13,0,1,0,0,45,1,0,1,1280,1,0
+50,13,0,1,0,0,40,1,0,0,1280,1,0
+31,12,0,1,0,0,40,1,0,0,1280,1,0
+50,13,0,1,0,2415,40,1,0,1,1280,1,0
+52,10,0,1,0,0,56,1,0,1,1280,1,0
+40,9,0,1,0,0,59,1,0,1,1280,1,0
+29,9,0,1,0,0,40,1,0,0,1280,1,0
+72,9,0,1,0,0,20,1,0,0,1280,1,0
+48,9,0,1,0,0,37,1,0,0,1280,1,0
+50,9,0,1,0,0,40,1,0,0,1280,1,0
+36,15,0,1,0,0,40,1,0,0,1280,1,0
+36,15,0,1,0,0,40,1,0,0,1280,1,0
+46,14,0,1,0,0,59,1,0,1,1280,1,0
+42,13,0,1,0,0,40,1,0,1,1280,1,0
+24,10,0,1,0,0,50,1,0,0,1280,1,0
+42,11,0,1,0,0,44,1,0,0,1280,1,0
+41,10,0,1,2174,0,45,1,0,0,1280,1,0
+46,9,0,1,0,0,40,1,0,0,1280,1,0
+30,13,0,1,3325,0,35,1,0,0,1280,1,0
+48,12,0,1,0,0,40,1,0,1,1280,1,0
+30,10,0,1,0,0,40,1,0,0,1280,1,0
+52,9,0,1,0,0,29,1,0,0,1280,1,0
+48,12,0,1,0,0,40,1,0,1,1280,1,0
+19,9,0,1,0,0,25,1,0,0,1280,1,0
+60,10,0,1,0,0,48,1,0,0,1280,1,0
+40,15,0,1,0,0,72,1,0,0,1280,1,0
+44,14,0,1,0,0,54,1,0,0,1280,1,0
+36,13,0,1,7298,0,55,1,0,1,1280,1,0
+38,13,0,1,7298,0,40,1,0,1,1280,1,0
+48,10,0,1,0,0,65,1,0,0,1280,1,0
+46,13,0,1,0,0,40,1,0,1,1280,1,0
+38,13,0,1,0,0,29,1,0,0,1280,1,0
+46,13,0,1,0,0,40,1,0,1,1280,1,0
+58,7,0,1,3674,0,40,1,0,0,1280,1,0
+68,7,0,1,0,1870,35,1,0,0,1280,1,0
+34,10,0,1,0,0,40,1,0,0,1280,1,0
+41,12,0,1,0,0,40,1,0,1,1280,1,0
+30,9,0,1,0,0,40,1,0,0,1280,1,0
+50,9,0,1,5178,0,40,1,0,1,1280,1,0
+42,10,0,1,1506,0,40,1,0,0,1280,1,0
+38,13,0,1,0,0,55,1,0,0,1280,1,0
+28,6,0,1,0,155,40,1,0,0,1280,1,0
+23,9,0,1,0,0,40,1,0,0,1280,1,0
+41,9,0,1,0,0,40,1,0,0,1280,1,0
+23,10,0,1,0,0,40,1,0,0,1280,1,0
+34,12,0,1,0,0,40,1,0,1,1280,1,0
+29,9,0,1,0,0,40,1,0,0,1280,1,0
+19,10,0,1,0,0,16,1,0,0,1280,1,0
+29,9,0,1,0,0,40,1,0,0,1280,1,0
+42,9,0,1,3325,0,40,1,0,0,1280,1,0
+19,10,0,1,0,0,7,1,0,0,1280,1,0
+23,9,0,1,0,0,25,1,0,0,1280,1,0
+31,12,0,1,0,0,3,1,0,0,1280,1,0
+23,13,0,1,0,0,29,1,0,0,1280,1,0
+21,9,0,1,0,0,35,1,0,0,1280,1,0
+42,9,0,1,0,0,40,1,0,0,1280,1,0
+44,13,0,1,0,0,35,1,0,1,1280,1,0
+44,10,0,1,0,0,50,1,0,1,1280,1,0
+25,9,0,1,0,0,40,1,0,0,1280,1,0
+24,13,0,1,0,0,40,1,0,0,1280,1,0
+48,13,0,1,0,0,50,1,0,0,1280,1,0
+36,10,0,1,0,0,45,1,0,0,1280,1,0
+26,9,0,1,0,0,40,1,0,0,1280,1,0
+50,8,0,1,0,0,99,1,0,0,1280,1,0
+34,10,0,1,0,0,45,1,0,0,1280,1,0
+58,9,0,1,0,0,40,1,0,0,1280,1,0
+42,3,0,1,0,0,40,1,0,0,1280,1,0
+46,10,0,1,0,0,40,1,0,0,1280,1,0
+44,10,0,1,0,2205,35,1,0,0,1280,1,0
+56,6,0,1,0,0,32,1,0,0,1280,1,0
+45,13,0,1,0,0,38,1,0,1,1280,1,0
+37,9,0,1,0,0,40,1,0,0,1280,1,0
+22,9,0,1,0,0,40,1,0,0,1280,1,0
+17,7,0,1,0,1721,14,1,0,0,1280,1,0
+32,9,0,1,0,0,46,1,0,1,1280,1,0
+22,10,0,1,0,0,20,1,0,0,1280,1,0
+38,12,0,1,0,0,20,1,0,0,1280,1,0
+18,10,0,1,0,1602,35,1,0,0,1280,1,0
+40,9,0,1,0,0,37,1,0,0,1280,1,0
+19,9,0,1,0,0,40,1,0,0,1280,1,0
+44,9,0,1,0,0,40,1,0,0,1280,1,0
+42,13,0,1,0,0,24,1,0,1,1280,1,0
+35,9,0,1,0,0,40,1,0,0,1280,1,0
+62,9,0,1,0,0,40,1,0,0,1280,1,0
+21,9,0,1,0,0,40,1,0,0,1280,1,0
+34,10,0,1,0,0,99,1,0,0,1280,1,0
+30,13,0,1,0,0,50,1,0,1,1280,1,0
+53,9,0,1,0,0,46,1,0,1,1280,1,0
+32,9,0,1,0,0,40,1,0,0,1280,1,0
+50,14,0,1,0,0,50,1,0,1,1280,1,0
+66,10,0,1,0,0,50,1,0,1,1280,1,0
+42,11,0,1,0,0,40,1,0,0,1280,1,0
+50,14,0,1,0,0,50,1,0,1,1280,1,0
+58,6,0,1,0,0,40,1,0,0,1280,1,0
+41,10,0,1,0,0,4,1,0,0,1280,1,0
+24,7,0,1,0,0,40,1,0,0,1280,1,0
+46,9,0,1,0,0,40,1,0,1,1280,1,0
+56,9,0,1,0,0,40,1,0,0,1280,1,0
+36,6,0,1,0,0,40,1,0,0,1280,1,0
+32,11,0,1,0,0,35,1,0,0,1280,1,0
+27,10,0,1,0,0,40,1,0,0,1280,1,0
+21,9,0,1,0,0,40,1,0,0,1280,1,0
+38,13,0,1,0,0,50,1,0,1,1280,1,0
+54,14,0,1,0,0,45,1,0,0,1280,1,0
+34,9,0,1,0,0,40,1,0,0,1280,1,0
+57,9,0,1,0,0,50,1,0,0,1280,1,0
+83,9,0,1,0,0,55,1,0,0,1280,1,0
+68,9,0,1,0,2206,29,1,0,0,1280,1,0
+45,11,0,1,0,0,44,1,0,0,1280,1,0
+20,10,0,1,0,0,50,1,0,0,1280,1,0
+35,9,0,1,0,0,25,1,0,0,1280,1,0
+70,10,0,1,0,0,40,1,0,1,1280,1,0
+36,10,0,1,0,0,57,1,0,1,1280,1,0
+22,12,0,1,0,0,40,1,0,0,1280,1,0
+32,10,0,1,4865,0,40,1,0,0,1280,1,0
+34,13,0,1,0,0,25,1,0,0,1280,1,0
+57,9,0,1,0,0,45,1,0,0,1280,1,0
+67,13,0,1,0,0,55,1,0,0,1280,1,0
+38,12,0,1,0,0,24,1,0,0,1280,1,0
+24,10,0,1,0,0,59,1,0,0,1280,1,0
+58,2,0,1,0,0,40,1,0,0,1280,1,0
+18,7,0,1,0,0,20,1,0,0,1280,1,0
+54,9,0,1,7688,0,40,1,0,1,1280,1,0
+35,9,0,1,0,0,40,1,0,0,1280,1,0
+25,11,0,1,0,0,40,1,0,0,1280,1,0
+42,9,0,1,0,0,50,1,0,0,1280,1,0
+32,13,0,1,0,0,45,1,0,1,1280,1,0
+38,10,0,1,0,0,55,1,0,0,1280,1,0
+27,10,0,1,0,0,40,1,0,0,1280,1,0
+26,11,0,1,0,2377,45,1,0,0,1280,1,0
+58,13,0,1,0,0,40,1,0,0,1280,1,0
+18,10,0,1,0,0,20,1,0,0,1280,1,0
+20,10,0,1,0,0,12,1,0,0,1280,1,0
+33,13,0,1,0,0,14,1,0,0,1280,1,0
+18,9,0,1,0,0,40,1,0,0,1280,1,0
+19,9,0,1,0,0,40,1,0,0,1280,1,0
+53,9,0,1,0,0,40,1,0,0,1280,1,0
+60,9,0,1,0,0,99,1,0,0,1280,1,0
+22,10,0,1,0,0,40,1,0,0,1280,1,0
+48,9,0,1,0,0,40,1,0,1,1280,1,0
+35,9,0,1,0,0,59,1,0,0,1280,1,0
+50,9,0,1,0,0,40,1,0,0,1280,1,0
+67,9,0,1,0,0,40,1,0,0,1280,1,0
+27,9,0,1,0,0,40,1,0,0,1280,1,0
+27,14,0,1,0,0,40,1,0,0,1280,1,0
+67,9,0,1,0,0,45,1,0,0,1280,1,0
+40,13,0,1,0,0,40,1,0,0,1280,1,0
+58,13,0,1,0,0,45,1,0,0,1280,1,0
+32,10,0,1,0,0,65,1,0,0,1280,1,0
+25,13,0,1,0,0,40,1,0,0,1280,1,0
+37,9,0,1,0,0,50,1,0,1,1280,1,0
+57,11,0,1,0,0,40,1,0,0,1280,1,0
+57,11,0,1,0,0,40,1,0,0,1280,1,0
+29,13,0,1,5178,0,45,1,0,1,1280,1,0
+33,10,0,1,0,0,54,1,0,1,1280,1,0
+42,13,0,1,0,0,40,1,0,1,1280,1,0
+24,13,0,1,0,0,40,1,0,0,1280,1,0
+31,9,0,1,0,0,40,1,0,0,1280,1,0
+49,9,0,1,0,0,40,1,0,0,1280,1,0
+26,13,0,1,0,0,55,1,0,1,1280,1,0
+36,13,0,1,0,1741,40,1,0,0,1280,1,0
+41,10,0,1,0,0,40,1,0,0,1280,1,0
+34,9,0,1,7443,0,35,1,0,0,1280,1,0
+61,10,0,1,7688,0,36,1,0,1,1280,1,0
+58,9,0,1,0,0,40,1,0,0,1280,1,0
+23,10,0,1,0,0,40,1,0,0,1280,1,0
+71,13,0,1,9386,0,50,1,0,1,1280,1,0
+26,12,0,1,0,0,40,1,0,0,1280,1,0
+60,9,0,1,0,0,40,1,0,0,1280,1,0
+53,14,0,1,7688,0,70,1,0,1,1280,1,0
+57,10,0,1,0,0,40,1,0,0,1280,1,0
+23,3,0,1,0,0,12,1,0,0,1280,1,0
+42,4,0,1,0,0,40,1,0,0,1280,1,0
+25,13,0,1,0,1977,40,1,0,1,1280,1,0
+42,13,0,1,0,1564,45,1,0,1,1280,1,0
+50,10,0,1,0,0,40,1,0,0,1280,1,0
+41,7,0,1,0,0,50,1,0,0,1280,1,0
+19,6,0,1,0,0,40,1,0,0,1280,1,0
+58,9,0,1,0,0,40,1,0,0,1280,1,0
+42,9,0,1,0,0,29,1,0,0,1280,1,0
+22,9,0,1,0,0,20,1,0,0,1280,1,0
+44,10,0,1,0,0,40,1,0,0,1280,1,0
+24,13,0,1,0,0,42,1,0,0,1280,1,0
+37,9,0,1,0,0,40,1,0,0,1280,1,0
+27,9,0,1,0,0,40,1,0,1,1280,1,0
+26,13,0,1,0,0,38,1,0,0,1280,1,0
+29,12,0,1,0,0,45,1,0,0,1280,1,0
+65,13,0,1,6723,0,40,1,0,0,1280,1,0
+33,9,0,1,0,0,36,1,0,0,1280,1,0
+38,10,0,1,0,0,45,1,0,0,1280,1,0
+26,9,0,1,0,0,50,1,0,0,1280,1,0
+38,9,0,1,7298,0,50,1,0,1,1280,1,0
+28,13,0,1,0,0,45,1,0,0,1280,1,0
+41,13,0,1,0,0,50,1,0,0,1280,1,0
+50,13,0,1,0,0,59,1,0,0,1280,1,0
+29,9,0,1,0,0,65,1,0,0,1280,1,0
+29,9,0,1,0,0,65,1,0,0,1280,1,0
+21,11,0,1,0,2603,40,1,0,0,1280,1,0
+19,10,0,1,0,0,14,1,0,0,1280,1,0
+18,8,0,1,0,0,29,1,0,0,1280,1,0
+31,13,0,1,0,0,50,1,0,0,1280,1,0
+26,11,0,1,0,0,40,1,0,0,1280,1,0
+33,9,0,1,0,0,59,1,0,0,1280,1,0
+42,9,0,1,0,0,40,1,0,0,1280,1,0
+35,11,0,1,0,0,40,1,0,1,1280,1,0
+68,6,0,1,0,0,20,1,0,0,1280,1,0
+60,9,0,1,0,0,40,1,0,0,1280,1,0
+22,10,0,1,0,0,50,1,0,0,1280,1,0
+33,15,0,1,0,0,40,1,0,1,1280,1,0
+80,9,0,1,0,0,14,1,0,0,1280,1,0
+35,10,0,1,0,0,38,1,0,0,1280,1,0
+34,13,0,1,0,0,40,1,0,1,1280,1,0
+46,3,0,1,0,0,40,1,0,0,1280,1,0
+34,13,0,1,0,0,40,1,0,1,1280,1,0
+31,13,0,1,0,0,40,1,0,1,1280,1,0
+42,11,0,1,0,0,56,1,0,0,1280,1,0
+38,10,0,1,0,0,35,1,0,1,1280,1,0
+19,7,0,1,0,0,29,1,0,0,1280,1,0
+48,10,0,1,0,0,40,1,0,1,1280,1,0
+21,10,0,1,0,0,20,1,0,0,1280,1,0
+21,10,0,1,0,0,20,1,0,0,1280,1,0
+32,10,0,1,0,0,35,1,0,0,1280,1,0
+44,13,0,1,10520,0,40,1,0,1,1280,1,0
+24,10,0,1,0,0,50,1,0,0,1280,1,0
+29,13,0,1,0,0,40,1,0,0,1280,1,0
+54,13,0,1,0,0,55,1,0,1,1280,1,0
+25,13,0,1,0,0,40,1,0,0,1280,1,0
+52,6,0,1,0,0,35,1,0,0,1280,1,0
+17,6,0,1,0,0,20,1,0,0,1280,1,0
+27,10,0,1,0,0,40,1,0,0,1280,1,0
+42,10,0,1,0,0,40,1,0,0,1280,1,0
+31,9,0,1,0,0,48,1,0,0,1280,1,0
+44,7,0,1,0,0,40,1,0,0,1280,1,0
+68,13,0,1,0,0,35,1,0,1,1280,1,0
+40,9,0,1,0,0,50,1,0,0,1280,1,0
+56,10,0,1,0,0,45,1,0,0,1280,1,0
+40,9,0,1,0,0,50,1,0,0,1280,1,0
+60,9,0,1,0,0,65,1,0,1,1280,1,0
+30,13,0,1,0,0,50,1,0,0,1280,1,0
+60,10,0,1,0,0,55,1,0,0,1280,1,0
+48,6,0,1,0,0,45,1,0,1,1280,1,0
+68,10,0,1,0,0,20,1,0,0,1280,1,0
+46,13,0,1,0,0,50,1,0,0,1280,1,0
+40,9,0,1,0,0,65,1,0,0,1280,1,0
+46,13,0,1,0,0,59,1,0,1,1280,1,0
+32,6,0,1,0,0,40,1,0,0,1280,1,0
+22,9,0,1,0,0,40,1,0,0,1280,1,0
+28,10,0,1,0,0,40,1,0,0,1280,1,0
+52,13,0,1,0,0,25,1,0,0,1280,1,0
+48,13,0,1,5178,0,40,1,0,1,1280,1,0
+26,13,0,1,0,0,40,1,0,0,1280,1,0
+50,12,0,1,0,0,40,1,0,0,1280,1,0
+57,13,0,1,0,0,40,1,0,1,1280,1,0
+19,10,0,1,0,0,14,1,0,0,1280,1,0
+30,9,0,1,5013,0,40,1,0,0,1280,1,0
+37,13,0,1,0,0,50,1,0,1,1280,1,0
+32,13,0,1,0,0,40,1,0,0,1280,1,0
+20,7,0,1,0,0,59,1,0,0,1280,1,0
+26,9,0,1,0,0,40,1,0,0,1280,1,0
+58,9,0,1,0,0,37,1,0,0,1280,1,0
+33,9,0,1,0,0,40,1,0,0,1280,1,0
+17,5,0,1,0,0,40,1,0,0,1280,1,0
+73,9,0,1,0,0,12,1,0,0,1280,1,0
+18,7,0,1,0,0,14,1,0,0,1280,1,0
+30,10,0,1,0,0,10,1,0,0,1280,1,0
+42,6,0,1,0,0,40,1,0,1,1280,1,0
+37,11,0,1,0,0,32,1,0,0,1280,1,0
+19,9,0,1,0,0,40,1,0,0,1280,1,0
+31,9,0,1,0,0,42,1,0,0,1280,1,0
+33,7,0,1,0,0,40,1,0,0,1280,1,0
+40,9,0,1,0,0,50,1,0,0,1280,1,0
+38,6,0,1,0,0,12,1,0,0,1280,1,0
+38,9,0,1,0,0,45,1,0,1,1280,1,0
+42,10,0,1,0,0,35,1,0,0,1280,1,0
+36,9,0,1,0,0,40,1,0,0,1280,1,0
+46,9,0,1,0,0,50,1,0,1,1280,1,0
+42,15,0,1,7430,0,40,1,0,1,1280,1,0
+52,9,0,1,0,0,40,1,0,1,1280,1,0
+50,8,0,1,0,0,40,1,0,0,1280,1,0
+38,13,0,1,7688,0,45,1,0,1,1280,1,0
+42,10,0,1,0,0,40,1,0,0,1280,1,0
+19,7,0,1,0,0,29,1,0,0,1280,1,0
+34,9,0,1,0,0,50,1,0,1,1280,1,0
+24,13,0,1,0,0,40,1,0,0,1280,1,0
+27,9,0,1,0,0,40,1,0,0,1280,1,0
+20,9,0,1,0,0,40,1,0,0,1280,1,0
+46,9,0,1,0,0,29,1,0,1,1280,1,0
+26,13,0,1,0,0,20,1,0,0,1280,1,0
+50,12,0,1,3103,0,40,1,0,1,1280,1,0
+42,10,0,1,0,0,45,1,0,1,1280,1,0
+52,9,0,1,0,0,40,1,0,0,1280,1,0
+27,13,0,1,0,0,40,1,0,0,1280,1,0
+40,6,0,1,0,0,32,1,0,0,1280,1,0
+49,9,0,1,0,0,40,1,0,0,1280,1,0
+38,12,0,1,0,0,40,1,0,0,1280,1,0
+26,12,0,1,0,0,8,1,0,0,1280,1,0
+46,14,0,1,0,0,40,1,0,1,1280,1,0
+35,10,0,1,0,0,40,1,0,0,1280,1,0
+54,11,0,1,0,0,40,1,0,0,1280,1,0
+38,10,0,1,0,0,40,1,0,0,1280,1,0
+29,11,0,1,0,0,50,1,0,0,1280,1,0
+22,9,0,1,0,0,55,1,0,0,1280,1,0
+58,9,0,1,15024,0,59,1,0,1,1280,1,0
+29,4,0,1,0,2042,40,1,0,0,1280,1,0
+50,9,0,1,0,0,35,1,0,1,1280,1,0
+46,9,0,1,0,0,40,1,0,0,1280,1,0
+27,10,0,1,0,0,40,1,0,0,1280,1,0
+60,9,0,1,0,0,20,1,0,0,1280,1,0
+23,10,0,1,0,0,14,1,0,0,1280,1,0
+31,6,0,1,0,0,40,1,0,0,1280,1,0
+60,10,0,1,0,0,40,1,0,0,1280,1,0
+29,12,0,1,0,0,35,1,0,0,1280,1,0
+42,10,0,1,0,0,50,1,0,0,1280,1,0
+18,10,0,1,2176,0,35,1,0,0,1280,1,0
+21,9,0,1,0,0,48,1,0,0,1280,1,0
+26,13,0,1,0,0,59,1,0,1,1280,1,0
+48,12,0,1,0,0,40,1,0,0,1280,1,0
+42,13,0,1,0,0,40,1,0,1,1280,1,0
+36,6,0,1,0,0,80,1,0,0,1280,1,0
+42,10,0,1,0,0,40,1,0,1,1280,1,0
+70,6,0,1,0,0,50,1,0,0,1280,1,0
+27,13,0,1,0,0,40,1,0,0,1280,1,0
+22,4,0,1,0,0,35,1,0,0,1280,1,0
+38,9,0,1,0,0,59,1,0,1,1280,1,0
+33,9,0,1,0,0,50,1,0,0,1280,1,0
+46,13,0,1,0,0,59,1,0,0,1280,1,0
+28,10,0,1,0,0,40,1,0,0,1280,1,0
+30,13,0,1,0,0,40,1,0,0,1280,1,0
+65,13,0,1,0,0,14,1,0,0,1280,1,0
+25,13,0,1,0,0,20,1,0,0,1280,1,0
+40,14,0,1,0,0,59,1,0,0,1280,1,0
+27,10,0,1,0,0,40,1,0,0,1280,1,0
+42,10,0,1,0,0,40,1,0,0,1280,1,0
+61,4,0,1,0,1651,40,1,0,0,1280,1,0
+57,10,0,1,0,0,55,1,0,0,1280,1,0
+57,10,0,1,0,0,55,1,0,0,1280,1,0
+58,10,0,1,0,0,40,1,0,0,1280,1,0
+27,13,0,1,0,0,50,1,0,0,1280,1,0
+36,10,0,1,0,0,40,1,0,0,1280,1,0
+44,10,0,1,0,0,35,1,0,0,1280,1,0
+37,9,0,1,1055,0,20,1,0,0,1280,1,0
+37,13,0,1,0,0,50,1,0,0,1280,1,0
+41,10,0,1,0,0,37,1,0,0,1280,1,0
+24,13,0,1,0,0,40,1,0,0,1280,1,0
+48,10,0,1,0,0,40,1,0,1,1280,1,0
+37,11,0,1,0,0,40,1,0,0,1280,1,0
+33,13,0,1,0,0,40,1,0,0,1280,1,0
+38,9,0,1,0,0,40,1,0,0,1280,1,0
+30,6,0,1,0,0,40,1,0,0,1280,1,0
+46,12,0,1,0,0,40,1,0,0,1280,1,0
+23,13,0,1,0,0,27,1,0,0,1280,1,0
+42,9,0,1,0,1887,45,1,0,1,1280,1,0
+54,8,0,1,0,0,40,1,0,0,1280,1,0
+38,13,0,1,5013,0,32,1,0,0,1280,1,0
+84,11,0,1,0,0,14,1,0,0,1280,1,0
+25,9,0,1,0,0,40,1,0,0,1280,1,0
+52,10,0,1,0,0,40,1,0,0,1280,1,0
+50,13,0,1,0,0,40,1,0,1,1280,1,0
+69,10,0,1,20051,0,50,1,0,1,1280,1,0
+42,10,0,1,0,0,40,1,0,0,1280,1,0
+37,13,0,1,0,0,40,1,0,0,1280,1,0
+60,4,0,1,0,0,50,1,0,0,1280,1,0
+37,13,0,1,0,0,40,1,0,0,1280,1,0
+23,10,0,1,0,0,12,1,0,0,1280,1,0
+48,9,0,1,7688,0,70,1,0,1,1280,1,0
+46,15,0,1,0,0,40,1,0,1,1280,1,0
+37,7,0,1,0,0,40,1,0,0,1280,1,0
+48,9,0,1,7688,0,70,1,0,1,1280,1,0
+35,9,0,1,0,0,40,1,0,0,1280,1,0
+37,10,0,1,0,0,38,1,0,0,1280,1,0
+24,13,0,1,0,0,38,1,0,0,1280,1,0
+40,9,0,1,0,0,35,1,0,0,1280,1,0
+31,13,0,1,0,1887,40,1,0,1,1280,1,0
+34,10,0,1,0,0,29,1,0,0,1280,1,0
+33,6,0,1,0,0,45,1,0,0,1280,1,0
+46,13,0,1,0,0,38,1,0,1,1280,1,0
+56,9,0,1,0,0,40,1,0,0,1280,1,0
+37,9,0,1,0,0,20,1,0,0,1280,1,0
+42,13,0,1,0,0,59,1,0,1,1280,1,0
+49,13,0,1,0,0,59,1,0,1,1280,1,0
+35,13,0,1,0,0,40,1,0,0,1280,1,0
+23,10,0,1,0,0,40,1,0,0,1280,1,0
+34,12,0,1,0,0,40,1,0,0,1280,1,0
+50,9,0,1,3103,0,59,1,0,1,1280,1,0
+36,7,0,1,0,0,40,1,0,0,1280,1,0
+58,12,0,1,0,0,32,1,0,1,1280,1,0
+26,11,0,1,0,0,59,1,0,0,1280,1,0
+25,9,0,1,0,0,40,1,0,0,1280,1,0
+37,14,0,1,0,0,55,1,0,1,1280,1,0
+37,10,0,1,0,0,40,1,0,0,1280,1,0
+28,13,0,1,0,0,40,1,0,0,1280,1,0
+23,11,0,1,0,0,36,1,0,0,1280,1,0
+34,9,0,1,0,0,40,1,0,1,1280,1,0
+35,13,0,1,0,0,50,1,0,1,1280,1,0
+38,10,0,1,0,0,40,1,0,0,1280,1,0
+50,15,0,1,0,0,50,1,0,1,1280,1,0
+45,12,0,1,0,0,40,1,0,0,1280,1,0
+32,14,0,1,13549,0,59,1,0,1,1280,1,0
+35,9,0,1,0,0,48,1,0,0,1280,1,0
+20,9,0,1,0,0,25,1,0,0,1280,1,0
+22,13,0,1,0,0,35,1,0,0,1280,1,0
+27,12,0,1,0,0,40,1,0,1,1280,1,0
+41,9,0,1,0,0,40,1,0,0,1280,1,0
+74,9,0,1,0,0,16,1,0,0,1280,1,0
+28,9,0,1,0,0,36,1,0,0,1280,1,0
+40,9,0,1,0,0,59,1,0,0,1280,1,0
+49,10,0,1,0,0,45,1,0,1,1280,1,0
+68,9,0,1,0,0,24,1,0,0,1280,1,0
+50,9,0,1,15024,0,40,1,0,1,1280,1,0
+34,2,0,1,0,0,40,1,0,0,1280,1,0
+32,6,0,1,0,0,40,1,0,0,1280,1,0
+44,10,0,1,0,0,59,1,0,1,1280,1,0
+38,10,0,1,0,0,43,1,0,0,1280,1,0
+41,13,0,1,0,0,40,1,0,0,1280,1,0
+35,6,0,1,0,0,59,0,0,0,1280,1,0
+23,9,0,1,0,2339,45,0,0,0,1280,1,0
+34,5,0,1,0,0,40,0,0,0,1280,1,0
+18,5,0,1,0,0,20,0,0,0,1280,1,0
+81,5,0,1,2062,0,5,0,0,0,1280,1,0
+49,15,0,1,0,0,40,0,0,0,1280,1,0
+48,10,0,1,0,0,40,0,0,0,1280,1,0
+21,10,0,1,0,0,40,0,0,0,1280,1,0
+18,6,0,1,0,0,16,0,0,0,1280,1,0
+58,9,0,1,0,0,20,0,0,1,1280,1,0
+29,12,0,1,0,0,38,0,0,0,1280,1,0
+25,10,0,1,0,0,29,0,0,0,1280,1,0
+33,6,0,1,0,0,40,0,0,0,1280,1,0
+18,9,0,1,0,0,10,0,0,0,1280,1,0
+19,9,0,1,0,0,40,0,0,0,1280,1,0
+46,6,0,1,0,0,40,0,0,1,1280,1,0
+52,9,0,1,0,0,40,0,0,0,1280,1,0
+45,9,0,1,0,0,40,0,0,1,1280,1,0
+48,10,0,1,0,1485,50,0,0,0,1280,1,0
+57,13,0,1,0,0,40,0,0,1,1280,1,0
+22,10,0,1,0,0,29,0,0,0,1280,1,0
+40,9,0,1,0,0,50,0,0,0,1280,1,0
+19,3,0,1,0,0,50,0,0,0,1280,1,0
+56,9,0,1,0,0,44,0,0,1,1280,1,0
+18,9,0,1,0,0,40,0,0,0,1280,1,0
+37,13,0,1,0,0,55,0,0,1,1280,1,0
+60,10,0,1,0,0,14,0,0,0,1280,1,0
+26,3,0,1,0,1628,50,0,0,0,1280,1,0
+23,12,0,1,0,0,32,0,0,0,1280,1,0
+60,10,0,1,0,0,14,0,0,0,1280,1,0
+29,10,0,1,0,0,40,0,0,0,1280,1,0
+24,13,0,1,0,0,40,0,0,0,1280,1,0
+48,14,0,1,0,0,52,0,0,0,1280,1,0
+19,7,0,1,0,2129,55,0,0,0,1280,1,0
+46,9,0,1,0,0,44,0,0,0,1280,1,0
+40,13,0,1,0,1902,40,0,0,1,1280,1,0
+22,9,0,1,0,0,40,0,0,0,1280,1,0
+23,10,0,1,0,0,40,0,0,0,1280,1,0
+42,10,0,1,0,1902,40,0,0,1,1280,1,0
+31,9,0,1,0,0,40,0,0,0,1280,1,0
+50,12,0,1,0,0,59,0,0,0,1280,1,0
+34,9,0,1,0,0,40,0,0,0,1280,1,0
+20,10,0,1,0,0,14,0,0,0,1280,1,0
+52,9,0,1,0,1876,50,0,0,0,1280,1,0
+34,13,0,1,0,0,40,0,0,1,1280,1,0
+23,9,0,1,0,0,40,0,0,0,1280,1,0
+35,10,0,1,0,0,40,0,0,0,1280,1,0
+37,9,0,1,0,0,37,0,0,0,1280,1,0
+26,13,0,1,0,0,40,0,0,0,1280,1,0
+61,14,0,1,0,0,59,0,0,1,1280,1,0
+38,10,0,1,0,0,40,0,0,1,1280,1,0
+42,10,0,1,0,0,40,0,0,0,1280,1,0
+68,10,0,1,0,1735,48,0,0,0,1280,1,0
+31,11,0,1,0,0,40,0,0,0,1280,1,0
+26,9,0,1,0,0,20,0,0,0,1280,1,0
+45,9,0,1,0,0,59,0,0,0,1280,1,0
+25,11,0,1,0,0,35,0,0,0,1280,1,0
+48,14,0,1,0,0,35,0,0,0,1280,1,0
+29,13,0,1,0,0,48,0,0,0,1280,1,0
+50,6,0,1,0,0,40,0,0,0,1280,1,0
+37,8,0,1,0,0,40,0,0,0,1280,1,0
+18,6,0,1,0,0,14,0,0,0,1280,1,0
+27,9,0,1,3908,0,35,0,0,0,1280,1,0
+31,10,0,1,0,0,40,0,0,0,1280,1,0
+42,10,0,1,0,0,20,0,0,1,1280,1,0
+31,10,0,1,0,0,45,0,0,0,1280,1,0
+50,14,0,1,0,0,50,0,0,1,1280,1,0
+35,10,0,1,0,0,48,0,0,1,1280,1,0
+24,9,0,1,0,0,40,0,0,0,1280,1,0
+41,10,0,1,0,0,50,0,0,1,1280,1,0
+24,12,0,1,0,0,40,0,0,0,1280,1,0
+45,10,0,1,0,0,45,0,0,0,1280,1,0
+30,15,0,1,0,0,59,0,0,1,1280,1,0
+19,10,0,1,0,0,40,0,0,0,1280,1,0
+53,10,0,1,0,0,40,0,0,0,1280,1,0
+22,13,0,1,0,0,40,0,0,0,1280,1,0
+44,10,0,1,0,0,40,0,0,0,1280,1,0
+29,10,0,1,0,0,40,0,0,0,1280,1,0
+61,13,0,1,0,0,45,0,0,1,1280,1,0
+23,10,0,1,0,0,24,0,0,0,1280,1,0
+42,5,0,1,0,0,50,0,0,0,1280,1,0
+30,9,0,1,0,0,40,0,0,0,1280,1,0
+21,9,0,1,0,0,40,0,0,0,1280,1,0
+38,9,0,1,0,0,40,0,0,0,1280,1,0
+70,6,0,1,2538,0,40,0,0,0,1280,1,0
+17,5,0,1,0,0,16,0,0,0,1280,1,0
+37,10,0,1,0,0,59,0,0,1,1280,1,0
+42,11,0,1,0,0,40,0,0,0,1280,1,0
+22,10,0,1,0,0,40,0,0,0,1280,1,0
+42,11,0,1,0,0,40,0,0,0,1280,1,0
+35,9,0,1,0,0,29,0,0,0,1280,1,0
+26,13,0,1,0,0,38,0,0,0,1280,1,0
+44,13,0,1,0,0,52,0,0,0,1280,1,0
+54,10,0,1,0,0,40,0,0,1,1280,1,0
+33,13,0,1,0,0,45,0,0,0,1280,1,0
+27,9,0,1,0,0,8,0,0,0,1280,1,0
+22,10,0,1,0,0,20,0,0,0,1280,1,0
+21,10,0,1,0,0,20,0,0,0,1280,1,0
+56,14,0,1,0,0,40,0,0,1,1280,1,0
+50,13,0,1,0,1672,70,0,0,0,1280,1,0
+32,12,0,1,0,0,45,0,0,1,1280,1,0
+64,10,0,1,0,0,40,0,0,0,1280,1,0
+35,8,0,1,0,0,40,0,0,0,1280,1,0
+60,5,0,1,0,0,40,0,0,0,1280,1,0
+42,13,0,1,7688,0,40,0,0,1,1280,1,0
+57,9,0,1,0,0,70,0,0,0,1280,1,0
+28,11,0,1,0,1726,40,0,0,0,1280,1,0
+36,10,0,1,0,0,40,0,0,0,1280,1,0
+25,12,0,1,0,0,38,0,0,0,1280,1,0
+36,9,0,1,0,0,40,0,0,0,1280,1,0
+35,7,0,1,0,2057,40,0,0,0,1280,1,0
+40,4,0,1,0,0,40,0,0,0,1280,1,0
+29,9,0,1,0,0,45,0,0,1,1280,1,0
+42,6,0,1,0,0,40,0,0,0,1280,1,0
+22,8,0,1,0,0,40,0,0,0,1280,1,0
+24,8,0,1,0,0,40,0,0,0,1280,1,0
+50,10,0,1,0,0,14,0,0,1,1280,1,0
+35,10,0,1,0,0,40,0,0,1,1280,1,0
+30,11,0,1,0,0,49,0,0,0,1280,1,0
+28,9,0,1,0,0,40,0,0,0,1280,1,0
+65,10,0,1,2964,0,35,0,0,0,1280,1,0
+23,9,0,1,0,0,29,0,0,0,1280,1,0
+45,9,0,1,0,0,32,0,0,0,1280,1,0
+35,10,0,1,0,0,75,0,0,1,1280,1,0
+25,13,0,1,0,0,40,0,0,0,1280,1,0
+22,10,0,1,0,0,59,0,0,0,1280,1,0
+38,13,0,1,0,0,40,0,0,1,1280,1,0
+52,9,0,1,0,1977,40,0,0,1,1280,1,0
+46,9,0,1,0,0,40,0,0,0,1280,1,0
+41,10,0,1,0,0,40,0,0,0,1280,1,0
+49,9,0,1,0,0,43,0,0,0,1280,1,0
+24,13,0,1,0,0,50,0,0,0,1280,1,0
+50,9,0,1,0,0,40,0,0,0,1280,1,0
+24,7,0,1,0,0,40,0,0,0,1280,1,0
+26,13,0,1,0,0,70,0,0,1,1280,1,0
+30,11,0,1,0,0,40,0,0,0,1280,1,0
+50,10,0,1,0,0,59,0,0,0,1280,1,0
+41,12,0,1,0,0,40,0,0,0,1280,1,0
+62,10,0,1,0,0,37,0,0,0,1280,1,0
+76,5,0,1,0,0,40,0,0,0,1280,1,0
+17,7,0,1,0,0,14,0,0,0,1280,1,0
+35,13,0,1,0,0,40,0,0,0,1280,1,0
+46,9,0,1,2174,0,40,0,0,0,1280,1,0
+26,13,0,1,13549,0,50,0,0,1,1280,1,0
+38,10,0,1,0,0,25,0,0,0,1280,1,0
+40,9,0,1,0,1902,40,0,0,1,1280,1,0
+36,13,0,1,15024,0,50,0,0,1,1280,1,0
+23,7,0,1,0,0,50,0,0,0,1280,1,0
+36,9,0,1,0,0,40,0,0,0,1280,1,0
+21,9,0,1,0,2205,40,0,0,0,1280,1,0
+24,9,0,1,0,0,40,0,0,0,1280,1,0
+49,10,0,1,0,0,56,0,0,1,1280,1,0
+27,9,0,1,0,0,40,0,0,0,1280,1,0
+45,10,0,1,0,0,40,0,0,0,1280,1,0
+42,10,0,1,0,0,40,0,0,0,1280,1,0
+28,9,0,1,0,0,45,0,0,1,1280,1,0
+44,13,0,1,0,1617,20,0,0,0,1280,1,0
+44,9,0,1,0,0,40,0,0,0,1280,1,0
+49,14,0,1,0,0,40,0,0,1,1280,1,0
+33,9,0,1,0,0,48,0,0,0,1280,1,0
+36,10,0,1,0,0,40,0,0,0,1280,1,0
+32,9,0,1,0,0,37,0,0,0,1280,1,0
+32,9,0,1,0,0,37,0,0,0,1280,1,0
+26,14,0,1,0,0,48,0,0,0,1280,1,0
+28,10,0,1,0,0,40,0,0,0,1280,1,0
+53,9,0,1,0,0,40,0,0,0,1280,1,0
+28,9,0,1,0,0,50,0,0,0,1280,1,0
+40,9,0,1,7688,0,50,0,0,1,1280,1,0
+72,13,0,1,0,0,40,0,0,0,1280,1,0
+53,14,0,1,0,0,65,0,0,1,1280,1,0
+24,5,0,1,0,0,40,0,0,0,1280,1,0
+41,13,0,1,0,0,40,0,0,1,1280,1,0
+28,6,0,1,0,0,40,0,0,0,1280,1,0
+64,4,0,1,0,0,35,0,0,0,1280,1,0
+36,13,0,1,0,0,40,0,0,0,1280,1,0
+46,14,0,1,15024,0,40,0,0,1,1280,1,0
+44,14,0,1,0,0,40,0,0,1,1280,1,0
+26,11,0,1,594,0,35,0,0,0,1280,1,0
+33,4,0,1,0,0,40,0,0,0,1280,1,0
+56,10,0,1,0,0,34,0,0,0,1280,1,0
+38,9,0,1,0,1887,65,0,0,1,1280,1,0
+31,9,0,1,0,0,40,0,0,0,1280,1,0
+56,9,0,1,0,0,45,0,0,0,1280,1,0
+30,10,0,1,0,0,40,0,0,0,1280,1,0
+45,13,0,1,0,0,40,0,0,1,1280,1,0
+53,9,0,1,0,0,40,0,0,0,1280,1,0
+52,7,0,1,0,0,40,0,0,0,1280,1,0
+30,13,0,1,0,0,50,0,0,0,1280,1,0
+27,7,0,1,0,0,35,0,0,0,1280,1,0
+72,9,0,1,6360,0,40,0,0,0,1280,1,0
+35,9,0,1,0,0,45,0,0,0,1280,1,0
+54,10,0,1,0,0,50,0,0,0,1280,1,0
+20,12,0,1,0,0,20,0,0,0,1280,1,0
+33,10,0,1,0,0,40,0,0,0,1280,1,0
+69,10,0,1,0,0,25,0,0,0,1280,1,0
+33,9,0,1,0,0,44,0,0,1,1280,1,0
+36,9,0,1,0,0,29,0,0,0,1280,1,0
+56,13,0,1,8614,0,55,0,0,1,1280,1,0
+33,9,0,1,2829,0,70,0,0,0,1280,1,0
+36,13,0,1,0,0,50,0,0,1,1280,1,0
+24,10,0,1,0,0,40,0,0,0,1280,1,0
+26,13,0,1,0,0,40,0,0,0,1280,1,0
+32,9,0,1,0,0,40,0,0,0,1280,1,0
+35,5,0,1,0,0,40,0,0,0,1280,1,0
+24,10,0,1,0,0,40,0,0,1,1280,1,0
+38,11,0,1,7298,0,45,0,0,1,1280,1,0
+44,10,0,1,13549,0,50,0,0,1,1280,1,0
+58,9,0,1,0,0,40,0,0,0,1280,1,0
+26,13,0,1,0,0,40,0,0,0,1280,1,0
+34,13,0,1,0,0,45,0,0,0,1280,1,0
+31,10,0,1,0,0,40,0,0,1,1280,1,0
+62,13,0,1,4650,0,48,0,0,0,1280,1,0
+52,10,0,1,0,0,45,0,0,1,1280,1,0
+23,13,0,1,0,0,35,0,0,0,1280,1,0
+54,9,0,1,0,0,40,0,0,1,1280,1,0
+27,13,0,1,0,0,40,0,0,0,1280,1,0
+62,13,0,1,14084,0,40,0,0,1,1280,1,0
+38,10,0,1,0,0,38,0,0,0,1280,1,0
+33,14,0,1,0,0,45,0,0,1,1280,1,0
+36,10,0,1,0,0,39,0,0,0,1280,1,0
+21,11,0,1,0,0,35,0,0,0,1280,1,0
+64,9,0,1,0,0,40,0,0,0,1280,1,0
+24,13,0,1,0,0,20,0,0,0,1280,1,0
+40,8,0,1,0,0,40,0,0,1,1280,1,0
+25,13,0,1,0,0,40,0,0,0,1280,1,0
+24,13,0,1,0,0,40,0,0,0,1280,1,0
+19,9,0,1,0,0,40,0,0,0,1280,1,0
+50,6,0,1,0,0,56,0,0,0,1280,1,0
+26,10,0,1,0,0,35,0,0,0,1280,1,0
+23,13,0,1,0,0,40,0,0,0,1280,1,0
+26,13,0,1,0,0,40,0,0,0,1280,1,0
+37,9,0,1,0,0,38,0,0,0,1280,1,0
+45,9,0,1,0,0,40,0,0,0,1280,1,0
+45,13,0,1,0,1902,40,0,0,1,1280,1,0
+42,10,0,1,0,0,59,0,0,0,1280,1,0
+27,13,0,1,0,1977,50,0,0,1,1280,1,0
+30,9,0,1,0,0,29,0,0,0,1280,1,0
+28,11,0,1,0,0,40,0,0,0,1280,1,0
+42,10,0,1,3908,0,40,0,0,0,1280,1,0
+28,11,0,1,0,0,40,0,0,1,1280,1,0
+28,9,0,1,0,0,40,0,0,0,1280,1,0
+37,4,0,1,0,0,50,0,0,0,1280,1,0
+21,9,0,1,0,0,40,0,0,0,1280,1,0
+36,9,0,1,0,0,50,0,0,0,1280,1,0
+38,9,0,1,0,0,32,0,0,0,1280,1,0
+58,9,0,1,3464,0,59,0,0,0,1280,1,0
+28,13,0,1,0,0,50,0,0,0,1280,1,0
+46,9,0,1,0,0,50,0,0,0,1280,1,0
+40,9,0,1,0,0,40,0,0,0,1280,1,0
+61,9,0,1,0,2051,20,0,0,0,1280,1,0
+28,13,0,1,0,1564,50,0,0,1,1280,1,0
+29,9,0,1,0,0,40,0,0,1,1280,1,0
+42,9,0,1,0,0,55,0,0,0,1280,1,0
+30,9,0,1,0,0,40,0,0,0,1280,1,0
+46,14,0,1,0,2392,50,0,0,1,1280,1,0
+27,1,0,1,41310,0,24,0,0,0,1280,1,0
+34,10,0,1,0,0,40,0,0,0,1280,1,0
+34,10,0,1,6849,0,70,0,0,0,1280,1,0
+54,9,0,1,0,0,45,0,0,0,1280,1,0
+27,7,0,1,0,0,40,0,0,0,1280,1,0
+28,9,0,1,0,0,40,0,0,1,1280,1,0
+41,12,0,1,0,0,40,0,0,0,1280,1,0
+49,11,0,1,0,0,40,0,0,0,1280,1,0
+42,14,0,1,0,0,38,0,0,0,1280,1,0
+41,5,0,1,0,0,35,0,0,0,1280,1,0
+22,12,0,1,0,0,27,0,0,0,1280,1,0
+32,10,0,1,0,0,40,0,0,0,1280,1,0
+32,14,0,1,0,0,45,0,0,1,1280,1,0
+34,14,0,1,0,0,40,0,0,1,1280,1,0
+38,7,0,1,0,0,40,0,0,0,1280,1,0
+46,10,0,1,0,0,40,0,0,1,1280,1,0
+66,13,0,1,0,0,5,0,0,1,1280,1,0
+27,10,0,1,0,0,45,0,0,0,1280,1,0
+22,10,0,1,0,0,40,0,0,0,1280,1,0
+37,9,0,1,0,0,40,0,0,0,1280,1,0
+27,7,0,1,0,0,45,0,0,0,1280,1,0
+50,10,0,1,0,0,40,0,0,0,1280,1,0
+30,9,0,1,0,0,40,0,0,0,1280,1,0
+27,10,0,1,3103,0,50,0,0,1,1280,1,0
+50,14,0,1,15020,0,40,0,0,1,1280,1,0
+32,10,0,1,0,0,50,0,0,0,1280,1,0
+23,10,0,1,0,0,29,0,0,0,1280,1,0
+23,10,0,1,0,0,45,0,0,0,1280,1,0
+29,11,0,1,0,0,40,0,0,1,1280,1,0
+29,13,0,1,0,0,40,0,0,0,1280,1,0
+74,13,0,1,0,1824,12,0,0,1,1280,1,0
+32,13,0,1,0,0,40,0,0,1,1280,1,0
+32,10,0,1,0,0,48,0,0,0,1280,1,0
+58,11,0,1,15024,0,40,0,0,1,1280,1,0
+42,9,0,1,0,0,40,0,0,1,1280,1,0
+54,14,0,1,0,2559,40,0,0,1,1280,1,0
+22,12,0,1,0,0,40,0,0,0,1280,1,0
+19,10,0,1,0,0,14,0,0,0,1280,1,0
+54,14,0,1,0,0,55,0,0,1,1280,1,0
+42,11,0,1,0,0,50,0,0,0,1280,1,0
+44,9,0,1,0,0,40,0,0,0,1280,1,0
+53,9,0,1,0,0,59,0,0,0,1280,1,0
+24,9,0,1,0,0,40,0,0,0,1280,1,0
+24,13,0,1,0,0,59,0,0,0,1280,1,0
+19,10,0,1,0,0,28,0,0,0,1280,1,0
+62,14,0,1,0,0,29,0,0,0,1280,1,0
+34,14,0,1,0,1902,50,0,0,1,1280,1,0
+17,4,0,1,0,0,45,0,0,0,1280,1,0
+24,10,0,1,0,0,40,0,0,0,1280,1,0
+36,13,0,1,0,0,40,0,0,0,1280,1,0
+35,4,0,1,0,0,80,0,0,0,1280,1,0
+61,10,0,1,0,0,40,0,0,0,1280,1,0
+18,9,0,1,0,0,25,0,0,0,1280,1,0
+50,9,0,1,0,0,38,0,0,0,1280,1,0
+46,10,0,1,0,0,40,0,0,0,1280,1,0
+61,9,0,1,0,0,40,0,0,0,1280,1,0
+26,10,0,1,0,0,40,0,0,0,1280,1,0
+19,10,0,1,0,0,40,0,0,0,1280,1,0
+45,14,0,1,0,0,40,0,0,1,1280,1,0
+31,9,0,1,0,0,40,0,0,0,1280,1,0
+36,13,0,1,0,0,35,0,0,0,1280,1,0
+33,9,0,1,0,0,40,0,0,0,1280,1,0
+62,13,0,1,0,0,40,0,0,1,1280,1,0
+34,13,0,1,0,0,40,0,0,1,1280,1,0
+54,9,0,1,0,0,40,0,0,0,1280,1,0
+46,13,0,1,0,0,44,0,0,1,1280,1,0
+35,7,0,1,0,0,40,0,0,0,1280,1,0
+30,12,0,1,0,0,40,0,0,0,1280,1,0
+17,7,0,1,0,0,14,0,0,0,1280,1,0
+35,15,0,1,0,0,55,0,0,0,1280,1,0
+20,9,0,1,0,0,40,0,0,0,1280,1,0
+33,10,0,1,0,0,40,0,0,0,1280,1,0
+33,10,0,1,0,0,40,0,0,0,1280,1,0
+57,9,0,1,0,0,72,0,0,0,1280,1,0
+20,9,0,1,0,0,29,0,0,0,1280,1,0
+36,10,0,1,0,0,52,0,0,1,1280,1,0
+53,9,0,1,0,0,48,0,0,0,1280,1,0
+34,13,0,1,0,0,50,0,0,1,1280,1,0
+20,9,0,1,0,1721,29,0,0,0,1280,1,0
+26,9,0,1,0,0,35,0,0,0,1280,1,0
+46,13,0,1,0,0,50,0,0,1,1280,1,0
+48,10,0,1,0,0,45,0,0,0,1280,1,0
+76,10,0,1,0,0,20,0,0,0,1280,1,0
+21,9,0,1,0,0,40,0,0,0,1280,1,0
+21,8,0,1,0,0,40,0,0,0,1280,1,0
+61,9,0,1,2829,0,45,0,0,0,1280,1,0
+44,13,0,1,0,0,50,0,0,1,1280,1,0
+26,13,0,1,0,0,40,0,0,0,1280,1,0
+30,9,0,1,0,0,50,0,0,0,1280,1,0
+36,13,0,1,0,0,40,0,0,0,1280,1,0
+36,9,0,1,0,0,38,0,0,0,1280,1,0
+32,14,0,1,0,0,40,0,0,1,1280,1,0
+37,6,0,1,0,0,29,0,0,0,1280,1,0
+38,10,0,1,0,0,50,0,0,1,1280,1,0
+35,13,0,1,0,0,40,0,0,1,1280,1,0
+24,9,0,1,0,0,40,0,0,0,1280,1,0
+22,9,0,1,0,0,80,0,0,0,1280,1,0
+22,10,0,1,0,0,40,0,0,0,1280,1,0
+52,9,0,1,0,0,40,0,0,0,1280,1,0
+42,2,0,1,0,0,40,0,0,0,1280,1,0
+21,9,0,1,0,0,35,0,0,0,1280,1,0
+49,14,0,1,0,0,70,0,0,1,1280,1,0
+23,9,0,1,0,0,40,0,0,0,1280,1,0
+72,9,0,1,0,0,55,0,0,0,1280,1,0
+45,10,0,1,0,0,40,0,0,0,1280,1,0
+46,10,0,1,0,0,40,0,0,0,1280,1,0
+46,10,0,1,0,0,40,0,0,0,1280,1,0
+17,8,0,1,0,0,18,0,0,0,1280,1,0
+46,15,0,1,0,0,40,0,0,1,1280,1,0
+23,6,0,1,0,0,40,0,0,0,1280,1,0
+42,14,0,1,0,0,35,0,0,1,1280,1,0
+42,7,0,1,0,0,59,0,0,0,1280,1,0
+23,10,0,1,0,0,44,0,0,0,1280,1,0
+28,9,0,1,0,0,40,0,0,0,1280,1,0
+25,9,0,1,0,0,40,0,0,0,1280,1,0
+31,9,0,1,0,0,45,0,0,0,1280,1,0
+65,9,0,1,0,0,20,0,0,0,1280,1,0
+40,14,0,1,0,0,50,0,0,1,1280,1,0
+44,13,0,1,0,0,50,0,0,0,1280,1,0
+18,7,0,1,0,0,18,0,0,0,1280,1,0
+25,9,0,1,0,0,40,0,0,0,1280,1,0
+17,6,0,1,0,0,16,0,0,0,1280,1,0
+44,10,0,1,0,0,25,0,0,0,1280,1,0
+20,10,0,1,0,0,25,0,0,0,1280,1,0
+27,13,0,1,0,0,40,0,0,0,1280,1,0
+19,10,0,1,0,0,25,0,0,0,1280,1,0
+38,10,0,1,0,0,59,0,0,0,1280,1,0
+41,10,0,1,0,0,50,0,0,0,1280,1,0
+49,12,0,1,4650,0,40,0,0,0,1280,1,0
+34,10,0,1,0,0,40,0,0,1,1280,1,0
+50,13,0,1,0,0,40,0,0,1,1280,1,0
+34,11,0,1,0,0,40,0,0,1,1280,1,0
+38,9,0,1,0,1726,40,0,0,0,1280,1,0
+50,13,0,1,0,1977,40,0,0,1,1280,1,0
+54,10,0,1,3103,0,40,0,0,1,1280,1,0
+29,13,0,1,0,0,50,0,0,0,1280,1,0
+22,5,0,1,0,0,32,0,0,0,1280,1,0
+61,9,0,1,0,0,20,0,0,0,1280,1,0
+21,9,0,1,0,0,35,0,0,0,1280,1,0
+40,9,0,1,0,1719,40,0,0,0,1280,1,0
+62,14,0,1,0,0,40,0,0,0,1280,1,0
+46,9,0,1,0,0,50,0,0,0,1280,1,0
+36,14,0,1,0,0,40,0,0,1,1280,1,0
+33,10,0,1,0,0,50,0,0,1,1280,1,0
+38,9,0,1,0,0,40,0,0,1,1280,1,0
+19,5,0,1,0,0,16,0,0,0,1280,1,0
+42,11,0,1,0,0,55,0,0,0,1280,1,0
+46,9,0,1,0,0,40,0,0,0,1280,1,0
+50,9,0,1,0,0,40,0,0,0,1280,1,0
+61,13,0,1,0,0,40,0,0,0,1280,1,0
+22,10,0,1,0,0,40,0,0,0,1280,1,0
+54,13,0,1,0,2415,50,0,0,1,1280,1,0
+32,10,0,1,3887,0,40,0,0,0,1280,1,0
+42,14,0,1,0,0,40,0,0,0,1280,1,0
+52,10,0,1,0,0,35,0,0,1,1280,1,0
+33,10,0,1,0,0,45,0,0,0,1280,1,0
+32,6,0,1,0,0,50,0,0,0,1280,1,0
+41,9,0,1,0,0,50,0,0,0,1280,1,0
+33,10,0,1,0,0,50,0,0,1,1280,1,0
+36,9,0,1,0,0,40,0,0,0,1280,1,0
+46,8,0,1,0,0,40,0,0,0,1280,1,0
+35,12,0,1,0,0,52,0,0,0,1280,1,0
+54,9,0,1,0,0,35,0,0,0,1280,1,0
+19,10,0,1,0,0,25,0,0,0,1280,1,0
+25,9,0,1,0,0,28,0,0,0,1280,1,0
+48,13,0,1,0,0,50,0,0,0,1280,1,0
+20,9,0,1,0,0,48,0,0,0,1280,1,0
+41,15,0,1,0,0,40,0,0,0,1280,1,0
+36,9,0,1,0,0,40,0,0,0,1280,1,0
+56,13,0,1,0,2001,65,0,0,0,1280,1,0
+36,10,0,1,0,0,40,0,0,0,1280,1,0
+40,14,0,1,0,0,50,0,0,1,1280,1,0
+40,9,0,1,0,1741,40,0,0,0,1280,1,0
+42,15,0,1,0,0,70,0,0,1,1280,1,0
+38,13,0,1,0,0,50,0,0,1,1280,1,0
+53,16,0,1,0,0,40,1,0,1,1280,1,0
+50,16,0,1,15024,0,59,0,0,1,1280,1,0
+50,16,0,1,15024,0,50,0,0,1,1280,1,0
+34,16,0,1,0,0,99,0,0,0,1280,1,0
+62,16,0,1,0,0,40,1,0,0,1280,1,0
+46,16,0,1,99999,0,50,1,0,1,1280,1,0
+36,16,0,1,0,0,40,0,0,1,1280,1,0
+35,16,0,1,0,0,45,0,0,1,1280,1,0
+54,16,0,1,0,0,80,0,0,1,1280,1,0
+67,16,0,1,20051,0,40,0,0,1,1280,1,0
+22,10,0,1,0,0,40,1,0,0,1280,1,0
+42,14,0,1,0,0,45,1,0,0,1280,1,0
+33,9,0,1,0,0,50,1,0,0,1280,1,0
+58,15,0,1,0,0,50,1,0,0,1280,1,0
+38,13,0,1,0,0,40,1,0,0,1280,1,0
+23,9,0,1,0,0,40,1,0,0,1280,1,0
+45,13,0,1,0,0,65,1,0,0,1280,1,0
+42,13,0,1,7298,0,45,1,0,1,1280,1,0
+19,9,0,1,0,0,20,1,0,0,1280,1,0
+22,10,0,1,0,0,29,1,0,0,1280,1,0
+50,12,0,1,0,0,59,1,0,0,1280,1,0
+28,11,0,1,0,0,38,1,0,0,1280,1,0
+20,9,0,1,0,0,29,1,0,0,1280,1,0
+61,13,0,1,0,0,40,1,0,1,1280,1,0
+57,10,0,1,0,0,40,1,0,1,1280,1,0
+37,9,0,1,0,0,40,1,0,0,1280,1,0
+33,10,0,1,0,0,40,1,0,0,1280,1,0
+45,10,0,1,0,0,46,1,0,0,1280,1,0
+35,10,0,1,0,0,40,1,0,1,1280,1,0
+30,9,0,1,0,0,55,1,0,0,1280,1,0
+33,9,0,1,0,0,40,1,0,0,1280,1,0
+31,9,0,1,0,0,52,1,0,0,1280,1,0
+38,13,0,1,0,0,40,1,0,0,1280,1,0
+27,13,0,1,0,0,40,1,0,0,1280,1,0
+29,13,0,1,0,0,50,1,0,1,1280,1,0
+37,13,0,1,0,0,40,1,0,0,1280,1,0
+28,15,0,1,0,0,45,1,0,0,1280,1,0
+64,7,0,1,0,0,48,1,0,0,1280,1,0
+23,7,0,1,14344,0,40,1,0,1,1280,1,0
+58,9,0,1,0,0,20,1,0,1,1280,1,0
+48,13,0,1,0,0,55,1,0,1,1280,1,0
+70,13,0,1,0,0,55,1,0,0,1280,1,0
+30,9,0,1,0,0,54,1,0,0,1280,1,0
+65,9,0,1,0,0,40,1,0,0,1280,1,0
+25,7,0,1,0,0,40,1,0,0,1280,1,0
+23,9,0,1,0,0,48,1,0,0,1280,1,0
+21,9,0,1,0,0,40,1,0,0,1280,1,0
+32,14,0,1,0,1977,48,1,0,1,1280,1,0
+37,9,0,1,0,0,45,1,0,1,1280,1,0
+22,9,0,1,0,0,40,1,0,0,1280,1,0
+52,12,0,1,13549,0,40,1,0,1,1280,1,0
+38,9,0,1,0,0,41,1,0,0,1280,1,0
+42,9,0,1,4650,0,40,1,0,0,1280,1,0
+57,10,0,1,0,0,40,1,0,1,1280,1,0
+23,4,0,1,0,0,36,1,0,0,1280,1,0
+45,11,0,1,0,0,40,1,0,0,1280,1,0
+17,6,0,1,0,0,20,1,0,0,1280,1,0
+38,12,0,1,0,0,40,1,0,0,1280,1,0
+54,12,0,1,0,0,40,1,0,0,1280,1,0
+34,9,0,1,0,1672,42,1,0,0,1280,1,0
+27,9,0,1,0,0,40,1,0,0,1280,1,0
+46,5,0,1,0,0,40,1,0,0,1280,1,0
+22,9,0,1,0,0,45,1,0,0,1280,1,0
+37,11,0,1,0,0,40,1,0,1,1280,1,0
+46,10,0,1,0,0,40,1,0,0,1280,1,0
+46,11,0,1,0,0,29,1,0,0,1280,1,0
+42,9,0,1,0,0,45,1,0,0,1280,1,0
+38,9,0,1,0,0,40,1,0,0,1280,1,0
+23,10,0,1,0,0,40,1,0,0,1280,1,0
+27,10,0,1,0,0,16,1,0,0,1280,1,0
+36,13,0,1,0,0,50,1,0,1,1280,1,0
+36,13,0,1,0,0,40,1,0,1,1280,1,0
+18,10,0,1,0,0,20,1,0,0,1280,1,0
+38,14,0,1,0,0,50,1,0,1,1280,1,0
+26,9,0,1,0,0,40,1,0,0,1280,1,0
+53,13,0,1,0,0,50,1,0,1,1280,1,0
+34,12,0,1,0,0,35,1,0,0,1280,1,0
+24,9,0,1,0,1762,32,1,0,0,1280,1,0
+22,9,0,1,0,0,38,1,0,0,1280,1,0
+50,13,0,1,0,0,40,1,0,0,1280,1,0
+20,10,0,1,0,0,25,1,0,0,1280,1,0
+68,10,0,1,0,0,14,1,0,0,1280,1,0
+71,15,0,1,0,0,2,1,0,0,1280,1,0
+19,7,0,1,0,0,24,1,0,0,1280,1,0
+40,11,0,1,0,0,59,1,0,0,1280,1,0
+22,13,0,1,0,0,40,1,0,0,1280,1,0
+24,10,0,1,0,0,45,1,0,0,1280,1,0
+42,10,0,1,0,1485,50,1,0,0,1280,1,0
+70,13,0,1,0,0,70,1,0,1,1280,1,0
+22,8,0,1,0,0,59,1,0,0,1280,1,0
+28,5,0,1,0,0,35,1,0,0,1280,1,0
+26,14,0,1,0,0,40,1,0,0,1280,1,0
+69,4,0,1,0,0,6,1,0,0,1280,1,0
+54,14,0,1,0,1902,59,1,0,1,1280,1,0
+44,11,0,1,0,1340,40,1,0,0,1280,1,0
+24,13,0,1,0,0,45,1,0,0,1280,1,0
+50,9,0,1,0,0,40,1,0,1,1280,1,0
+25,10,0,1,2174,0,50,1,0,0,1280,1,0
+32,13,0,1,0,0,59,1,0,1,1280,1,0
+31,9,0,1,0,0,40,1,0,0,1280,1,0
+37,14,0,1,0,0,70,1,0,0,1280,1,0
+25,9,0,1,0,0,40,1,0,0,1280,1,0
+60,15,0,1,0,0,70,1,0,1,1280,1,0
+20,9,0,1,0,0,25,1,0,0,1280,1,0
+22,5,0,1,0,0,54,1,0,0,1280,1,0
+30,9,0,1,0,0,40,1,0,0,1280,1,0
+38,13,0,1,0,0,40,1,0,0,1280,1,0
+70,9,0,1,2329,0,20,1,0,0,1280,1,0
+30,9,0,1,0,0,40,1,0,0,1280,1,0
+41,13,0,1,0,0,40,1,0,0,1280,1,0
+31,4,0,1,0,0,40,1,0,0,1280,1,0
+42,11,0,1,0,0,40,1,0,1,1280,1,0
+44,10,0,1,0,0,40,1,0,0,1280,1,0
+54,4,0,1,0,0,59,1,0,0,1280,1,0
+46,10,0,1,0,0,45,1,0,1,1280,1,0
+42,14,0,1,0,1902,40,1,0,1,1280,1,0
+37,9,0,1,0,0,40,1,0,0,1280,1,0
+26,9,0,1,0,0,40,1,0,0,1280,1,0
+19,6,0,1,0,0,40,1,0,0,1280,1,0
+60,10,0,1,0,1887,40,1,0,1,1280,1,0
+48,9,0,1,0,0,40,1,0,1,1280,1,0
+57,5,0,1,0,0,38,1,0,0,1280,1,0
+36,9,0,1,0,0,59,1,0,0,1280,1,0
+27,13,0,1,0,0,40,1,0,0,1280,1,0
+27,13,0,1,0,0,40,1,0,0,1280,1,0
+38,11,0,1,0,0,45,1,0,1,1280,1,0
+40,10,0,1,0,0,55,1,0,0,1280,1,0
+40,10,0,1,0,0,40,1,0,0,1280,1,0
+68,9,0,1,0,0,40,1,0,0,1280,1,0
+24,9,0,1,0,0,40,1,0,0,1280,1,0
+57,9,0,1,0,0,40,1,0,1,1280,1,0
+31,13,0,1,0,0,40,1,0,0,1280,1,0
+62,10,0,1,0,0,20,1,0,0,1280,1,0
+57,13,0,1,0,2258,40,1,0,0,1280,1,0
+54,4,0,1,0,0,75,1,0,0,1280,1,0
+52,13,0,1,0,1755,40,1,0,1,1280,1,0
+23,9,0,1,0,0,40,1,0,0,1280,1,0
+38,13,0,1,0,0,29,1,0,1,1280,1,0
+19,9,0,1,0,0,40,1,0,0,1280,1,0
+19,9,0,1,0,0,40,1,0,0,1280,1,0
+28,11,0,1,0,0,3,1,0,0,1280,1,0
+27,13,0,1,0,1340,40,1,0,0,1280,1,0
+29,14,0,1,0,0,14,1,0,0,1280,1,0
+52,10,0,1,0,0,65,1,0,0,1280,1,0
+58,10,0,1,0,0,40,1,0,1,1280,1,0
+69,10,0,1,0,0,40,1,0,0,1280,1,0
+40,10,0,1,0,0,40,1,0,0,1280,1,0
+49,9,0,1,0,0,40,1,0,1,1280,1,0
+21,10,0,1,0,0,35,1,0,0,1280,1,0
+38,9,0,1,0,0,40,1,0,0,1280,1,0
+54,13,0,1,0,0,65,1,0,0,1280,1,0
+18,6,0,1,0,0,27,1,0,0,1280,1,0
+60,10,0,1,0,0,40,1,0,0,1280,1,0
+50,9,0,1,0,0,40,1,0,0,1280,1,0
+44,11,0,1,15024,0,50,1,0,1,1280,1,0
+30,12,0,1,0,0,52,1,0,0,1280,1,0
+37,11,0,1,0,0,4,1,0,0,1280,1,0
+61,11,0,1,0,0,40,1,0,1,1280,1,0
+44,9,0,1,0,0,40,1,0,0,1280,1,0
+38,10,0,1,0,0,40,1,0,0,1280,1,0
+49,4,0,1,0,0,35,1,0,0,1280,1,0
+50,10,0,1,0,0,45,1,0,1,1280,1,0
+46,9,0,1,0,0,40,1,0,0,1280,1,0
+46,9,0,1,0,0,40,1,0,0,1280,1,0
+38,11,0,1,0,0,50,1,0,0,1280,1,0
+37,5,0,1,0,0,16,1,0,0,1280,1,0
+32,9,0,1,0,0,40,1,0,0,1280,1,0
+29,12,0,1,0,0,37,1,0,0,1280,1,0
+23,9,0,1,0,0,40,1,0,0,1280,1,0
+29,12,0,1,0,0,37,1,0,0,1280,1,0
+26,11,0,1,0,0,50,1,0,0,1280,1,0
+54,14,0,1,0,0,40,1,0,0,1280,1,0
+29,10,0,1,7298,0,50,1,0,1,1280,1,0
+31,12,0,1,0,0,40,1,0,0,1280,1,0
+28,9,0,1,0,0,23,1,0,0,1280,1,0
+52,7,0,1,0,0,40,1,0,0,1280,1,0
+37,10,0,1,0,0,45,1,0,1,1280,1,0
+38,10,0,1,0,0,40,1,0,0,1280,1,0
+46,13,0,1,0,0,40,1,0,1,1280,1,0
+70,9,0,1,0,2174,40,1,0,1,1280,1,0
+24,10,0,1,14344,0,50,1,0,1,1280,1,0
+37,14,0,1,0,0,59,1,0,1,1280,1,0
+37,13,0,1,7688,0,40,1,0,1,1280,1,0
+54,9,0,1,0,1848,40,1,0,1,1280,1,0
+30,10,0,1,0,0,40,1,0,0,1280,1,0
+48,4,0,1,0,1672,55,1,0,0,1280,1,0
+38,11,0,1,0,2415,40,1,0,1,1280,1,0
+69,14,0,1,0,0,40,1,0,0,1280,1,0
+25,9,0,1,0,0,35,1,0,0,1280,1,0
+23,9,0,1,0,0,50,1,0,0,1280,1,0
+35,13,0,1,0,0,50,1,0,0,1280,1,0
+31,9,0,1,0,0,40,1,0,0,1280,1,0
+44,15,0,1,0,0,55,1,0,1,1280,1,0
+24,10,0,1,0,0,65,1,0,0,1280,1,0
+65,10,0,1,1848,0,20,1,0,0,1280,1,0
+29,9,0,1,0,0,35,1,0,0,1280,1,0
+22,10,0,1,0,0,29,1,0,0,1280,1,0
+37,6,0,1,0,0,40,1,0,0,1280,1,0
+54,9,0,1,0,0,40,1,0,0,1280,1,0
+50,10,0,1,0,0,43,1,0,1,1280,1,0
+21,10,0,1,0,0,40,0,0,0,1280,1,0
+46,10,0,1,0,0,75,0,0,1,1280,1,0
+42,14,0,1,0,0,45,0,0,0,1280,1,0
+45,12,0,1,0,0,40,1,0,0,1280,1,0
+20,9,0,1,0,0,40,1,0,0,1280,1,0
+19,10,0,1,0,0,14,0,0,0,1280,1,0
+58,5,0,1,0,0,40,0,0,0,1280,1,0
+61,9,0,1,0,0,40,0,0,0,1280,1,0
+45,10,0,1,0,0,40,0,0,0,1280,1,0
+65,10,0,1,0,0,38,0,0,0,1280,1,0
+21,10,0,1,0,0,12,0,0,0,1280,1,0
+45,13,0,1,0,0,59,0,0,0,1280,1,0
+37,9,0,1,0,0,45,0,0,0,1280,1,0
+45,13,0,1,0,0,40,0,0,0,1280,1,0
+45,9,0,1,0,0,55,0,0,0,1280,1,0
+20,10,0,1,0,0,29,0,0,0,1280,1,0
+48,10,0,1,0,0,40,0,0,0,1280,1,0
+40,9,0,1,0,0,40,0,0,0,1280,1,0
+46,13,0,1,0,1887,40,0,0,1,1280,1,0
+42,15,0,1,0,0,59,0,0,1,1280,1,0
+49,10,0,1,0,0,40,0,0,0,1280,1,0
+37,15,0,1,0,0,50,0,0,1,1280,1,0
+31,11,0,1,0,0,40,0,0,0,1280,1,0
+36,10,0,1,0,0,40,0,0,0,1280,1,0
+31,9,0,1,0,0,38,0,0,0,1280,1,0
+18,8,0,1,0,0,29,0,0,0,1280,1,0
+45,15,0,1,7298,0,59,0,0,1,1280,1,0
+24,9,0,1,0,0,40,0,0,0,1280,1,0
+32,9,0,1,0,0,45,0,0,0,1280,1,0
+29,13,0,1,0,0,40,0,0,0,1280,1,0
+32,9,0,1,0,0,40,0,0,0,1280,1,0
+38,9,0,1,0,0,40,0,0,1,1280,1,0
+54,4,0,1,0,0,50,0,0,0,1280,1,0
+37,15,0,1,0,0,50,0,0,1,1280,1,0
+41,9,0,1,0,0,40,0,0,0,1280,1,0
+27,10,0,1,0,0,40,0,0,0,1280,1,0
+54,6,0,1,0,0,40,0,0,0,1280,1,0
+32,11,0,1,0,0,55,0,0,1,1280,1,0
+49,10,0,1,0,0,59,0,0,0,1280,1,0
+27,9,0,1,0,0,40,0,0,0,1280,1,0
+58,6,0,1,0,0,40,0,0,0,1280,1,0
+69,10,0,1,0,0,14,0,0,0,1280,1,0
+28,10,0,1,0,0,40,0,0,0,1280,1,0
+31,9,0,1,0,0,35,0,0,0,1280,1,0
+18,10,0,1,0,0,40,0,0,0,1280,1,0
+58,6,0,1,0,0,40,0,0,0,1280,1,0
+40,14,0,1,0,0,50,0,0,1,1280,1,0
+32,10,0,1,0,0,45,0,0,0,1280,1,0
+31,12,0,1,0,0,40,0,0,0,1280,1,0
+41,15,0,1,0,0,50,0,0,1,1280,1,0
+46,10,0,1,0,0,48,0,0,1,1280,1,0
+38,10,0,1,0,0,50,0,0,1,1280,1,0
+36,9,0,1,0,0,40,0,0,1,1280,1,0
+53,10,0,1,0,0,40,0,0,1,1280,1,0
+42,9,0,1,8614,0,40,0,0,1,1280,1,0
+29,13,0,1,7298,0,42,0,0,1,1280,1,0
+26,9,0,1,0,0,20,0,0,0,1280,1,0
+38,6,0,1,0,0,40,0,0,0,1280,1,0
+45,9,0,1,0,0,59,0,0,0,1280,1,0
+26,13,0,1,0,0,40,0,0,0,1280,1,0
+23,13,0,1,0,0,20,0,0,0,1280,1,0
+44,9,0,1,3137,0,50,0,0,0,1280,1,0
+42,14,0,1,0,0,25,0,0,0,1280,1,0
+29,13,0,1,0,0,45,0,0,0,1280,1,0
+31,10,0,1,0,0,40,0,0,0,1280,1,0
+44,9,0,1,0,0,39,0,0,0,1280,1,0
+70,6,0,1,0,0,40,0,0,0,1280,1,0
+34,5,0,1,0,0,40,0,0,0,1280,1,0
+21,9,0,1,0,0,32,0,0,0,1280,1,0
+41,9,0,1,0,0,40,0,0,0,1280,1,0
+27,9,0,1,0,0,40,0,0,0,1280,1,0
+53,6,0,1,0,0,40,0,0,0,1280,1,0
+50,12,0,1,0,0,45,0,0,0,1280,1,0
+30,10,0,1,0,0,29,0,0,0,1280,1,0
+50,9,0,1,0,0,40,0,0,1,1280,1,0
+30,7,0,1,0,0,40,0,0,0,1280,1,0
+45,14,0,1,0,0,40,0,0,0,1280,1,0
+34,9,0,1,0,0,45,0,0,0,1280,1,0
+36,13,0,1,0,0,50,0,0,0,1280,1,0
+23,9,0,1,0,0,96,0,0,0,1280,1,0
+18,7,0,1,0,0,20,0,0,0,1280,1,0
+35,7,0,1,3674,0,40,0,0,0,1280,1,0
+31,6,0,1,0,0,40,0,0,0,1280,1,0
+32,9,0,1,0,0,36,0,0,0,1280,1,0
+54,10,0,1,0,0,40,0,0,0,1280,1,0
+23,10,0,1,0,0,40,0,0,0,1280,1,0
+44,13,0,1,0,0,45,0,0,0,1280,1,0
+20,9,0,1,0,0,24,0,0,0,1280,1,0
+46,14,0,1,0,0,42,0,0,0,1280,1,0
+62,9,0,1,0,0,40,0,0,0,1280,1,0
+18,6,0,1,0,0,40,0,0,0,1280,1,0
+48,11,0,1,7688,0,40,0,0,1,1280,1,0
+36,9,0,1,0,0,40,0,0,0,1280,1,0
+60,4,0,1,0,0,40,0,0,0,1280,1,0
+20,7,0,1,0,0,40,0,0,0,1280,1,0
+25,11,0,1,0,0,34,0,0,0,1280,1,0
+22,9,0,1,0,0,20,0,0,0,1280,1,0
+60,4,0,1,0,0,40,0,0,0,1280,1,0
+26,13,0,1,0,0,20,0,0,0,1280,1,0
+34,9,0,1,0,0,45,0,0,0,1280,1,0
+20,10,0,1,0,0,40,0,0,0,1280,1,0
+31,15,0,1,0,0,59,0,0,1,1280,1,0
+36,9,0,1,0,0,40,0,0,1,1280,1,0
+50,10,0,1,7298,0,40,0,0,1,1280,1,0
+26,10,0,1,0,0,40,0,0,0,1280,1,0
+45,13,0,1,0,0,50,0,0,1,1280,1,0
+68,9,0,1,0,0,24,0,0,0,1280,1,0
+22,13,0,1,0,0,29,0,0,0,1280,1,0
+34,10,0,1,0,0,45,0,0,1,1280,1,0
+24,13,0,1,0,0,35,0,0,0,1280,1,0
+61,9,0,1,0,0,40,0,0,0,1280,1,0
+48,10,0,1,0,0,40,0,0,1,1280,1,0
+46,10,0,1,0,0,40,0,0,0,1280,1,0
+50,14,0,1,0,0,59,0,0,0,1280,1,0
+26,9,0,1,0,0,40,0,0,0,1280,1,0
+32,4,0,1,0,0,40,0,0,0,1280,1,0
+50,13,0,1,0,0,25,0,0,0,1280,1,0
+18,7,0,1,0,0,10,0,0,0,1280,1,0
+53,10,0,1,0,0,29,0,0,0,1280,1,0
+46,12,0,1,0,0,40,0,0,1,1280,1,0
+19,7,0,1,0,0,25,0,0,0,1280,1,0
+35,4,0,1,0,0,25,0,0,0,1280,1,0
+45,13,0,1,0,0,50,0,0,1,1280,1,0
+25,13,0,1,0,0,40,0,0,0,1280,1,0
+57,9,0,1,0,0,40,0,0,0,1280,1,0
+49,9,0,1,0,0,40,0,0,0,1280,1,0
+17,6,0,1,0,0,25,0,0,0,1280,1,0
+31,13,0,1,0,0,29,0,0,0,1280,1,0
+34,9,0,1,0,0,29,0,0,0,1280,1,0
+31,13,0,1,0,0,40,0,0,0,1280,1,0
+20,8,0,1,0,0,40,0,0,0,1280,1,0
+20,9,0,1,0,0,40,0,0,0,1280,1,0
+54,10,0,1,0,0,40,0,0,1,1280,1,0
+46,13,0,1,0,0,40,0,0,1,1280,1,0
+46,9,0,1,0,0,40,0,0,0,1280,1,0
+37,14,0,1,0,0,38,0,0,0,1280,1,0
+36,9,0,1,0,0,25,0,0,0,1280,1,0
+49,4,0,1,0,0,40,0,0,0,1280,1,0
+53,8,0,1,5013,0,45,0,0,0,1280,1,0
+49,9,0,1,0,0,40,0,0,0,1280,1,0
+50,5,0,1,0,0,50,0,0,0,1280,1,0
+62,9,0,1,0,0,48,0,0,0,1280,1,0
+37,10,0,1,0,0,29,0,0,0,1280,1,0
+27,13,0,1,0,0,40,0,0,0,1280,1,0
+36,14,0,1,0,0,29,0,0,0,1280,1,0
+20,9,0,1,0,0,32,0,0,0,1280,1,0
+30,8,0,1,0,0,40,0,0,0,1280,1,0
+60,9,0,1,0,0,40,0,0,0,1280,1,0
+38,9,0,1,0,0,59,0,0,0,1280,1,0
+38,9,0,1,0,1876,40,0,0,0,1280,1,0
+23,13,0,1,0,0,50,0,0,0,1280,1,0
+37,7,0,1,7688,0,40,0,0,1,1280,1,0
+23,10,0,1,0,0,20,0,0,0,1280,1,0
+27,9,0,1,0,0,38,0,0,0,1280,1,0
+36,10,0,1,7298,0,32,0,0,1,1280,1,0
+46,10,0,1,0,1485,47,0,0,0,1280,1,0
+46,14,0,1,15024,0,50,0,0,1,1280,1,0
+22,10,0,1,0,0,29,0,0,0,1280,1,0
+20,10,0,1,2176,0,40,0,0,0,1280,1,0
+32,14,0,1,0,0,40,0,0,0,1280,1,0
+34,13,0,1,0,0,40,0,0,1,1280,1,0
+36,9,0,1,0,0,37,0,0,0,1280,1,0
+38,13,0,1,0,0,40,0,0,1,1280,1,0
+17,7,0,1,0,0,16,0,0,0,1280,1,0
+49,9,0,1,0,0,40,0,0,0,1280,1,0
+21,10,0,1,0,0,40,0,0,0,1280,1,0
+46,9,0,1,0,0,40,0,0,0,1280,1,0
+18,7,0,1,0,0,20,0,0,0,1280,1,0
+36,3,0,1,0,0,40,0,0,0,1280,1,0
+56,9,0,1,0,0,40,0,0,0,1280,1,0
+30,10,0,1,0,0,40,0,0,0,1280,1,0
+26,7,0,1,0,0,40,0,0,0,1280,1,0
+45,5,0,1,0,0,40,0,0,0,1280,1,0
+58,9,0,1,0,0,40,0,0,1,1280,1,0
+21,10,0,1,2907,0,29,0,0,0,1280,1,0
+23,10,0,1,0,0,40,0,0,0,1280,1,0
+44,14,0,1,0,1902,40,0,0,1,1280,1,0
+52,9,0,1,0,0,40,0,0,1,1280,1,0
+31,9,0,1,0,0,40,0,0,0,1280,1,0
+24,13,0,1,0,0,45,0,0,0,1280,1,0
+23,11,0,1,0,0,55,0,0,1,1280,1,0
+41,9,0,1,0,0,50,0,0,0,1280,1,0
+38,9,0,1,0,0,43,0,0,0,1280,1,0
+49,10,0,1,0,1902,50,0,0,1,1280,1,0
+23,10,0,1,0,0,25,0,0,0,1280,1,0
+40,13,0,1,0,1977,40,0,0,1,1280,1,0
+49,5,0,1,0,0,20,0,0,0,1280,1,0
+53,13,0,1,0,1740,40,0,0,0,1280,1,0
+44,15,0,1,15024,0,75,0,0,1,1280,1,0
+36,13,0,1,0,0,48,0,0,1,1280,1,0
+38,9,0,1,0,0,56,0,0,0,1280,1,0
+37,7,0,1,0,0,45,0,0,0,1280,1,0
+25,2,0,1,0,0,96,0,0,0,1280,1,0
+40,10,0,1,0,0,40,0,0,0,1280,1,0
+21,10,0,1,0,1721,35,0,0,0,1280,1,0
+61,6,0,1,0,0,40,0,0,0,1280,1,0
+33,9,0,1,0,0,40,0,0,0,1280,1,0
+33,9,0,1,0,0,40,0,0,0,1280,1,0
+37,10,0,1,0,0,40,0,0,0,1280,1,0
+53,9,0,1,0,0,35,0,0,1,1280,1,0
+26,13,0,1,6849,0,65,0,0,0,1280,1,0
+33,10,0,1,0,0,10,0,0,0,1280,1,0
+56,16,0,1,2885,0,40,0,0,0,1280,1,0
+50,16,0,1,0,0,70,0,0,1,1280,1,0
+20,9,0,1,0,0,40,0,0,0,1280,1,0
+38,16,0,1,0,0,42,1,0,1,1280,1,0
+33,16,0,1,0,0,40,1,0,0,1280,1,0
+42,16,0,1,0,0,40,1,0,1,1280,1,0
+36,16,0,1,0,0,40,1,0,0,1280,1,0
+28,16,0,1,0,0,50,1,0,1,1280,1,0
+60,15,0,1,99999,0,59,1,0,1,1280,1,0
+48,13,0,1,99999,0,50,1,0,1,1280,1,0
+71,14,0,1,99999,0,40,1,0,1,1280,1,0
+28,11,0,1,99999,0,50,0,0,1,1280,1,0
+42,6,0,1,99999,0,40,1,0,1,1280,1,0
