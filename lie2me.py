@@ -19,6 +19,7 @@ import pandas as pd
 import lime
 import lime.lime_tabular
 import shap
+import pprint
 
 from sklearn.cluster import KMeans
 
@@ -31,7 +32,7 @@ from cols import Table, Col, Sym, Num, leafmedians2, getLeafData2, getXY2
 params = Params("model_configurations/experiment_params.json")
 np.random.seed(params.seed)
 ###
-## The models f and psi for GERMAN.  We discriminate based on gender for f and consider loan rate % income for explanation
+## The models f and psi.  We discriminate based on sensitive for f and consider innoc feature for explanation
 #
 # the biased model
 class biased_model_f():
@@ -51,7 +52,7 @@ class biased_model_f():
 class innocuous_model_psi:
     def __init__(self, inno_indc):
         self.inno_indc = inno_indc
-    # Decision rule: classify according to loan rate indc
+    # Decision rule: classify according to innoc indc
     def predict_proba(self, X):
         return one_hot_encode(np.array([params.negative_outcome if x[self.inno_indc] > 0 else params.positive_outcome for x in X]))
 
@@ -66,11 +67,11 @@ class innocuous_model_psi_two:
         return one_hot_encode(preds)
 ##
 ###
-def explain(xtrain, xtest, adv_lime, categorical, features):
-    print ('---------------------')
-    print ("Beginning LIME COMPAS Experiments....")
-    print ("(These take some time to run because we have to generate explanations for every point in the test set) ")
-    print ('---------------------')
+def explain(xtrain, xtest, adv_lime, categorical, features, model):
+    # print ('---------------------')
+    # print ("Beginning LIME COMPAS Experiments....")
+    # print ("(These take some time to run because we have to generate explanations for every point in the test set) ")
+    # print ('---------------------')
 
     adv_explainer = lime.lime_tabular.LimeTabularExplainer(xtrain, sample_around_instance=True, feature_names=adv_lime.get_column_names(), categorical_features= categorical, discretize_continuous=False)
 
@@ -78,10 +79,17 @@ def explain(xtrain, xtest, adv_lime, categorical, features):
     for i in range(xtest.shape[0]):
         explanations.append(adv_explainer.explain_instance(xtest[i], adv_lime.predict_proba).as_list())
 
+    exp_dict = experiment_summary(explanations, features)
+
+    L = [(k, *t) for k, v in exp_dict.items() for t in v]
+    LDF = pd.DataFrame(L, columns = ["ranking", "feature", "occurances_pct"])
+    LDF["model_num"] = [model] * LDF.index.size
+
+    return LDF
     # Display Results
-    print ("LIME Ranks and Pct Occurances (1 corresponds to most important feature) for one unrelated feature:")
-    print (experiment_summary(explanations, features))
-    print ("Fidelity:", round(adv_lime.fidelity(xtest),2))
+    # print (str(adv_lime) + " LIME Ranks and Pct Occurances (1 corresponds to most important feature) for one unrelated feature:")
+    # pprint.pprint (experiment_summary(explanations, features))
+    # print ("\nFidelity:", round(adv_lime.fidelity(xtest),3))
 
     # # Repeat the same thing for two features
     # adv_lime = Adversarial_Lime_Model(racist_model_f(), innocuous_model_psi_two()).train(xtrain, ytrain, categorical_features= categorical, feature_names=features, perturbation_multiplier=2)
@@ -261,32 +269,34 @@ def main():
 
         all_models_test = pd.DataFrame(columns = M0.columns)
         all_models_test = all_models_test.append(M0)
-        M0.to_csv("./output/clones/" +  dataset + "_M0.csv", index=False)
+        # M0.to_csv("./output/clones/" +  dataset + "_M0.csv", index=False)
 
         Mm = pred(adv_lime_m,ss,cols,xtest, ytest, "ytest", f, 1)
         Mm = transformed(Mm, cols, "ytest", categorical, ss)
         all_models_test = all_models_test.append(Mm)
-        Mm.to_csv("./output/clones/" +  dataset + "_M1.csv", index=False)
+        # Mm.to_csv("./output/clones/" +  dataset + "_M1.csv", index=False)
 
         M5 = pred(adv_lime_5,ss,cols,xtest, ytest, "ytest", f, 5)
         M5 = transformed(M5, cols, "ytest", categorical, ss)
         all_models_test = all_models_test.append(M5)
-        M5.to_csv("./output/clones/" +  dataset + "_M5.csv", index=False)
+        # M5.to_csv("./output/clones/" +  dataset + "_M5.csv", index=False)
 
         M7 = pred(adv_lime_7,ss,cols,xtest, ytest, "ytest", f, 7)
         M7 = transformed(M7, cols, "ytest", categorical, ss)
         all_models_test = all_models_test.append(M7)
-        M7.to_csv("./output/clones/" +  dataset + "_M7.csv", index=False)
+        # M7.to_csv("./output/clones/" +  dataset + "_M7.csv", index=False)
         all_models_test.to_csv("./output/clones/" +  dataset + "_all.csv", index=False)
 
-
-
-
-
-
-
-        # explain(xtrain, xtest, adv_lime, categorical, features)
-
+        L = explain(xtrain, xtest, adv_lime, categorical, cols, 0)
+        all_L = pd.DataFrame(columns = L.columns)
+        all_L = all_L.append(L)
+        L = explain(xtrain, xtest, adv_lime_m, categorical, cols, 1)
+        all_L = all_L.append(L)
+        L = explain(xtrain, xtest, adv_lime_5, categorical, cols, 5)
+        all_L = all_L.append(L)
+        L = explain(xtrain, xtest, adv_lime_7, categorical, cols, 7)
+        all_L = all_L.append(L)
+        all_L.to_csv("./output/LIME_rankings/" +  dataset + ".csv", index=False)
         # print ('-'*55)
         # print("Finished " + dataset + " ; biased_model's FEATURE: ", str(sensitive_features[0]))
         # print ('-'*55)

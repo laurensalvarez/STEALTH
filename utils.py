@@ -4,7 +4,7 @@ import pandas as pd
 
 class Params():
     """Parameters object taken from: https://github.com/cs230-stanford/cs230-code-examples/blob/master/pytorch/nlp/utils.py
-    
+
     Parameters
     ----------
     json_path : string
@@ -62,7 +62,7 @@ def rank_features(explanation):
     List contained ranked feature names
     """
 
-    ordered_tuples = sorted(explanation, key=lambda x : abs(x[1]), reverse=True)  
+    ordered_tuples = sorted(explanation, key=lambda x : abs(x[1]), reverse=True)
     results = [tup[0] if tup[1] != 0 else ("Nothing shown",0) for tup in ordered_tuples]
     return results
 
@@ -83,7 +83,7 @@ def get_rank_map(ranks, to_consider):
 
     for i, rank in enumerate(ranks):
         for unique_rank in np.unique(rank):
-            unique[i+1].append((unique_rank, np.sum(np.array(rank) == unique_rank) / to_consider))
+            unique[i+1].append((unique_rank, round(np.sum(np.array(rank) == unique_rank) / to_consider, 3)))
 
     return unique
 
@@ -98,11 +98,11 @@ def experiment_summary(explanations, features):
     explain_features : list
     bias_feature : string
 
-    Returns 
+    Returns
     ----------
     A summary of the experiment
     """
-    # features_of_interest = explain_features + [bias_feature]   
+    # features_of_interest = explain_features + [bias_feature]
     top_features = [[], [], []]
 
     # sort ranks into top 3 features
