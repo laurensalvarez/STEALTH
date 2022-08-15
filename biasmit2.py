@@ -18,11 +18,11 @@ import sklearn.metrics as metrics
 from sklearn.preprocessing import MinMaxScaler
 
 # sys.path.append(os.path.abspath('..'))
-from utils import *
+
 from smote import smote
 from Measure import measure_final_score,calculate_recall,calculate_far,calculate_precision,calculate_accuracy
 from Generate_Samples import generate_samples
-
+from utils import *
 params = Params("./model_configurations/experiment_params.json")
 np.random.seed(params.seed)
 
@@ -53,17 +53,12 @@ def getMetrics(test_df, clf, X_train, y_train, X_test, y_test, protected_attribu
 
 ## Load dataset
 def getOGscores(path, scaler, dataset):
-    lilprobs = ["adultscensusincome", "diabetes", "bankmarketing"]
+    # lilprobs = ["adultscensusincome", "diabetes", "bankmarketing"]
     dataset_og = pd.read_csv(path)
     y_s = [col for col in dataset_og.columns if "!" in col]
     yname = y_s[0]
-
-    if dataset in lilprobs:
-        y_og = dataset_og[yname].values
-        dataset_og.drop([yname], axis=1, inplace=True)
-    else:
-        y_og = dataset_og[yname].values
-        dataset_og.drop([yname], axis=1, inplace=True)
+    y_og = dataset_og[yname].values
+    dataset_og.drop([yname], axis=1, inplace=True)
     # print(dataset_og.head())
     sensitive_features = [col for col in dataset_og.columns if "(" in col]
     sorted(sensitive_features)
@@ -104,7 +99,7 @@ def getOGscores(path, scaler, dataset):
 
     original_scores = pd.DataFrame(colmetrics,columns = ['recall+', 'precision+', 'accuracy+', 'F1_Score+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-', 'feature', 'sample_size', 'model_num', 'smote-ified'])
     training_df[yname] = y_train
-    
+
     zero_zero = len(training_df[(training_df[yname] == 0) & (training_df[sensitive_features[0]] == 0)])
     zero_one = len(training_df[(training_df[yname] == 0) & (training_df[sensitive_features[0]] == 1)])
     one_zero = len(training_df[(training_df[yname] == 1) & (training_df[sensitive_features[0]] == 0)])

@@ -104,17 +104,11 @@ def explain(xtrain, xtest, adv_lime, categorical, features, model):
     # print ("Fidelity:", round(adv_lime.fidelity(xtest),2))
 
 def splitUp(path, dataset):
-    lilprobs = ["adultscensusincome", "diabetes", "bankmarketing"]
     X = pd.read_csv(path)
     y_s = [col for col in X.columns if "!" in col]
     yname = y_s[0]
-
-    if dataset in lilprobs:
-        y = X[yname].values
-        X.drop([yname], axis=1, inplace=True)
-    else:
-        y = X[yname].values
-        X.drop([yname], axis=1, inplace=True)
+    y = X[yname].values
+    X.drop([yname], axis=1, inplace=True)
 
     # add unrelated columns
     X['Unrelated_column_one'] = np.random.choice([0,1],size=X.shape[0])
@@ -140,11 +134,15 @@ def splitUp(path, dataset):
     inno_indc = cols.index('Unrelated_column_one')
     categorical = [cols.index(c) for c in cat_features_encoded]
 
+    no_cats = pd.DataFrame(X.copy(),columns = X.columns)
+    no_cats[yname] = deepcopy(y)
+    no_cats.to_csv("./datasets/no_cats/" +  dataset + ".csv", index=False)
+
     return X, y, yname, cols, inno_indc, categorical, sensitive_features, sensa_indc
 
 def clusterGroups(trainingdf, ss, features):
     table = Table(11111)
-    rows = trainingdf.values
+    rows = deepcopy(trainingdf.values)
     header = deepcopy(list(trainingdf.columns.values))
     table + header
     for r in rows:
@@ -170,14 +168,14 @@ def clusterGroups(trainingdf, ss, features):
 
 def pred(adv_lime,ss,features,xtest, ytest, yname, f, model_num):
     """ returing sensitive feat and predictions from ADV model (y vals) """
-    pred = adv_lime.predict(xtest)
-    sdf = pd.DataFrame(xtest, columns=features)
+    pred = adv_lime.predict(deepcopy(xtest))
+    sdf = pd.DataFrame(deepcopy(xtest), columns=features)
 
     samples_col = [sdf.index.size] * sdf.index.size
     fold_col = [f] * sdf.index.size
     model_col = [model_num] * sdf.index.size
     sdf["predicted"] = pred
-    sdf[yname] = ytest
+    sdf[yname] = deepcopy(ytest)
     sdf["samples"] = samples_col
     sdf["fold"] = fold_col
     sdf["model_num"] = model_col
@@ -230,8 +228,9 @@ def main():
         ss = MinMaxScaler().fit(xtrain)
         xtrain = ss.transform(xtrain)
         xtest = ss.transform(xtest)
-        trainingdf = pd.DataFrame(xtrain, columns = cols)
-        trainingdf[yname]= ytrain
+
+        trainingdf = pd.DataFrame(deepcopy(xtrain), columns = cols)
+        trainingdf[yname]= deepcopy(ytrain)
 
         my, mdf, y5, df5, y7, df7 = clusterGroups(trainingdf, ss, cols)
 
@@ -248,14 +247,14 @@ def main():
         medianX, mediany = newTraining(exp_df, yname)
         adv_lime_m = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(medianX, mediany, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
 
-        exp_df5 = pred(adv_lime, ss, cols, df5.to_numpy(), y5, yname, f, 0)
+        exp_df5 = pred(adv_lime, ss, cols, df5.to_numpy(), y5, yname, f, 5)
         texp_df5 = transformed(exp_df5, cols, yname, categorical, ss)
         clusters_df = clusters_df.append(texp_df5)
 
         X5, Y5 = newTraining(exp_df5, yname)
         adv_lime_5 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(X5, Y5, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
 
-        exp_df7 = pred(adv_lime, ss, cols, df7.to_numpy(), y7, yname, f, 0)
+        exp_df7 = pred(adv_lime, ss, cols, df7.to_numpy(), y7, yname, f, 7)
         texp_df7 = transformed(exp_df7, cols, yname, categorical, ss)
         clusters_df = clusters_df.append(texp_df7)
         clusters_df.to_csv("./output/cluster_preds/" +  dataset + ".csv", index=False)
