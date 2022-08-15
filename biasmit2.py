@@ -34,7 +34,7 @@ def apply_smote(df):
     df.columns = cols
     return df
 
-def getMetrics(test_df, clf, X_train, y_train, X_test, y_test, protected_attribute, samples, yname, model_num):
+def getMetrics(test_df, clf, X_train, y_train, X_test, y_test, protected_attribute, samples, yname, model_num, smoted):
 
     recall = measure_final_score(test_df, clf, X_train, y_train, X_test, y_test, protected_attribute, 'recall', yname)
     precision = measure_final_score(test_df, clf, X_train, y_train, X_test, y_test, protected_attribute, 'precision', yname)
@@ -48,11 +48,11 @@ def getMetrics(test_df, clf, X_train, y_train, X_test, y_test, protected_attribu
     DI = measure_final_score(test_df, clf, X_train, y_train, X_test, y_test, protected_attribute, 'DI', yname)
     FAR = measure_final_score(test_df, clf, X_train, y_train, X_test, y_test, protected_attribute, 'far', yname)
 
-    return [recall, precision, accuracy, F1, AOD, EOD, SPD, FA0, FA1, DI, protected_attribute, samples, model_num]
+    return [recall, precision, accuracy, F1, AOD, EOD, SPD, FA0, FA1, DI, protected_attribute, samples, model_num, smoted]
 
 
 ## Load dataset
-def getOGscores(path, scaler, clf, dataset):
+def getOGscores(path, scaler, dataset):
     lilprobs = ["adultscensusincome", "diabetes", "bankmarketing"]
     dataset_og = pd.read_csv(path)
     y_s = [col for col in dataset_og.columns if "!" in col]
@@ -83,20 +83,71 @@ def getOGscores(path, scaler, clf, dataset):
     X_train,X_test,y_train,y_test = train_test_split(dataset_og, y_og, test_size=0.2, shuffle = True)
 
     test_df = pd.DataFrame(X_test, columns = dataset_og.columns)
-
     # # Check Original Score from Original Training set
-    colmetrics = {}
-    rows = []
-    for i in sensitive_features:
-        colmetrics[i] = getMetrics(test_df, clf, X_train, y_train, X_test, y_test, i, len(test_df.index), yname, 0)
 
-    for col, metric_row in colmetrics.items():
-        rows.append(metric_row)
-    original_scores = pd.DataFrame(rows,columns = ['recall+', 'precision+', 'accuracy+', 'F1_Score+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-', 'feature', 'sample_size', 'model_num'])
+    clf = RandomForestClassifier(n_estimators=100)
+    colmetrics = []
+    for i in sensitive_features:
+        colmetrics.append(getMetrics(test_df, clf, X_train, y_train, X_test, y_test, i, len(X_train), yname, 0, 0))
+
+    #applying apply_smote
+
+    training_df = pd.DataFrame(copy.deepcopy(X_train), columns = dataset_og.columns)
+    training_df[yname] = y_train
+    training_df = apply_smote(training_df)
+    y_train_smote = training_df[yname].values
+    training_df.drop([yname], axis = 1, inplace = True)
+    clf2 = RandomForestClassifier(n_estimators=100)
+
+    for i in sensitive_features:
+        colmetrics.append(getMetrics(test_df, clf2, training_df.values, y_train_smote, X_test, y_test, i, len(X_train), yname, 0, -1))
+
+    original_scores = pd.DataFrame(colmetrics,columns = ['recall+', 'precision+', 'accuracy+', 'F1_Score+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-', 'feature', 'sample_size', 'model_num', 'smote-ified'])
+    training_df[yname] = y_train
+    
+    zero_zero = len(training_df[(training_df[yname] == 0) & (training_df[sensitive_features[0]] == 0)])
+    zero_one = len(training_df[(training_df[yname] == 0) & (training_df[sensitive_features[0]] == 1)])
+    one_zero = len(training_df[(training_df[yname] == 1) & (training_df[sensitive_features[0]] == 0)])
+    one_one = len(training_df[(training_df[yname] == 1) & (training_df[sensitive_features[0]] == 1)])
+    maximum = max(zero_zero,zero_one,one_zero,one_one)
+
+    zero_zero_to_be_incresed = maximum - zero_zero ## where both are 0
+    one_zero_to_be_incresed = maximum - one_zero ## where class is 1 attribute is 0
+    one_one_to_be_incresed = maximum - one_one ## where class is 1 attribute is 1
+    df_zero_zero = training_df[(training_df[yname] == 0) & (training_df[sensitive_features[0]] == 0)]
+    df_one_zero = training_df[(training_df[yname] == 1) & (training_df[sensitive_features[0]] == 0)]
+    df_one_one = training_df[(training_df[yname] == 1) & (training_df[sensitive_features[0]] == 1)]
+
+    df_zero_zero[sensitive_features[0]] = df_zero_zero[sensitive_features[0]].astype(str)
+    df_zero_zero[sensitive_features[0]] = df_zero_zero[sensitive_features[0]].astype(str)
+    df_one_zero[sensitive_features[0]] = df_one_zero[sensitive_features[0]].astype(str)
+    df_one_one[sensitive_features[0]] = df_one_one[sensitive_features[0]].astype(str)
+
+
+    df_zero_zero = generate_samples(zero_zero_to_be_incresed,df_zero_zero, dataset)
+    df_one_zero = generate_samples(one_zero_to_be_incresed,df_one_zero, dataset)
+    df_one_one = generate_samples(one_one_to_be_incresed,df_one_one, dataset)
+
+    df = df_zero_zero.append(df_one_zero)
+    df = df.append(df_one_one)
+
+    df[sensitive_features[0]] = df[sensitive_features[0]].astype(float)
+
+    df_zero_one = training_df[(training_df[yname] == 0) & (training_df[sensitive_features[0]] == 1)]
+    df = df.append(df_zero_one)
+
+    X_train, y_train = df.loc[:, df.columns != yname], df[yname]
+
+    clf3 = RandomForestClassifier(n_estimators=100)
+
+    for i in sensitive_features:
+        colmetrics.append(getMetrics(test_df, clf3, X_train, y_train, X_test, y_test, i, len(X_train), yname, 0, 1))
+
+
 
     return original_scores, test_df, X_test, y_test, yname, sensitive_features
     # # Check Original Score from Original Training set
-def getSurrogates(cluster_path, sensitive_features, scaler, clf, test_df, X_test, y_test, yname):
+def getSurrogates(cluster_path, sensitive_features, scaler, test_df, X_test, y_test, yname):
     sur = pd.read_csv(cluster_path)
     surrogate = sur.copy()
     surrogate_cat_features = []
@@ -114,27 +165,32 @@ def getSurrogates(cluster_path, sensitive_features, scaler, clf, test_df, X_test
     sortedsamples = sorted(set(samples), key = lambda ele: samples.count(ele))
     m = 1
     for s in sortedsamples:
-        # print(s)
-        # print(m)
-        # print(surrogate.head())
+        clf = RandomForestClassifier(n_estimators=100)
         surr_colmetrics = []
         surrogate_1 = copy.deepcopy(surrogate)
         surrogate_1.drop(surrogate.loc[surrogate['samples']!= s].index, inplace=True)
-        # print(surrogate_1.head())
         surrogate_ground_truth = surrogate_1[yname].values
         surrogate_y = surrogate_1[y_pred].values
         surrogate_1.drop([yname,y_pred,'samples','Unrelated_column_one'],axis=1, inplace=True)
         scaled_surrogate = pd.DataFrame(scaler.fit_transform(surrogate_1.values),columns = surrogate_1.columns)
-        # print(scaled_surrogate.head())
+
         for i in sensitive_features:
-            # print(s)
-            # print(m)
-            surr_colmetrics.insert(m,getMetrics(test_df, clf, scaled_surrogate.values, surrogate_y, X_test, y_test, i, s, yname, m))
-        # print(surr_colmetrics)
+            # print(surrogate_y)
+            surr_colmetrics.insert(m,getMetrics(test_df, clf, scaled_surrogate.values, surrogate_y, X_test, y_test, i, s, yname, m, 0))
+
+        training_df = pd.DataFrame(copy.deepcopy(scaled_surrogate.values), columns = surrogate_1.columns)
+        training_df[yname] = surrogate_y
+        training_df = apply_smote(training_df)
+        y_train_smote = training_df[yname].values
+        training_df.drop([yname], axis = 1, inplace = True)
+        clf2 = RandomForestClassifier(n_estimators=100)
+        for i in sensitive_features:
+            surr_colmetrics.insert(m,getMetrics(test_df, clf, scaled_surrogate.values, surrogate_y, X_test, y_test, i, s, yname, m, 1))
+
         sample_metrics[s] = surr_colmetrics
+
         m+=1
 
-    # print(sample_metrics)
     return sample_metrics
 #apply smote to OG, Surrogates
 
@@ -147,25 +203,19 @@ def main():
         og_path =  "./datasets/processed/" + dataset + "_p.csv"
         cluster_path =  "./output/cluster_preds/" + dataset + ".csv"
         scaler = MinMaxScaler()
-        clf = LogisticRegression(C=1.0, penalty='l2', solver='liblinear', max_iter=100)
-        original_scores, test_df, X_test, y_test, yname, sensitive_features = getOGscores(og_path, scaler, clf, dataset)
-        # original_scores.append(original_scores)
-        # print(original_scores.head(10))
-        s_metrics = getSurrogates(cluster_path, sensitive_features, scaler, clf, test_df, X_test, y_test, yname)
+        original_scores, test_df, X_test, y_test, yname, sensitive_features = getOGscores(og_path, scaler, dataset)
+
+        s_metrics = getSurrogates(cluster_path, sensitive_features, scaler, test_df, X_test, y_test, yname)
         surr_rows = []
-        print(s_metrics)
+        # print(s_metrics)
         for s,c in s_metrics.items():
             for metric_row in c:
                 surr_rows.append(metric_row)
-        # print(s_metrics)
-        # print(surr_rows)
         surr_pd = pd.DataFrame(surr_rows,columns = original_scores.columns)
-        # print(surr_pd.head(10))
         original_scores = original_scores.append(surr_pd)
-        print(original_scores.head(10))
 
 
-        original_scores.to_csv("./bias/" +  dataset + "_LR.csv", index=False)
+        original_scores.to_csv("./bias/" +  dataset + "_RF.csv", index=False)
 
 
 

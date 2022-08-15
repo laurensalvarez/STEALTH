@@ -6,7 +6,7 @@ from sklearn.neighbors import NearestNeighbors
 
 
 def get_counts(clf, x_train, y_train, x_test, y_test, test_df, biased_col, metric, yname):
-
+    
     clf.fit(x_train, y_train)
     y_pred = clf.predict(x_test)
     # TN, FP, FN, TP = confusion_matrix(y_test,y_pred).ravel()
