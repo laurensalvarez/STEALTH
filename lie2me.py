@@ -40,7 +40,15 @@ class biased_model_f():
         self.sensa_indc = sensa_indc
     # Decision rule: classify negative outcome if underrepresented class
     def predict(self,X):
-        return np.array([params.negative_outcome if x[self.sensa_indc] == 0 else params.positive_outcome for x in X])
+        predictions = np.array([params.negative_outcome if x[self.sensa_indc] == 0 else params.positive_outcome for x in X])
+        indices = np.random.choice(np.arange(predictions.size), replace = False, size = int(predictions.size * 0.2))
+        for i in indices:
+            if predictions[i] == params.negative_outcome:
+                predictions[i] = params.positive_outcome
+            else:
+                predictions[i] = params.negative_outcome
+
+        return predictions
 
     def predict_proba(self, X):
         return one_hot_encode(self.predict(X))
@@ -134,9 +142,9 @@ def splitUp(path, dataset):
     inno_indc = cols.index('Unrelated_column_one')
     categorical = [cols.index(c) for c in cat_features_encoded]
 
-    no_cats = pd.DataFrame(X.copy(),columns = X.columns)
-    no_cats[yname] = deepcopy(y)
-    no_cats.to_csv("./datasets/no_cats/" +  dataset + ".csv", index=False)
+    # no_cats = pd.DataFrame(X.copy(),columns = X.columns)
+    # no_cats[yname] = deepcopy(y)
+    # no_cats.to_csv("./datasets/no_cats/" +  dataset + ".csv", index=False)
 
     return X, y, yname, cols, inno_indc, categorical, sensitive_features, sensa_indc
 
@@ -211,7 +219,7 @@ def transformed(df, cols, yname, categorical, ss):
 
 def main():
     # random.seed(10039)
-    datasets = ["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+    datasets = ["compas"]#["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
     pbar = tqdm(datasets)
 
     for dataset in pbar:
@@ -242,7 +250,7 @@ def main():
         t_df = transformed(exp_df, cols, yname, categorical, ss)
         clusters_df = pd.DataFrame(columns = t_df.columns)
         clusters_df = clusters_df.append(t_df)
-        # t_df.to_csv("./output/cluster_preds/" +  dataset + "_medians.csv", index=False)
+        # t_df.to_csv("./output/cluster_preds/class_bal/" +  dataset + "_medians.csv", index=False)
 
         medianX, mediany = newTraining(exp_df, yname)
         adv_lime_m = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(medianX, mediany, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
@@ -257,7 +265,7 @@ def main():
         exp_df7 = pred(adv_lime, ss, cols, df7.to_numpy(), y7, yname, f, 7)
         texp_df7 = transformed(exp_df7, cols, yname, categorical, ss)
         clusters_df = clusters_df.append(texp_df7)
-        clusters_df.to_csv("./output/cluster_preds/" +  dataset + ".csv", index=False)
+        clusters_df.to_csv("./output/cluster_preds/class_bal/" +  dataset + ".csv", index=False)
 
         X7, Y7 = newTraining(exp_df7, yname)
         adv_lime_7 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(X7, Y7, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
@@ -268,23 +276,23 @@ def main():
 
         all_models_test = pd.DataFrame(columns = M0.columns)
         all_models_test = all_models_test.append(M0)
-        # M0.to_csv("./output/clones/" +  dataset + "_M0.csv", index=False)
+        # M0.to_csv("./output/clones/class_bal/" +  dataset + "_M0.csv", index=False)
 
         Mm = pred(adv_lime_m,ss,cols,xtest, ytest, "ytest", f, 1)
         Mm = transformed(Mm, cols, "ytest", categorical, ss)
         all_models_test = all_models_test.append(Mm)
-        # Mm.to_csv("./output/clones/" +  dataset + "_M1.csv", index=False)
+        # Mm.to_csv("./output/clones/class_bal/" +  dataset + "_M1.csv", index=False)
 
         M5 = pred(adv_lime_5,ss,cols,xtest, ytest, "ytest", f, 5)
         M5 = transformed(M5, cols, "ytest", categorical, ss)
         all_models_test = all_models_test.append(M5)
-        # M5.to_csv("./output/clones/" +  dataset + "_M5.csv", index=False)
+        # M5.to_csv("./output/clones/class_bal/" +  dataset + "_M5.csv", index=False)
 
         M7 = pred(adv_lime_7,ss,cols,xtest, ytest, "ytest", f, 7)
         M7 = transformed(M7, cols, "ytest", categorical, ss)
         all_models_test = all_models_test.append(M7)
-        # M7.to_csv("./output/clones/" +  dataset + "_M7.csv", index=False)
-        all_models_test.to_csv("./output/clones/" +  dataset + "_all.csv", index=False)
+        # M7.to_csv("./output/clones/class_bal/" +  dataset + "_M7.csv", index=False)
+        all_models_test.to_csv("./output/clones/class_bal/" +  dataset + "_all.csv", index=False)
 
         L = explain(xtrain, xtest, adv_lime, categorical, cols, 0)
         all_L = pd.DataFrame(columns = L.columns)
@@ -295,7 +303,7 @@ def main():
         all_L = all_L.append(L)
         L = explain(xtrain, xtest, adv_lime_7, categorical, cols, 7)
         all_L = all_L.append(L)
-        all_L.to_csv("./output/LIME_rankings/" +  dataset + ".csv", index=False)
+        all_L.to_csv("./output/LIME_rankings/class_bal/" +  dataset + ".csv", index=False)
         # print ('-'*55)
         # print("Finished " + dataset + " ; biased_model's FEATURE: ", str(sensitive_features[0]))
         # print ('-'*55)
