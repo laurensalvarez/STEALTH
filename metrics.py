@@ -16,19 +16,20 @@ from cols import Table, Col, Sym, Num
 ###############################################
 
 # normal matrix
-def getMetrics(test_df, y_true, y_pred, biased_col, samples, fold, model_num):
+def getMetrics(test_df, y_test, y_pred, biased_col, samples, model_num, fold, yname):
 
-    recall = measure_final_score(test_df, y_true, y_pred, biased_col, 'recall')
-    precision = measure_final_score(test_df, y_true, y_pred, biased_col, 'precision')
-    accuracy = measure_final_score(test_df, y_true, y_pred, biased_col, 'accuracy')
-    F1 = measure_final_score(test_df, y_true, y_pred, biased_col, 'F1')
-    AOD = measure_final_score(test_df, y_true, y_pred, biased_col, 'aod')
-    EOD =measure_final_score(test_df, y_true, y_pred, biased_col, 'eod')
-    SPD = measure_final_score(test_df, y_true, y_pred, biased_col, 'SPD')
-    FA0 = measure_final_score(test_df, y_true, y_pred, biased_col, 'FA0')
-    FA1 = measure_final_score(test_df, y_true, y_pred, biased_col, 'FA1')
+    recall = measure_final_score(test_df, y_test, y_pred, biased_col, 'recall',yname)
+    precision = measure_final_score(test_df, y_test, y_pred, biased_col, 'precision',yname)
+    accuracy = measure_final_score(test_df, y_test, y_pred, biased_col, 'accuracy',yname)
+    F1 = measure_final_score(test_df, y_test, y_pred, biased_col, 'F1',yname)
+    AOD = measure_final_score(test_df, y_test, y_pred, biased_col, 'aod',yname)
+    EOD =measure_final_score(test_df, y_test, y_pred, biased_col, 'eod',yname)
+    SPD = measure_final_score(test_df, y_test, y_pred, biased_col, 'SPD',yname)
+    FA0 = measure_final_score(test_df, y_test, y_pred, biased_col, 'FA0',yname)
+    FA1 = measure_final_score(test_df, y_test, y_pred, biased_col, 'FA1',yname)
+    DI = measure_final_score(test_df, y_test, y_pred, biased_col, 'DI',yname)
 
-    return [recall, precision, accuracy, F1, AOD, EOD, SPD, FA0, FA1, biased_col, samples, fold, model_num]
+    return [recall, precision, accuracy, F1, AOD, EOD, SPD, DI, FA0, FA1, biased_col, samples, model_num, fold]
 
 def getBiasCols(dataset):
     bias_cols = []
@@ -54,41 +55,39 @@ def getBiasCols(dataset):
         bias_cols = ["race("]
     return bias_cols
 
-def getBiasCols2(dataset):
-    bias_cols = []
-    if dataset == "CleanCOMPAS53":
-        bias_cols = ["sex(", "Age(","race("]
-
-    if dataset == "GermanCredit":
-        bias_cols = ["C_a(","sav(", "sex(" , "Age(", "f_w("]
-
-    if dataset == "diabetes":
-        bias_cols = ["Age("]
-
-    if dataset == "adultscensusincome":
-        bias_cols = ["sex(", "race("]
-
-    if dataset == "bankmarketing":
-        bias_cols = ["Age(", "marital(", "education("]
-
-    if dataset == "defaultcredit":
-        bias_cols = ["LIMIT_BAL(", "SEX(","EDUCATION(","MARRIAGE(","AGE("]
-
-
-    return bias_cols
+# def getBiasCols2(dataset):
+#     bias_cols = []
+#     if dataset == "CleanCOMPAS53":
+#         bias_cols = ["sex(", "Age(","race("]
+#
+#     if dataset == "GermanCredit":
+#         bias_cols = ["C_a(","sav(", "sex(" , "Age(", "f_w("]
+#
+#     if dataset == "diabetes":
+#         bias_cols = ["Age("]
+#
+#     if dataset == "adultscensusincome":
+#         bias_cols = ["sex(", "race("]
+#
+#     if dataset == "bankmarketing":
+#         bias_cols = ["Age(", "marital(", "education("]
+#
+#     if dataset == "defaultcredit":
+#         bias_cols = ["LIMIT_BAL(", "SEX(","EDUCATION(","MARRIAGE(","AGE("]
+#     return bias_cols
 
 
-def sampleMetrics(test_df, y_true, y_pred, biased_cols, samples, f, model_num):
+def sampleMetrics(test_df, y_test, y_pred, biased_cols, samples, model_num, f, yname):
     colmetrics = {}
     for i in biased_cols:
-        colmetrics[i] = getMetrics(test_df, y_true, y_pred, i, samples, f, model_num)
+        colmetrics[i] = getMetrics(test_df, y_test, y_pred, i, samples, model_num, f, yname)
     return colmetrics
 
 ###############################################
 ###
 ###############################################
 def main():
-    datasets = ["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+    datasets = ["compas"]#["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
     pbar = tqdm(datasets)
     for dataset in pbar:
         pbar.set_description("Processing %s" % dataset)
@@ -106,6 +105,7 @@ def main():
         sortedmodels = sorted(set(models), key = lambda ele: models.count(ele))
         all_metrics = {}
         rows = []
+        yname = "ytest"
 
         for m in sortedmodels:
             print("Metrics for model num:", m, "\n")
@@ -120,14 +120,10 @@ def main():
                     dfr = copy.deepcopy(dfs)
                     dfr.drop(dfs.loc[dfs['fold']!= f].index, inplace=True)
 
-                    if '!probability' in dfr.columns:
-                        y_true = dfr["!probability"]
-                    elif '!Probability' in dfr.columns:
-                        y_true = dfr["!Probability"]
-                    else:
-                        y_true = dfr["ytest"]
+                    y_test = dfr[yname]
+
                     y_pred = dfr["predicted"]
-                    list.insert(f, sampleMetrics(dfr, y_true, y_pred, biased_cols, s, f, m))
+                    list.insert(f, sampleMetrics(dfr, y_test, y_pred, biased_cols, s, m, f, yname))
             all_metrics[m] = list
             # print("all_metrics:", all_metrics)
 
@@ -140,7 +136,7 @@ def main():
 
         # sys.exit()
 
-        fulldf = pd.DataFrame(rows, columns = ['recall+', 'precision+', 'accuracy+', 'F1_Score+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'feature', 'sample_size', 'fold', 'model_num'])
+        fulldf = pd.DataFrame(rows, columns = ['recall+', 'precision+', 'accuracy+', 'F1_Score+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-', 'feature', 'sample_size', 'model_num', 'fold'])
 
         fulldf.to_csv("./metrics/all_models/" + dataset + ".csv", index=False)
 

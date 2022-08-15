@@ -5,13 +5,13 @@ from sklearn.neighbors import KDTree
 from sklearn.neighbors import NearestNeighbors
 
 
-def get_counts(clf, x_train, y_train, x_test, y_test, test_df, biased_col, metric, yname):
-    
-    clf.fit(x_train, y_train)
-    y_pred = clf.predict(x_test)
+def get_counts(df, y_pred, x_train, y_train, x_test, y_test, biased_col, metric, yname):
+
+    # clf.fit(x_train, y_train)
+    # y_pred = clf.predict(x_test)
     # TN, FP, FN, TP = confusion_matrix(y_test,y_pred).ravel()
 
-    test_df_copy = copy.deepcopy(test_df)
+    test_df_copy = copy.deepcopy(df)
     test_df_copy['y_pred'] = y_pred
     test_df_copy[yname] = y_test
 
@@ -173,6 +173,6 @@ def consistency_score(X, y, n_neighbors=5):
     return consistency
 
 
-def measure_final_score(test_df, clf, X_train, y_train, X_test, y_test, biased_col, metric, yname):
+def measure_final_score(test_df, y_pred, X_train, y_train, X_test, y_test, biased_col, metric, yname):
     df = copy.deepcopy(test_df)
-    return get_counts(clf, X_train, y_train, X_test, y_test, df, biased_col, metric, yname)
+    return get_counts(df, y_pred, X_train, y_train, X_test, y_test, biased_col, metric, yname)

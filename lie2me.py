@@ -219,7 +219,7 @@ def transformed(df, cols, yname, categorical, ss):
 
 def main():
     # random.seed(10039)
-    datasets = ["compas"]#["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+    datasets = ["adultscensusincome","bankmarketing", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"] #"compas"
     pbar = tqdm(datasets)
 
     for dataset in pbar:

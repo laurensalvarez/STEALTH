@@ -3,77 +3,38 @@ import copy,math,sys
 from sklearn.metrics import confusion_matrix, classification_report
 
 
-def get_counts(test_df, y_pred, y_true, biased_col, metric):
-
-    # TN, FP, FN, TP = confusion_matrix(y_true,y_pred,labels=[0, 1]).ravel()
-
-
+def get_counts(test_df, y_test, y_pred, biased_col, metric, yname):
     test_df_copy = copy.deepcopy(test_df)
-    # print(test_df_copy)
-    # test_df_copy['predicted'] = test_df_copy['predicted']
-    # test_df_copy['!Probability'] = test_df_copy['!Probability']
-    # test_df_copy[biased_col] = test_df_copy[biased_col]
+    test_df_copy['y_pred'] = y_pred
+    test_df_copy[yname] = y_test
 
-    if '!probability' in test_df_copy.columns:
-        test_df_copy['TP_' + biased_col + "_1"] = np.where((test_df_copy['!probability']  == 1) & (test_df_copy['predicted'] == 1) & (test_df_copy[biased_col] == 1), 1, 0)
 
-        test_df_copy['TN_' + biased_col + "_1"] = np.where((test_df_copy['!probability'] == 0) & (test_df_copy['predicted'] == 0) & (test_df_copy[biased_col] == 1), 1, 0)
+    if yname in test_df_copy.columns:
+        test_df_copy['TP_' + biased_col + "_1"] = np.where((test_df_copy[yname]  == 1) & (test_df_copy['y_pred'] == 1) & (test_df_copy[biased_col] == 1), 1, 0)
 
-        test_df_copy['FN_' + biased_col + "_1"] = np.where((test_df_copy['!probability'] == 1) & (test_df_copy['predicted'] == 0) & (test_df_copy[biased_col] == 1), 1, 0)
+        test_df_copy['TN_' + biased_col + "_1"] = np.where((test_df_copy[yname] == 0) & (test_df_copy['y_pred'] == 0) & (test_df_copy[biased_col] == 1), 1, 0)
 
-        test_df_copy['FP_' + biased_col + "_1"] = np.where((test_df_copy['!probability'] == 0) & (test_df_copy['predicted'] == 1) & (test_df_copy[biased_col] == 1), 1, 0)
+        test_df_copy['FN_' + biased_col + "_1"] = np.where((test_df_copy[yname] == 1) & (test_df_copy['y_pred'] == 0) & (test_df_copy[biased_col] == 1), 1, 0)
 
-        test_df_copy['TP_' + biased_col + "_0"] = np.where((test_df_copy['!probability'] == 1) & (test_df_copy['predicted'] == 1) & (test_df_copy[biased_col] == 0), 1, 0)
+        test_df_copy['FP_' + biased_col + "_1"] = np.where((test_df_copy[yname] == 0) & (test_df_copy['y_pred'] == 1) & (test_df_copy[biased_col] == 1), 1, 0)
 
-        test_df_copy['TN_' + biased_col + "_0"] = np.where((test_df_copy['!probability'] == 0) & (test_df_copy['predicted'] == 0) & (test_df_copy[biased_col] == 0), 1, 0)
+        test_df_copy['TP_' + biased_col + "_0"] = np.where((test_df_copy[yname] == 1) & (test_df_copy['y_pred'] == 1) & (test_df_copy[biased_col] == 0), 1, 0)
 
-        test_df_copy['FN_' + biased_col + "_0"] = np.where((test_df_copy['!probability'] == 1) & (test_df_copy['predicted'] == 0) & (test_df_copy[biased_col] == 0), 1, 0)
+        test_df_copy['TN_' + biased_col + "_0"] = np.where((test_df_copy[yname] == 0) & (test_df_copy['y_pred'] == 0) & (test_df_copy[biased_col] == 0), 1, 0)
 
-        test_df_copy['FP_' + biased_col + "_0"] = np.where((test_df_copy['!probability'] == 0) & (test_df_copy['predicted'] == 1) & (test_df_copy[biased_col] == 0), 1, 0)
+        test_df_copy['FN_' + biased_col + "_0"] = np.where((test_df_copy[yname] == 1) & (test_df_copy['y_pred'] == 0) & (test_df_copy[biased_col] == 0), 1, 0)
 
-    elif '!Probability' in test_df_copy.columns:
+        test_df_copy['FP_' + biased_col + "_0"] = np.where((test_df_copy[yname] == 0) & (test_df_copy['y_pred'] == 1) & (test_df_copy[biased_col] == 0), 1, 0)
 
-        test_df_copy['TP_' + biased_col + "_1"] = np.where((test_df_copy['!Probability']  == 1) & (test_df_copy['predicted'] == 1) & (test_df_copy[biased_col] == 1), 1, 0)
 
-        test_df_copy['TN_' + biased_col + "_1"] = np.where((test_df_copy['!Probability'] == 0) & (test_df_copy['predicted'] == 0) & (test_df_copy[biased_col] == 1), 1, 0)
-
-        test_df_copy['FN_' + biased_col + "_1"] = np.where((test_df_copy['!Probability'] == 1) & (test_df_copy['predicted'] == 0) & (test_df_copy[biased_col] == 1), 1, 0)
-
-        test_df_copy['FP_' + biased_col + "_1"] = np.where((test_df_copy['!Probability'] == 0) & (test_df_copy['predicted'] == 1) & (test_df_copy[biased_col] == 1), 1, 0)
-
-        test_df_copy['TP_' + biased_col + "_0"] = np.where((test_df_copy['!Probability'] == 1) & (test_df_copy['predicted'] == 1) & (test_df_copy[biased_col] == 0), 1, 0)
-
-        test_df_copy['TN_' + biased_col + "_0"] = np.where((test_df_copy['!Probability'] == 0) & (test_df_copy['predicted'] == 0) & (test_df_copy[biased_col] == 0), 1, 0)
-
-        test_df_copy['FN_' + biased_col + "_0"] = np.where((test_df_copy['!Probability'] == 1) & (test_df_copy['predicted'] == 0) & (test_df_copy[biased_col] == 0), 1, 0)
-
-        test_df_copy['FP_' + biased_col + "_0"] = np.where((test_df_copy['!Probability'] == 0) & (test_df_copy['predicted'] == 1) & (test_df_copy[biased_col] == 0), 1, 0)
-
-    else:
-        test_df_copy['TP_' + biased_col + "_1"] = np.where((test_df_copy['ytest']  == 1) & (test_df_copy['predicted'] == 1) & (test_df_copy[biased_col] == 1), 1, 0)
-
-        test_df_copy['TN_' + biased_col + "_1"] = np.where((test_df_copy['ytest'] == 0) & (test_df_copy['predicted'] == 0) & (test_df_copy[biased_col] == 1), 1, 0)
-
-        test_df_copy['FN_' + biased_col + "_1"] = np.where((test_df_copy['ytest'] == 1) & (test_df_copy['predicted'] == 0) & (test_df_copy[biased_col] == 1), 1, 0)
-
-        test_df_copy['FP_' + biased_col + "_1"] = np.where((test_df_copy['ytest'] == 0) & (test_df_copy['predicted'] == 1) & (test_df_copy[biased_col] == 1), 1, 0)
-
-        test_df_copy['TP_' + biased_col + "_0"] = np.where((test_df_copy['ytest'] == 1) & (test_df_copy['predicted'] == 1) & (test_df_copy[biased_col] == 0), 1, 0)
-
-        test_df_copy['TN_' + biased_col + "_0"] = np.where((test_df_copy['ytest'] == 0) & (test_df_copy['predicted'] == 0) & (test_df_copy[biased_col] == 0), 1, 0)
-
-        test_df_copy['FN_' + biased_col + "_0"] = np.where((test_df_copy['ytest'] == 1) & (test_df_copy['predicted'] == 0) & (test_df_copy[biased_col] == 0), 1, 0)
-
-        test_df_copy['FP_' + biased_col + "_0"] = np.where((test_df_copy['ytest'] == 0) & (test_df_copy['predicted'] == 1) & (test_df_copy[biased_col] == 0), 1, 0)
-
-    e = test_df_copy['TP_' + biased_col + "_1"].sum()
-    f = test_df_copy['TN_' + biased_col + "_1"].sum()
-    g = test_df_copy['FN_' + biased_col + "_1"].sum()
-    h = test_df_copy['FP_' + biased_col + "_1"].sum()
-    a = test_df_copy['TP_' + biased_col + "_0"].sum()
-    b = test_df_copy['TN_' + biased_col + "_0"].sum()
-    c = test_df_copy['FN_' + biased_col + "_0"].sum()
-    d = test_df_copy['FP_' + biased_col + "_0"].sum()
+    a = test_df_copy['TP_' + biased_col + "_1"].sum()
+    b = test_df_copy['TN_' + biased_col + "_1"].sum()
+    c = test_df_copy['FN_' + biased_col + "_1"].sum()
+    d = test_df_copy['FP_' + biased_col + "_1"].sum()
+    e = test_df_copy['TP_' + biased_col + "_0"].sum()
+    f = test_df_copy['TN_' + biased_col + "_0"].sum()
+    g = test_df_copy['FN_' + biased_col + "_0"].sum()
+    h = test_df_copy['FP_' + biased_col + "_0"].sum()
 
     # print("a:", a)
     # print("b:", b)
@@ -89,19 +50,23 @@ def get_counts(test_df, y_pred, y_true, biased_col, metric):
     elif metric=='eod':
         return calculate_equal_opportunity_difference(a, b, c, d, e, f, g, h)
     elif metric=='recall':
-        return calculate_recall(a,d,c,b)
+        return calculate_recall(e,h,g,f)
+    elif metric=='far':
+        return calculate_far(e,h,g,f)
     elif metric=='precision':
-        return calculate_precision(a,d,c,b)
+        return calculate_precision(e,h,g,f)
     elif metric=='accuracy':
-        return calculate_accuracy(a,d,c,b)
+        return calculate_accuracy(e,h,g,f)
     elif metric=='F1':
-        return calculate_F1(a,d,c,b)
+        return calculate_F1(e,h,g,f)
     elif metric=='TPR':
         return calculate_TPR_difference(a, b, c, d, e, f, g, h)
     elif metric=='FPR':
         return calculate_FPR_difference(a, b, c, d, e, f, g, h)
+    elif metric == "DI":
+        return calculate_Disparate_Impact(a, b, c, d, e, f, g, h)
     elif metric == "SPD":
-    	return calculate_SPD(a, b, c, d, e, f, g, h)
+        return calculate_SPD(a, b, c, d, e, f, g, h)
     elif metric == "FA0":
         return calculate_false_alarm(a,d,c,b)
     elif metric == "FA1":
@@ -109,56 +74,39 @@ def get_counts(test_df, y_pred, y_true, biased_col, metric):
 
 
 
-
-
-def calculate_average_odds_difference(TP_0 , TN_0, FN_0,FP_0, TP_1 , TN_1 , FN_1,  FP_1):
-    FPR_diff = calculate_FPR_difference(TP_0 , TN_0, FN_0,FP_0, TP_1 , TN_1 , FN_1,  FP_1)
-    TPR_diff = calculate_TPR_difference(TP_0 , TN_0, FN_0,FP_0, TP_1 , TN_1 , FN_1,  FP_1)
+def calculate_average_odds_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0):
+    FPR_diff = calculate_FPR_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0)
+    TPR_diff = calculate_TPR_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0)
     average_odds_difference = (FPR_diff + TPR_diff)/2
     return round(average_odds_difference,2)
 
+def calculate_Disparate_Impact(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0):
+    P_1 = (TP_1 + FP_1)/(TP_1 + TN_1 + FN_1 + FP_1)
+    P_0 = (TP_0 + FP_0)/(TP_0 + TN_0 + FN_0 +  FP_0)
+    DI = (P_0/P_1)
+    return round((1 - abs(DI)),2)
 
-def calculate_SPD(TP_0 , TN_0, FN_0,FP_0, TP_1 , TN_1 , FN_1,  FP_1):
-    P_0 = (TP_0 + FP_0)/(TP_0 + TN_0 + FN_0 + FP_0)
-    P_1 = (TP_1 + FP_1) /(TP_1 + TN_1 + FN_1 +  FP_1)
+def calculate_SPD(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0):
+    P_1 = (TP_1 + FP_1)/(TP_1 + TN_1 + FN_1 + FP_1)
+    P_0 = (TP_0 + FP_0) /(TP_0 + TN_0 + FN_0 +  FP_0)
     SPD = (P_0 - P_1)
     return round(abs(SPD),2)
 
-def calculate_equal_opportunity_difference(TP_0 , TN_0, FN_0,FP_0, TP_1 , TN_1 , FN_1,  FP_1):
-    return calculate_TPR_difference(TP_0 , TN_0, FN_0,FP_0, TP_1 , TN_1 , FN_1,  FP_1)
 
-def calculate_TPR_difference(TP_0 , TN_0, FN_0,FP_0, TP_1 , TN_1 , FN_1,  FP_1):
-    if (TP_0+FN_0) != 0:
-        TPR_0 = TP_0/(TP_0+FN_0)
-    else:
-        TPR_0 = 0
+def calculate_equal_opportunity_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0):
+    return calculate_TPR_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0)
 
-    if (TP_1+FN_1) != 0:
-        TPR_1 = TP_1/(TP_1+FN_1)
-    else:
-        TPR_1 = 0
-
-    diff = (TPR_0 - TPR_1)
+def calculate_TPR_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0):
+    TPR_1 = TP_1/(TP_1+FN_1)
+    TPR_0 = TP_0/(TP_0+FN_0)
+    diff = (TPR_1 - TPR_0)
     return round(diff,2)
 
-def calculate_FPR_difference(TP_0 , TN_0, FN_0,FP_0, TP_1 , TN_1 , FN_1,  FP_1):
-    if (FP_0+TN_0) != 0:
-        FPR_0 = FP_0/(FP_0+TN_0)
-    else:
-        FPR_0 = 0
-    if (FP_1+TN_1) != 0:
-        FPR_1 = FP_1/(FP_1+TN_1)
-    else:
-        FPR_1 = 0
+def calculate_FPR_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0):
+    FPR_1 = FP_1/(FP_1+TN_1)
+    FPR_0 = FP_0/(FP_0+TN_0)
     diff = (FPR_0 - FPR_1)
     return round(diff,2)
-
-def calculate_false_alarm(TP,FP,FN,TN):
-    if (TP + FN) != 0:
-        alarm = FN / (FN + TP)
-    else:
-        alarm = 0
-    return round(alarm,2)
 
 def calculate_recall(TP,FP,FN,TN):
     if (TP + FN) != 0:
@@ -166,6 +114,20 @@ def calculate_recall(TP,FP,FN,TN):
     else:
         recall = 0
     return round(recall,2)
+
+def calculate_far(TP,FP,FN,TN):
+    if (FP + TN) != 0:
+        far = FP / (FP + TN)
+    else:
+        far = 0
+    return round(far,2)
+
+def calculate_false_alarm(TP,FP,FN,TN):
+    if (TP + FN) != 0:
+        alarm = FN / (FN + TP)
+    else:
+        alarm = 0
+    return round(alarm,2)
 
 def calculate_precision(TP,FP,FN,TN):
     if (TP + FP) != 0:
@@ -177,15 +139,27 @@ def calculate_precision(TP,FP,FN,TN):
 def calculate_F1(TP,FP,FN,TN):
     precision = calculate_precision(TP,FP,FN,TN)
     recall = calculate_recall(TP,FP,FN,TN)
-    if (precision + recall) != 0:
-        F1 = (2 * precision * recall)/(precision + recall)
-    else:
-        F1 = 0
+    F1 = (2 * precision * recall)/(precision + recall)
     return round(F1,2)
 
 def calculate_accuracy(TP,FP,FN,TN):
     return round((TP + TN)/(TP + TN + FP + FN),2)
 
-def measure_final_score(test_df, y_train, y_true, biased_col, metric):
+def consistency_score(X, y, n_neighbors=5):
+
+    num_samples = X.shape[0]
+    # y = y.values # Do it if it's not np array
+    # learn a KNN on the features
+    nbrs = NearestNeighbors(n_neighbors, algorithm='ball_tree').fit(X)
+    _, indices = nbrs.kneighbors(X)
+
+    # compute consistency score
+    consistency = 0.0
+    for i in range(num_samples):
+        consistency += np.abs(y[i] - np.mean(y[indices[i]]))
+    consistency = 1.0 - consistency/num_samples
+    return consistency
+
+def measure_final_score(test_df, y_test, y_pred, biased_col, metric, yname):
     df = copy.deepcopy(test_df)
-    return get_counts(df, y_train, y_true, biased_col, metric=metric)
+    return get_counts(df, y_test, y_pred, biased_col, metric, yname)

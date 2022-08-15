@@ -69,6 +69,7 @@ def Fair_Smote(df, base_clf, scaler, keyword, rep, yname, m, s):
     # protected_attribute_list =[]
     # samples = []
     # smoted = []
+    og_res = []
     res1 = []
     protected_attribute = keyword
 
@@ -80,16 +81,28 @@ def Fair_Smote(df, base_clf, scaler, keyword, rep, yname, m, s):
         X_train, y_train = dataset_orig_train.loc[:, dataset_orig_train.columns != yname], dataset_orig_train[yname]
         X_test, y_test = dataset_orig_test.loc[:, dataset_orig_test.columns != yname], dataset_orig_test[yname]
 
-        clf3 = base_clf
+        clf4 = base_clf
+        clf4.fit(X_train, y_train)
+        y_pred4 = clf4.predict(X_test)
 
-
+        fr = 0
+        print("Round", (i + 1), "finished.")
+        acc = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'accuracy', yname)
+        pre = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'precision', yname)
+        recall = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'recall', yname)
+        f1 = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'F1', yname)
+        aod1 =measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'aod', yname)
+        eod1 = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'eod', yname)
+        spd1 = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'SPD',yname)
+        FA0 = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'FA0',yname)
+        FA1 = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'FA1',yname)
+        di1 = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'DI',yname)
+        smoted = 0
+        og_res = ([recall, acc, pre, f1, aod1, eod1, spd1, di1, FA0, FA1, fr, protected_attribute, s, m, smoted])
 
         zero_zero_zero = len(dataset_orig_train[(dataset_orig_train[yname] == 0) & (dataset_orig_train[protected_attribute] == 0)])
-
         zero_one_zero = len(dataset_orig_train[(dataset_orig_train[yname] == 0) & (dataset_orig_train[protected_attribute] == 1)])
-
         one_zero_zero = len(dataset_orig_train[(dataset_orig_train[yname] == 1) & (dataset_orig_train[protected_attribute] == 0)])
-
         one_one_zero = len(dataset_orig_train[(dataset_orig_train[yname] == 1) & (dataset_orig_train[protected_attribute] == 1)])
 
         # print("class distribution:","\n0 0: ", zero_zero_zero, "\n0 1: ",zero_one_zero, "\n1 0: ", one_zero_zero,"\n1 1: ",one_one_zero)
@@ -121,36 +134,30 @@ def Fair_Smote(df, base_clf, scaler, keyword, rep, yname, m, s):
         df.columns = dataset_orig.columns
         clf2 = base_clf
         clf2.fit(X_train, y_train)
-        X_train, y_train = df.loc[:, df.columns != yname], df[yname]
+        X_train2, y_train2 = df.loc[:, df.columns != yname], df[yname]
         print("Situational testing...")
-        X_train, y_train = situation(clf2, X_train, y_train, protected_attribute)
-        X_test, y_test = dataset_orig_test.loc[:, dataset_orig_test.columns != yname], dataset_orig_test[yname]
+        X_train_sitch, y_train_sitch = situation(clf2, X_train2, y_train2, protected_attribute)
+        # X_test, y_test = dataset_orig_test.loc[:, dataset_orig_test.columns != yname], dataset_orig_test[yname]
 
-        clf = base_clf
-        # clf.fit(X_train, y_train)
-        # y_pred = clf.predict(X_test)
-        # cm = confusion_matrix(y_test, y_pred)
+        clf3 = base_clf
+        clf3.fit(X_train_sitch, y_train_sitch)
+        y_pred3 = clf3.predict(X_test)
 
-        flip_rate = calculate_flip(clf, X_test, protected_attribute)
-        # print("FLIP rate1:", flip_rate)
-        # print("# of flips1:", flip_rate * X_test.shape[0])
-        fr = flip_rate
+        fr = calculate_flip(clf3, X_test, protected_attribute)
         print("Round", (i + 1), "finished.")
-        acc = measure_final_score(dataset_orig_test, clf, X_train, y_train, X_test, y_test, protected_attribute, 'accuracy', yname)
-        pre = measure_final_score(dataset_orig_test, clf, X_train, y_train, X_test, y_test, protected_attribute, 'precision', yname)
-        recall = measure_final_score(dataset_orig_test, clf, X_train, y_train, X_test, y_test, protected_attribute, 'recall', yname)
-        f1 = measure_final_score(dataset_orig_test, clf, X_train, y_train, X_test, y_test, protected_attribute, 'F1', yname)
-        aod1 =measure_final_score(dataset_orig_test, clf, X_train, y_train, X_test, y_test, protected_attribute, 'aod', yname)
-        eod1 = measure_final_score(dataset_orig_test, clf, X_train, y_train, X_test, y_test, protected_attribute, 'eod', yname)
-        spd1 = measure_final_score(dataset_orig_test, clf, X_train, y_train, X_test, y_test, protected_attribute, 'SPD',yname)
-        FA0 = measure_final_score(dataset_orig_test, clf, X_train, y_train, X_test, y_test, protected_attribute, 'FA0',yname)
-        FA1 = measure_final_score(dataset_orig_test, clf, X_train, y_train, X_test, y_test, protected_attribute, 'FA1',yname)
-        di1 = measure_final_score(dataset_orig_test, clf, X_train, y_train, X_test, y_test, protected_attribute, 'DI',yname)
-        # protected_attribute_list = protected_attribute
-        # samples.append(s)
-        # model.append(m)
+        acc = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'accuracy', yname)
+        pre = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'precision', yname)
+        recall = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'recall', yname)
+        f1 = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'F1', yname)
+        aod1 = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'aod', yname)
+        eod1 = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'eod', yname)
+        spd1 = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'SPD',yname)
+        FA0 = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'FA0',yname)
+        FA1 = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'FA1',yname)
+        di1 = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'DI',yname)
         smoted = 1
         print('Time', time.time() - start)
+    res1.append(og_res)
     res1.append([recall, acc, pre, f1, aod1, eod1, spd1, di1, FA0, FA1, fr, protected_attribute, s, m, smoted])
     return res1
 
@@ -169,6 +176,7 @@ if __name__ == "__main__":
     base = RandomForestClassifier()
     scaler = MinMaxScaler()
     results_dict={}
+    rows = []
     pbar = tqdm(datasets)
 
     for dataset in pbar:
@@ -213,16 +221,15 @@ if __name__ == "__main__":
             result7 = Fair_Smote(surrogate_7, base, scaler, keyword, 2, yname, 7, len(surrogate_7.index))
             results_dict[7] = result7
 
-            # pprint.pprint(results_dict)
+            pprint.pprint(results_dict)
 
-            rows = []
             for s,c in results_dict.items():
                 for metric_row in c:
                     # print(metric_row)
                     rows.append(metric_row)
 
-            final_df = pd.DataFrame(rows,columns = ['recall+', 'precision+', 'accuracy+', 'F1_Score+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-', 'flip_rate', 'feature', 'sample_size', 'model_num', 'smoted'])
-            final_df.to_csv("./bias/" +  dataset + "_RF.csv", index=False)
+        final_df = pd.DataFrame(rows,columns = ['recall+', 'precision+', 'accuracy+', 'F1_Score+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-', 'flip_rate', 'feature', 'sample_size', 'model_num', 'smoted'])
+        final_df.to_csv("./bias/" +  dataset + "_RF.csv", index=False)
 
 
 
