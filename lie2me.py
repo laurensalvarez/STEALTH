@@ -219,7 +219,7 @@ def transformed(df, cols, yname, categorical, ss):
 
 def main():
     # random.seed(10039)
-    datasets = ["adultscensusincome","bankmarketing", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"] #"compas"
+    datasets = ["adultscensusincome","bankmarketing", "communities", "compas", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"] 
     pbar = tqdm(datasets)
 
     for dataset in pbar:
@@ -246,26 +246,27 @@ def main():
         adv_lime = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
 
         # finalcols = cols + ["predicted", "samples", "fold", "model_num"]
-        exp_df = pred(adv_lime, ss, cols, mdf.to_numpy(), my, yname, f, 0)
+        exp_df = pred(adv_lime, ss, cols, mdf.to_numpy(), my, yname, f, 1)
         t_df = transformed(exp_df, cols, yname, categorical, ss)
+
         clusters_df = pd.DataFrame(columns = t_df.columns)
         clusters_df = clusters_df.append(t_df)
         # t_df.to_csv("./output/cluster_preds/class_bal/" +  dataset + "_medians.csv", index=False)
-
-        medianX, mediany = newTraining(exp_df, yname)
-        adv_lime_m = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(medianX, mediany, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
 
         exp_df5 = pred(adv_lime, ss, cols, df5.to_numpy(), y5, yname, f, 5)
         texp_df5 = transformed(exp_df5, cols, yname, categorical, ss)
         clusters_df = clusters_df.append(texp_df5)
 
-        X5, Y5 = newTraining(exp_df5, yname)
-        adv_lime_5 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(X5, Y5, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
-
         exp_df7 = pred(adv_lime, ss, cols, df7.to_numpy(), y7, yname, f, 7)
         texp_df7 = transformed(exp_df7, cols, yname, categorical, ss)
         clusters_df = clusters_df.append(texp_df7)
         clusters_df.to_csv("./output/cluster_preds/class_bal/" +  dataset + ".csv", index=False)
+
+        medianX, mediany = newTraining(exp_df, yname)
+        adv_lime_m = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(medianX, mediany, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
+
+        X5, Y5 = newTraining(exp_df5, yname)
+        adv_lime_5 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(X5, Y5, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
 
         X7, Y7 = newTraining(exp_df7, yname)
         adv_lime_7 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(X7, Y7, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)

@@ -58,28 +58,56 @@ def situation(clf,X_train,y_train,keyword):
     X_rest = X_rest.drop(columns=['same','y'])
     return X_rest,y_rest
 
-def Fair_Smote(df, base_clf, scaler, keyword, rep, yname, m, s):
-    dataset_orig = df.dropna()
-    dataset_orig = pd.DataFrame(scaler.fit_transform(dataset_orig), columns=dataset_orig.columns)
+def classBal(ds_train, yname, protected_attribute):
+    zero_zero_zero = len(ds_train[(ds_train[yname] == 0) & (ds_train[protected_attribute] == 0)])
+    zero_one_zero = len(ds_train[(ds_train[yname] == 0) & (ds_train[protected_attribute] == 1)])
+    one_zero_zero = len(ds_train[(ds_train[yname] == 1) & (ds_train[protected_attribute] == 0)])
+    one_one_zero = len(ds_train[(ds_train[yname] == 1) & (ds_train[protected_attribute] == 1)])
 
-    # acc, pre, recall, f1 = [], [], [], []
-    # aod1, eod1, spd1, di1 = [], [], [], []
-    # fr=[]
-    # model =[]
-    # protected_attribute_list =[]
-    # samples = []
-    # smoted = []
+    # print("class distribution:","\n0 0: ", zero_zero_zero, "\n0 1: ",zero_one_zero, "\n1 0: ", one_zero_zero,"\n1 1: ",one_one_zero)
+    maximum = max(zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero)
+    zero_zero_zero_to_be_incresed = maximum - zero_zero_zero
+    zero_one_zero_to_be_incresed = maximum - zero_one_zero
+    one_zero_zero_to_be_incresed = maximum - one_zero_zero
+    one_one_zero_to_be_incresed = maximum - one_one_zero
+
+    df_zero_zero_zero = ds_train[(ds_train[yname] == 0) & (ds_train[protected_attribute] == 0)]
+
+    df_zero_one_zero = ds_train[(ds_train[yname] == 0) & (ds_train[protected_attribute] == 1)]
+
+    df_one_zero_zero = ds_train[(ds_train[yname] == 1) & (ds_train[protected_attribute] == 0)]
+
+    df_one_one_zero = ds_train[(ds_train[yname] == 1) & (ds_train[protected_attribute] == 1)]
+
+    df_zero_zero_zero[protected_attribute] = df_zero_zero_zero[protected_attribute].astype(str)
+    df_zero_one_zero[protected_attribute] = df_zero_one_zero[protected_attribute].astype(str)
+    df_one_zero_zero[protected_attribute] = df_one_zero_zero[protected_attribute].astype(str)
+    df_one_one_zero[protected_attribute] = df_one_one_zero[protected_attribute].astype(str)
+
+    print("Start generating samples...")
+    df_zero_zero_zero = generate_samples(zero_zero_zero_to_be_incresed, df_zero_zero_zero, '')
+    df_zero_one_zero = generate_samples(zero_one_zero_to_be_incresed, df_zero_one_zero, '')
+    df_one_zero_zero = generate_samples(one_zero_zero_to_be_incresed, df_one_zero_zero, '')
+    df_one_one_zero = generate_samples(one_one_zero_to_be_incresed, df_one_one_zero, '')
+    df = pd.concat([df_zero_zero_zero, df_zero_one_zero,df_one_zero_zero, df_one_one_zero])
+
+    return df
+
+def Fair_Smote(df, base_clf, scaler, keyword, rep, yname, m, s, X_test = None, y_test = None):
+    ds = df.dropna()
+    ds = pd.DataFrame(scaler.fit_transform(ds), columns=ds.columns)
     og_res = []
     res1 = []
     protected_attribute = keyword
 
-
     for i in range(rep):
         print("Round", (i + 1), "Model", str(m), "Feature", keyword, "started.")
-        start = time.time()
-        dataset_orig_train, dataset_orig_test = train_test_split(dataset_orig, test_size=0.2, random_state=i)
-        X_train, y_train = dataset_orig_train.loc[:, dataset_orig_train.columns != yname], dataset_orig_train[yname]
-        X_test, y_test = dataset_orig_test.loc[:, dataset_orig_test.columns != yname], dataset_orig_test[yname]
+        # start = time.time()
+        ds_train, ds_test = train_test_split(ds, test_size=0.2, random_state=i)
+        X_train, y_train = ds_train.loc[:, ds_train.columns != yname], ds_train[yname]
+
+        if X_test and y_test == None:
+            X_test, y_test = ds_test.loc[:, ds_test.columns != yname], ds_test[yname]
 
         clf4 = base_clf
         clf4.fit(X_train, y_train)
@@ -87,57 +115,29 @@ def Fair_Smote(df, base_clf, scaler, keyword, rep, yname, m, s):
 
         fr = 0
         print("Round", (i + 1), "finished.")
-        acc = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'accuracy', yname)
-        pre = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'precision', yname)
-        recall = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'recall', yname)
-        f1 = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'F1', yname)
-        aod1 =measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'aod', yname)
-        eod1 = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'eod', yname)
-        spd1 = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'SPD',yname)
-        FA0 = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'FA0',yname)
-        FA1 = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'FA1',yname)
-        di1 = measure_final_score(dataset_orig_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'DI',yname)
+        acc = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'accuracy', yname)
+        pre = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'precision', yname)
+        recall = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'recall', yname)
+        f1 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'F1', yname)
+        aod1 =measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'aod', yname)
+        eod1 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'eod', yname)
+        spd1 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'SPD',yname)
+        FA0 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'FA0',yname)
+        FA1 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'FA1',yname)
+        di1 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'DI',yname)
         smoted = 0
         og_res = ([recall, acc, pre, f1, aod1, eod1, spd1, di1, FA0, FA1, fr, protected_attribute, s, m, smoted])
+        res1.append(og_res)
 
-        zero_zero_zero = len(dataset_orig_train[(dataset_orig_train[yname] == 0) & (dataset_orig_train[protected_attribute] == 0)])
-        zero_one_zero = len(dataset_orig_train[(dataset_orig_train[yname] == 0) & (dataset_orig_train[protected_attribute] == 1)])
-        one_zero_zero = len(dataset_orig_train[(dataset_orig_train[yname] == 1) & (dataset_orig_train[protected_attribute] == 0)])
-        one_one_zero = len(dataset_orig_train[(dataset_orig_train[yname] == 1) & (dataset_orig_train[protected_attribute] == 1)])
+        df = classBal(ds_train, yname, protected_attribute)
 
-        # print("class distribution:","\n0 0: ", zero_zero_zero, "\n0 1: ",zero_one_zero, "\n1 0: ", one_zero_zero,"\n1 1: ",one_one_zero)
-        maximum = max(zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero)
-        zero_zero_zero_to_be_incresed = maximum - zero_zero_zero
-        zero_one_zero_to_be_incresed = maximum - zero_one_zero
-        one_zero_zero_to_be_incresed = maximum - one_zero_zero
-        one_one_zero_to_be_incresed = maximum - one_one_zero
-        df_zero_zero_zero = dataset_orig_train[(dataset_orig_train[yname] == 0) & (dataset_orig_train[protected_attribute] == 0)]
-
-        df_zero_one_zero = dataset_orig_train[(dataset_orig_train[yname] == 0) & (dataset_orig_train[protected_attribute] == 1)]
-
-        df_one_zero_zero = dataset_orig_train[(dataset_orig_train[yname] == 1) & (dataset_orig_train[protected_attribute] == 0)]
-
-        df_one_one_zero = dataset_orig_train[(dataset_orig_train[yname] == 1) & (dataset_orig_train[protected_attribute] == 1)]
-
-        df_zero_zero_zero[protected_attribute] = df_zero_zero_zero[protected_attribute].astype(str)
-        df_zero_one_zero[protected_attribute] = df_zero_one_zero[protected_attribute].astype(str)
-        df_one_zero_zero[protected_attribute] = df_one_zero_zero[protected_attribute].astype(str)
-        df_one_one_zero[protected_attribute] = df_one_one_zero[protected_attribute].astype(str)
-
-        print("Start generating samples...")
-        df_zero_zero_zero = generate_samples(zero_zero_zero_to_be_incresed, df_zero_zero_zero, '')
-        df_zero_one_zero = generate_samples(zero_one_zero_to_be_incresed, df_zero_one_zero, '')
-        df_one_zero_zero = generate_samples(one_zero_zero_to_be_incresed, df_one_zero_zero, '')
-        df_one_one_zero = generate_samples(one_one_zero_to_be_incresed, df_one_one_zero, '')
-        df = pd.concat([df_zero_zero_zero, df_zero_one_zero,df_one_zero_zero, df_one_one_zero])
-
-        df.columns = dataset_orig.columns
+        df.columns = ds.columns
         clf2 = base_clf
         clf2.fit(X_train, y_train)
         X_train2, y_train2 = df.loc[:, df.columns != yname], df[yname]
         print("Situational testing...")
         X_train_sitch, y_train_sitch = situation(clf2, X_train2, y_train2, protected_attribute)
-        # X_test, y_test = dataset_orig_test.loc[:, dataset_orig_test.columns != yname], dataset_orig_test[yname]
+        # X_test, y_test = ds_test.loc[:, ds_test.columns != yname], ds_test[yname]
 
         clf3 = base_clf
         clf3.fit(X_train_sitch, y_train_sitch)
@@ -145,21 +145,21 @@ def Fair_Smote(df, base_clf, scaler, keyword, rep, yname, m, s):
 
         fr = calculate_flip(clf3, X_test, protected_attribute)
         print("Round", (i + 1), "finished.")
-        acc = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'accuracy', yname)
-        pre = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'precision', yname)
-        recall = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'recall', yname)
-        f1 = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'F1', yname)
-        aod1 = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'aod', yname)
-        eod1 = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'eod', yname)
-        spd1 = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'SPD',yname)
-        FA0 = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'FA0',yname)
-        FA1 = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'FA1',yname)
-        di1 = measure_final_score(dataset_orig_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'DI',yname)
+        acc = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'accuracy', yname)
+        pre = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'precision', yname)
+        recall = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'recall', yname)
+        f1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'F1', yname)
+        aod1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'aod', yname)
+        eod1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'eod', yname)
+        spd1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'SPD',yname)
+        FA0 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'FA0',yname)
+        FA1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'FA1',yname)
+        di1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'DI',yname)
         smoted = 1
-        print('Time', time.time() - start)
-    res1.append(og_res)
-    res1.append([recall, acc, pre, f1, aod1, eod1, spd1, di1, FA0, FA1, fr, protected_attribute, s, m, smoted])
-    return res1
+        # print('Time', time.time() - start)
+
+        res1.append([recall, acc, pre, f1, aod1, eod1, spd1, di1, FA0, FA1, fr, protected_attribute, s, m, smoted])
+    return res1, X_test, y_test
 
 if __name__ == "__main__":
     datasets = ["compas"]#["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
@@ -187,7 +187,7 @@ if __name__ == "__main__":
             df1 = pd.read_csv("./datasets/no_cats/"+ dataset + ".csv")
             y_s = [col for col in df1.columns if "!" in col]
             yname = y_s[0]
-            result0 = Fair_Smote(df1, base, scaler, keyword, 2, yname, 0, len(df1.index))
+            result0, X_test, y_test = Fair_Smote(df1, base, scaler, keyword, 2, yname, 0, len(df1.index), None, None)
             # feature_list[k] = results0
             results_dict[0] = result0
 
@@ -214,11 +214,11 @@ if __name__ == "__main__":
             # print(surrogate_5.head())
             # print(surrogate_7.head())
 
-            result1 = Fair_Smote(surrogate_1, base, scaler, keyword, 2, yname, 1, len(surrogate_1.index))
+            result1 = Fair_Smote(surrogate_1, base, scaler, keyword, 2, yname, 1, len(surrogate_1.index), X_test, y_test)
             results_dict[1] = result1
-            result5 = Fair_Smote(surrogate_5, base, scaler, keyword, 2, yname, 5, len(surrogate_5.index))
+            result5 = Fair_Smote(surrogate_5, base, scaler, keyword, 2, yname, 5, len(surrogate_5.index), X_test, y_test)
             results_dict[5] = result5
-            result7 = Fair_Smote(surrogate_7, base, scaler, keyword, 2, yname, 7, len(surrogate_7.index))
+            result7 = Fair_Smote(surrogate_7, base, scaler, keyword, 2, yname, 7, len(surrogate_7.index), X_test, y_test)
             results_dict[7] = result7
 
             pprint.pprint(results_dict)
