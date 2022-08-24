@@ -11,9 +11,15 @@ def get_counts(df, y_pred, x_train, y_train, x_test, y_test, biased_col, metric,
     # y_pred = clf.predict(x_test)
     # TN, FP, FN, TP = confusion_matrix(y_test,y_pred).ravel()
 
+
+    # print("GC:", y_test.shape, X_test.columns )
+    print("y_pred", y_pred, len(y_pred))
+    print("y_test",y_test.values, len(y_test.values))
+
     test_df_copy = copy.deepcopy(df)
+    print(test_df_copy.head())
     test_df_copy['y_pred'] = y_pred
-    test_df_copy[yname] = y_test
+    # test_df_copy[yname] = y_test
 
     test_df_copy['TP_' + biased_col + "_1"] = np.where((test_df_copy[yname] == 1) &
                                            (test_df_copy['y_pred'] == 1) &

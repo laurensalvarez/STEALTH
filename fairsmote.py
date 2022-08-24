@@ -20,7 +20,7 @@ from Generate_Samples import generate_samples
 
 from utils import *
 params = Params("./model_configurations/experiment_params.json")
-np.random.seed(params.seed)
+seed = np.random.seed(params.seed)
 
 
 def reg2clf(protected_pred,threshold=.5):
@@ -93,72 +93,98 @@ def classBal(ds_train, yname, protected_attribute):
 
     return df
 
-def Fair_Smote(df, base_clf, scaler, keyword, rep, yname, m, s, X_test = None, y_test = None):
-    ds = df.dropna()
-    ds = pd.DataFrame(scaler.fit_transform(ds), columns=ds.columns)
+def Fair_Smote(df, base_clf, scaler, keyword, rep, yname, m, size, X_test, y_test, i): #remove rep
+    ds1 = df.dropna()
+    ds = pd.DataFrame(scaler.fit_transform(ds1), columns=ds1.columns)  #dtype = 'int64'
     og_res = []
     res1 = []
     protected_attribute = keyword
+    # X_test, y_test = X_test, y_test
 
-    for i in range(rep):
-        print("Round", (i + 1), "Model", str(m), "Feature", keyword, "started.")
-        # start = time.time()
-        ds_train, ds_test = train_test_split(ds, test_size=0.2, random_state=i)
-        X_train, y_train = ds_train.loc[:, ds_train.columns != yname], ds_train[yname]
+    print("Round", (i + 1), "Model", str(m), "Feature", keyword, "started.")
+    # start = time.time()
 
-        if X_test and y_test == None:
-            X_test, y_test = ds_test.loc[:, ds_test.columns != yname], ds_test[yname]
+    ds_train, ds_test = train_test_split(ds, test_size=0.2, random_state= seed)
+    cols = [col for col in ds_train.columns]
+    if 'model_num' in cols:
+        ds_train.drop(['model_num'], axis=1, inplace=True)
 
-        clf4 = base_clf
-        clf4.fit(X_train, y_train)
-        y_pred4 = clf4.predict(X_test)
+    X_train, y_train = ds_train.iloc[:, ds_train.columns != yname], ds_train[yname]
 
-        fr = 0
-        print("Round", (i + 1), "finished.")
-        acc = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'accuracy', yname)
-        pre = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'precision', yname)
-        recall = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'recall', yname)
-        f1 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'F1', yname)
-        aod1 =measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'aod', yname)
-        eod1 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'eod', yname)
-        spd1 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'SPD',yname)
-        FA0 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'FA0',yname)
-        FA1 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'FA1',yname)
-        di1 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'DI',yname)
-        smoted = 0
-        og_res = ([recall, acc, pre, f1, aod1, eod1, spd1, di1, FA0, FA1, fr, protected_attribute, s, m, smoted])
-        res1.append(og_res)
 
-        df = classBal(ds_train, yname, protected_attribute)
+        # ds_train.drop(ds_train['fold'], inplace=True)
 
-        df.columns = ds.columns
-        clf2 = base_clf
-        clf2.fit(X_train, y_train)
-        X_train2, y_train2 = df.loc[:, df.columns != yname], df[yname]
-        print("Situational testing...")
-        X_train_sitch, y_train_sitch = situation(clf2, X_train2, y_train2, protected_attribute)
-        # X_test, y_test = ds_test.loc[:, ds_test.columns != yname], ds_test[yname]
+    if X_test.empty and y_test.empty:
+        X_test, y_test = ds_test.iloc[:, ds_test.columns != yname], ds_test[yname]
 
-        clf3 = base_clf
-        clf3.fit(X_train_sitch, y_train_sitch)
-        y_pred3 = clf3.predict(X_test)
 
-        fr = calculate_flip(clf3, X_test, protected_attribute)
-        print("Round", (i + 1), "finished.")
-        acc = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'accuracy', yname)
-        pre = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'precision', yname)
-        recall = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'recall', yname)
-        f1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'F1', yname)
-        aod1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'aod', yname)
-        eod1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'eod', yname)
-        spd1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'SPD',yname)
-        FA0 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'FA0',yname)
-        FA1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'FA1',yname)
-        di1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'DI',yname)
-        smoted = 1
-        # print('Time', time.time() - start)
+        # X_test.drop(X_test.loc[X_test['model_num']].index, inplace=True)
 
-        res1.append([recall, acc, pre, f1, aod1, eod1, spd1, di1, FA0, FA1, fr, protected_attribute, s, m, smoted])
+
+
+
+    # else:
+    #     X_test = copy.deepcopy(X_test)
+    #     y_test = copy.deepcopy(y_test)
+    print("PRE TRAINING TRAIN:", X_train.shape, X_train.columns )
+    # print(y_train.values, len(y_train.values))
+    print("PRE TRAINING TEST:", X_test.shape, X_test.columns )
+    print("PRE TRAINING ds_test:", ds_test.shape, ds_test.columns )
+    # print(y_test.values, len(y_test.values))
+    # print(y_train.shape)
+    # print(y_test.head())
+
+    clf4 = base_clf
+    clf4.fit(X_train, y_train)
+    y_pred4 = clf4.predict(X_test)
+    # print("y_pred", len(y_pred4))
+
+    fr = 0
+    print("Round", (i + 1), "finished.")
+    acc = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'accuracy', yname)
+    pre = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'precision', yname)
+    recall = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'recall', yname)
+    f1 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'F1', yname)
+    aod1 =measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'aod', yname)
+    eod1 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'eod', yname)
+    spd1 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'SPD',yname)
+    FA0 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'FA0',yname)
+    FA1 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'FA1',yname)
+    di1 = measure_final_score(ds_test, y_pred4, X_train, y_train, X_test, y_test, protected_attribute, 'DI',yname)
+    smoted = 0
+    og_res = ([recall, acc, pre, f1, aod1, eod1, spd1, di1, FA0, FA1, fr, protected_attribute, size, m, smoted])
+    res1.append(og_res)
+
+    df = classBal(ds_train, yname, protected_attribute)
+
+    df.columns = ds.columns
+    clf2 = base_clf
+    clf2.fit(X_train, y_train)
+    X_train2, y_train2 = df.loc[:, df.columns != yname], df[yname]
+    print("Situational testing...")
+    X_train_sitch, y_train_sitch = situation(clf2, X_train2, y_train2, protected_attribute)
+    # X_test, y_test = ds_test.loc[:, ds_test.columns != yname], ds_test[yname]
+
+    clf3 = base_clf
+    clf3.fit(X_train_sitch, y_train_sitch)
+    y_pred3 = clf3.predict(X_test)
+
+    fr = calculate_flip(clf3, X_test, protected_attribute)
+    print("Round", (i + 1), "finished.")
+    acc = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'accuracy', yname)
+    pre = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'precision', yname)
+    recall = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'recall', yname)
+    f1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'F1', yname)
+    aod1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'aod', yname)
+    eod1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'eod', yname)
+    spd1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'SPD',yname)
+    FA0 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'FA0',yname)
+    FA1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'FA1',yname)
+    di1 = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'DI',yname)
+    smoted = 1
+    # print('Time', time.time() - start)
+
+    res1.append([recall, acc, pre, f1, aod1, eod1, spd1, di1, FA0, FA1, fr, protected_attribute, size, m, smoted])
     return res1, X_test, y_test
 
 if __name__ == "__main__":
@@ -187,38 +213,47 @@ if __name__ == "__main__":
             df1 = pd.read_csv("./datasets/no_cats/"+ dataset + ".csv")
             y_s = [col for col in df1.columns if "!" in col]
             yname = y_s[0]
-            result0, X_test, y_test = Fair_Smote(df1, base, scaler, keyword, 2, yname, 0, len(df1.index), None, None)
-            # feature_list[k] = results0
+            df1.drop(['Unrelated_column_one'], axis=1, inplace = True)
+            result0, X_test, y_test = Fair_Smote(df1, base, scaler, keyword, 2, yname, 0, len(df1.index), pd.DataFrame(), pd.DataFrame(), 1)
+            # print (X_test, y_test)
             results_dict[0] = result0
 
             surrogatedf = pd.read_csv("./output/cluster_preds/class_bal/"+ dataset + ".csv")
             surrogate_cat_features = []
             y_pred = "predicted"
-            y_pred_vals = surrogatedf["predicted"].values
+            y_pred_vals = surrogatedf[y_pred].values
+            # for i in y_pred_vals:
+            #     print(i)
+            # print("ORIGINAL:", surrogatedf.head())
 
-            surrogatedf.drop([yname,y_pred,'samples','Unrelated_column_one'],axis=1, inplace=True)
+            # sys.exit()
+
+            surrogatedf.drop([yname,y_pred,'samples','fold','Unrelated_column_one'],axis=1, inplace=True)
+            # print("ORIGINAL dropped:", surrogatedf.head())
             surrogatedf[yname] = y_pred_vals
-
-            models = copy.deepcopy(surrogatedf["model_num"].tolist())
-            sortedmodels = sorted(set(models), key = lambda ele: models.count(ele))
 
             surrogate_1 = pd.DataFrame(copy.deepcopy(surrogatedf.values),columns = surrogatedf.columns)
             surrogate_5 = pd.DataFrame(copy.deepcopy(surrogatedf.values),columns = surrogatedf.columns)
             surrogate_7 = pd.DataFrame(copy.deepcopy(surrogatedf.values),columns = surrogatedf.columns)
 
-            surrogate_1.drop(surrogatedf.loc[surrogatedf['model_num']!= sortedmodels[0]].index, inplace=True)
-            surrogate_5.drop(surrogatedf.loc[surrogatedf['model_num']!= sortedmodels[1]].index, inplace=True)
-            surrogate_7.drop(surrogatedf.loc[surrogatedf['model_num']!= sortedmodels[2]].index, inplace=True)
+            models = copy.deepcopy(surrogatedf["model_num"].tolist())
+            sortedmodels = sorted(set(models), key = lambda ele: models.count(ele))
+            # print(surrogate_1.head())
+
+            surrogate_1.drop(surrogatedf.loc[surrogatedf['model_num'] != 1].index, inplace=True)
+            # print("ONE:", surrogate_1.head())
+            surrogate_5.drop(surrogatedf.loc[surrogatedf['model_num'] != 5].index, inplace=True)
+            surrogate_7.drop(surrogatedf.loc[surrogatedf['model_num'] != 7].index, inplace=True)
 
             # print(surrogate_1.head())
             # print(surrogate_5.head())
             # print(surrogate_7.head())
 
-            result1 = Fair_Smote(surrogate_1, base, scaler, keyword, 2, yname, 1, len(surrogate_1.index), X_test, y_test)
+            result1, _, _ = Fair_Smote(surrogate_1, base, scaler, keyword, 2, yname, 1, len(surrogate_1.index), X_test, y_test, 1)
             results_dict[1] = result1
-            result5 = Fair_Smote(surrogate_5, base, scaler, keyword, 2, yname, 5, len(surrogate_5.index), X_test, y_test)
+            result5, _, _ = Fair_Smote(surrogate_5, base, scaler, keyword, 2, yname, 5, len(surrogate_5.index), X_test, y_test, 1)
             results_dict[5] = result5
-            result7 = Fair_Smote(surrogate_7, base, scaler, keyword, 2, yname, 7, len(surrogate_7.index), X_test, y_test)
+            result7, _, _ = Fair_Smote(surrogate_7, base, scaler, keyword, 2, yname, 7, len(surrogate_7.index), X_test, y_test, 1)
             results_dict[7] = result7
 
             pprint.pprint(results_dict)
