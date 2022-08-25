@@ -5,13 +5,19 @@ import pandas as pd
 
 
 def main():
-    datasets = ["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+    datasets = ["bankmarketing", "compas", "communities", "defaultcredit", "diabetes"]
     pbar = tqdm(datasets)
     for dataset in pbar:
         pbar.set_description("Processing %s" % dataset)
-        df = pd.read_csv(r'./bias/' + dataset + ".csv")
+        df = pd.read_csv(r'./bias/' + dataset + "_RF.csv")
 
         df1 = copy.deepcopy(df)
+
+        smoted = copy.deepcopy(df1["smoted"].tolist())
+        sortedsmote = sorted(set(smoted), key = lambda ele: smoted.count(ele))
+
+        dfRF2 = copy.deepcopy(df1)
+        dfRF2.drop(dfRF2.loc[dfRF2['smoted']!= 0].index, inplace=True)
 
         model_num = copy.deepcopy(df1["model_num"].tolist())
         sortedmodels = sorted(set(model_num), key = lambda ele: model_num.count(ele))
@@ -114,39 +120,39 @@ def main():
 
         recall_df = pd.DataFrame(reformed_recalldict)
         recall_df.columns = ['_'.join(map(str, x)) for x in recall_df.columns]
-        recall_df.transpose().to_csv("./sk_data/bias/" + dataset + "_recall+_.csv", header = None, index=True, sep=' ')
+        recall_df.transpose().to_csv("./sk_data/bias/OG/" + dataset + "_recall+_.csv", header = None, index=True, sep=' ')
 
         prec_df = pd.DataFrame(reformed_predict)
         prec_df.columns = ['_'.join(map(str, x)) for x in prec_df.columns]
-        prec_df.transpose().to_csv("./sk_data/bias/" + dataset + "_prec+_.csv", header = None, index=True, sep=' ')
+        prec_df.transpose().to_csv("./sk_data/bias/OG/" + dataset + "_prec+_.csv", header = None, index=True, sep=' ')
 
         acc_df = pd.DataFrame(reformed_accdict)
         acc_df.columns = ['_'.join(map(str, x)) for x in acc_df.columns]
-        acc_df.transpose().to_csv("./sk_data/bias/" + dataset + "_acc+_.csv", header = None, index=True, sep=' ')
+        acc_df.transpose().to_csv("./sk_data/bias/OG/" + dataset + "_acc+_.csv", header = None, index=True, sep=' ')
 
         F1_df = pd.DataFrame(reformed_F1dict)
         F1_df.columns = ['_'.join(map(str, x)) for x in F1_df.columns]
-        F1_df.transpose().to_csv("./sk_data/bias/" + dataset + "_F1+_.csv", header = None, index=True, sep=' ')
+        F1_df.transpose().to_csv("./sk_data/bias/OG/" + dataset + "_F1+_.csv", header = None, index=True, sep=' ')
 
         AOD_df = pd.DataFrame(reformed_AODdict)
         AOD_df.columns = ['_'.join(map(str, x)) for x in AOD_df.columns]
-        AOD_df.transpose().to_csv("./sk_data/bias/" + dataset + "_AOD-_.csv", header = None, index=True, sep=' ')
+        AOD_df.transpose().to_csv("./sk_data/bias/OG/" + dataset + "_AOD-_.csv", header = None, index=True, sep=' ')
 
         EOD_df = pd.DataFrame(reformed_EODdict)
         EOD_df.columns = ['_'.join(map(str, x)) for x in EOD_df.columns]
-        EOD_df.transpose().to_csv("./sk_data/bias/" + dataset + "_EOD-_.csv", header = None, index=True, sep=' ')
+        EOD_df.transpose().to_csv("./sk_data/bias/OG/" + dataset + "_EOD-_.csv", header = None, index=True, sep=' ')
 
         SPD_df = pd.DataFrame(reformed_SPDdict)
         SPD_df.columns = ['_'.join(map(str, x)) for x in SPD_df.columns]
-        SPD_df.transpose().to_csv("./sk_data/bias/" + dataset + "_SPD-_.csv", header = None, index=True, sep=' ')
+        SPD_df.transpose().to_csv("./sk_data/bias/OG/" + dataset + "_SPD-_.csv", header = None, index=True, sep=' ')
 
         FA0_df = pd.DataFrame(reformed_FA0dict)
         FA0_df.columns = ['_'.join(map(str, x)) for x in FA0_df.columns]
-        FA0_df.transpose().to_csv("./sk_data/bias/" + dataset + "_FA0-_.csv", header = None, index=True, sep=' ')
+        FA0_df.transpose().to_csv("./sk_data/bias/OG/" + dataset + "_FA0-_.csv", header = None, index=True, sep=' ')
 
         FA1_df = pd.DataFrame(reformed_FA1dict)
         FA1_df.columns = ['_'.join(map(str, x)) for x in FA1_df.columns]
-        FA1_df.transpose().to_csv("./sk_data/bias/" + dataset + "_FA1-_.csv", header = None, index=True, sep=' ')
+        FA1_df.transpose().to_csv("./sk_data/bias/OG/" + dataset + "_FA1-_.csv", header = None, index=True, sep=' ')
 
 
 if __name__ == '__main__':

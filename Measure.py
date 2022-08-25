@@ -13,13 +13,14 @@ def get_counts(df, y_pred, x_train, y_train, x_test, y_test, biased_col, metric,
 
 
     # print("GC:", y_test.shape, X_test.columns )
-    print("y_pred", y_pred, len(y_pred))
-    print("y_test",y_test.values, len(y_test.values))
+    # print("y_pred", y_pred, len(y_pred))
+    # print("y_test",y_test.values, len(y_test.values))
 
     test_df_copy = copy.deepcopy(df)
-    print(test_df_copy.head())
     test_df_copy['y_pred'] = y_pred
-    # test_df_copy[yname] = y_test
+    test_df_copy[yname] = y_test
+
+    # print("test_df_copy:", test_df_copy.head())
 
     test_df_copy['TP_' + biased_col + "_1"] = np.where((test_df_copy[yname] == 1) &
                                            (test_df_copy['y_pred'] == 1) &
@@ -115,14 +116,28 @@ def calculate_equal_opportunity_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 ,
     return calculate_TPR_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0)
 
 def calculate_TPR_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0):
-    TPR_1 = TP_1/(TP_1+FN_1)
-    TPR_0 = TP_0/(TP_0+FN_0)
-    diff = (TPR_1 - TPR_0)
+    if (TP_0+FN_0) != 0:
+        TPR_0 = TP_0/(TP_0+FN_0)
+    else:
+        TPR_0 = 0
+
+    if (TP_1+FN_1) != 0:
+        TPR_1 = TP_1/(TP_1+FN_1)
+    else:
+        TPR_1 = 0
+
+    diff = (TPR_0 - TPR_1)
     return round(diff,2)
 
 def calculate_FPR_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0):
-    FPR_1 = FP_1/(FP_1+TN_1)
-    FPR_0 = FP_0/(FP_0+TN_0)
+    if (FP_0+TN_0) != 0:
+        FPR_0 = FP_0/(FP_0+TN_0)
+    else:
+        FPR_0 = 0
+    if (FP_1+TN_1) != 0:
+        FPR_1 = FP_1/(FP_1+TN_1)
+    else:
+        FPR_1 = 0
     diff = (FPR_0 - FPR_1)
     return round(diff,2)
 
@@ -157,7 +172,10 @@ def calculate_precision(TP,FP,FN,TN):
 def calculate_F1(TP,FP,FN,TN):
     precision = calculate_precision(TP,FP,FN,TN)
     recall = calculate_recall(TP,FP,FN,TN)
-    F1 = (2 * precision * recall)/(precision + recall)
+    if (precision + recall) != 0:
+        F1 = (2 * precision * recall)/(precision + recall)
+    else:
+        F1 = 0
     return round(F1,2)
 
 def calculate_accuracy(TP,FP,FN,TN):

@@ -352,14 +352,15 @@ from tqdm import tqdm
 
 if __name__ == "__main__":
   random.seed(1)
-  datasets = ["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+  # datasets = ["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+  datasets = ["bankmarketing", "compas", "communities", "defaultcredit", "diabetes"]
   metrics = ['recall+', 'prec+', 'acc+', 'F1+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-']
   pbar = tqdm(datasets)
   for dataset in pbar:
     pbar.set_description("Processing %s" % dataset)
     for m in metrics:
       print("\n" +"-" + dataset +"-" + m + "\n"  )
-      Rx.fileIn("./sk_data/" + dataset + "_" + m +"_.csv")
+      Rx.fileIn("./sk_data/bias/smoted/" + dataset + "_" + m +"_.csv")
 
 
 
