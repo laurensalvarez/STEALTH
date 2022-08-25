@@ -1,26 +1,3 @@
-Last login: Sun Aug 14 09:38:04 on ttys000
-laurenalvarez@Laurens-MacBook-Pro ~ % cd desktop
-laurenalvarez@Laurens-MacBook-Pro desktop % cd lying
-laurenalvarez@Laurens-MacBook-Pro lying % python3 sk.py
-Processing bankmarketing:   0%|                           | 0/5 [00:00<?, ?it/s]
--bankmarketing-recall+
-
-Processing bankmarketing:   0%|                           | 0/5 [00:00<?, ?it/s]
-Traceback (most recent call last):
-  File "sk.py", line 363, in <module>
-    Rx.fileIn("./sk_data/bias/OG" + dataset + "_" + m +"_.csv")
-  File "sk.py", line 199, in fileIn
-    for word in words(f):
-  File "sk.py", line 260, in words
-    with open(f) as fp:
-FileNotFoundError: [Errno 2] No such file or directory: './sk_data/bias/OGbankmarketing_recall+_.csv'
-laurenalvarez@Laurens-MacBook-Pro lying % clear
-
-
-
-
-
-
 laurenalvarez@Laurens-MacBook-Pro lying % python3 sk.py
 Processing bankmarketing:   0%|                                    | 0/5 [00:00<?, ?it/s]
 -bankmarketing-recall+
@@ -801,4 +778,4 @@ Processing diabetes:  80%|██████████████████
    3     0_Age( (       -----*--------    |                        ), 0.080,  0.130,  0.230,  0.330,  0.400
    4     0_SEX( (                         |                    -*- ), 0.800,  0.840,  0.870,  0.890,  0.910
 Processing diabetes: 100%|█████████████████████████████████| 5/5 [00:02<00:00,  2.30it/s]
-laurenalvarez@Laurens-MacBook-Pro lying % 
+laurenalvarez@Laurens-MacBook-Pro lying %
