@@ -173,7 +173,7 @@ def Fair_Smote(df1, base_clf, scaler, keyword, rep, yname, m, size, X_test1, y_t
         y_pred3 = clf3.predict(X_test)
 
         fr = calculate_flip(clf3, X_test, protected_attribute)
-        print("Round", (i + 1), "finished.")
+        print("Round", (i + 1), "SMOTED finished.")
         acc = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'accuracy', yname)
         pre = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'precision', yname)
         recall = measure_final_score(ds_test, y_pred3, X_train_sitch, y_train_sitch, X_test, y_test, protected_attribute, 'recall', yname)
@@ -191,8 +191,8 @@ def Fair_Smote(df1, base_clf, scaler, keyword, rep, yname, m, size, X_test1, y_t
     return res1, X_test, y_test
 
 if __name__ == "__main__":
-    datasets = ["defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
-    # datasets = ["adultscensusincome","bankmarketing", "communities", "compas", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+    datasets = [ "adultscensusincome"]
+    # datasets = ["bankmarketing", "communities", "compas", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
@@ -253,8 +253,8 @@ if __name__ == "__main__":
             # print(surrogate_5.head())
             # print(surrogate_7.head())
 
-            # # result1, _, _ = Fair_Smote(surrogate_1, base, scaler, keyword, 10, yname, 1, len(surrogate_1.index), X_test, y_test)
-            # results_dict[1] = result1
+            result1, _, _ = Fair_Smote(surrogate_1, base, scaler, keyword, 10, yname, 1, len(surrogate_1.index), X_test, y_test)
+            results_dict[1] = result1
             result5, _, _ = Fair_Smote(surrogate_5, base, scaler, keyword, 10, yname, 5, len(surrogate_5.index), X_test, y_test)
             results_dict[5] = result5
             result7, _, _ = Fair_Smote(surrogate_7, base, scaler, keyword, 10, yname, 7, len(surrogate_7.index), X_test, y_test)

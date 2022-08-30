@@ -86,9 +86,9 @@ def get_counts(df, y_pred, x_train, y_train, x_test, y_test, biased_col, metric,
     	return calculate_Disparate_Impact(a, b, c, d, e, f, g, h)
     elif metric == "SPD":
     	return calculate_SPD(a, b, c, d, e, f, g, h)
-    elif metric == "FA0":
-        return calculate_false_alarm(a,d,c,b)
     elif metric == "FA1":
+        return calculate_false_alarm(a,d,c,b)
+    elif metric == "FA0":
         return calculate_false_alarm(e,h,g,f)
 
 
