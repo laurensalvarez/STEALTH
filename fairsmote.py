@@ -6,6 +6,7 @@ import numpy as np
 from tqdm import tqdm
 import pprint
 from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_score
@@ -191,8 +192,8 @@ def Fair_Smote(df1, base_clf, scaler, keyword, rep, yname, m, size, X_test1, y_t
     return res1, X_test, y_test
 
 if __name__ == "__main__":
-    datasets = [ "adultscensusincome"]
-    # datasets = ["bankmarketing", "communities", "compas", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+    # datasets = [ "adultscensusincome"]
+    datasets = ["bankmarketing", "communities", "compas", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
@@ -203,7 +204,8 @@ if __name__ == "__main__":
                 'heart': ['Age('],
                 'studentperformance': ['sex(']
                 }
-    base = RandomForestClassifier()
+    # base = RandomForestClassifier()
+    base = LogisticRegression(C=1.0, penalty='l2', solver='liblinear', max_iter=100)
     scaler = MinMaxScaler()
     results_dict={}
     rows = []
@@ -253,8 +255,8 @@ if __name__ == "__main__":
             # print(surrogate_5.head())
             # print(surrogate_7.head())
 
-            result1, _, _ = Fair_Smote(surrogate_1, base, scaler, keyword, 10, yname, 1, len(surrogate_1.index), X_test, y_test)
-            results_dict[1] = result1
+            # result1, _, _ = Fair_Smote(surrogate_1, base, scaler, keyword, 10, yname, 1, len(surrogate_1.index), X_test, y_test)
+            # results_dict[1] = result1
             result5, _, _ = Fair_Smote(surrogate_5, base, scaler, keyword, 10, yname, 5, len(surrogate_5.index), X_test, y_test)
             results_dict[5] = result5
             result7, _, _ = Fair_Smote(surrogate_7, base, scaler, keyword, 10, yname, 7, len(surrogate_7.index), X_test, y_test)
@@ -268,4 +270,4 @@ if __name__ == "__main__":
                     rows.append(metric_row)
 
         final_df = pd.DataFrame(rows,columns = ['recall+', 'precision+', 'accuracy+', 'F1_Score+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-', 'flip_rate', 'feature', 'sample_size', 'model_num', 'smoted'])
-        final_df.to_csv("./bias/" +  dataset + "_RF.csv", index=False)
+        final_df.to_csv("./bias/" +  dataset + "_LR.csv", index=False)

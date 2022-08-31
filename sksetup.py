@@ -1,4 +1,4 @@
-import copy,math, sys
+import copy,math, sys, statistics
 from collections import defaultdict
 from tqdm import tqdm
 import pandas as pd
@@ -53,7 +53,6 @@ def main():
                 FA1 = dfRF3 ['FA1-']
                 DI = dfRF3 ['DI-']
                 FLIP = dfRF3 ['flip_rate']
-
 
                 recalldict[m][f] = recall.values
                 precisiondict[m][f] = precision.values
