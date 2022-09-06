@@ -231,26 +231,6 @@ def main():
 
         Xvals = X.values
 
-        xtrain,xtest,ytrain,ytest = train_test_split(Xvals,y,test_size=0.2, shuffle = True)
-        f = 1
-
-        ss = MinMaxScaler().fit(xtrain)
-        xtrain = ss.transform(xtrain)
-        xtest = ss.transform(xtest)
-
-        training = pd.DataFrame(deepcopy(xtrain), columns = cols)
-        training [yname] = deepcopy(ytrain)
-
-        table = Table(11111)
-        rows = deepcopy(training.values)
-        header = deepcopy(list(training.columns.values))
-        table + header
-        for r in rows:
-            table + r
-
-        enough = int(math.sqrt(len(table.rows)))
-        root = Table.clusters(table.rows, table, enough)
-
         clustered_cols = deepcopy(cols)
         clustered_cols.append("predicted")
         clustered_cols.append(yname)
@@ -269,32 +249,55 @@ def main():
         all_models_test = pd.DataFrame(columns = final_columns)
         all_L = pd.DataFrame(columns = ["ranking","feature","occurances_pct","model_num"])
 
-        # Train the adversrial model for LIME with f and psi
-        adv_lime_0 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
-        L = explain(xtrain, xtest, adv_lime_0, categorical, cols, 0)
-        all_L = all_L.append(L)
+        for i in range(10):
+            i += 1
 
-        treatment = [1,2,3,4,5]
-        for num_points in treatment:
-            clustered_df, clustered_y = clusterGroups(root, cols, num_points)
-            # print(clustered_df.head(), clustered_df.index)
+            xtrain,xtest,ytrain,ytest = train_test_split(Xvals,y,test_size=0.2, shuffle = True)
 
-            probed_df = pred(adv_lime_0, cols, clustered_df.to_numpy(), clustered_y, yname, f, num_points)
-            tdf = transformed(probed_df, cols, yname, categorical, ss)
-            clusters = clusters.append(tdf)
+            ss = MinMaxScaler().fit(xtrain)
+            xtrain = ss.transform(xtrain)
+            xtest = ss.transform(xtest)
 
-            subset_training, subset_y = newTraining(probed_df, yname)
+            training = pd.DataFrame(deepcopy(xtrain), columns = cols)
+            training [yname] = deepcopy(ytrain)
 
-            adv_lime_clone = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(subset_training, subset_y, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
+            table = Table(11111)
+            rows = deepcopy(training.values)
+            header = deepcopy(list(training.columns.values))
+            table + header
+            for r in rows:
+                table + r
 
-            tested_model = predTrans(adv_lime_clone, ss, cols, categorical, xtest, ytest, "ytest", f, num_points)
+            enough = int(math.sqrt(len(table.rows)))
+            root = Table.clusters(table.rows, table, enough)
 
-            all_models_test = all_models_test.append(tested_model)
-            # print(all_models_test.index)
-
-            L = explain(xtrain, xtest, adv_lime_clone, categorical, cols, num_points)
-
+            # Train the adversrial model for LIME with f and psi
+            adv_lime_0 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
+            L = explain(xtrain, xtest, adv_lime_0, categorical, cols, 0)
             all_L = all_L.append(L)
+
+            treatment = [1,2,3,4,5]
+            for num_points in treatment:
+                clustered_df, clustered_y = clusterGroups(root, cols, num_points)
+                # print(clustered_df.head(), clustered_df.index)
+
+                probed_df = pred(adv_lime_0, cols, clustered_df.to_numpy(), clustered_y, yname, i, num_points)
+                tdf = transformed(probed_df, cols, yname, categorical, ss)
+                clusters = clusters.append(tdf)
+
+                subset_training, subset_y = newTraining(probed_df, yname)
+
+                adv_lime_clone = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(subset_training, subset_y, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
+
+                tested_model = predTrans(adv_lime_clone, ss, cols, categorical, xtest, ytest, "ytest", i, num_points)
+
+                all_models_test = all_models_test.append(tested_model)
+                # print(all_models_test.index)
+
+                L = explain(xtrain, xtest, adv_lime_clone, categorical, cols, num_points)
+
+                all_L = all_L.append(L)
+
 
         clusters.to_csv("./output/cluster_preds/lower/" +  dataset + "_all.csv", index=False)
         all_models_test.to_csv("./output/clones/lower/" +  dataset + "_all.csv", index=False)
