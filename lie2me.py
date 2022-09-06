@@ -41,7 +41,7 @@ class biased_model_f():
     # Decision rule: classify negative outcome if underrepresented class
     def predict(self,X):
         predictions = np.array([params.negative_outcome if x[self.sensa_indc] == 0 else params.positive_outcome for x in X])
-        indices = np.random.choice(np.arange(predictions.size), replace = False, size = int(predictions.size * 0.2))
+        indices = np.random.choice(np.arange(predictions.size), replace = False, size = int(predictions.size * 0.25))
         for i in indices:
             if predictions[i] == params.negative_outcome:
                 predictions[i] = params.positive_outcome
@@ -142,9 +142,9 @@ def splitUp(path, dataset):
     inno_indc = cols.index('Unrelated_column_one')
     categorical = [cols.index(c) for c in cat_features_encoded]
 
-    # no_cats = pd.DataFrame(X.copy(),columns = X.columns)
-    # no_cats[yname] = deepcopy(y)
-    # no_cats.to_csv("./datasets/no_cats/" +  dataset + ".csv", index=False)
+    no_cats = pd.DataFrame(X.copy(),columns = X.columns)
+    no_cats[yname] = deepcopy(y)
+    no_cats.to_csv("./datasets/no_cats/" +  dataset + ".csv", index=False)
 
     return X, y, yname, cols, inno_indc, categorical, sensitive_features, sensa_indc
 
@@ -217,9 +217,24 @@ def transformed(df, cols, yname, categorical, ss):
 
     return tdf
 
+# def predTrans(model, ss, cols, df5.to_numpy(), y, yname, f, 5):
+#     exp_df5 = pred(model, ss, cols, df5.to_numpy(), y, yname, f, 5)
+#     texp_df5 = transformed(exp_df5, cols, yname, categorical, ss)
+#     clusters_df = clusters_df.append(texp_df5)
+
 def main():
     # random.seed(10039)
-    datasets = ["adultscensusincome","bankmarketing", "communities", "compas", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"] 
+    datasets = ["adultscensusincome"]#,"bankmarketing", "communities", "compas", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+    keywords = {'adultscensusincome': ['race(', 'sex('],
+                'compas': ['race(','sex('],
+                'bankmarketing': ['Age('],
+                'communities': ['Racepctwhite('],
+                'defaultcredit': ['SEX('],
+                'diabetes': ['Age('],
+                'germancredit': ['sex('],
+                'heart': ['Age('],
+                'studentperformance': ['sex(']
+                }
     pbar = tqdm(datasets)
 
     for dataset in pbar:

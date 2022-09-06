@@ -66,33 +66,33 @@ def classBal(ds_train, yname, protected_attribute):
     one_one_zero = len(ds_train[(ds_train[yname] == 1) & (ds_train[protected_attribute] == 1)])
 
     print("class distribution:","\n0 0: ", zero_zero_zero, "\n0 1: ",zero_one_zero, "\n1 0: ", one_zero_zero,"\n1 1: ",one_one_zero)
-    maximum = max(zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero)
-    zero_zero_zero_to_be_incresed = maximum - zero_zero_zero
-    zero_one_zero_to_be_incresed = maximum - zero_one_zero
-    one_zero_zero_to_be_incresed = maximum - one_zero_zero
-    one_one_zero_to_be_incresed = maximum - one_one_zero
-
-    df_zero_zero_zero = ds_train[(ds_train[yname] == 0) & (ds_train[protected_attribute] == 0)]
-
-    df_zero_one_zero = ds_train[(ds_train[yname] == 0) & (ds_train[protected_attribute] == 1)]
-
-    df_one_zero_zero = ds_train[(ds_train[yname] == 1) & (ds_train[protected_attribute] == 0)]
-
-    df_one_one_zero = ds_train[(ds_train[yname] == 1) & (ds_train[protected_attribute] == 1)]
-
-    df_zero_zero_zero[protected_attribute] = df_zero_zero_zero[protected_attribute].astype(str)
-    df_zero_one_zero[protected_attribute] = df_zero_one_zero[protected_attribute].astype(str)
-    df_one_zero_zero[protected_attribute] = df_one_zero_zero[protected_attribute].astype(str)
-    df_one_one_zero[protected_attribute] = df_one_one_zero[protected_attribute].astype(str)
-
-    print("Start generating samples...")
-    df_zero_zero_zero = generate_samples(zero_zero_zero_to_be_incresed, df_zero_zero_zero, '')
-    df_zero_one_zero = generate_samples(zero_one_zero_to_be_incresed, df_zero_one_zero, '')
-    df_one_zero_zero = generate_samples(one_zero_zero_to_be_incresed, df_one_zero_zero, '')
-    df_one_one_zero = generate_samples(one_one_zero_to_be_incresed, df_one_one_zero, '')
-    df = pd.concat([df_zero_zero_zero, df_zero_one_zero,df_one_zero_zero, df_one_one_zero])
-
-    return df
+    # maximum = max(zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero)
+    # zero_zero_zero_to_be_incresed = maximum - zero_zero_zero
+    # zero_one_zero_to_be_incresed = maximum - zero_one_zero
+    # one_zero_zero_to_be_incresed = maximum - one_zero_zero
+    # one_one_zero_to_be_incresed = maximum - one_one_zero
+    #
+    # df_zero_zero_zero = ds_train[(ds_train[yname] == 0) & (ds_train[protected_attribute] == 0)]
+    #
+    # df_zero_one_zero = ds_train[(ds_train[yname] == 0) & (ds_train[protected_attribute] == 1)]
+    #
+    # df_one_zero_zero = ds_train[(ds_train[yname] == 1) & (ds_train[protected_attribute] == 0)]
+    #
+    # df_one_one_zero = ds_train[(ds_train[yname] == 1) & (ds_train[protected_attribute] == 1)]
+    #
+    # df_zero_zero_zero[protected_attribute] = df_zero_zero_zero[protected_attribute].astype(str)
+    # df_zero_one_zero[protected_attribute] = df_zero_one_zero[protected_attribute].astype(str)
+    # df_one_zero_zero[protected_attribute] = df_one_zero_zero[protected_attribute].astype(str)
+    # df_one_one_zero[protected_attribute] = df_one_one_zero[protected_attribute].astype(str)
+    #
+    # print("Start generating samples...")
+    # df_zero_zero_zero = generate_samples(zero_zero_zero_to_be_incresed, df_zero_zero_zero, '')
+    # df_zero_one_zero = generate_samples(zero_one_zero_to_be_incresed, df_zero_one_zero, '')
+    # df_one_zero_zero = generate_samples(one_zero_zero_to_be_incresed, df_one_zero_zero, '')
+    # df_one_one_zero = generate_samples(one_one_zero_to_be_incresed, df_one_one_zero, '')
+    # df = pd.concat([df_zero_zero_zero, df_zero_one_zero,df_one_zero_zero, df_one_one_zero])
+    #
+    # return df
 
 def Fair_Smote(df1, base_clf, scaler, keyword, rep, yname, m, size, X_test1, y_test1): #remove rep
     ds1 = df1.dropna()
@@ -192,8 +192,8 @@ def Fair_Smote(df1, base_clf, scaler, keyword, rep, yname, m, size, X_test1, y_t
     return res1, X_test, y_test
 
 if __name__ == "__main__":
-    # datasets = [ "adultscensusincome"]
-    datasets = ["bankmarketing", "communities", "compas", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+    datasets = [ "adultscensusincome"]
+    # datasets = ["adultscensusincome", "bankmarketing", "communities", "compas", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
@@ -220,9 +220,15 @@ if __name__ == "__main__":
             y_s = [col for col in df1.columns if "!" in col]
             yname = y_s[0]
             df1.drop(['Unrelated_column_one'], axis=1, inplace = True)
-            result0, X_test, y_test = Fair_Smote(df1, base, scaler, keyword, 10, yname, 0, len(df1.index), pd.DataFrame(), pd.DataFrame())
+            # result0, X_test, y_test = Fair_Smote(df1, base, scaler, keyword, 10, yname, 0, len(df1.index), pd.DataFrame(), pd.DataFrame())
             # print (X_test, y_test)
-            results_dict[0] = result0
+            # results_dict[0] = result0
+            unprocessed_df = pd.read_csv("./datasets/processed/"+ dataset + "_p.csv")
+            print("processed \n")
+            classBal(unprocessed_df, yname, keyword)
+            print("no cats \n")
+
+            classBal(df1, yname, keyword)
 
             surrogatedf = pd.read_csv("./output/cluster_preds/class_bal/"+ dataset + ".csv")
             surrogate_cat_features = []
@@ -251,23 +257,30 @@ if __name__ == "__main__":
             surrogate_5.drop(surrogatedf.loc[surrogatedf['model_num'] != 5].index, inplace=True)
             surrogate_7.drop(surrogatedf.loc[surrogatedf['model_num'] != 7].index, inplace=True)
 
-            print(len(surrogate_1.index))
-            # print(surrogate_5.head())
-            # print(surrogate_7.head())
+            print("surrogates \n")
+            classBal(surrogate_1, yname, keyword)
+            classBal(surrogate_5, yname, keyword)
+            classBal(surrogate_7, yname, keyword)
 
-            # result1, _, _ = Fair_Smote(surrogate_1, base, scaler, keyword, 10, yname, 1, len(surrogate_1.index), X_test, y_test)
-            # results_dict[1] = result1
-            result5, _, _ = Fair_Smote(surrogate_5, base, scaler, keyword, 10, yname, 5, len(surrogate_5.index), X_test, y_test)
-            results_dict[5] = result5
-            result7, _, _ = Fair_Smote(surrogate_7, base, scaler, keyword, 10, yname, 7, len(surrogate_7.index), X_test, y_test)
-            results_dict[7] = result7
 
-            # pprint.pprint(results_dict)
-
-            for s,c in results_dict.items():
-                for metric_row in c:
-                    # print(metric_row)
-                    rows.append(metric_row)
-
-        final_df = pd.DataFrame(rows,columns = ['recall+', 'precision+', 'accuracy+', 'F1_Score+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-', 'flip_rate', 'feature', 'sample_size', 'model_num', 'smoted'])
-        final_df.to_csv("./bias/" +  dataset + "_LR.csv", index=False)
+        #
+        #     print(len(surrogate_1.index))
+        #     # print(surrogate_5.head())
+        #     # print(surrogate_7.head())
+        #
+        #     # result1, _, _ = Fair_Smote(surrogate_1, base, scaler, keyword, 10, yname, 1, len(surrogate_1.index), X_test, y_test)
+        #     # results_dict[1] = result1
+        #     result5, _, _ = Fair_Smote(surrogate_5, base, scaler, keyword, 10, yname, 5, len(surrogate_5.index), X_test, y_test)
+        #     results_dict[5] = result5
+        #     result7, _, _ = Fair_Smote(surrogate_7, base, scaler, keyword, 10, yname, 7, len(surrogate_7.index), X_test, y_test)
+        #     results_dict[7] = result7
+        #
+        #     # pprint.pprint(results_dict)
+        #
+        #     for s,c in results_dict.items():
+        #         for metric_row in c:
+        #             # print(metric_row)
+        #             rows.append(metric_row)
+        #
+        # final_df = pd.DataFrame(rows,columns = ['recall+', 'precision+', 'accuracy+', 'F1_Score+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-', 'flip_rate', 'feature', 'sample_size', 'model_num', 'smoted'])
+        # final_df.to_csv("./bias/" +  dataset + "_LR.csv", index=False)

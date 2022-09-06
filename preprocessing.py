@@ -39,8 +39,8 @@ def trim(df, dataset):
 def makeBinary(df, dataset):
     """encode sensitive & categorical features as numeric."""
     if dataset == "adultscensusincome":
-        df['sex('] = np.where((df['sex('] == "Female"), 0, 1)
-        df['race('] = np.where((df['race('] == "White"), 1, 0)
+        df['sex('] = np.where((df['sex('] == " Female"), 0, 1)
+        df['race('] = np.where((df['race('] == " White"), 1, 0)
         df['!probability'] = np.where((df['!probability'] == " >50K"), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
 
     if dataset == "bankmarketing":
@@ -121,7 +121,7 @@ def makeBinary(df, dataset):
     return df
 
 def preprocess(path,dataset):
-    raw_datadf = pd.read_csv(path, header=0, na_values=['?', ' ?'])
+    raw_datadf = pd.read_csv(path, header=0, na_values=['?', ' ?'], sep =",")
     raw_copy = raw_datadf.copy()
     if dataset != "compas":
         """1: remove rows with missing values."""
@@ -136,16 +136,32 @@ def preprocess(path,dataset):
 
     return bindf
 
+def classBal(ds_train, yname, protected_attribute):
+    zero_zero_zero = len(ds_train[(ds_train[yname] == 0) & (ds_train[protected_attribute] == 0)])
+    zero_one_zero = len(ds_train[(ds_train[yname] == 0) & (ds_train[protected_attribute] == 1)])
+    one_zero_zero = len(ds_train[(ds_train[yname] == 1) & (ds_train[protected_attribute] == 0)])
+    one_one_zero = len(ds_train[(ds_train[yname] == 1) & (ds_train[protected_attribute] == 1)])
+
+    print("class distribution:","\n0 0: ", zero_zero_zero, "\n0 1: ",zero_one_zero, "\n1 0: ", one_zero_zero,"\n1 1: ",one_one_zero)
+
 
 
 if __name__ == "__main__":
-    datasets = ["adultscensusincome.csv","bankmarketing.csv", "compas.csv", "communities.csv", "defaultcredit.csv", "diabetes.csv",  "germancredit.csv", "heart.csv", "studentperformance.csv"]
+    datasets = ["adultscensusincome"] #,"bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
     pbar = tqdm(datasets)
+    keywords = {'adultscensusincome': ['race(', 'sex('],
+                'compas': ['race(','sex('],
+                'bankmarketing': ['Age('],
+                'communities': ['Racepctwhite('],
+                'defaultcredit': ['SEX('],
+                'diabetes': ['Age('],
+                'germancredit': ['sex('],
+                'heart': ['Age('],
+                'studentperformance': ['sex(']
+                }
 
     for dataset in pbar:
         pbar.set_description("Processing %s" % dataset)
-        filename = dataset[:-4]
-        # df = pd.DataFrame(columns=columns)
-        path =  "./datasets/" + filename + ".csv"
-        df = preprocess(path,filename)
-        df.to_csv("./datasets/processed/"  + filename + "_p.csv", index = False)
+        path =  "./datasets/" + dataset + ".csv"
+        df = preprocess(path, dataset)
+        df.to_csv("./datasets/processed/"  + dataset + "_p.csv", index = False)

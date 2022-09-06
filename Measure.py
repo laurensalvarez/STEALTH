@@ -109,7 +109,7 @@ def calculate_SPD(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0):
     P_1 = (TP_1 + FP_1)/(TP_1 + TN_1 + FN_1 + FP_1)
     P_0 = (TP_0 + FP_0) /(TP_0 + TN_0 + FN_0 +  FP_0)
     SPD = (P_0 - P_1)
-    return round(abs(SPD),2)
+    return round(SPD,2)
 
 
 def calculate_equal_opportunity_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0):
