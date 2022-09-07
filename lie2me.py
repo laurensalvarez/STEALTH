@@ -210,7 +210,7 @@ def predTrans(model, scaler, features, categorical, xtest, ytest, yname, fold, m
 
 def main():
     # random.seed(10039)
-    datasets = ["diabetes"]#["adultscensusincome","bankmarketing", "communities", "compas", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+    datasets = ["adultscensusincome","bankmarketing", "communities", "compas", "defaultcredit",  "germancredit", "heart", "studentperformance"]
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
