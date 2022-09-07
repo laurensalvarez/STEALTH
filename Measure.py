@@ -5,7 +5,7 @@ from sklearn.neighbors import KDTree
 from sklearn.neighbors import NearestNeighbors
 
 
-def get_counts(df, y_pred, x_train, y_train, x_test, y_test, biased_col, metric, yname):
+def get_counts(df, y_test, y_pred, biased_col, metric, yname):
 
     # clf.fit(x_train, y_train)
     # y_pred = clf.predict(x_test)
@@ -197,6 +197,10 @@ def consistency_score(X, y, n_neighbors=5):
     return consistency
 
 
-def measure_final_score(test_df, y_pred, X_train, y_train, X_test, y_test, biased_col, metric, yname):
+# def measure_final_score(test_df, y_pred, X_train, y_train, X_test, y_test, biased_col, metric, yname):
+#     df = copy.deepcopy(test_df)
+#     return get_counts(df, y_pred, X_train, y_train, X_test, y_test, biased_col, metric, yname)
+
+def measure_final_score(test_df, y_test, y_pred, biased_col, metric, yname):
     df = copy.deepcopy(test_df)
-    return get_counts(df, y_pred, X_train, y_train, X_test, y_test, biased_col, metric, yname)
+    return get_counts(df, y_test, y_pred, biased_col, metric, yname)

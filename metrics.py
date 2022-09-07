@@ -6,7 +6,7 @@ from tqdm import tqdm
 import pandas as pd
 import numpy as np
 from sklearn.metrics import confusion_matrix,classification_report
-from class0measure import measure_final_score,calculate_recall,calculate_precision,calculate_accuracy
+from Measure import measure_final_score,calculate_recall,calculate_precision,calculate_accuracy
 from cols import Table, Col, Sym, Num
 
 
@@ -18,16 +18,16 @@ from cols import Table, Col, Sym, Num
 # normal matrix
 def getMetrics(test_df, y_test, y_pred, biased_col, samples, model_num, fold, yname):
 
-    recall = measure_final_score(test_df, y_test, y_pred, biased_col, 'recall',yname)
-    precision = measure_final_score(test_df, y_test, y_pred, biased_col, 'precision',yname)
-    accuracy = measure_final_score(test_df, y_test, y_pred, biased_col, 'accuracy',yname)
-    F1 = measure_final_score(test_df, y_test, y_pred, biased_col, 'F1',yname)
-    AOD = measure_final_score(test_df, y_test, y_pred, biased_col, 'aod',yname)
-    EOD =measure_final_score(test_df, y_test, y_pred, biased_col, 'eod',yname)
-    SPD = measure_final_score(test_df, y_test, y_pred, biased_col, 'SPD',yname)
-    FA0 = measure_final_score(test_df, y_test, y_pred, biased_col, 'FA0',yname)
-    FA1 = measure_final_score(test_df, y_test, y_pred, biased_col, 'FA1',yname)
-    DI = measure_final_score(test_df, y_test, y_pred, biased_col, 'DI',yname)
+    recall = measure_final_score(test_df, y_test, y_pred, biased_col, 'recall', yname)
+    precision = measure_final_score(test_df, y_test, y_pred, biased_col, 'precision', yname)
+    accuracy = measure_final_score(test_df, y_test, y_pred, biased_col, 'accuracy', yname)
+    F1 = measure_final_score(test_df, y_test, y_pred, biased_col, 'F1', yname)
+    AOD = measure_final_score(test_df, y_test, y_pred, biased_col, 'aod', yname)
+    EOD =measure_final_score(test_df, y_test, y_pred, biased_col, 'eod', yname)
+    SPD = measure_final_score(test_df, y_test, y_pred, biased_col, 'SPD', yname)
+    FA0 = measure_final_score(test_df, y_test, y_pred, biased_col, 'FA0', yname)
+    FA1 = measure_final_score(test_df, y_test, y_pred, biased_col, 'FA1', yname)
+    DI = measure_final_score(test_df, y_test, y_pred, biased_col, 'DI', yname)
 
     return [recall, precision, accuracy, F1, AOD, EOD, SPD, DI, FA0, FA1, biased_col, samples, model_num, fold]
 
@@ -87,12 +87,12 @@ def sampleMetrics(test_df, y_test, y_pred, biased_cols, samples, model_num, f, y
 ###
 ###############################################
 def main():
-    datasets = ["compas"]#["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+    datasets = ["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
     pbar = tqdm(datasets)
     for dataset in pbar:
         pbar.set_description("Processing %s" % dataset)
 
-        filepath = r'./output/clones/' + dataset + "_all.csv"
+        filepath = r'./output/clones/lower/' + dataset + "_all.csv"
 
         preddf = pd.read_csv(filepath)
 
@@ -116,7 +116,8 @@ def main():
                 dfr = copy.deepcopy(dfs)
                 dfr.drop(dfs.loc[dfs['samples']!= s].index, inplace=True)
 
-                for f in [1]:
+                for f in range(10):
+                    f+=1
                     dfr = copy.deepcopy(dfs)
                     dfr.drop(dfs.loc[dfs['fold']!= f].index, inplace=True)
 
@@ -138,7 +139,7 @@ def main():
 
         fulldf = pd.DataFrame(rows, columns = ['recall+', 'precision+', 'accuracy+', 'F1_Score+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-', 'feature', 'sample_size', 'model_num', 'fold'])
 
-        fulldf.to_csv("./metrics/all_models/" + dataset + ".csv", index=False)
+        fulldf.to_csv("./metrics/all_models/lower/" + dataset + ".csv", index=False)
 
 
 

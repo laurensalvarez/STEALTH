@@ -261,47 +261,49 @@ def main():
             training = pd.DataFrame(deepcopy(xtrain), columns = cols)
             training [yname] = deepcopy(ytrain)
 
-            table = Table(11111)
-            rows = deepcopy(training.values)
-            header = deepcopy(list(training.columns.values))
-            table + header
-            for r in rows:
-                table + r
-
-            enough = int(math.sqrt(len(table.rows)))
-            root = Table.clusters(table.rows, table, enough)
+            # table = Table(11111)
+            # rows = deepcopy(training.values)
+            # header = deepcopy(list(training.columns.values))
+            # table + header
+            # for r in rows:
+            #     table + r
+            #
+            # enough = int(math.sqrt(len(table.rows)))
+            # root = Table.clusters(table.rows, table, enough)
 
             # Train the adversrial model for LIME with f and psi
             adv_lime_0 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
+            tested_model = predTrans(adv_lime_0, ss, cols, categorical, xtest, ytest, "ytest", i, num_points)
+            all_models_test = all_models_test.append(tested_model)
             L = explain(xtrain, xtest, adv_lime_0, categorical, cols, 0)
             all_L = all_L.append(L)
 
-            treatment = [1,2,3,4,5]
-            for num_points in treatment:
-                clustered_df, clustered_y = clusterGroups(root, cols, num_points)
-                # print(clustered_df.head(), clustered_df.index)
+            # treatment = [1,2,3,4,5]
+            # for num_points in treatment:
+            #     clustered_df, clustered_y = clusterGroups(root, cols, num_points)
+            #     # print(clustered_df.head(), clustered_df.index)
+            #
+            #     probed_df = pred(adv_lime_0, cols, clustered_df.to_numpy(), clustered_y, yname, i, num_points)
+            #     tdf = transformed(probed_df, cols, yname, categorical, ss)
+            #     clusters = clusters.append(tdf)
+            #
+            #     subset_training, subset_y = newTraining(probed_df, yname)
+            #
+            #     adv_lime_clone = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(subset_training, subset_y, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
+            #
+            #     tested_model = predTrans(adv_lime_clone, ss, cols, categorical, xtest, ytest, "ytest", i, num_points)
+            #
+            #     all_models_test = all_models_test.append(tested_model)
+            #     # print(all_models_test.index)
+            #
+            #     L = explain(xtrain, xtest, adv_lime_clone, categorical, cols, num_points)
+            #
+            #     all_L = all_L.append(L)
 
-                probed_df = pred(adv_lime_0, cols, clustered_df.to_numpy(), clustered_y, yname, i, num_points)
-                tdf = transformed(probed_df, cols, yname, categorical, ss)
-                clusters = clusters.append(tdf)
 
-                subset_training, subset_y = newTraining(probed_df, yname)
-
-                adv_lime_clone = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(subset_training, subset_y, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
-
-                tested_model = predTrans(adv_lime_clone, ss, cols, categorical, xtest, ytest, "ytest", i, num_points)
-
-                all_models_test = all_models_test.append(tested_model)
-                # print(all_models_test.index)
-
-                L = explain(xtrain, xtest, adv_lime_clone, categorical, cols, num_points)
-
-                all_L = all_L.append(L)
-
-
-        clusters.to_csv("./output/cluster_preds/lower/" +  dataset + "_all.csv", index=False)
-        all_models_test.to_csv("./output/clones/lower/" +  dataset + "_all.csv", index=False)
-        all_L.to_csv("./output/LIME_rankings/lower/" +  dataset + ".csv", index=False)
+        # clusters.to_csv("./output/cluster_preds/lower/" +  dataset + "_0.csv", index=False)
+        all_models_test.to_csv("./output/clones/lower/" +  dataset + "_0.csv", index=False)
+        # all_L.to_csv("./output/LIME_rankings/lower/" +  dataset + ".csv", index=False)
         # print ('-'*55)
         # print("Finished " + dataset + " ; biased_model's FEATURE: ", str(sensitive_features[0]))
         # print ('-'*55)
