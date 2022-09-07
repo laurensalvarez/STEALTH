@@ -362,7 +362,7 @@ if __name__ == "__main__":
     pbar.set_description("Processing %s" % dataset)
     for m in metrics:
       print("\n" +"-" + dataset +"-" + m + "\n"  )
-      Rx.fileIn("./sk_data/lower/" + dataset + "_" + m +"_.csv")
+      Rx.fileIn("./sk_data/lower/J/" + dataset + "_" + m +"_.csv")
 
 
 
