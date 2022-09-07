@@ -210,7 +210,7 @@ def predTrans(model, scaler, features, categorical, xtest, ytest, yname, fold, m
 
 def main():
     # random.seed(10039)
-    datasets = ["adultscensusincome","bankmarketing", "communities", "compas", "defaultcredit",  "germancredit", "heart", "studentperformance"]
+    datasets = ["diabetes"]#["adultscensusincome","bankmarketing", "communities", "compas", "defaultcredit",  "germancredit", "heart", "studentperformance"]
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
@@ -273,10 +273,10 @@ def main():
 
             # Train the adversrial model for LIME with f and psi
             adv_lime_0 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
-            tested_model = predTrans(adv_lime_0, ss, cols, categorical, xtest, ytest, "ytest", i, num_points)
+            tested_model = predTrans(adv_lime_0, ss, cols, categorical, xtest, ytest, "ytest", i, 0)
             all_models_test = all_models_test.append(tested_model)
-            L = explain(xtrain, xtest, adv_lime_0, categorical, cols, 0)
-            all_L = all_L.append(L)
+            # L = explain(xtrain, xtest, adv_lime_0, categorical, cols, 0)
+            # all_L = all_L.append(L)
 
             # treatment = [1,2,3,4,5]
             # for num_points in treatment:

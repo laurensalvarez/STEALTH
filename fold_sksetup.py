@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def main():
-    datasets = ["bankmarketing", "communities", "compas", "defaultcredit", "diabetes", "germancredit", "heart", "studentperformance"]
+    datasets = ["adultscensusincome","bankmarketing", "communities", "compas", "defaultcredit", "diabetes", "germancredit", "heart", "studentperformance"]
     pbar = tqdm(datasets)
     for dataset in pbar:
         pbar.set_description("Processing %s" % dataset)

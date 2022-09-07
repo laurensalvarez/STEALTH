@@ -349,18 +349,20 @@ def bsTest(n=1000,mu1=10,sigma1=1,mu2=10.2,sigma2=1):
 #     Rx.show(Rx.sk(skDemo(n)))
 #     n*=5
 from tqdm import tqdm
+from utils import *
 
 if __name__ == "__main__":
-  random.seed(1)
-  # datasets = ["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
-  datasets = ["bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
-  metrics = ['recall+', 'prec+', 'acc+', 'F1+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-', 'flip_rate']
+  params = Params("model_configurations/experiment_params.json")
+  np.random.seed(params.seed)
+  datasets = ["adultscensusincome","bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+  # datasets = ["bankmarketing", "compas", "communities", "defaultcredit", "diabetes",  "germancredit", "heart", "studentperformance"]
+  metrics = ['recall+', 'prec+', 'acc+', 'F1+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-']
   pbar = tqdm(datasets)
   for dataset in pbar:
     pbar.set_description("Processing %s" % dataset)
     for m in metrics:
       print("\n" +"-" + dataset +"-" + m + "\n"  )
-      Rx.fileIn("./sk_data/bias/smoted/" + dataset + "_" + m +"_.csv")
+      Rx.fileIn("./sk_data/lower/" + dataset + "_" + m +"_.csv")
 
 
 
