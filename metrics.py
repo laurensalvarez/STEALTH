@@ -139,7 +139,7 @@ def main():
 
         fulldf = pd.DataFrame(rows, columns = ['recall+', 'precision+', 'accuracy+', 'F1_Score+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-', 'feature', 'sample_size', 'model_num', 'fold'])
 
-        fulldf.to_csv("./metrics/all_models/lower/J/" + dataset + "_J.csv", index=False)
+        fulldf.to_csv("./metrics/all_models/lower/" + dataset + "_abs.csv", index=False)
 
 
 

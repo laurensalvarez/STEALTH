@@ -97,7 +97,7 @@ def calculate_average_odds_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0
     FPR_diff = calculate_FPR_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0)
     TPR_diff = calculate_TPR_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0)
     average_odds_difference = (FPR_diff + TPR_diff)/2
-    return round(average_odds_difference,2)
+    return abs(round(average_odds_difference,2))
 
 def calculate_Disparate_Impact(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0):
     P_1 = (TP_1 + FP_1)/(TP_1 + TN_1 + FN_1 + FP_1)
@@ -109,11 +109,12 @@ def calculate_SPD(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0):
     P_1 = (TP_1 + FP_1)/(TP_1 + TN_1 + FN_1 + FP_1)
     P_0 = (TP_0 + FP_0) /(TP_0 + TN_0 + FN_0 +  FP_0)
     SPD = (P_0 - P_1)
-    return round(SPD,2)
+    return abs(round(SPD,2))
 
 
 def calculate_equal_opportunity_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0):
-    return calculate_TPR_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0)
+    score = calculate_TPR_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0)
+    return abs(score)
 
 def calculate_TPR_difference(TP_1 , TN_1, FN_1,FP_1, TP_0 , TN_0 , FN_0,  FP_0):
     if (TP_0+FN_0) != 0:

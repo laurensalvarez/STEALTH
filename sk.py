@@ -218,7 +218,7 @@ class Rx(Mine):
   def show(rxs,lo=0,hi=1):
     "pretty print set of treatments"
     tmp=Rx.sum(rxs)
-    lo,hi=tmp.vals[0], tmp.vals[-1]
+    # lo,hi=tmp.vals[0], tmp.vals[-1]
     for rx in sorted(rxs):
         print(THE.rx.show % (rx.rank, rx.rx,
               rx.tiles(lo=lo,hi=hi)))
@@ -362,7 +362,7 @@ if __name__ == "__main__":
     pbar.set_description("Processing %s" % dataset)
     for m in metrics:
       print("\n" +"-" + dataset +"-" + m + "\n"  )
-      Rx.fileIn("./sk_data/lower/J/" + dataset + "_" + m +"_.csv")
+      Rx.fileIn("./sk_data/lower/abs/" + dataset + "_" + m +"_.csv")
 
 
 
