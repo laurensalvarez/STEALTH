@@ -6,7 +6,7 @@ from tqdm import tqdm
 import pandas as pd
 import numpy as np
 from sklearn.metrics import confusion_matrix,classification_report
-from JMeasure import measure_final_score,calculate_recall,calculate_precision,calculate_accuracy
+from Measure import measure_final_score,calculate_recall,calculate_precision,calculate_accuracy
 from cols import Table, Col, Sym, Num
 
 
