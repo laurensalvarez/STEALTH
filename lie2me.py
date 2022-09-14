@@ -11,6 +11,8 @@ from get_data import *
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder, MinMaxScaler, OneHotEncoder
 from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 
 import math, re, random, statistics, sys
 import numpy as np
@@ -41,12 +43,13 @@ class biased_model_f():
     # Decision rule: classify negative outcome if underrepresented class
     def predict(self,X):
         predictions = np.array([params.negative_outcome if x[self.sensa_indc] == 0 else params.positive_outcome for x in X])
-        indices = np.random.choice(np.arange(predictions.size), replace = False, size = int(predictions.size * 0.25))
-        for i in indices:
-            if predictions[i] == params.negative_outcome:
-                predictions[i] = params.positive_outcome
-            else:
-                predictions[i] = params.negative_outcome
+        # FOR when the class balancing complains that there's not enough points to do KNN
+        # indices = np.random.choice(np.arange(predictions.size), replace = False, size = int(predictions.size * 0.25))
+        # for i in indices:
+        #     if predictions[i] == params.negative_outcome:
+        #         predictions[i] = params.positive_outcome
+        #     else:
+        #         predictions[i] = params.negative_outcome
 
         return predictions
 
@@ -210,7 +213,7 @@ def predTrans(model, scaler, features, categorical, xtest, ytest, yname, fold, m
 
 def main():
     # random.seed(10039)
-    datasets = ["diabetes"]#["adultscensusincome","bankmarketing", "communities", "compas", "defaultcredit",  "germancredit", "heart", "studentperformance"]
+    datasets = ["adultscensusincome","bankmarketing", "communities", "compas", "defaultcredit",  "germancredit", "heart", "studentperformance"]
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
@@ -261,15 +264,15 @@ def main():
             training = pd.DataFrame(deepcopy(xtrain), columns = cols)
             training [yname] = deepcopy(ytrain)
 
-            # table = Table(11111)
-            # rows = deepcopy(training.values)
-            # header = deepcopy(list(training.columns.values))
-            # table + header
-            # for r in rows:
-            #     table + r
-            #
-            # enough = int(math.sqrt(len(table.rows)))
-            # root = Table.clusters(table.rows, table, enough)
+            table = Table(11111)
+            rows = deepcopy(training.values)
+            header = deepcopy(list(training.columns.values))
+            table + header
+            for r in rows:
+                table + r
+
+            enough = int(math.sqrt(len(table.rows)))
+            root = Table.clusters(table.rows, table, enough)
 
             # Train the adversrial model for LIME with f and psi
             adv_lime_0 = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
@@ -278,31 +281,31 @@ def main():
             # L = explain(xtrain, xtest, adv_lime_0, categorical, cols, 0)
             # all_L = all_L.append(L)
 
-            # treatment = [1,2,3,4,5]
-            # for num_points in treatment:
-            #     clustered_df, clustered_y = clusterGroups(root, cols, num_points)
-            #     # print(clustered_df.head(), clustered_df.index)
-            #
-            #     probed_df = pred(adv_lime_0, cols, clustered_df.to_numpy(), clustered_y, yname, i, num_points)
-            #     tdf = transformed(probed_df, cols, yname, categorical, ss)
-            #     clusters = clusters.append(tdf)
-            #
-            #     subset_training, subset_y = newTraining(probed_df, yname)
-            #
-            #     adv_lime_clone = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(subset_training, subset_y, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
-            #
-            #     tested_model = predTrans(adv_lime_clone, ss, cols, categorical, xtest, ytest, "ytest", i, num_points)
-            #
-            #     all_models_test = all_models_test.append(tested_model)
-            #     # print(all_models_test.index)
-            #
-            #     L = explain(xtrain, xtest, adv_lime_clone, categorical, cols, num_points)
-            #
-            #     all_L = all_L.append(L)
+            treatment = [1,2,3,4,5]
+            for num_points in treatment:
+                clustered_df, clustered_y = clusterGroups(root, cols, num_points)
+                # print(clustered_df.head(), clustered_df.index)
+
+                probed_df = pred(adv_lime_0, cols, clustered_df.to_numpy(), clustered_y, yname, i, num_points)
+                tdf = transformed(probed_df, cols, yname, categorical, ss)
+                clusters = clusters.append(tdf)
+
+                subset_training, subset_y = newTraining(probed_df, yname)
+
+                adv_lime_clone = RandomForestClassifier(n_estimators=100).fit(subset_training, subset_y)
+                # predictions = adv_lime_clone.predict(xtest, ytest)
+                tested_model = predTrans(adv_lime_clone, ss, cols, categorical, xtest, ytest, "ytest", i, num_points)
+
+                all_models_test = all_models_test.append(tested_model)
+                # print(all_models_test.index)
+
+                # L = explain(xtrain, xtest, adv_lime_clone, categorical, cols, num_points)
+                #
+                # all_L = all_L.append(L)
 
 
-        # clusters.to_csv("./output/cluster_preds/lower/" +  dataset + "_0.csv", index=False)
-        all_models_test.to_csv("./output/clones/lower/" +  dataset + "_0.csv", index=False)
+        clusters.to_csv("./output/cluster_preds/RF/" +  dataset + "_all.csv", index=False)
+        all_models_test.to_csv("./output/clones/RF/" +  dataset + "_all.csv", index=False)
         # all_L.to_csv("./output/LIME_rankings/lower/" +  dataset + ".csv", index=False)
         # print ('-'*55)
         # print("Finished " + dataset + " ; biased_model's FEATURE: ", str(sensitive_features[0]))
