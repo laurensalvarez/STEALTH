@@ -92,7 +92,7 @@ def main():
     for dataset in pbar:
         pbar.set_description("Processing %s" % dataset)
 
-        filepath = r'./output/clones/lower/' + dataset + "_all.csv"
+        filepath = r'./output/clones/RF/' + dataset + "_all.csv"
 
         preddf = pd.read_csv(filepath)
 
@@ -139,7 +139,7 @@ def main():
 
         fulldf = pd.DataFrame(rows, columns = ['recall+', 'precision+', 'accuracy+', 'F1_Score+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-', 'feature', 'sample_size', 'model_num', 'fold'])
 
-        fulldf.to_csv("./metrics/all_models/lower/" + dataset + "_abs.csv", index=False)
+        fulldf.to_csv("./metrics/RF/" + dataset + ".csv", index=False)
 
 
 
