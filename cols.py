@@ -61,7 +61,7 @@ class Sym(Col):
         self.mode = ""
         self.uid = uid  # uid --> it allows for permanence and recalling necessary subtables
         self.count = defaultdict(int)  # will never throw a key error bc it will guve default value as missing key
-        self.encoder = preprocessing.LabelEncoder()
+        # self.encoder = preprocessing.LabelEncoder()
         self.coltype = 0
         self.vals = []
         if data != None:  # initializes the empty col with val
@@ -343,26 +343,26 @@ class Table:
         # else:
         # print("Line", self.fileline, "has missing values")
 
-    def encode_lines(self):
-        # for all Syms
-        # initialize the LabelEncoder
-        # fit from all dictionary keys
-        encodedrows = []
-        for col in self.cols:
-            if col.coltype == 0:
-                keys = list(col.count.keys())
-                col.encoder.fit(keys)
-        for line in self.rows:
-            newline = []
-            for i, val in enumerate(line):
-                newval = val
-                if self.cols[i].coltype == 0:
-                    newval = self.cols[i].encoder.transform([val])[-1]
-                else:
-                    newval = self.compiler(val)
-                newline.append(newval)
-            encodedrows.append(newline)
-        self.encodedrows = encodedrows
+    # def encode_lines(self):
+    #     # for all Syms
+    #     # initialize the LabelEncoder
+    #     # fit from all dictionary keys
+    #     encodedrows = []
+    #     for col in self.cols:
+    #         if col.coltype == 0:
+    #             keys = list(col.count.keys())
+    #             col.encoder.fit(keys)
+    #     for line in self.rows:
+    #         newline = []
+    #         for i, val in enumerate(line):
+    #             newval = val
+    #             if self.cols[i].coltype == 0:
+    #                 newval = self.cols[i].encoder.transform([val])[-1]
+    #             else:
+    #                 newval = self.compiler(val)
+    #             newline.append(newval)
+    #         encodedrows.append(newline)
+    #     self.encodedrows = encodedrows
         # for all lines, if col of line is Sym encode with le.transform([val])
         # store all encoded lines
 
@@ -506,7 +506,7 @@ def leafmedians(root, how=None):  # for all of the leaves from smallest to large
         mid = [col.mid() for col in t.cols]
         MedianTable + mid
         # print(len(t.rows), [col.mid() for col in t.cols], t.cols[-1].count)
-    MedianTable.encode_lines()
+    # MedianTable.encode_lines()
     return MedianTable
 
 def leafmedians2(root, how=None):  # for all of the leaves from smallest to largest print len of rows & median
@@ -546,7 +546,7 @@ def getLeafData(root, samples_per_leaf, how=None):  # for all of the leaves from
             randomrow = random.choice(t.rows)
             EDT + randomrow
             counter += 1
-    EDT.encode_lines()
+    # EDT.encode_lines()
     return EDT
 
 def getLeafMedClass(root, samples_per_leaf,how=None):  # for all of the leaves from smallest to largest get x samples per leaf with median class label
@@ -567,7 +567,7 @@ def getLeafMedClass(root, samples_per_leaf,how=None):  # for all of the leaves f
     numrows = len(EDT.rows)
     newy = [mid for r in numrows]
     EDT.y = newy
-    EDT.encode_lines()
+    # EDT.encode_lines()
     return EDT
 
 def getLeafModes(root, samples_per_leaf,how=None):  # for all of the leaves from smallest to largest get x samples per leaf with median class label
@@ -585,7 +585,7 @@ def getLeafModes(root, samples_per_leaf,how=None):  # for all of the leaves from
             randomrow = random.choice(t.rows)
             EDT + randomrow
     EDT.y[-1].vals = newy
-    EDT.encode_lines()
+    # EDT.encode_lines()
     return EDT
 
     def dump(self, f):
@@ -621,22 +621,22 @@ def isValid(self, row):
     return True
 
 
-def getXY(table):
-    X = []
-    y = []
-    y_index = table.y[-1].uid
-
-    for row in table.encodedrows:
-        X_row = []
-        y_row = -1
-        for i, val in enumerate(row):
-            if i == y_index:  # for multiple y if i in y_indexes:
-                y_row = val
-            else:
-                X_row.append(val)
-        X.append(X_row)
-        y.append(y_row)
-    return X,y
+# def getXY(table):
+#     X = []
+#     y = []
+#     y_index = table.y[-1].uid
+#
+#     for row in table.encodedrows:
+#         X_row = []
+#         y_row = -1
+#         for i, val in enumerate(row):
+#             if i == y_index:  # for multiple y if i in y_indexes:
+#                 y_row = val
+#             else:
+#                 X_row.append(val)
+#         X.append(X_row)
+#         y.append(y_row)
+#     return X,y
 
 def getXY2(table):
     X = []
@@ -739,10 +739,10 @@ def getTable(csv, limiter = None):
     return table, filename
 
 def clusterandclassify(table, filename):
-    table.encode_lines()
+    # table.encode_lines()
     y_index = table.y[-1].name
     tcolumns = deepcopy(table.header)
-    trows = deepcopy(table.encodedrows)
+    # trows = deepcopy(table.encodedrows)
     dsdf = pd.DataFrame(data= trows, columns=tcolumns)
 
     tcols = deepcopy(table.header)
