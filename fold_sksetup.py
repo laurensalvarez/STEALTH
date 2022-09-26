@@ -5,17 +5,27 @@ import pandas as pd
 
 
 def main():
-    datasets = ["adultscensusincome","bankmarketing", "communities", "compas", "defaultcredit", "diabetes", "germancredit", "heart", "studentperformance"]
+    datasets = ["heart", "germancredit", "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
+    keywords = {'adultscensusincome': ['race(', 'sex('],
+                'compas': ['race(','sex('],
+                'bankmarketing': ['Age('],
+                'communities': ['Racepctwhite('],
+                'defaultcredit': ['SEX('],
+                'diabetes': ['Age('],
+                'germancredit': ['sex('],
+                'heart': ['Age('],
+                'studentperformance': ['sex(']
+                }
     pbar = tqdm(datasets)
     for dataset in pbar:
         pbar.set_description("Processing %s" % dataset)
-        df = pd.read_csv(r'./metrics/RF/' + dataset + ".csv")
+        df = pd.read_csv(r'./output/surro_2/' + dataset + ".csv")
 
         df1 = copy.deepcopy(df)
 
         # df1.drop(df1.loc[df1['smoted']!= 0].index, inplace=True)
 
-        model_num = copy.deepcopy(df1["model_num"].tolist())
+        model_num = copy.deepcopy(df1["samples"].tolist())
         sortedmodels = sorted(set(model_num), key = lambda ele: model_num.count(ele))
 
         recalldict = defaultdict(dict)
@@ -32,20 +42,20 @@ def main():
 
         for m in sortedmodels:
             dfRF2 = copy.deepcopy(df1)
-            dfRF2.drop(dfRF2.loc[dfRF2['model_num']!= m].index, inplace=True)
+            dfRF2.drop(dfRF2.loc[dfRF2['samples']!= m].index, inplace=True)
 
-            features = copy.deepcopy(dfRF2["feature"].tolist())
+            features = copy.deepcopy(dfRF2["biased_col"].tolist())
             sortedfeatures = sorted(set(features), key = lambda ele: features.count(ele))
 
             for f in sortedfeatures:
                 # print("Grouping DF-RF by feature", f, " \n")
                 dfRF3 = copy.deepcopy(dfRF2)
-                dfRF3.drop(dfRF3.loc[dfRF3['feature']!= f].index, inplace=True)
+                dfRF3.drop(dfRF3.loc[dfRF3['biased_col']!= f].index, inplace=True)
 
                 recall = dfRF3 ['recall+']
                 precision = dfRF3 ['precision+']
                 accuracy = dfRF3 ['accuracy+']
-                F1_Score = dfRF3 ['F1_Score+']
+                F1_Score = dfRF3 ['F1+']
                 AOD = dfRF3 ['AOD-']
                 EOD = dfRF3 ['EOD-']
                 SPD = dfRF3 ['SPD-']
@@ -125,47 +135,47 @@ def main():
 
         recall_df = pd.DataFrame(reformed_recalldict)
         recall_df.columns = ['_'.join(map(str, x)) for x in recall_df.columns]
-        recall_df.transpose().to_csv("./sk_data/RF/" + dataset + "_recall+_.csv", header = None, index=True, sep=' ')
+        recall_df.transpose().to_csv("./sk_data/surro/" + dataset + "_recall+_.csv", header = None, index=True, sep=' ')
 
         prec_df = pd.DataFrame(reformed_predict)
         prec_df.columns = ['_'.join(map(str, x)) for x in prec_df.columns]
-        prec_df.transpose().to_csv("./sk_data/RF/" + dataset + "_prec+_.csv", header = None, index=True, sep=' ')
+        prec_df.transpose().to_csv("./sk_data/surro/" + dataset + "_prec+_.csv", header = None, index=True, sep=' ')
 
         acc_df = pd.DataFrame(reformed_accdict)
         acc_df.columns = ['_'.join(map(str, x)) for x in acc_df.columns]
-        acc_df.transpose().to_csv("./sk_data/RF/" + dataset + "_acc+_.csv", header = None, index=True, sep=' ')
+        acc_df.transpose().to_csv("./sk_data/surro/" + dataset + "_acc+_.csv", header = None, index=True, sep=' ')
 
         F1_df = pd.DataFrame(reformed_F1dict)
         F1_df.columns = ['_'.join(map(str, x)) for x in F1_df.columns]
-        F1_df.transpose().to_csv("./sk_data/RF/" + dataset + "_F1+_.csv", header = None, index=True, sep=' ')
+        F1_df.transpose().to_csv("./sk_data/surro/" + dataset + "_F1+_.csv", header = None, index=True, sep=' ')
 
         AOD_df = pd.DataFrame(reformed_AODdict)
         AOD_df.columns = ['_'.join(map(str, x)) for x in AOD_df.columns]
-        AOD_df.transpose().to_csv("./sk_data/RF/" + dataset + "_AOD-_.csv", header = None, index=True, sep=' ')
+        AOD_df.transpose().to_csv("./sk_data/surro/" + dataset + "_AOD-_.csv", header = None, index=True, sep=' ')
 
         EOD_df = pd.DataFrame(reformed_EODdict)
         EOD_df.columns = ['_'.join(map(str, x)) for x in EOD_df.columns]
-        EOD_df.transpose().to_csv("./sk_data/RF/" + dataset + "_EOD-_.csv", header = None, index=True, sep=' ')
+        EOD_df.transpose().to_csv("./sk_data/surro/" + dataset + "_EOD-_.csv", header = None, index=True, sep=' ')
 
         SPD_df = pd.DataFrame(reformed_SPDdict)
         SPD_df.columns = ['_'.join(map(str, x)) for x in SPD_df.columns]
-        SPD_df.transpose().to_csv("./sk_data/RF/" + dataset + "_SPD-_.csv", header = None, index=True, sep=' ')
+        SPD_df.transpose().to_csv("./sk_data/surro/" + dataset + "_SPD-_.csv", header = None, index=True, sep=' ')
 
         FA0_df = pd.DataFrame(reformed_FA0dict)
         FA0_df.columns = ['_'.join(map(str, x)) for x in FA0_df.columns]
-        FA0_df.transpose().to_csv("./sk_data/RF/" + dataset + "_FA0-_.csv", header = None, index=True, sep=' ')
+        FA0_df.transpose().to_csv("./sk_data/surro/" + dataset + "_FA0-_.csv", header = None, index=True, sep=' ')
 
         FA1_df = pd.DataFrame(reformed_FA1dict)
         FA1_df.columns = ['_'.join(map(str, x)) for x in FA1_df.columns]
-        FA1_df.transpose().to_csv("./sk_data/RF/" + dataset + "_FA1-_.csv", header = None, index=True, sep=' ')
+        FA1_df.transpose().to_csv("./sk_data/surro/" + dataset + "_FA1-_.csv", header = None, index=True, sep=' ')
 
         DI_df = pd.DataFrame(reformed_DIdict)
         DI_df.columns = ['_'.join(map(str, x)) for x in DI_df.columns]
-        DI_df.transpose().to_csv("./sk_data/RF/" + dataset + "_DI-_.csv", header = None, index=True, sep=' ')
+        DI_df.transpose().to_csv("./sk_data/surro/" + dataset + "_DI-_.csv", header = None, index=True, sep=' ')
 
         # flip_df = pd.DataFrame(reformed_FLIPdict)
         # flip_df.columns = ['_'.join(map(str, x)) for x in flip_df.columns]
-        # flip_df.transpose().to_csv("./sk_data/RF/" + dataset + "_flip_rate_.csv", header = None, index=True, sep=' ')
+        # flip_df.transpose().to_csv("./sk_data/surro/" + dataset + "_flip_rate_.csv", header = None, index=True, sep=' ')
 
 
 if __name__ == '__main__':

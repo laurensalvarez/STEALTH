@@ -57,7 +57,7 @@ def getMetrics(test_df, y_test, y_pred, biased_col, samples, yname, rep):
 
 
 def main():
-    datasets = ["adultscensusincome","bankmarketing", "communities", "compas", "defaultcredit", "diabetes", "germancredit", "heart", "studentperformance"]
+    datasets = ["heart", "germancredit", "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
@@ -68,7 +68,7 @@ def main():
                 'heart': ['Age('],
                 'studentperformance': ['sex(']
                 }
-    base = RandomForestClassifier()
+    # base = RandomForestClassifier()
     # base2 = LogisticRegression()
     # base3 = MLPClassifier()
 
@@ -118,7 +118,7 @@ def main():
                 training = pd.DataFrame(deepcopy(xtrain), columns = cols)
                 training[yname] = deepcopy(ytrain)
 
-                full_clf = base
+                full_clf = RandomForestClassifier()
                 full_clf.fit(xtrain, ytrain)
                 fc_pred = full_clf.predict(xtest)
                 results.append(getMetrics(testing, ytest, fc_pred, keyword, len(ytrain), yname, i ))
@@ -139,13 +139,13 @@ def main():
 
                     probed_y = full_clf.predict(deepcopy(clustered_df))
 
-                    surrogate = base.fit(clustered_df, probed_y)
+                    surrogate = RandomForestClassifier().fit(clustered_df, probed_y)
                     surr_pred = surrogate.predict(xtest)
                     results.append(getMetrics(testing, ytest, surr_pred, keyword, len(probed_y), yname, i ))
 
             #results.items() #(model, metric_row)
-        metrics = pd.DataFrame(results, columns = ["recall", "precision", "accuracy", "F1", "AOD", "EOD", "SPD", "DI", "FA0", "FA1", "biased_col", "samples", "rep"] )
-        metrics.to_csv("./output/surrogates/" +  dataset + "_" + keyword +".csv", index=False)
+        metrics = pd.DataFrame(results, columns = ["recall+", "precision+", "accuracy+", "F1+", "AOD-", "EOD-", "SPD-", "DI-", "FA0-", "FA1-", "biased_col", "samples", "rep"] )
+        metrics.to_csv("./output/surro_2/" +  dataset + "_" + keyword +".csv", index=False)
         # print ('-'*55)
             # print("Finished " + dataset + " ; biased_model's FEATURE: ", str(sensitive_features[0]))
             # print ('-'*55)
