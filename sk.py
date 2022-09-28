@@ -354,14 +354,15 @@ from utils import *
 if __name__ == "__main__":
   params = Params("model_configurations/experiment_params.json")
   np.random.seed(params.seed)
-  datasets = ["heart", "germancredit", "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
+  datasets = ["heart",  "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
+  # "germancredit",
   metrics = ['recall+', 'prec+', 'acc+', 'F1+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-']
   pbar = tqdm(datasets)
   for dataset in pbar:
     pbar.set_description("Processing %s" % dataset)
     for m in metrics:
       print("\n" +"-" + dataset +"-" + m + "\n"  )
-      Rx.fileIn("./sk_data/surro/" + dataset + "_" + m +"_.csv")
+      Rx.fileIn("./sk_data/surro/SVM/" + dataset + "_" + m +"_.csv")
 
 
 

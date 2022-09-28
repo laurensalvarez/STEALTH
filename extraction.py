@@ -12,6 +12,7 @@ from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neural_network import MLPClassifier
+from sklearn.svm import LinearSVC
 
 import math, re, random, statistics, sys
 import numpy as np
@@ -57,7 +58,8 @@ def getMetrics(test_df, y_test, y_pred, biased_col, samples, yname, rep):
 
 
 def main():
-    datasets = ["heart", "germancredit", "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
+    #datasets = ["heart", "germancredit", "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
+    datasets = ["diabetes", "communities", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
@@ -118,7 +120,7 @@ def main():
                 training = pd.DataFrame(deepcopy(xtrain), columns = cols)
                 training[yname] = deepcopy(ytrain)
 
-                full_clf = RandomForestClassifier()
+                full_clf = LogisticRegression()
                 full_clf.fit(xtrain, ytrain)
                 fc_pred = full_clf.predict(xtest)
                 results.append(getMetrics(testing, ytest, fc_pred, keyword, len(ytrain), yname, i ))
@@ -133,19 +135,20 @@ def main():
                 enough = int(math.sqrt(len(table.rows)))
                 root = Table.clusters(table.rows, table, enough)
 
-                treatment = [1,2,3,4,5]
+                treatment = [2,3,4,5]
                 for num_points in treatment:
                     clustered_df, clustered_y = clusterGroups(root, cols, num_points)
 
                     probed_y = full_clf.predict(deepcopy(clustered_df))
+                    print(num_points)
 
-                    surrogate = RandomForestClassifier().fit(clustered_df, probed_y)
+                    surrogate = LogisticRegression().fit(clustered_df, probed_y)
                     surr_pred = surrogate.predict(xtest)
                     results.append(getMetrics(testing, ytest, surr_pred, keyword, len(probed_y), yname, i ))
 
             #results.items() #(model, metric_row)
         metrics = pd.DataFrame(results, columns = ["recall+", "precision+", "accuracy+", "F1+", "AOD-", "EOD-", "SPD-", "DI-", "FA0-", "FA1-", "biased_col", "samples", "rep"] )
-        metrics.to_csv("./output/surro_2/" +  dataset + "_" + keyword +".csv", index=False)
+        metrics.to_csv("./output/surro_2/LR/" +  dataset + ".csv", index=False)
         # print ('-'*55)
             # print("Finished " + dataset + " ; biased_model's FEATURE: ", str(sensitive_features[0]))
             # print ('-'*55)
