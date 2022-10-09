@@ -43,9 +43,6 @@ def getMedians(path,metrics):
     return mediandf
 
 
-
-
-
 if __name__ == "__main__":
     datasets = ["heart",  "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
     #, "germancredit"
