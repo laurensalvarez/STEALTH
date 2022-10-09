@@ -13,6 +13,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.svm import LinearSVC
+from sklearn.tree import DecisionTreeClassifier
 
 import math, re, random, statistics, sys
 import numpy as np
@@ -58,8 +59,8 @@ def getMetrics(test_df, y_test, y_pred, biased_col, samples, yname, rep):
 
 
 def main():
-    #datasets = ["heart", "germancredit", "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
-    datasets = ["diabetes", "communities", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
+    datasets = ["heart", "germancredit", "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "defaultcredit", "adultscensusincome"]
+    # datasets = ["diabetes", "communities", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
@@ -120,7 +121,7 @@ def main():
                 training = pd.DataFrame(deepcopy(xtrain), columns = cols)
                 training[yname] = deepcopy(ytrain)
 
-                full_clf = LogisticRegression()
+                full_clf = LinearSVC()
                 full_clf.fit(xtrain, ytrain)
                 fc_pred = full_clf.predict(xtest)
                 results.append(getMetrics(testing, ytest, fc_pred, keyword, len(ytrain), yname, i ))
@@ -133,22 +134,40 @@ def main():
                     table + r
 
                 enough = int(math.sqrt(len(table.rows)))
-                root = Table.clusters(table.rows, table, enough)
+                # root = Table.clusters(table.rows, table, enough)
+                tree = DecisionTreeClassifier(min_samples_leaf = enough, random_state = i)
+                tree.fit(xtrain, ytrain)
+                leaves = tree.get_n_leaves()
+                leaf_indexes = tree.apply(xtrain)
+                # print(leaf_indexes)
+                new_leaves = list(set(leaf_indexes))
+                # print("leaves:", len(new_leaves))
 
                 treatment = [2,3,4,5]
                 for num_points in treatment:
-                    clustered_df, clustered_y = clusterGroups(root, cols, num_points)
+                    # clustered_df, clustered_y = clusterGroups(root, cols, num_points)
+                    subset_x = []
+                    for l in new_leaves:
+                        indices = [i for i, x in enumerate(leaf_indexes) if x == l] #gives indexes of leaf_num aka index of all points in leaf
+                        # print("indices:", indices, "\n")
+                        x_index = np.random.choice(indices, replace = False, size = num_points)
+                        # print("x_index:", x_index, "\n")
+                        for t in x_index:
+                            subset_x.append(xtrain[t])
 
-                    probed_y = full_clf.predict(deepcopy(clustered_df))
-                    print(num_points)
+                    # print(num_points, len(subset_x))
+                    # print(subset_x)
 
-                    surrogate = LogisticRegression().fit(clustered_df, probed_y)
+                    probed_y = full_clf.predict(deepcopy(subset_x))
+                    # print(num_points)
+
+                    surrogate = LinearSVC().fit(subset_x, probed_y)
                     surr_pred = surrogate.predict(xtest)
                     results.append(getMetrics(testing, ytest, surr_pred, keyword, len(probed_y), yname, i ))
 
             #results.items() #(model, metric_row)
         metrics = pd.DataFrame(results, columns = ["recall+", "precision+", "accuracy+", "F1+", "AOD-", "EOD-", "SPD-", "DI-", "FA0-", "FA1-", "biased_col", "samples", "rep"] )
-        metrics.to_csv("./output/surro_2/LR/" +  dataset + ".csv", index=False)
+        metrics.to_csv("./output/CART/SVM/" +  dataset + ".csv", index=False)
         # print ('-'*55)
             # print("Finished " + dataset + " ; biased_model's FEATURE: ", str(sensitive_features[0]))
             # print ('-'*55)

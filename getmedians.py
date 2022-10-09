@@ -48,7 +48,7 @@ def getMedians(path,metrics):
 
 if __name__ == "__main__":
     datasets = ["heart",  "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
-    # "germancredit",
+    #, "germancredit"
     metrics = ['recall+', 'precision+', 'accuracy+', 'F1+', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'FA0-', 'FA1-'] #feature,sample_size,model_num,smoted
     pbar = tqdm(datasets)
 
@@ -60,9 +60,9 @@ if __name__ == "__main__":
         pbar.set_description("Processing %s" % dataset)
         # mediandf = pd.DataFrame(columns=columns)
 
-        path =  "./output/surro_2/SVM/" + dataset + ".csv"
+        path =  "./output/CART/SVM/" + dataset + ".csv"
         mediandf = getMedians(path, metrics)
-        print(mediandf)
+        # print(mediandf)
 
         # mediandf.to_csv("./medians/surro/" + dataset + "_medians.csv", index = False)
         mediandf['dataset'] = dataset
@@ -70,4 +70,4 @@ if __name__ == "__main__":
     # print(datasetdf)
 
     fulldf = datasetdf[columns]
-    fulldf.to_csv("./medians/surro/allmedians_SVM.csv", index = False)
+    fulldf.to_csv("./medians/CART/allmedians_SVM.csv", index = False)
