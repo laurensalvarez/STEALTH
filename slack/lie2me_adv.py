@@ -41,7 +41,7 @@ class biased_model_f():
     # Decision rule: classify negative outcome if underrepresented class
     def predict(self,X):
         predictions = np.array([params.negative_outcome if x[self.sensa_indc] == 0 else params.positive_outcome for x in X])
-        indices = np.random.choice(np.arange(predictions.size), replace = False, size = int(predictions.size * 0.25))
+        indices = np.random.choice(np.arange(predictions.size), replace = False, size = int(predictions.size * 0.10))
         for i in indices:
             if predictions[i] == params.negative_outcome:
                 predictions[i] = params.positive_outcome
