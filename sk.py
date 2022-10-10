@@ -362,10 +362,14 @@ if __name__ == "__main__":
     pbar.set_description("Processing %s" % dataset)
     for m in metrics:
       print("\n" +"-" + dataset +"-" + m + "\n"  )
-      Rx.fileIn("./sk_data/slack_ext/SVM/" + dataset + "_" + m +"_.csv")
-
-
-
+      Rx.fileIn("./sk_data/surro/SVM/" + dataset + "_" + m +"_.csv")
+      print("-"*50)
+      _cliffsDelta()
+      print("-"*50)
+      print("bootstrap",  bsTest(100, 10, .5, 10, .5) )
+      print("bootstrap",  bsTest(100, 10, 1, 20, 1) )
+      print("bootstrap",  bsTest(100, 10, 10, 10.5, 10) )
+      print("-"*50)
   # print("-"*50)
   # Rx.fileIn("sk2.csv",lo=0,hi=100)
   # print("-"*50)
