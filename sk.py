@@ -2,7 +2,12 @@
 # vim: sta:et:sw=2:ts=2:sts=2 :
 
 from copy import deepcopy as kopy
-import sys,random
+import sys,random, statistics, pprint
+import pandas as pd
+from cliffs_delta import cliffs_delta #https://pypi.org/project/cliffs-delta/
+from scipy.stats import bootstrap
+import warnings
+warnings.filterwarnings('ignore')
 
 """
 Scott-Knot test + non parametric effect size + significance tests.
@@ -62,7 +67,7 @@ class THE:
              b=500)
   mine =  o( private="_")
   char =  o( skip="?")
-  rx   =  o( show="%4s %10s %s")
+  rx   =  o( show="%5s %15s %s")
   tile =  o( width=50,
              chops=[0.1 ,0.3,0.5,0.7,0.9],
              marks=[" " ,"-","-","-"," "],
@@ -102,6 +107,9 @@ def cliffsDelta(lst1, lst2,  dull=THE.cliffs.dull):
     less += (n - j)*repeats
   d= (more - less) / (m*n)
   return abs(d)  <= dull
+
+
+
 
 def bootstrap(y0,z0,conf=THE.bs.conf,b=THE.bs.b):
   """
@@ -173,15 +181,16 @@ class Rx(Mine):
     i.med  = i.vals[int(i.n/2)]
     i.mu   = sum(i.vals)/i.n
     i.rank = 1
+    i.sd = statistics.stdev(i.vals)
+    i.cohen = i.sd* 0.35
   def tiles(i,lo=0,hi=1): return  xtile(i.vals,lo,hi)
   def __lt__(i,j):        return i.med < j.med
   def __eq__(i,j):
-    return cliffsDelta(i.vals,j.vals) and \
-            bootstrap(i.vals,j.vals)
+    return cliffsDelta(i.vals,j.vals) and bootstrap(i.vals,j.vals)
   def __repr__(i):
     return '%4s %10s %s' % (i.rank, i.rx, i.tiles())
   def xpect(i,j,b4):
-    "Expected value of difference in emans before and after a split"
+    "Expected value of difference in means before and after a split"
     n = i.n + j.n
     return i.n/n * (b4.med- i.med)**2 + j.n/n * (j.med-b4.med)**2
 
@@ -192,8 +201,13 @@ class Rx(Mine):
     "convert dictionary to list of treatments"
     return [Rx(k,v) for k,v in d.items()]
 
+  def removekey(d, key):
+    r = dict(d)
+    del r[key]
+    return r
+
   @staticmethod
-  def fileIn(f,lo=0,hi=1):
+  def fileIn(f, df, klist, lo=0,hi=1):
     d={}
     what=None
     for word in words(f):
@@ -203,7 +217,44 @@ class Rx(Mine):
           d[what] = d.get(what,[])
        else:
           d[what] += [x]
-    Rx.show(Rx.sk(Rx.data(**d)),lo=lo,hi=hi)
+
+    cDlist = []
+    blist = []
+    dlist = []
+    modellist = []
+    reslist = []
+    bslist = []
+
+    statdf = pd.DataFrame(columns = ["cliffsDelta", "bootstrap"])
+    for keyword in klist:
+      newd = {i:d[i] for i in d if keyword in i}
+
+      df1 = Rx.show(Rx.sk(Rx.data(**newd)),lo=lo,hi=hi)
+      df = pd.concat([df, df1], ignore_index = True)
+    # print(df.head(), df.index.size)
+
+      slist = sorted(newd.keys(), key = lambda x: int(x.split('_')[0]))
+      max_key = slist[-1]
+
+      for key2 in slist[:-1]:
+        modellist.append(key2)
+        cdelta, res = cliffs_delta(newd.get(max_key),newd.get(key2))
+        dlist.append(cdelta)
+        reslist.append(res)
+        cDlist.append(cliffsDelta(newd.get(max_key),newd.get(key2)))
+        blist.append("same" if bootstrap(newd.get(max_key),newd.get(key2)) else 'different')
+
+        # print("comparisons:", max_key, key2)
+
+
+    statdf["model"] = modellist
+    statdf["cliffsDelta"] = dlist
+    statdf["CD_res"] = reslist
+    statdf["tm_cliffsDelta"] = cDlist
+    # statdf["scip_bootstrap"] = bslist
+    statdf["tm_bootstrap"] = blist
+
+    return df, statdf
 
   @staticmethod
   def sum(rxs):
@@ -218,10 +269,34 @@ class Rx(Mine):
   def show(rxs,lo=0,hi=1):
     "pretty print set of treatments"
     tmp=Rx.sum(rxs)
+    mlist = []
+    ranklist =[]
+    sdlist =[]
+    medlist = []
+    avglist = []
+    clist = []
+    skdf = pd.DataFrame(columns=["dataset", "model", "metric", "median", "StandDev", "mean", "sk_rank", "cohens"])
     # lo,hi=tmp.vals[0], tmp.vals[-1]
     for rx in sorted(rxs):
+        mlist.append(rx.rx)
+        ranklist.append(rx.rank)
+        sdlist.append(round(rx.sd,3))
+        medlist.append(rx.med)
+        avglist.append(round(rx.mu,3))
+        clist.append(round(rx.cohen,3))
         print(THE.rx.show % (rx.rank, rx.rx,
               rx.tiles(lo=lo,hi=hi)))
+
+    skdf["model"] = mlist
+    skdf["sk_rank"] = ranklist
+    skdf["median"] = medlist
+    skdf["mean"] = avglist
+    skdf["StandDev"] = sdlist
+    skdf["cohens"] = clist
+    return skdf
+
+
+
 
   @staticmethod
   def sk(rxs):
@@ -304,22 +379,22 @@ def thing(x):
       return x
 
 #-------------------------------------------------------
-def _cliffsDelta():
-  "demo function"
-  lst1=[1,2,3,4,5,6,7]*100
-  n=1
-  for _ in range(10):
-      lst2=[x*n for x in lst1]
-      print("_cliffsDelta",
-           cliffsDelta(lst1,lst2),n) # should return False
-      n*=1.03
-
-def bsTest(n=1000,mu1=10,sigma1=1,mu2=10.2,sigma2=1):
-   def g(mu,sigma) : return random.gauss(mu,sigma)
-   x = [g(mu1,sigma1) for i in range(n)]
-   y = [g(mu2,sigma2) for i in range(n)]
-   return n,mu1,sigma1,mu2,sigma2,\
-          'same' if bootstrap(x,y) else 'different'
+# def _cliffsDelta():
+#   "demo function"
+#   lst1=[1,2,3,4,5,6,7]*100
+#   n=1
+#   for _ in range(10):
+#       lst2=[x*n for x in lst1]
+#       print("_cliffsDelta",
+#            cliffsDelta(lst1,lst2),n) # should return False
+#       n*=1.03
+#
+# def bsTest(n=1000,mu1=10,sigma1=1,mu2=10.2,sigma2=1):
+#    def g(mu,sigma) : return random.gauss(mu,sigma)
+#    x = [g(mu1,sigma1) for i in range(n)]
+#    y = [g(mu2,sigma2) for i in range(n)]
+#    return n,mu1,sigma1,mu2,sigma2,\
+#           'same' if bootstrap(x,y) else 'different'
 
 #-------------------------------------------------------
 #
@@ -354,41 +429,43 @@ from utils import *
 if __name__ == "__main__":
   params = Params("model_configurations/experiment_params.json")
   np.random.seed(params.seed)
-  datasets = ["heart",  "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
+  datasets = ["heart",  "diabetes", "communities","germancredit", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
   # "germancredit",
-  metrics = ['recall+', 'prec+', 'acc+', 'F1+', 'AOD-', 'EOD-', 'SPD-', 'FA0-', 'FA1-', 'DI-']
+  keywords = {'adultscensusincome': ['race(', 'sex('],
+              'compas': ['race(','sex('],
+              'bankmarketing': ['Age('],
+              'communities': ['Racepctwhite('],
+              'defaultcredit': ['SEX('],
+              'diabetes': ['Age('],
+              'germancredit': ['sex('],
+              'heart': ['Age('],
+              'studentperformance': ['sex(']
+              }
+
+
+  metrics = ['recall+', 'prec+', 'acc+', 'F1+','FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
   pbar = tqdm(datasets)
+
+  datasetsdf = pd.DataFrame(columns=["dataset", "model", "metric", "median", "StandDev", "mean", "sk_rank", "cohens"])
+  statsdf = pd.DataFrame(columns = ["cliffsDelta", "CD_res", "tm_cliffsDelta","tm_bootstrap"])
   for dataset in pbar:
     pbar.set_description("Processing %s" % dataset)
+    klist = keywords[dataset]
+    metricdf = pd.DataFrame(columns=["dataset","model", "metric", "median", "StandDev", "mean", "sk_rank", "cohens" ])
+    # statdf = pd.DataFrame(columns = ["model", "cliffsDelta", "bootstrap"])
     for m in metrics:
+
       print("\n" +"-" + dataset +"-" + m + "\n"  )
-      Rx.fileIn("./sk_data/surro/SVM/" + dataset + "_" + m +"_.csv")
-      print("-"*50)
-      _cliffsDelta()
-      print("-"*50)
-      print("bootstrap",  bsTest(100, 10, .5, 10, .5) )
-      print("bootstrap",  bsTest(100, 10, 1, 20, 1) )
-      print("bootstrap",  bsTest(100, 10, 10, 10.5, 10) )
-      print("-"*50)
-  # print("-"*50)
-  # Rx.fileIn("sk2.csv",lo=0,hi=100)
-  # print("-"*50)
-  # _cliffsDelta()
-  # print("-"*50)
-  # print("bootstrap",  bsTest(100, 10, .5, 10, .5) )
-  # print("bootstrap",  bsTest(100, 10, 1, 20, 1) )
-  # print("bootstrap",  bsTest(100, 10, 10, 10.5, 10) )
-  # print("-"*50)
-  # n=1
-  # l1= [1,2,3,4,5,6,7,8,9,10]*10
-  # for _ in range(10):
-  #   l2=[n*x for x in l1]
-  #   print('same' if bootstrap(l1,l2) else 'different',n)
-  #   n*=1.02
-  # n=1
-  # print("-"*50)
-  # for _ in range(4):
-  #   print()
-  #   print(n*5)
-  #   Rx.show(Rx.sk(skDemo(n)))
-  #   n*=5
+      metric2df, statdf = Rx.fileIn("./sk_data/slack_ext/LR/" + dataset + "_" + m +"_.csv", metricdf, klist)
+      metric2df["metric"] = [m] * metric2df.index.size
+      metric2df["dataset"] = [dataset] * metric2df.index.size
+      statdf["metric"] = [m] * statdf.index.size
+      # statdf["dataset"] = [dataset] * statdf.index.size
+      datasetsdf = pd.concat([datasetsdf, metric2df], ignore_index=True)
+      # print(datasetsdf.head(), datasetsdf.index.size )
+      statsdf = pd.concat([statsdf, statdf], ignore_index=True)
+    df_merged = pd.merge(datasetsdf, statsdf, on = ["model", "metric"], how = "left")
+    # datasetsdf.to_csv("./sk_graphs/output/sk_SVM.csv", index = False)
+    # statsdf.to_csv("./sk_graphs/output/cliff_SVM.csv", index = False)
+    df_merged.to_csv("./sk_graphs/output/slack_LR.csv", index = False)
+    print("-"*85)

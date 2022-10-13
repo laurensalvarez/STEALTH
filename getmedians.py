@@ -14,16 +14,19 @@ def getMedians(path,metrics):
     row = []
 
     df1 = copy.deepcopy(df)
-
+    to_bin = pd.Series(df1["samples"].tolist())
+    a = pd.qcut(to_bin.rank(method = 'first'), 5, labels = False, retbins = True)
+    # print(a)
+    df1["d_samples"] = a[0]
 
     # df1.drop(df1.loc[df1['smoted']!= 1].index, inplace=True)
 
-    model_num = copy.deepcopy(df1["samples"].tolist())
+    model_num = copy.deepcopy(df1["d_samples"].tolist())
     sortedmodels = sorted(set(model_num), key = lambda ele: model_num.count(ele))
 
     for m in sortedmodels:
         dfRF2 = copy.deepcopy(df1)
-        dfRF2.drop(dfRF2.loc[dfRF2['samples']!= m].index, inplace=True)
+        dfRF2.drop(dfRF2.loc[dfRF2['d_samples']!= m].index, inplace=True)
 
         features = copy.deepcopy(dfRF2["biased_col"].tolist())
         sortedfeatures = sorted(set(features), key = lambda ele: features.count(ele))
@@ -36,7 +39,7 @@ def getMedians(path,metrics):
             r.append(m)
             row.append(r)
             # print(m)
-    cols = metrics + ["biased_col", "samples"]
+    cols = metrics + ["biased_col", "d_samples"]
     mediandf = pd.DataFrame(row, columns = cols)
     # print(mediandf)
 
@@ -44,12 +47,12 @@ def getMedians(path,metrics):
 
 
 if __name__ == "__main__":
-    datasets = ["heart", "germancredit" , "diabetes",  "communities", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
-    #
+    datasets = ["heart" , "diabetes",  "communities", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
+    # , "germancredit"
     metrics = ['recall+', 'precision+', 'accuracy+', 'F1+', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'FA0-', 'FA1-'] #feature,sample_size,model_num,smoted
     pbar = tqdm(datasets)
 
-    columns = ['dataset','recall+', 'precision+', 'accuracy+', 'F1+','AOD-', 'EOD-', 'SPD-', 'DI-', 'FA0-', 'FA1-', 'biased_col','samples']
+    columns = ['dataset','recall+', 'precision+', 'accuracy+', 'F1+','AOD-', 'EOD-', 'SPD-', 'DI-', 'FA0-', 'FA1-', 'biased_col','d_samples']
     fulldf = pd.DataFrame(columns=columns)
     datasetdf = pd.DataFrame(columns=columns)
 
@@ -57,7 +60,7 @@ if __name__ == "__main__":
         pbar.set_description("Processing %s" % dataset)
         # mediandf = pd.DataFrame(columns=columns)
 
-        path =  "./output/slack_ext/SVM/" + dataset + ".csv"
+        path =  "./output/CART/LR/" + dataset + ".csv"
         mediandf = getMedians(path, metrics)
         # print(mediandf)
 
@@ -67,4 +70,4 @@ if __name__ == "__main__":
     # print(datasetdf)
 
     fulldf = datasetdf[columns]
-    fulldf.to_csv("./medians/slack_ext/allmedians_SVM.csv", index = False)
+    fulldf.to_csv("./medians/CART/sallmedians_LR.csv", index = False)
