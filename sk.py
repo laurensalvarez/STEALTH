@@ -225,7 +225,7 @@ class Rx(Mine):
     reslist = []
     bslist = []
 
-    statdf = pd.DataFrame(columns = ["cliffsDelta", "bootstrap"])
+    statdf = pd.DataFrame(columns = ["cliffsDelta"])
     for keyword in klist:
       newd = {i:d[i] for i in d if keyword in i}
 
@@ -253,6 +253,7 @@ class Rx(Mine):
     statdf["tm_cliffsDelta"] = cDlist
     # statdf["scip_bootstrap"] = bslist
     statdf["tm_bootstrap"] = blist
+
 
     return df, statdf
 
@@ -294,9 +295,6 @@ class Rx(Mine):
     skdf["StandDev"] = sdlist
     skdf["cohens"] = clist
     return skdf
-
-
-
 
   @staticmethod
   def sk(rxs):
@@ -429,7 +427,7 @@ from utils import *
 if __name__ == "__main__":
   params = Params("model_configurations/experiment_params.json")
   np.random.seed(params.seed)
-  datasets = ["heart",  "diabetes", "communities","germancredit", "compas", "studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
+  datasets = [ "heart","diabetes", "communities","compas","studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
   # "germancredit",
   keywords = {'adultscensusincome': ['race(', 'sex('],
               'compas': ['race(','sex('],
@@ -441,31 +439,27 @@ if __name__ == "__main__":
               'heart': ['Age('],
               'studentperformance': ['sex(']
               }
-
-
   metrics = ['recall+', 'prec+', 'acc+', 'F1+','FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
   pbar = tqdm(datasets)
 
   datasetsdf = pd.DataFrame(columns=["dataset", "model", "metric", "median", "StandDev", "mean", "sk_rank", "cohens"])
-  statsdf = pd.DataFrame(columns = ["cliffsDelta", "CD_res", "tm_cliffsDelta","tm_bootstrap"])
+  statsdf = pd.DataFrame(columns = ["dataset","model", "metric", "median", "StandDev", "mean", "sk_rank", "cohens","cliffsDelta", "CD_res", "tm_cliffsDelta","tm_bootstrap"])
   for dataset in pbar:
     pbar.set_description("Processing %s" % dataset)
     klist = keywords[dataset]
     metricdf = pd.DataFrame(columns=["dataset","model", "metric", "median", "StandDev", "mean", "sk_rank", "cohens" ])
     # statdf = pd.DataFrame(columns = ["model", "cliffsDelta", "bootstrap"])
     for m in metrics:
-
       print("\n" +"-" + dataset +"-" + m + "\n"  )
-      metric2df, statdf = Rx.fileIn("./sk_data/slack_ext/LR/" + dataset + "_" + m +"_.csv", metricdf, klist)
+      metric2df, statdf = Rx.fileIn("./sk_data/CART/RF/" + dataset + "_" + m +"_.csv", metricdf, klist)
       metric2df["metric"] = [m] * metric2df.index.size
       metric2df["dataset"] = [dataset] * metric2df.index.size
       statdf["metric"] = [m] * statdf.index.size
-      # statdf["dataset"] = [dataset] * statdf.index.size
-      datasetsdf = pd.concat([datasetsdf, metric2df], ignore_index=True)
-      # print(datasetsdf.head(), datasetsdf.index.size )
-      statsdf = pd.concat([statsdf, statdf], ignore_index=True)
-    df_merged = pd.merge(datasetsdf, statsdf, on = ["model", "metric"], how = "left")
-    # datasetsdf.to_csv("./sk_graphs/output/sk_SVM.csv", index = False)
-    # statsdf.to_csv("./sk_graphs/output/cliff_SVM.csv", index = False)
-    df_merged.to_csv("./sk_graphs/output/slack_LR.csv", index = False)
-    print("-"*85)
+      df_merged = pd.merge(metric2df, statdf, on = ["model", "metric"], how = "left")
+      print("df_merged", df_merged.index.size )
+      statsdf = pd.concat([statsdf, df_merged], ignore_index=True)
+      print("statsdf", statsdf.index.size )
+  datasetsdf = pd.concat([datasetsdf, statsdf], ignore_index=True)
+  print("datasetdf",datasetsdf.index.size )
+  datasetsdf.to_csv("./sk_graphs/output/cart_RF.csv", index = False)
+  print("-"*85)
