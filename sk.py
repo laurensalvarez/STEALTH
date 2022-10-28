@@ -67,7 +67,7 @@ class THE:
              b=500)
   mine =  o( private="_")
   char =  o( skip="?")
-  rx   =  o( show="%5s %15s %s")
+  rx   =  o( show="%5s %20s %10s")
   tile =  o( width=50,
              chops=[0.1 ,0.3,0.5,0.7,0.9],
              marks=[" " ,"-","-","-"," "],
@@ -188,7 +188,7 @@ class Rx(Mine):
   def __eq__(i,j):
     return cliffsDelta(i.vals,j.vals) and bootstrap(i.vals,j.vals)
   def __repr__(i):
-    return '%4s %10s %s' % (i.rank, i.rx, i.tiles())
+    return '%10s %20s %10s' % (i.rank, i.rx, i.tiles())
   def xpect(i,j,b4):
     "Expected value of difference in means before and after a split"
     n = i.n + j.n
@@ -223,7 +223,7 @@ class Rx(Mine):
     dlist = []
     modellist = []
     reslist = []
-    bslist = []
+    # bslist = []
 
     statdf = pd.DataFrame(columns = ["cliffsDelta"])
     for keyword in klist:
@@ -243,9 +243,6 @@ class Rx(Mine):
         reslist.append(res)
         cDlist.append(cliffsDelta(newd.get(max_key),newd.get(key2)))
         blist.append("same" if bootstrap(newd.get(max_key),newd.get(key2)) else 'different')
-
-        # print("comparisons:", max_key, key2)
-
 
     statdf["model"] = modellist
     statdf["cliffsDelta"] = dlist
@@ -275,8 +272,8 @@ class Rx(Mine):
     sdlist =[]
     medlist = []
     avglist = []
-    clist = []
-    skdf = pd.DataFrame(columns=["dataset", "model", "metric", "median", "StandDev", "mean", "sk_rank", "cohens"])
+    # clist = []
+    skdf = pd.DataFrame(columns=["dataset", "model", "metric", "median", "StandDev", "mean", "sk_rank"])
     # lo,hi=tmp.vals[0], tmp.vals[-1]
     for rx in sorted(rxs):
         mlist.append(rx.rx)
@@ -284,7 +281,7 @@ class Rx(Mine):
         sdlist.append(round(rx.sd,3))
         medlist.append(rx.med)
         avglist.append(round(rx.mu,3))
-        clist.append(round(rx.cohen,3))
+        # clist.append(round(rx.cohen,3))
         print(THE.rx.show % (rx.rank, rx.rx,
               rx.tiles(lo=lo,hi=hi)))
 
@@ -293,7 +290,7 @@ class Rx(Mine):
     skdf["median"] = medlist
     skdf["mean"] = avglist
     skdf["StandDev"] = sdlist
-    skdf["cohens"] = clist
+    # skdf["cohens"] = clist
     return skdf
 
   @staticmethod
@@ -439,27 +436,38 @@ if __name__ == "__main__":
               'heart': ['Age('],
               'studentperformance': ['sex(']
               }
-  metrics = ['recall+', 'prec+', 'acc+', 'F1+','FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
+  metrics = ['recall+', 'prec+', 'acc+', 'F1+', 'MSE-', 'FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
+  learners = ['RF', 'LSR', 'SVC','Slack']
   pbar = tqdm(datasets)
 
-  datasetsdf = pd.DataFrame(columns=["dataset", "model", "metric", "median", "StandDev", "mean", "sk_rank", "cohens"])
-  statsdf = pd.DataFrame(columns = ["dataset","model", "metric", "median", "StandDev", "mean", "sk_rank", "cohens","cliffsDelta", "CD_res", "tm_cliffsDelta","tm_bootstrap"])
+  datasetsdf = pd.DataFrame(columns=["dataset", "model", "metric", "median", "mean", "StandDev", "sk_rank"])
+  statsdf = pd.DataFrame(columns = ["dataset","model", "metric", "median", "mean", "StandDev", "sk_rank", "CD_res", "tm_bootstrap", "cliffsDelta", "tm_cliffsDelta"])
   for dataset in pbar:
     pbar.set_description("Processing %s" % dataset)
     klist = keywords[dataset]
-    metricdf = pd.DataFrame(columns=["dataset","model", "metric", "median", "StandDev", "mean", "sk_rank", "cohens" ])
+    metricdf = pd.DataFrame(columns=["dataset","model", "metric", "median", "mean", "StandDev", "sk_rank"])
     # statdf = pd.DataFrame(columns = ["model", "cliffsDelta", "bootstrap"])
     for m in metrics:
-      print("\n" +"-" + dataset +"-" + m + "\n"  )
-      metric2df, statdf = Rx.fileIn("./sk_data/CART/RF/" + dataset + "_" + m +"_.csv", metricdf, klist)
-      metric2df["metric"] = [m] * metric2df.index.size
-      metric2df["dataset"] = [dataset] * metric2df.index.size
-      statdf["metric"] = [m] * statdf.index.size
-      df_merged = pd.merge(metric2df, statdf, on = ["model", "metric"], how = "left")
-      print("df_merged", df_merged.index.size )
-      statsdf = pd.concat([statsdf, df_merged], ignore_index=True)
-      print("statsdf", statsdf.index.size )
-  datasetsdf = pd.concat([datasetsdf, statsdf], ignore_index=True)
-  print("datasetdf",datasetsdf.index.size )
-  datasetsdf.to_csv("./sk_graphs/output/cart_RF.csv", index = False)
-  print("-"*85)
+      df = pd.read_csv(r'./sk_data/features/' + dataset + "_" + m +"_.csv", sep=' ')
+      df = df.transpose()
+      df.columns = df.iloc[0]
+      df = df[1:]
+      for l in learners:
+        learner_cols = [col for col in df.columns if l in col]
+        output = df[learner_cols]
+        output.transpose().to_csv("./sk_data/features/learners/" + l + "/" + dataset + "_" +  l +"_" + m +"_.csv", header = None, index=True, sep=' ')
+
+    for l in learners:
+      for m in metrics:
+        print("\n" +"-" + dataset +"-" + l +"-"+ m + "\n"  )
+        metric2df, statdf = Rx.fileIn("./sk_data/features/learners/" + l + "/" + dataset + "_" +  l + "_" + m +"_.csv", metricdf, klist)
+        metric2df["metric"] = [m] * metric2df.index.size
+        metric2df["dataset"] = [dataset] * metric2df.index.size
+        statdf["metric"] = [m] * statdf.index.size
+        df_merged = pd.merge(metric2df, statdf, on = ["model", "metric"], how = "left")
+        statsdf = pd.concat([statsdf, df_merged], ignore_index=True)
+
+    datasetsdf = pd.concat([datasetsdf, statsdf], ignore_index=True)
+    # print("datasetdf",datasetsdf.index.size )
+    datasetsdf.to_csv("./sk_graphs/features/FM_RF.csv", index = False)
+    print("-"*100)
