@@ -44,7 +44,6 @@ class biased_model_f():
                 predictions[i] = params.positive_outcome
             else:
                 predictions[i] = params.negative_outcome
-
         return predictions
 
     def predict_proba(self, X):
@@ -191,6 +190,7 @@ def main():
             categorical = [cols.index(c) for c in cat_features_encoded]
             inno_indc = cols.index('Unrelated_column_one')
 
+            all_L = pd.DataFrame(columns = ["ranking","feature","occurances_pct","model_num"])
             for i in range(10):
                 i += 1
 
