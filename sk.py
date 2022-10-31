@@ -424,7 +424,7 @@ from utils import *
 if __name__ == "__main__":
   params = Params("model_configurations/experiment_params.json")
   np.random.seed(params.seed)
-  datasets = [ "heart","diabetes", "communities","compas","studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
+  datasets = [ "heart","diabetes" , "communities","compas","studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
   # "germancredit",
   keywords = {'adultscensusincome': ['race(', 'sex('],
               'compas': ['race(','sex('],
@@ -448,7 +448,7 @@ if __name__ == "__main__":
     metricdf = pd.DataFrame(columns=["dataset","model", "metric", "median", "mean", "StandDev", "sk_rank"])
     # statdf = pd.DataFrame(columns = ["model", "cliffsDelta", "bootstrap"])
     for m in metrics:
-      df = pd.read_csv(r'./sk_data/features/' + dataset + "_" + m +"_.csv", sep=' ')
+      df = pd.read_csv(r'./sk_data/features/' + dataset + "_" + m +"_.csv", sep=' ', header = None)
       df = df.transpose()
       df.columns = df.iloc[0]
       df = df[1:]
@@ -465,9 +465,11 @@ if __name__ == "__main__":
         metric2df["dataset"] = [dataset] * metric2df.index.size
         statdf["metric"] = [m] * statdf.index.size
         df_merged = pd.merge(metric2df, statdf, on = ["model", "metric"], how = "left")
+        # print("df_merged",df_merged.index.size )
         statsdf = pd.concat([statsdf, df_merged], ignore_index=True)
+        # print("statsdf",statsdf.index.size )
 
-    datasetsdf = pd.concat([datasetsdf, statsdf], ignore_index=True)
-    # print("datasetdf",datasetsdf.index.size )
-    datasetsdf.to_csv("./sk_graphs/features/FM_RF.csv", index = False)
-    print("-"*100)
+  datasetsdf = pd.concat([datasetsdf, statsdf], ignore_index=True)
+  # print("datasetdf",datasetsdf.index.size )
+  datasetsdf.to_csv("./sk_graphs/features/FM_RF.csv", index = False)
+  print("-"*100)
