@@ -152,47 +152,47 @@ def main():
                 reformed_DIdict[(outerKey,innerKey)] = values
 
         recall_df.columns = ['_'.join(map(str, x)) for x in recall_df.columns]
-        recall_df.transpose().to_csv("./sk_data/features/" + dataset + model + "_recall+_.csv", header = None, index=True, sep=' ')
+        recall_df.transpose().to_csv("./sk_data/features/" + dataset + "_recall+_.csv", header = None, index=True, sep=' ')
 
         prec_df = pd.DataFrame(reformed_predict)
         prec_df.columns = ['_'.join(map(str, x)) for x in prec_df.columns]
-        prec_df.transpose().to_csv("./sk_data/features/" + dataset + model + "_prec+_.csv", header = None, index=True, sep=' ')
+        prec_df.transpose().to_csv("./sk_data/features/" + dataset + "_prec+_.csv", header = None, index=True, sep=' ')
 
         acc_df = pd.DataFrame(reformed_accdict)
         acc_df.columns = ['_'.join(map(str, x)) for x in acc_df.columns]
-        acc_df.transpose().to_csv("./sk_data/features/" + dataset + model + "_acc+_.csv", header = None, index=True, sep=' ')
+        acc_df.transpose().to_csv("./sk_data/features/" + dataset + "_acc+_.csv", header = None, index=True, sep=' ')
 
         F1_df = pd.DataFrame(reformed_F1dict)
         F1_df.columns = ['_'.join(map(str, x)) for x in F1_df.columns]
-        F1_df.transpose().to_csv("./sk_data/features/" + dataset + model + "_F1+_.csv", header = None, index=True, sep=' ')
+        F1_df.transpose().to_csv("./sk_data/features/" + dataset + "_F1+_.csv", header = None, index=True, sep=' ')
 
         FA0_df = pd.DataFrame(reformed_FA0dict)
         FA0_df.columns = ['_'.join(map(str, x)) for x in FA0_df.columns]
-        FA0_df.transpose().to_csv("./sk_data/features/" + dataset + model + "_FA0-_.csv", header = None, index=True, sep=' ')
+        FA0_df.transpose().to_csv("./sk_data/features/" + dataset + "_FA0-_.csv", header = None, index=True, sep=' ')
 
         FA1_df = pd.DataFrame(reformed_FA1dict)
         FA1_df.columns = ['_'.join(map(str, x)) for x in FA1_df.columns]
-        FA1_df.transpose().to_csv("./sk_data/features/" + dataset + model + "_FA1-_.csv", header = None, index=True, sep=' ')
+        FA1_df.transpose().to_csv("./sk_data/features/" + dataset + "_FA1-_.csv", header = None, index=True, sep=' ')
 
         MSE_df = pd.DataFrame(reformed_MSEdict)
         MSE_df.columns = ['_'.join(map(str, x)) for x in MSE_df.columns]
-        MSE_df.transpose().to_csv("./sk_data/features/" + dataset + model + "_MSE-_.csv", header = None, index=True, sep=' ')
+        MSE_df.transpose().to_csv("./sk_data/features/" + dataset + "_MSE-_.csv", header = None, index=True, sep=' ')
 
         AOD_df = pd.DataFrame(reformed_AODdict)
         AOD_df.columns = ['_'.join(map(str, x)) for x in AOD_df.columns]
-        AOD_df.transpose().to_csv("./sk_data/features/" + dataset + model + "_AOD-_.csv", header = None, index=True, sep=' ')
+        AOD_df.transpose().to_csv("./sk_data/features/" + dataset + "_AOD-_.csv", header = None, index=True, sep=' ')
 
         EOD_df = pd.DataFrame(reformed_EODdict)
         EOD_df.columns = ['_'.join(map(str, x)) for x in EOD_df.columns]
-        EOD_df.transpose().to_csv("./sk_data/features/" + dataset + model + "_EOD-_.csv", header = None, index=True, sep=' ')
+        EOD_df.transpose().to_csv("./sk_data/features/" + dataset + "_EOD-_.csv", header = None, index=True, sep=' ')
 
         SPD_df = pd.DataFrame(reformed_SPDdict)
         SPD_df.columns = ['_'.join(map(str, x)) for x in SPD_df.columns]
-        SPD_df.transpose().to_csv("./sk_data/features/" + dataset + model + "_SPD-_.csv", header = None, index=True, sep=' ')
+        SPD_df.transpose().to_csv("./sk_data/features/" + dataset + "_SPD-_.csv", header = None, index=True, sep=' ')
 
         DI_df = pd.DataFrame(reformed_DIdict)
         DI_df.columns = ['_'.join(map(str, x)) for x in DI_df.columns]
-        DI_df.transpose().to_csv("./sk_data/features/" + dataset + model + "_DI-_.csv", header = None, index=True, sep=' ')
+        DI_df.transpose().to_csv("./sk_data/features/" + dataset + "_DI-_.csv", header = None, index=True, sep=' ')
 
 
 

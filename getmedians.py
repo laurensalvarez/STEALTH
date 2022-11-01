@@ -14,12 +14,10 @@ def getDiscritizedMedians(path,metrics):
     row = []
 
     df1 = copy.deepcopy(df)
-    to_bin = pd.Series(df1["samples"].tolist())
-    a = pd.qcut(to_bin.rank(method = 'first'), 5, labels = False, retbins = True)
-    # print(a)
-    df1["d_samples"] = a[0]
-
-    # df1.drop(df1.loc[df1['smoted']!= 1].index, inplace=True)
+    # to_bin = pd.Series(df1["samples"].tolist())
+    # a = pd.qcut(to_bin.rank(method = 'first'), 5, labels = False, retbins = True)
+    # # print(a)
+    # df1["d_samples"] = a[0]
 
     model_num = copy.deepcopy(df1["d_samples"].tolist())
     sortedmodels = sorted(set(model_num), key = lambda ele: model_num.count(ele))
@@ -50,6 +48,20 @@ def getMedians(path,metrics):
     row = []
 
     df1 = copy.deepcopy(df)
+    # print(df1.head)
+
+    flip_vals = df1['smoted'].values
+    smote_vals = df1['Flip'].values
+
+    df1.drop(['Flip'], axis=1, inplace=True)
+    df1.drop(['smoted'], axis=1, inplace=True)
+
+    df1['smoted'] = smote_vals
+    df1['Flip'] = flip_vals
+    # print(df1.head)
+
+    df1.drop(df1.loc[df1['smoted']!= 1].index, inplace=True)
+    print(df1.head)
 
     model_num = copy.deepcopy(df1["learner"].tolist())
     sortedmodels = sorted(set(model_num), key = lambda ele: model_num.count(ele))
@@ -79,7 +91,7 @@ def getMedians(path,metrics):
 
     cols = metrics + ["biased_col", "samples", "learner"]
     mediandf = pd.DataFrame(row, columns = cols)
-    # print(mediandf)
+    print(mediandf)
 
     return mediandf
 
@@ -87,10 +99,10 @@ def getMedians(path,metrics):
 if __name__ == "__main__":
     datasets = ["heart" , "diabetes",  "communities", "compas", "studentperformance", "bankmarketing", "defaultcredit", "adultscensusincome"]
     # , "germancredit"
-    metrics = ['recall+', 'precision+', 'accuracy+', 'F1+','MSE-', 'FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-'] #feature,sample_size,model_num,smoted
+    metrics = ['recall+', 'precision+', 'accuracy+', 'F1+','MSE-', 'FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip'] #feature,sample_size,model_num,smoted
     pbar = tqdm(datasets)
 
-    columns = ['dataset','recall+', 'precision+', 'accuracy+', 'F1+', 'MSE-', 'FA0-', 'FA1-','AOD-', 'EOD-', 'SPD-', 'DI-','biased_col','samples', "learner"]
+    columns = ['dataset','recall+', 'precision+', 'accuracy+', 'F1+', 'MSE-', 'FA0-', 'FA1-','AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip','biased_col','samples', "learner"]
     fulldf = pd.DataFrame(columns=columns)
     datasetdf = pd.DataFrame(columns=columns)
 
@@ -98,7 +110,7 @@ if __name__ == "__main__":
         pbar.set_description("Processing %s" % dataset)
         # mediandf = pd.DataFrame(columns=columns)
 
-        path =  "./output/features/LIME/" + dataset + "_FM.csv"
+        path =  "./output/features/SMOTE/" + dataset + "_FM.csv"
         mediandf = getMedians(path, metrics)
         # print(mediandf)
 
@@ -108,4 +120,4 @@ if __name__ == "__main__":
     # print(datasetdf)
 
     fulldf = datasetdf[columns]
-    fulldf.to_csv("./medians/features/allmedians.csv", index = False)
+    fulldf.to_csv("./medians/features/smoted/allmedians.csv", index = False)

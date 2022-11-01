@@ -36,7 +36,7 @@ def apply_smote(df):
 
 
 
-def getMetrics(test_df, y_test, y_pred, biased_col, samples, yname, rep, learner):
+def getMetrics(test_df, y_test, y_pred, biased_col, samples, yname, rep, learner, smoted):
 #extraction run
     recall = measure_final_score(test_df, y_test, y_pred, biased_col, 'recall', yname)
     precision = measure_final_score(test_df, y_test, y_pred, biased_col, 'precision', yname)
@@ -51,7 +51,7 @@ def getMetrics(test_df, y_test, y_pred, biased_col, samples, yname, rep, learner
     MSE = round(mean_squared_error(y_test, y_pred),3)
 
 
-    return [recall, precision, accuracy, F1, FA0, FA1, MSE, AOD, EOD, SPD, DI, biased_col, samples, rep, learner]
+    return [recall, precision, accuracy, F1, FA0, FA1, MSE, AOD, EOD, SPD, DI, biased_col, samples, rep, learner, smoted]
 
 def flip(X_test,keyword):
     X_flip = X_test.copy()
@@ -97,8 +97,9 @@ def Fair_Smote(training_df, testing_df, base_clf, keyword, rep, samples, yname, 
     one_one_zero = len(train_df[(train_df[yname] == 1) & (train_df[keyword] == 1)])
 
     # print("class distribution:", (zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero))
-    if zero_zero_zero or zero_one_zero or one_zero_zero or one_one_zero <= 3:
-        return [None, None, None, None, None, None, None, None, None, None, None, biased_col, samples, rep, learner]
+    if (zero_zero_zero < 3) or (zero_one_zero < 3) or (one_zero_zero < 3) or (one_one_zero < 3):
+        print("CANCELLED for class distribution:", (zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero))
+        return [None, None, None, None, None, None, None, None, None, None, None, keyword, samples, rep, learner, None, None]
 
     maximum = max(zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero)
     zero_zero_zero_to_be_incresed = maximum - zero_zero_zero
@@ -139,7 +140,7 @@ def Fair_Smote(training_df, testing_df, base_clf, keyword, rep, samples, yname, 
     y_pred = clf2.predict(X_test)
     cm = confusion_matrix(y_test, y_pred)
 
-    res = getMetrics(test_df, y_test, y_pred, keyword, samples, yname, rep, learner)
+    res = getMetrics(test_df, y_test, y_pred, keyword, samples, yname, rep, learner, 1)
     flip_rate = calculate_flip(clf2,X_test,keyword)
     res.append(round(flip_rate,3))
 
@@ -223,19 +224,19 @@ def main():
                 full_RF = RandomForestClassifier()
                 full_RF.fit(xtrain, ytrain)
                 f_RF_pred = full_RF.predict(xtest)
-                results.append(getMetrics(testing, ytest, f_RF_pred, keyword, len(ytrain), yname, i, "RF" ))
+                results.append(getMetrics(testing, ytest, f_RF_pred, keyword, len(ytrain), yname, i, "RF",0 ))
                 results.append(Fair_Smote(training, testing, RandomForestClassifier(), keyword, i, len(ytrain), yname, "RF"))
 
                 full_LSR = LogisticRegression()
                 full_LSR.fit(xtrain, ytrain)
                 f_LSR_pred = full_LSR.predict(xtest)
-                results.append(getMetrics(testing, ytest, f_LSR_pred, keyword, len(ytrain), yname, i, "LSR" ))
+                results.append(getMetrics(testing, ytest, f_LSR_pred, keyword, len(ytrain), yname, i, "LSR",0 ))
                 results.append(Fair_Smote(training, testing, LogisticRegression(), keyword, i, len(ytrain), yname, "LSR"))
 
                 full_SVC = LinearSVC()
                 full_SVC.fit(xtrain, ytrain)
                 f_SVC_pred = full_SVC.predict(xtest)
-                results.append(getMetrics(testing, ytest, f_SVC_pred, keyword, len(ytrain), yname, i, "SVC" ))
+                results.append(getMetrics(testing, ytest, f_SVC_pred, keyword, len(ytrain), yname, i, "SVC", 0))
                 #no predict.proba() not compatible
                 results.append(Fair_Smote(training, testing, LinearSVC(), keyword, i, len(ytrain), yname, "SVC"))
 
@@ -281,7 +282,7 @@ def main():
                     RF_probed_y = full_RF.predict(subset_x)
                     RF_surrogate = RandomForestClassifier().fit(subset_x, RF_probed_y)
                     RF_surr_pred = RF_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, ytest, RF_surr_pred, keyword, len(subset_x), yname, i, "RF_RF" ))
+                    results.append(getMetrics(testing, ytest, RF_surr_pred, keyword, len(subset_x), yname, i, "RF_RF",0 ))
 
                     subset_df[yname] = RF_probed_y
                     results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, i, len(subset_x), yname, "RF_RF"))
@@ -290,17 +291,16 @@ def main():
                     LSR_probed_y = full_LSR.predict(subset_x)
                     LSR_surrogate = RandomForestClassifier().fit(subset_x, LSR_probed_y)
                     LSR_surr_pred = LSR_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, ytest, LSR_surr_pred, keyword, len(subset_x), yname, i, "LSR_RF" ))
+                    results.append(getMetrics(testing, ytest, LSR_surr_pred, keyword, len(subset_x), yname, i, "LSR_RF",0 ))
 
                     subset_df[yname] = LSR_probed_y
                     results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, i, len(subset_x), yname, "LSR_RF"))
                     subset_df.drop([yname], axis=1, inplace=True)
 
-
                     SVC_probed_y = full_SVC.predict(subset_x)
                     SVC_surrogate = RandomForestClassifier().fit(subset_x, SVC_probed_y)
                     SVC_surr_pred = SVC_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, ytest, SVC_surr_pred, keyword, len(subset_x), yname, i, "SVC_RF" ))
+                    results.append(getMetrics(testing, ytest, SVC_surr_pred, keyword, len(subset_x), yname, i, "SVC_RF", 0))
 
                     subset_df[yname] = SVC_probed_y
                     results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, i, len(subset_x), yname, "SVC_RF"))
@@ -311,7 +311,7 @@ def main():
                     # Slack_surr_pred = Slack_surrogate.predict(xtest)
                     # results.append(getMetrics(testing, ytest, Slack_surr_pred, keyword, len(subset_x), yname, i, "Slack_RF" ))
 
-        metrics = pd.DataFrame(results, columns = ["recall+", "precision+", "accuracy+", "F1+", "FA0-", "FA1-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-", "biased_col", "samples", "rep", "learner", "Flip"] )
+        metrics = pd.DataFrame(results, columns = ["recall+", "precision+", "accuracy+", "F1+", "FA0-", "FA1-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-", "biased_col", "samples", "rep", "learner", "smoted", "Flip"] )
         metrics.to_csv("./output/features/SMOTE/" +  dataset + "_FM.csv", index=False)
         # print ('-'*55)
         # print("Finished " + dataset + " ; biased_model's FEATURE: ", str(sensitive_features[0]))
