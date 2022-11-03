@@ -5,7 +5,7 @@ from copy import deepcopy as kopy
 import sys,random, statistics, pprint
 import pandas as pd
 from cliffs_delta import cliffs_delta #https://pypi.org/project/cliffs-delta/
-from scipy.stats import bootstrap
+# from scipy.stats import bootstrap
 import warnings
 warnings.filterwarnings('ignore')
 
