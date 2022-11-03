@@ -75,14 +75,14 @@ def getMedians(path,metrics):
 
         for s in sortedsamples:
             dfRF3 = copy.deepcopy(dfRF2)
-            dfRF3.drop(dfRF2.loc[dfRF3['samples']!= s].index, inplace=True)
+            dfRF3.drop(dfRF3.loc[dfRF3['samples']!= s].index, inplace=True)
 
             features = copy.deepcopy(dfRF3["biased_col"].tolist())
             sortedfeatures = sorted(set(features), key = lambda ele: features.count(ele))
 
             for f in sortedfeatures:
                 dfRF4 = copy.deepcopy(dfRF3)
-                dfRF4.drop(dfRF3.loc[dfRF4['biased_col']!= f].index, inplace=True)
+                dfRF4.drop(dfRF4.loc[dfRF4['biased_col']!= f].index, inplace=True)
                 r = [round(statistics.median(dfRF4[col].values),2) for col in metrics]
                 r.append(f)
                 r.append(s)
@@ -97,7 +97,7 @@ def getMedians(path,metrics):
 
 
 if __name__ == "__main__":
-    datasets = ["heart" , "diabetes",  "communities", "compas", "studentperformance", "bankmarketing", "defaultcredit", "adultscensusincome"]
+    datasets = ["communities", "heart" , "diabetes", "compas", "studentperformance", "bankmarketing", "defaultcredit", "adultscensusincome"]
     # , "germancredit"
     metrics = ['recall+', 'precision+', 'accuracy+', 'F1+','MSE-', 'FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip'] #feature,sample_size,model_num,smoted
     pbar = tqdm(datasets)
