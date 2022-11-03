@@ -223,7 +223,7 @@ class Rx(Mine):
     dlist = []
     modellist = []
     reslist = []
-    # bslist = []
+    jlist = []
 
     statdf = pd.DataFrame(columns = ["cliffsDelta"])
     for keyword in klist:
@@ -243,6 +243,7 @@ class Rx(Mine):
         reslist.append(res)
         cDlist.append(cliffsDelta(newd.get(max_key),newd.get(key2)))
         blist.append("same" if bootstrap(newd.get(max_key),newd.get(key2)) else 'different')
+        jlist.append(jaccard_similarity(newd.get(max_key),newd.get(key2)))
 
     statdf["model"] = modellist
     statdf["cliffsDelta"] = dlist
@@ -250,6 +251,7 @@ class Rx(Mine):
     statdf["tm_cliffsDelta"] = cDlist
     # statdf["scip_bootstrap"] = bslist
     statdf["tm_bootstrap"] = blist
+    statdf["jacc"] = jlist
 
 
     return df, statdf
@@ -373,6 +375,11 @@ def thing(x):
     except ValueError:
       return x
 
+def jaccard_similarity(list1, list2):
+    intersection = len(list(set(list1).intersection(list2)))
+    union = (len(set(list1)) + len(set(list2))) - intersection
+    return round(float(intersection) / union,2)
+
 #-------------------------------------------------------
 # def _cliffsDelta():
 #   "demo function"
@@ -424,7 +431,7 @@ from utils import *
 if __name__ == "__main__":
   params = Params("model_configurations/experiment_params.json")
   np.random.seed(params.seed)
-  datasets = [ "heart","diabetes" , "communities","compas","studentperformance", "bankmarketing", "adultscensusincome", "defaultcredit"]
+  datasets = [ "communities" ,"heart","diabetes" ,"studentperformance", "compas", "bankmarketing", "defaultcredit", "adultscensusincome"]
   # "germancredit",
   keywords = {'adultscensusincome': ['race(', 'sex('],
               'compas': ['race(','sex('],
@@ -440,29 +447,32 @@ if __name__ == "__main__":
   learners = ['RF', 'LSR', 'SVC']
   pbar = tqdm(datasets)
 
-  datasetsdf = pd.DataFrame(columns=["dataset", "model", "metric", "median", "mean", "StandDev", "sk_rank"])
-  statsdf = pd.DataFrame(columns = ["dataset","model", "metric", "median", "mean", "StandDev", "sk_rank", "CD_res", "tm_bootstrap", "cliffsDelta", "tm_cliffsDelta"])
+  datasetsdf = pd.DataFrame(columns=["dataset", "order", "model", "metric", "median", "mean", "StandDev", "sk_rank"])
+  statsdf = pd.DataFrame(columns = ["dataset","order","model", "metric", "median", "mean", "StandDev", "sk_rank", "CD_res", "tm_bootstrap", "jacc", "tm_cliffsDelta", "cliffsDelta"])
+  order = 0
   for dataset in pbar:
+    order += 1
     pbar.set_description("Processing %s" % dataset)
     klist = keywords[dataset]
     metricdf = pd.DataFrame(columns=["dataset","model", "metric", "median", "mean", "StandDev", "sk_rank"])
     # statdf = pd.DataFrame(columns = ["model", "cliffsDelta", "bootstrap"])
     for m in metrics:
-      df = pd.read_csv(r'./sk_data/features/smoted/' + dataset + "_" + m +"_.csv", sep=' ', header = None)
+      df = pd.read_csv(r'./sk_data/features/full/' + dataset + "_" + m +"_.csv", sep=' ', header = None)
       df = df.transpose()
       df.columns = df.iloc[0]
       df = df[1:]
       for l in learners:
         learner_cols = [col for col in df.columns if l in col]
         output = df[learner_cols]
-        output.transpose().to_csv("./sk_data/features/smoted/learners/" + l + "/" + dataset + "_" +  l +"_" + m +"_.csv", header = None, index=True, sep=' ')
+        output.transpose().to_csv("./sk_data/features/learners/" + l + "/" + dataset + "_" +  l +"_" + m +"_.csv", header = None, index=True, sep=' ')
 
     for l in learners:
       for m in metrics:
         print("\n" +"-" + dataset +"-" + l +"-"+ m + "\n"  )
-        metric2df, statdf = Rx.fileIn("./sk_data/features/smoted/learners/" + l + "/" + dataset + "_" +  l + "_" + m +"_.csv", metricdf, klist)
+        metric2df, statdf = Rx.fileIn("./sk_data/features/learners/" + l + "/" + dataset + "_" +  l + "_" + m +"_.csv", metricdf, klist)
         metric2df["metric"] = [m] * metric2df.index.size
         metric2df["dataset"] = [dataset] * metric2df.index.size
+        metric2df["order"] = [order] * metric2df.index.size
         statdf["metric"] = [m] * statdf.index.size
         df_merged = pd.merge(metric2df, statdf, on = ["model", "metric"], how = "left")
         # print("df_merged",df_merged.index.size )
@@ -471,5 +481,5 @@ if __name__ == "__main__":
 
   datasetsdf = pd.concat([datasetsdf, statsdf], ignore_index=True)
   # print("datasetdf",datasetsdf.index.size )
-  datasetsdf.to_csv("./sk_graphs/features/smoted/FM_RF.csv", index = False)
+  datasetsdf.to_csv("./sk_graphs/features/FM_RF.csv", index = False)
   print("-"*100)

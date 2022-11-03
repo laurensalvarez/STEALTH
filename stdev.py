@@ -8,7 +8,7 @@ import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 
-def getSmotedMedians(path,metrics):
+def getSmotedMedians(path,allmetrics):
     df = pd.read_csv(path)
     row = []
 
@@ -48,19 +48,19 @@ def getSmotedMedians(path,metrics):
             for f in sortedfeatures:
                 df4 = copy.deepcopy(df3)
                 df4.drop(df4.loc[df4['biased_col']!= f].index, inplace=True)
-                r = [round(statistics.median(df4[col].values),2) for col in metrics]
+                r = [round(statistics.median(df4[col].values),2) for col in allmetrics]
                 r.append(f)
                 r.append(s)
                 r.append(m)
                 row.append(r)
 
-    cols = metrics + ["biased_col", "samples", "learner"]
+    cols = allmetrics + ["biased_col", "samples", "learner"]
     mediandf = pd.DataFrame(row, columns = cols)
     # print(mediandf)
 
     return mediandf
 
-def getMedians(path,metrics):
+def getMedians(path,allmetrics):
     mdf = pd.read_csv(path)
     row = []
 
@@ -87,30 +87,39 @@ def getMedians(path,metrics):
             for f in sortedfeatures:
                 mdf4 = copy.deepcopy(mdf3)
                 mdf4.drop(mdf4.loc[mdf4['biased_col']!= f].index, inplace=True)
-                r = [round(statistics.median(mdf4[col].values),2) for col in metrics]
+                r = [round(statistics.median(mdf4[col].values),2) for col in allmetrics]
                 r.append(f)
                 r.append(s)
                 r.append(m)
                 row.append(r)
 
-    cols = metrics + ["biased_col", "samples", "learner"]
+    cols = allmetrics + ["biased_col", "samples", "learner"]
     mediandf = pd.DataFrame(row, columns = cols)
     # print(mediandf)
 
     return mediandf
 
-def twinsies(maxdict, stdvdict, val, col):
+def twinsies(maxdict, stdvdict, val, col, hmetrics, lowmetrics):
     high = maxdict[col] + stdvdict[col]
     low = maxdict[col] - stdvdict[col]
+    # print("col:", col, "  val:", val, "  high:", high, "  low:", low)
 
-    if low <= val and val <= high:
-        newval = str(val) + "Y"
-    else:
-        newval = str(val) + "N"
+    if col in hmetrics:
+        if low <= val and val >=high or val <= high:
+            newval = str(val) + "Y"
+        else:
+            newval = str(val) + "N"
+    elif col in lmetrics:
+        if low >= val or low <=val and val <= high:
+            newval = str(val) + "Y"
+        else:
+            newval = str(val) + "N"
+    # print("\n new val:", newval)
+
     return newval
 
 
-def printStdv(path, metrics, mediandf):
+def printStdv(path, hmetrics, lmetrics, allmetrics, mediandf):
     df = pd.read_csv(path)
     row = []
     valss = []
@@ -149,13 +158,10 @@ def printStdv(path, metrics, mediandf):
             sortedsamples = sorted(sortedsamples, reverse = True)
             # print("sortedsamples", sortedsamples)
             # fulllearner = sortedsamples[0]
-
-
-
             df3 = copy.deepcopy(df2)
             df3.drop(df3.loc[df3['samples'] != sortedsamples[0]].index, inplace=True)
 
-            for col in metrics:
+            for col in allmetrics:
                 fulldict[col] = df3[col].values[0]
             # print("sortedsamples", sortedsamples)
             # print("fulldict:", fulldict)
@@ -164,26 +170,32 @@ def printStdv(path, metrics, mediandf):
                 df5 = copy.deepcopy(df2)
                 df5.drop(df5.loc[df5['samples']!= s].index, inplace=True)
 
-                for col in metrics:
+                for col in allmetrics:
                     val = df5[col].values[0]
-                    newval = twinsies(fulldict, stdd, val, col)
+                    newval= twinsies(fulldict, stdd, val, col, hmetrics, lmetrics)
                     r.append(newval)
+                    Ys = sum([1 for p in r if "Y" in str(p)])
+                    Ns = sum([1 for p in r if "N" in str(p)])
                 r.append(s)
                 r.append(m)
                 r.append(f)
+                r.append(Ys)
+                r.append(Ns)
                 row.append(r)
 
-    cols = metrics + ["samples", "learner", "biased_col"]
+    cols = allmetrics + ["samples", "learner", "biased_col", "ycount", "ncount"]
     stdvdf = pd.DataFrame(row, columns = cols)
     return stdvdf
 
 if __name__ == "__main__":
-    datasets = ["communities", "heart", "diabetes", "compas", "studentperformance", "bankmarketing", "defaultcredit", "adultscensusincome"]
+    datasets =  ["communities", "heart", "diabetes", "studentperformance","compas",  "bankmarketing", "defaultcredit", "adultscensusincome"] #
     # , "germancredit"
-    metrics = ['recall+', 'precision+', 'accuracy+', 'F1+','FA0-', 'FA1-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
+    allmetrics = ['recall+', 'precision+', 'accuracy+', 'F1+','FA0-', 'FA1-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
+    hmetrics = ['recall+', 'precision+', 'accuracy+', 'F1+']
+    lmetrics = ['FA0-', 'FA1-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
     pbar = tqdm(datasets)
 
-    columns = ['order','dataset', 'biased_col','learner', "samples", 'recall+', 'precision+', 'accuracy+', 'F1+', 'FA0-', 'FA1-','MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
+    columns = ['order','dataset', 'biased_col','learner', "samples", 'recall+', 'precision+', 'accuracy+', 'F1+', 'FA0-', 'FA1-','MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-', "ycount", "ncount"]
     fulldf = pd.DataFrame(columns=columns)
     datasetdf = pd.DataFrame(columns=columns)
     order = 0
@@ -195,8 +207,8 @@ if __name__ == "__main__":
         # mediandf = pd.DataFrame(columns=columns)
 
         path =  "./output/features/LIME/" + dataset + "_FM.csv"
-        mediandf = getMedians(path, metrics)
-        stdvdf = printStdv(path, metrics, mediandf)
+        mediandf = getMedians(path, allmetrics)
+        stdvdf = printStdv(path, hmetrics, lmetrics, allmetrics, mediandf)
 
         # mediandf.to_csv("./medians/surro/" + dataset + "_medians.csv", index = False)
         stdvdf['dataset'] = dataset
@@ -205,4 +217,4 @@ if __name__ == "__main__":
     # print(datasetdf)
 
     fulldf = datasetdf[columns]
-    fulldf.to_csv("./stdv/allmedians.csv", index = False)
+    fulldf.to_csv("./stdv/medians_gt.csv", index = False)

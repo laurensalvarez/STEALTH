@@ -97,7 +97,7 @@ def getMedians(path,metrics):
 
 
 if __name__ == "__main__":
-    datasets = ["communities", "heart" , "diabetes", "compas", "studentperformance", "bankmarketing", "defaultcredit", "adultscensusincome"]
+    datasets = ["communities", "heart" , "diabetes",  "studentperformance","compas", "bankmarketing", "defaultcredit", "adultscensusincome"]
     # , "germancredit"
     metrics = ['recall+', 'precision+', 'accuracy+', 'F1+','MSE-', 'FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip'] #feature,sample_size,model_num,smoted
     pbar = tqdm(datasets)
