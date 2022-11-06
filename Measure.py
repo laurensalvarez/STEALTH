@@ -18,7 +18,7 @@ def get_counts(df, y_test, y_pred, biased_col, metric, yname):
 
     test_df_copy = copy.deepcopy(df)
     test_df_copy['y_pred'] = y_pred
-    # test_df_copy[yname] = y_test
+    test_df_copy[yname] = y_test
 
     # print("test_df_copy:", test_df_copy.head())
 
