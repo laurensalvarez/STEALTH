@@ -444,7 +444,7 @@ if __name__ == "__main__":
               'studentperformance': ['sex(']
               }
   metrics = ['recall+', 'prec+', 'acc+', 'F1+', 'MSE-', 'FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
-  learners = ['RF', 'LSR', 'SVC']
+  learners = ['RF']
   pbar = tqdm(datasets)
 
   datasetsdf = pd.DataFrame(columns=["dataset", "order", "model", "metric", "median", "mean", "StandDev", "sk_rank"])
@@ -457,19 +457,19 @@ if __name__ == "__main__":
     metricdf = pd.DataFrame(columns=["dataset","model", "metric", "median", "mean", "StandDev", "sk_rank"])
     # statdf = pd.DataFrame(columns = ["model", "cliffsDelta", "bootstrap"])
     for m in metrics:
-      df = pd.read_csv(r'./sk_data/features/full/' + dataset + "_" + m +"_.csv", sep=' ', header = None)
+      df = pd.read_csv(r'./sk_data/final/' + dataset + "_" + m +"_.csv", sep=' ', header = None)
       df = df.transpose()
       df.columns = df.iloc[0]
       df = df[1:]
       for l in learners:
         learner_cols = [col for col in df.columns if l in col]
         output = df[learner_cols]
-        output.transpose().to_csv("./sk_data/features/learners/" + l + "/" + dataset + "_" +  l +"_" + m +"_.csv", header = None, index=True, sep=' ')
+        output.transpose().to_csv("./sk_data/final/learners/" + l + "/" + dataset + "_" +  l +"_" + m +"_.csv", header = None, index=True, sep=' ')
 
     for l in learners:
       for m in metrics:
         print("\n" +"-" + dataset +"-" + l +"-"+ m + "\n"  )
-        metric2df, statdf = Rx.fileIn("./sk_data/features/learners/" + l + "/" + dataset + "_" +  l + "_" + m +"_.csv", metricdf, klist)
+        metric2df, statdf = Rx.fileIn("./sk_data/final/learners/" + l + "/" + dataset + "_" +  l + "_" + m +"_.csv", metricdf, klist)
         metric2df["metric"] = [m] * metric2df.index.size
         metric2df["dataset"] = [dataset] * metric2df.index.size
         metric2df["order"] = [order] * metric2df.index.size
@@ -481,5 +481,5 @@ if __name__ == "__main__":
 
   datasetsdf = pd.concat([datasetsdf, statsdf], ignore_index=True)
   # print("datasetdf",datasetsdf.index.size )
-  datasetsdf.to_csv("./sk_graphs/features/FM_RF.csv", index = False)
+  datasetsdf.to_csv("./sk_graphs/final/FM_RF.csv", index = False)
   print("-"*100)

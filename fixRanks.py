@@ -29,7 +29,7 @@ def rearrange(path):
 
             for f in sortedfeatures:
                 dfRF4 = copy.deepcopy(dfRF3)
-                dfRF4.drop(dfRF3.loc[dfRF4['feature']!= f].index, inplace=True)
+                dfRF4.drop(dfRF4.loc[dfRF4['feature']!= f].index, inplace=True)
                 vals = dfRF4['occurances_pct'].values
 
                 median = round(statistics.median(vals),2)
@@ -43,38 +43,38 @@ def rearrange(path):
 
 def addModel(path):
     df = pd.read_csv(path)
-    df1 = copy.deepcopy(df)
+    df2 = copy.deepcopy(df)
     all = []
 
-    for r in range(10):
-        r+=1
+    # for r in range(10):
+    #     r+=1
 
-        nums = []
-        mods = []
-        alts = []
-        df2 = copy.deepcopy(df1)
-        df2.drop(df2.loc[df2['rep']!= r].index, inplace=True)
+    #     nums = []
+    #     mods = []
+    #     alts = []
+    #     df2 = copy.deepcopy(df1)
+    #     df2.drop(df2.loc[df2['rep']!= r].index, inplace=True)
 
-        df3 = copy.deepcopy(df2)
-        # df3.drop(df3.loc[df3['ranking']!= ranking].index, inplace=True)
+    #     df3 = copy.deepcopy(df2)
+    #     # df3.drop(df3.loc[df3['ranking']!= ranking].index, inplace=True)
 
-        models = df3['model_num'].values
-        counts = list(chain.from_iterable([(k, len(list(v)))] for k, v in groupby(models)))
+    #     models = df3['model_num'].values
+    #     counts = list(chain.from_iterable([(k, len(list(v)))] for k, v in groupby(models)))
 
-        c = defaultdict(count)
-        mods = [tuple[0] for tuple in counts]
-        multiples = [tuple[1] for tuple in counts]
+    #     c = defaultdict(count)
+    #     mods = [tuple[0] for tuple in counts]
+    #     multiples = [tuple[1] for tuple in counts]
 
-        nums = [next(c[n]) for n in mods]
+    #     nums = [next(c[n]) for n in mods]
 
-        for i in range(len(nums)):
-            alts.extend([nums[i]] * int(multiples[i]))
-
-
-        # print("alts",alts)
+    #     for i in range(len(nums)):
+    #         alts.extend([nums[i]] * int(multiples[i]))
 
 
-    df3["treatment"] = alts
+    #     # print("alts",alts)
+
+
+    # df3["treatment"] = alts
 
     # dfRF2 = dfRF2.groupby([dfRF2['model_num'].ne(dfRF2['model_num'].shift()).cumsum(), 'model_num']).size().to_frame('size').reset_index()
     # df3['Counts'] = df3.groupby(['model_num'])['ranking'].transform('count')
@@ -93,22 +93,22 @@ def addModel(path):
     #     print(model_nums)
     # for learners in ['RF_RF', 'LSR_RF', 'SVC_RF', 'Slack_RF']:
 
-    treats = copy.deepcopy(df3["treatment"].tolist())
+    treats = copy.deepcopy(df2["samples"].tolist())
     sortedtreats = sorted(set(treats), key = lambda ele: treats.count(ele))
     sortedtreats = sorted(sortedtreats)
 
 
     for m in sortedtreats:
         print(sortedtreats)
-        dfRF2 = copy.deepcopy(df3)
-        dfRF2.drop(dfRF2.loc[dfRF2['treatment']!= m].index, inplace=True)
+        dfRF2 = copy.deepcopy(df2)
+        dfRF2.drop(dfRF2.loc[dfRF2['samples']!= m].index, inplace=True)
 
-        learners = copy.deepcopy(dfRF2["model_num"].tolist())
+        learners = copy.deepcopy(dfRF2["learner"].tolist())
         sortedlearners= sorted(set(learners), key = lambda ele: learners.count(ele))
         sortedlearners = sorted(sortedlearners)
         for l in sortedlearners:
             dfRF5 = copy.deepcopy(dfRF2)
-            dfRF5.drop(dfRF5.loc[dfRF5['model_num']!= l].index, inplace=True)
+            dfRF5.drop(dfRF5.loc[dfRF5['learner']!= l].index, inplace=True)
 
             for rank in [1,2,3]:
                 dfRF3 = copy.deepcopy(dfRF5)
@@ -119,7 +119,7 @@ def addModel(path):
 
                 for f in sortedfeatures:
                     dfRF4 = copy.deepcopy(dfRF3)
-                    dfRF4.drop(dfRF3.loc[dfRF4['feature']!= f].index, inplace=True)
+                    dfRF4.drop(dfRF4.loc[dfRF4['feature']!= f].index, inplace=True)
                     vals = dfRF4['occurances_pct'].values
 
                     median = round(statistics.median(vals),2)
@@ -128,13 +128,13 @@ def addModel(path):
                     newRow = [m, l, rank, f, median]
                     all.append(newRow)
 
-    prettydf = pd.DataFrame(all, columns = ["treatment", "model_num", "ranking", "feature", "median_occurances_pct"])
+    prettydf = pd.DataFrame(all, columns = ["samples", "learner", "ranking", "feature", "median_occurances_pct"])
     return prettydf
 
 
 
 if __name__ == "__main__":
-    datasets = ["heart", "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "defaultcredit", "adultscensusincome"]
+    datasets = ["heart", "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "defaultcredit"] #, "adultscensusincome"]
 # "germancredit"
     metrics = ['recall+', 'prec+', 'acc+', 'F1+', 'FA0-', 'FA1-','MSE-', 'AOD-', 'EOD-', 'SPD-',  'DI-']
     #LIME COls  ["ranking","feature", "occurances_pct","model_num", "rep"]
@@ -143,8 +143,8 @@ if __name__ == "__main__":
     for dataset in pbar:
         pbar.set_description("Processing %s" % dataset)
 
-        path =  "./output/features/LIME/" + dataset + "._LIME.csv"
+        path =  "./output/final/" + dataset + "._LIME.csv"
         prettydf = addModel(path)
 
         # print(prettydf.head())
-        prettydf.to_csv("./LIME_rankings/features/" + dataset + ".csv", index = False)
+        prettydf.to_csv("./LIME_rankings/final/" + dataset + ".csv", index = False)

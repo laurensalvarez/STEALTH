@@ -50,18 +50,11 @@ def getMedians(path,metrics):
     df1 = copy.deepcopy(df)
     # print(df1.head)
 
-    flip_vals = df1['smoted'].values
-    smote_vals = df1['Flip'].values
 
-    df1.drop(['Flip'], axis=1, inplace=True)
-    df1.drop(['smoted'], axis=1, inplace=True)
-
-    df1['smoted'] = smote_vals
-    df1['Flip'] = flip_vals
     # print(df1.head)
 
-    df1.drop(df1.loc[df1['smoted']!= 1].index, inplace=True)
-    print(df1.head)
+    # df1.drop(df1.loc[df1['smoted']!= 1].index, inplace=True)
+    # print(df1.head)
 
     model_num = copy.deepcopy(df1["learner"].tolist())
     sortedmodels = sorted(set(model_num), key = lambda ele: model_num.count(ele))
@@ -97,12 +90,12 @@ def getMedians(path,metrics):
 
 
 if __name__ == "__main__":
-    datasets = ["communities", "heart" , "diabetes",  "studentperformance","compas", "bankmarketing", "defaultcredit", "adultscensusincome"]
-    # , "germancredit"
+    datasets = ["communities", "heart" , "diabetes",  "studentperformance","compas", "bankmarketing", "defaultcredit"]
+    # , "germancredit", "adultscensusicome"
     metrics = ['recall+', 'precision+', 'accuracy+', 'F1+','MSE-', 'FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip'] #feature,sample_size,model_num,smoted
     pbar = tqdm(datasets)
 
-    columns = ['dataset','recall+', 'precision+', 'accuracy+', 'F1+', 'MSE-', 'FA0-', 'FA1-','AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip','biased_col','samples', "learner"]
+    columns = ['dataset','recall+', 'precision+', 'accuracy+', 'F1+', 'MSE-', 'FA0-', 'FA1-','AOD-', 'EOD-', 'SPD-', 'DI-','biased_col','samples', "learner"]
     fulldf = pd.DataFrame(columns=columns)
     datasetdf = pd.DataFrame(columns=columns)
 
@@ -110,7 +103,7 @@ if __name__ == "__main__":
         pbar.set_description("Processing %s" % dataset)
         # mediandf = pd.DataFrame(columns=columns)
 
-        path =  "./output/features/SMOTE/" + dataset + "_FM.csv"
+        path =  "./output/final/SMOTE/" + dataset + ".csv"
         mediandf = getMedians(path, metrics)
         # print(mediandf)
 
@@ -120,4 +113,4 @@ if __name__ == "__main__":
     # print(datasetdf)
 
     fulldf = datasetdf[columns]
-    fulldf.to_csv("./medians/features/smoted/allmedians.csv", index = False)
+    fulldf.to_csv("./medians/final/allmedians_smoted.csv", index = False)

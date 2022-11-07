@@ -8,6 +8,9 @@ import numpy as np
 from copy import deepcopy
 from tqdm import tqdm
 
+from utils import *
+from adversarial_models import *
+
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix, mean_squared_error
@@ -18,7 +21,7 @@ from sklearn.preprocessing import MinMaxScaler
 # sys.path.append(os.path.abspath('..'))
 
 from smote import smote
-from Measure import measure_final_score,calculate_recall,calculate_far,calculate_precision,calculate_accuracy
+from smote_measure import measure_final_score,calculate_recall,calculate_far,calculate_precision,calculate_accuracy
 from Generate_Samples import generate_samples
 from utils import *
 from cols import Table, Col, Sym, Num, leafmedians2, getLeafData2, getXY2
@@ -26,14 +29,36 @@ from extraction import clusterGroups
 params = Params("./model_configurations/experiment_params.json")
 np.random.seed(params.seed)
 
-def apply_smote(df):
-    df.reset_index(drop=True,inplace=True)
-    cols = df.columns
-    smt = smote(df)
-    df = smt.run()
-    df.columns = cols
-    return df
+class biased_model_f():
+    def __init__(self, sensa_indc):
+        self.sensa_indc = sensa_indc
+    # Decision rule: classify negative outcome if underrepresented class
+    def predict(self,X):
+        predictions = np.array([params.negative_outcome if x[self.sensa_indc] == 0 else params.positive_outcome for x in X])
+        #### if the class balance is unbalanced add the random flips to create examples in each class distribution ####
+        indices = np.random.choice(np.arange(predictions.size), replace = False, size = int(predictions.size * 0.10))
+        for i in indices:
+            if predictions[i] == params.negative_outcome:
+                predictions[i] = params.positive_outcome
+            else:
+                predictions[i] = params.negative_outcome
 
+        return predictions
+
+    def predict_proba(self, X):
+        return one_hot_encode(self.predict(X))
+
+    def score(self, X,y):
+        return np.sum(self.predict(X)==y) / len(X)
+
+# the display model with one unrelated feature
+class innocuous_model_psi:
+    def __init__(self, inno_indc):
+        self.inno_indc = inno_indc
+    # Decision rule: classify according to innoc indc
+    def predict_proba(self, X):
+        return one_hot_encode(np.array([params.negative_outcome if x[self.inno_indc] > 0 else params.positive_outcome for x in X]))
+##
 
 
 def getMetrics(test_df, y_test, y_pred, biased_col, samples, yname, rep, learner, smoted):
@@ -146,7 +171,7 @@ def Fair_Smote(training_df, testing_df, base_clf, keyword, rep, samples, yname, 
 
     return res
 
-#apply smote to OG, Surrogates
+
 
 def main():
     datasets = ["communities", "heart", "diabetes", "studentperformance", "compas", "bankmarketing", "defaultcredit", "adultscensusincome"] #"germancredit" idk why but doesn;t work with SVC surrogate
@@ -199,13 +224,6 @@ def main():
             categorical = [cols.index(c) for c in cat_features_encoded]
 
 
-            # scaler = MinMaxScaler()
-            # data_df = pd.DataFrame(scaler.fit_transform(data_df), columns=data_df.columns)
-            #
-            # train_df, test_df = train_test_split(data_df, test_size=0.2, random_state=i)
-            # X_train, y_train = train_df.loc[:, train_df.columns != yname], train_df[yname]
-            # X_test, y_test = test_df.loc[:, test_df.columns != yname], test_df[yname]
-
             for i in range(10):
                 i += 1
 
@@ -227,23 +245,11 @@ def main():
                 results.append(getMetrics(testing, ytest, f_RF_pred, keyword, len(ytrain), yname, i, "RF",0 ))
                 results.append(Fair_Smote(training, testing, RandomForestClassifier(), keyword, i, len(ytrain), yname, "RF"))
 
-                full_LSR = LogisticRegression()
-                full_LSR.fit(xtrain, ytrain)
-                f_LSR_pred = full_LSR.predict(xtest)
-                results.append(getMetrics(testing, ytest, f_LSR_pred, keyword, len(ytrain), yname, i, "LSR",0 ))
-                results.append(Fair_Smote(training, testing, LogisticRegression(), keyword, i, len(ytrain), yname, "LSR"))
 
-                full_SVC = LinearSVC()
-                full_SVC.fit(xtrain, ytrain)
-                f_SVC_pred = full_SVC.predict(xtest)
-                results.append(getMetrics(testing, ytest, f_SVC_pred, keyword, len(ytrain), yname, i, "SVC", 0))
-                #no predict.proba() not compatible
-                results.append(Fair_Smote(training, testing, LinearSVC(), keyword, i, len(ytrain), yname, "SVC"))
-
-                # full_Slack = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
-                # f_Slack_pred = full_Slack.predict(xtest)
-                # results.append(getMetrics(testing, ytest, f_Slack_pred, keyword, len(ytrain), yname, i, "Slack" ))
-                # results.append(Fair_Smote(training, LinearSVC(), keyword, i, len(ytrain), yname, "Slack"))
+                full_Slack = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
+                f_Slack_pred = full_Slack.predict(xtest)
+                results.append(getMetrics(testing, ytest, f_Slack_pred, keyword, len(ytrain), yname, i, "Slack", 0 ))
+                results.append(Fair_Smote(training, testing, LinearSVC(), keyword, i, len(ytrain), yname, "Slack"))
 
                 table = Table(i)
                 rows = deepcopy(training.values)
@@ -255,64 +261,35 @@ def main():
                 enough = int(math.sqrt(len(table.rows)))
                 root = Table.clusters(table.rows, table, enough)
 
-                # #O-CART
-                # tree = DecisionTreeClassifier(min_samples_leaf = enough, random_state = i)
-                # tree.fit(xtrain, ytrain)
-                # leaves = tree.get_n_leaves()
-                # leaf_indexes = tree.apply(xtrain)
-                # new_leaves = list(set(leaf_indexes))=
 
-                if dataset in ["compas", "bankmarketing", "defaultcredit", "adultscensusincome"]:
-                    treatment = [4,5,6,7,8,9,10]
-                else:
-                    treatment = [2,3,4,5]
+                treatment = [2,3,4,5]
 
                 for num_points in treatment:
                     subset_x, clustered_y = clusterGroups(root, cols, num_points)
                     subset_df = pd.DataFrame(subset_x, columns = cols)
 
-                    #O-CART leaf extraction
-                    # subset_x = []
-                    # for l in new_leaves:
-                    #     indices = [i for i, x in enumerate(leaf_indexes) if x == l] #gives indexes of leaf_num aka index of all points in leaf
-                    #     x_index = np.random.choice(indices, replace = False, size = num_points)
-                    #     for t in x_index:
-                    #         subset_x.append(xtrain[t])
 
                     RF_probed_y = full_RF.predict(subset_x)
                     RF_surrogate = RandomForestClassifier().fit(subset_x, RF_probed_y)
                     RF_surr_pred = RF_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, ytest, RF_surr_pred, keyword, len(subset_x), yname, i, "RF_RF",0 ))
+                    results.append(getMetrics(testing, ytest, RF_surr_pred, keyword, len(subset_x), yname, i, "RF_RF", 0 ))
 
                     subset_df[yname] = RF_probed_y
                     results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, i, len(subset_x), yname, "RF_RF"))
                     subset_df.drop([yname], axis=1, inplace=True)
 
-                    LSR_probed_y = full_LSR.predict(subset_x)
-                    LSR_surrogate = RandomForestClassifier().fit(subset_x, LSR_probed_y)
-                    LSR_surr_pred = LSR_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, ytest, LSR_surr_pred, keyword, len(subset_x), yname, i, "LSR_RF",0 ))
+                    Slack_probed_y = full_Slack.predict(subset_x)
+                    Slack_surrogate = RandomForestClassifier().fit(subset_x, Slack_probed_y)
+                    Slack_surr_pred = Slack_surrogate.predict(xtest)
+                    results.append(getMetrics(testing, ytest, Slack_surr_pred, keyword, len(subset_x), yname, i, "Slack_RF", 0 ))
 
-                    subset_df[yname] = LSR_probed_y
-                    results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, i, len(subset_x), yname, "LSR_RF"))
-                    subset_df.drop([yname], axis=1, inplace=True)
+                    subset_df[yname] = Slack_probed_y
+                    results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, i, len(subset_x), yname, "RF_RF"))
+                    subset_df.drop([yname], axis=1, inplace=True) 
 
-                    SVC_probed_y = full_SVC.predict(subset_x)
-                    SVC_surrogate = RandomForestClassifier().fit(subset_x, SVC_probed_y)
-                    SVC_surr_pred = SVC_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, ytest, SVC_surr_pred, keyword, len(subset_x), yname, i, "SVC_RF", 0))
-
-                    subset_df[yname] = SVC_probed_y
-                    results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, i, len(subset_x), yname, "SVC_RF"))
-                    subset_df.drop([yname], axis=1, inplace=True)
-
-                    # Slack_probed_y = full_Slack.predict(subset_x)
-                    # Slack_surrogate = RandomForestClassifier().fit(subset_x, Slack_probed_y)
-                    # Slack_surr_pred = Slack_surrogate.predict(xtest)
-                    # results.append(getMetrics(testing, ytest, Slack_surr_pred, keyword, len(subset_x), yname, i, "Slack_RF" ))
 
         metrics = pd.DataFrame(results, columns = ["recall+", "precision+", "accuracy+", "F1+", "FA0-", "FA1-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-", "biased_col", "samples", "rep", "learner", "smoted", "Flip"] )
-        metrics.to_csv("./output/features/SMOTE/" +  dataset + "_FM.csv", index=False)
+        metrics.to_csv("./output/final/SMOTE/" +  dataset + ".csv", index=False)
         # print ('-'*55)
         # print("Finished " + dataset + " ; biased_model's FEATURE: ", str(sensitive_features[0]))
         # print ('-'*55)

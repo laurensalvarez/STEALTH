@@ -48,7 +48,7 @@ def rearrange(path):
 
 
 if __name__ == "__main__":
-    datasets = ["heart", "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "defaultcredit", "adultscensusincome"]
+    datasets = ["heart", "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "defaultcredit"]#, "adultscensusincome"]
 # "germancredit"
     # metrics = ['recall+', 'prec+', 'acc+', 'F1+', 'FA0-', 'FA1-','MSE-', 'AOD-', 'EOD-', 'SPD-',  'DI-']
     #LIME COls  rep,samples,learner,feature,importance,biased_col
@@ -57,8 +57,8 @@ if __name__ == "__main__":
     for dataset in pbar:
         pbar.set_description("Processing %s" % dataset)
 
-        path =  "./output/features/LIME/" + dataset + "_feat.csv"
+        path =  "./output/final/" + dataset + "_feat.csv"
         prettydf = rearrange(path)
 
         # print(prettydf.head())
-        prettydf.to_csv("./Feat/" + dataset + ".csv", index = False)
+        prettydf.to_csv("./Feat/final/" + dataset + ".csv", index = False)

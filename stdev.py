@@ -102,6 +102,7 @@ def getMedians(path,allmetrics):
 def twinsies(maxdict, stdvdict, val, col, hmetrics, lowmetrics):
     high = maxdict[col] + stdvdict[col]
     low = maxdict[col] - stdvdict[col]
+    newval = None
     # print("col:", col, "  val:", val, "  high:", high, "  low:", low)
 
     if col in hmetrics:
@@ -127,8 +128,8 @@ def printStdv(path, hmetrics, lmetrics, allmetrics, mediandf):
     df1 = copy.deepcopy(df)
     # print(df1.head)
     mediandf = mediandf[~mediandf['learner'].isin(['Slack', 'Slack_RF'])]
-    mediandf["learner"].replace(["RF_RF", "SVC_RF","LSR_RF" ],["RF", "SVC", "LSR"], inplace = True)
-
+    # mediandf["learner"].replace(["RF_RF", "SVC_RF","LSR_RF" ],["RF", "SVC", "LSR"], inplace = True)
+    mediandf["learner"].replace(["RF_RF"],["RF"], inplace = True)
     df1 = df1[~df1['learner'].isin(['Slack', 'Slack_RF'])]
 
     features = copy.deepcopy(df1["biased_col"].tolist())
@@ -179,23 +180,24 @@ def printStdv(path, hmetrics, lmetrics, allmetrics, mediandf):
                 r.append(s)
                 r.append(m)
                 r.append(f)
-                r.append(Ys)
-                r.append(Ns)
+                # r.append(Ys)
+                # r.append(Ns)
                 row.append(r)
 
-    cols = allmetrics + ["samples", "learner", "biased_col", "ycount", "ncount"]
+    cols = allmetrics + ["samples", "learner", "biased_col"]
     stdvdf = pd.DataFrame(row, columns = cols)
     return stdvdf
 
 if __name__ == "__main__":
-    datasets =  ["communities", "heart", "diabetes", "studentperformance","compas",  "bankmarketing", "defaultcredit", "adultscensusincome"] #
+    datasets =  ["communities", "heart", "diabetes", "studentperformance","compas",  "bankmarketing", "defaultcredit"] # "adultscensusincome"
+
     # , "germancredit"
-    allmetrics = ['recall+', 'precision+', 'accuracy+', 'F1+','FA0-', 'FA1-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
+    allmetrics = ['recall+', 'precision+', 'accuracy+', 'F1+','FA0-', 'FA1-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip']
     hmetrics = ['recall+', 'precision+', 'accuracy+', 'F1+']
     lmetrics = ['FA0-', 'FA1-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
     pbar = tqdm(datasets)
 
-    columns = ['order','dataset', 'biased_col','learner', "samples", 'recall+', 'precision+', 'accuracy+', 'F1+', 'FA0-', 'FA1-','MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-', "ycount", "ncount"]
+    columns = ['order','dataset', 'biased_col','learner', "samples", 'recall+', 'precision+', 'accuracy+', 'F1+', 'FA0-', 'FA1-','MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-', "Flip"]
     fulldf = pd.DataFrame(columns=columns)
     datasetdf = pd.DataFrame(columns=columns)
     order = 0
@@ -206,7 +208,7 @@ if __name__ == "__main__":
         pbar.set_description("Processing %s" % dataset)
         # mediandf = pd.DataFrame(columns=columns)
 
-        path =  "./output/features/LIME/" + dataset + "_FM.csv"
+        path =  "./output/final/SMOTE/" + dataset + ".csv"
         mediandf = getMedians(path, allmetrics)
         stdvdf = printStdv(path, hmetrics, lmetrics, allmetrics, mediandf)
 
@@ -217,4 +219,4 @@ if __name__ == "__main__":
     # print(datasetdf)
 
     fulldf = datasetdf[columns]
-    fulldf.to_csv("./stdv/medians_gt.csv", index = False)
+    fulldf.to_csv("./stdv/final/medians_smoted.csv", index = False)

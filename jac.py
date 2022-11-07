@@ -17,18 +17,24 @@ def compareLIMERanks(path, dataset):
 
     rows = []
     reslist, cDlist, blist, jlist, = [], [], [], []
-    full_names = ['RF', "LSR", "Slack"]
-    surro_names = ['RF_RF', 'LSR_RF', 'Slack_RF']
+    full_names = ['RF', "Slack"] #"LSR", ]
+    surro_names = ['RF_RF', 'Slack_RF'] #'LSR_RF',
 
-    if dataset in ["compas", "bankmarketing", "defaultcredit", "adultscensusincome"]:
-        treatment = range(7)
-    else:
-        treatment = range(4)
+    # if dataset in ["compas", "bankmarketing", "defaultcredit", "adultscensusincome"]:
+    #     treatment = range(7)
+    # else:
+    #     treatment = range(4)
+    treatment = [2,3,4,5]
 
-    for n in range(3):
+    samples = copy.deepcopy(df1["samples"].tolist())
+    sortedsamples = sorted(set(samples), key = lambda ele: samples.count(ele))
+    sortedsamples = sorted(sortedsamples, reverse = True)
+
+    for n in range(2):
+
         df2 = copy.deepcopy(df1)
-        df2.drop(df2.loc[df2['model_num']!= full_names[n]].index, inplace=True)
-        df2.drop(df2.loc[df2['treatment']!= 0].index, inplace=True)
+        df2.drop(df2.loc[df2['learner']!= full_names[n]].index, inplace=True)
+        df2.drop(df2.loc[df2['samples']!= sortedsamples[0]].index, inplace=True)
         df2.drop(df2.loc[df2['ranking']!= 1].index, inplace=True)
 
         # print(df2.head(10))
@@ -36,20 +42,20 @@ def compareLIMERanks(path, dataset):
         full_rank_1 = df2['feature'].values
 
         df3 = copy.deepcopy(df1)
-        df3.drop(df3.loc[df3['model_num']!= surro_names[n]].index, inplace=True)
-        for t in treatment:
+        df3.drop(df3.loc[df3['learner']!= surro_names[n]].index, inplace=True)
+        for t in sortedsamples[1:]:
             r = []
             df4 = copy.deepcopy(df3)
-            df4.drop(df4.loc[df4['treatment']!= t].index, inplace=True)
+            df4.drop(df4.loc[df4['samples']!= t].index, inplace=True)
             df4.drop(df4.loc[df4['ranking']!= 1].index, inplace=True)
 
             # print(df4.head(10))
 
             surro_rank_1 = df4['feature'].values
 
-            # print("full_rank_1", full_rank_1, "\n \n surro_rank_1", surro_rank_1)
+            print("full_rank_1", full_rank_1, "\n \n surro_rank_1", surro_rank_1)
 
-            cdelta, res = cliffs_delta(full_rank_1,surro_rank_1)
+            # cdelta, res = cliffs_delta(full_rank_1,surro_rank_1)
 
             r.append(t)
             r.append(surro_names[n])
@@ -60,7 +66,7 @@ def compareLIMERanks(path, dataset):
             # r.append(cliffsDelta(full_rank_1,surro_rank_1))
 
             rows.append(r)
-    prettydf = pd.DataFrame(rows, columns = ["treatment", "model_num", "jacc", "CD_res", "CD"])
+    prettydf = pd.DataFrame(rows, columns = ["samples", "learner", "jacc", "CD_res", "CD"])
     print(prettydf.head(10))
     return prettydf
 
@@ -71,7 +77,7 @@ def compareRFRanks(path, dataset):
     rows = []
     reslist, cDlist, blist, jlist, = [], [], [], []
     full_names = ['RF']
-    surro_names = ['RF_RF', 'LSR_RF', 'SVC_RF', 'Slack_RF']
+    surro_names = ['RF_RF', 'Slack_RF']#, 'LSR_RF', 'SVC_RF']
 
     # learners = copy.deepcopy(df1["learners"].tolist())
     # sortedlearners = sorted(set(learners), key = lambda ele: learners.count(ele))
@@ -130,7 +136,7 @@ def compareRFRanks(path, dataset):
 
 
 if __name__ == "__main__":
-    datasets = ["communities","heart", "diabetes", "studentperformance", "compas", "bankmarketing", "defaultcredit", "adultscensusincome"]
+    datasets = ["communities","heart", "diabetes", "studentperformance", "compas", "bankmarketing", "defaultcredit"]#, "adultscensusincome"]
 # "germancredit"
     metrics = ['recall+', 'prec+', 'acc+', 'F1+', 'FA0-', 'FA1-','MSE-', 'AOD-', 'EOD-', 'SPD-',  'DI-']
     #LIME COls  ["ranking","feature", "occurances_pct","model_num", "rep"]
@@ -143,12 +149,12 @@ if __name__ == "__main__":
         order += 1
         pbar.set_description("Processing %s" % dataset)
 
-        path =  "./Feat/" + dataset + ".csv"
-        jacdf = compareRFRanks(path, dataset)
+        path =  "./LIME_rankings/final/" + dataset + ".csv"
+        jacdf = compareLIMERanks(path, dataset)
 
         jacdf['dataset'] = dataset
         jacdf['order'] = order
         datasetdf = pd.concat([datasetdf, jacdf], ignore_index=True)
 
         # print(prettydf.head())
-    datasetdf.to_csv("./Feat/jac/all.csv", index = False)
+    datasetdf.to_csv("./LIME_rankings/final/all.csv", index = False)

@@ -109,7 +109,7 @@ def getMetrics(test_df, y_test, y_pred, biased_col, samples, yname, rep, learner
     return [recall, precision, accuracy, F1, FA0, FA1, MSE, AOD, EOD, SPD, DI, biased_col, samples, rep, learner]
 
 def main():
-    datasets = ["compas", "bankmarketing", "defaultcredit", "adultscensusincome"] #"communities","heart", "diabetes", "studentperformance",
+    datasets = ["adultscensusincome"] #"communities","heart", "diabetes", "studentperformance","compas", "bankmarketing", "defaultcredit", 
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
