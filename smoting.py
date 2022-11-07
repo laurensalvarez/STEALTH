@@ -10,23 +10,25 @@ from tqdm import tqdm
 
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, confusion_matrix, mean_squared_error
+from sklearn.metrics import classification_report, confusion_matrix, mean_squared_error, matthews_corrcoef
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import LinearSVC
 from sklearn.preprocessing import MinMaxScaler
 
-from smote import smote
-from smote_measure import measure_final_score,calculate_recall,calculate_far,calculate_precision,calculate_accuracy
-from Generate_Samples import generate_samples
-from utils import *
+from metrics.Measure import measure_final_score,calculate_recall,calculate_far,calculate_precision,calculate_accuracy
+from smote.Generate_Samples import generate_samples
+from slack.utils import *
 from cols import Table, Col, Sym, Num, leafmedians2, getLeafData2, getXY2
 from extraction import clusterGroups
-from adversarial_models import *
+from slack.adversarial_models import *
 
-sys.path.append(os.path.abspath('.'))
+from maat.WAE import data_dis
+
 params = Params("./model_configurations/experiment_params.json")
 np.random.seed(params.seed)
 
+##SLACK
+# 
 class biased_model_f():
     def __init__(self, sensa_indc):
         self.sensa_indc = sensa_indc
@@ -56,10 +58,57 @@ class innocuous_model_psi:
     # Decision rule: classify according to innoc indc
     def predict_proba(self, X):
         return one_hot_encode(np.array([params.negative_outcome if x[self.inno_indc] > 0 else params.positive_outcome for x in X]))
+## MAAT
+#
+
 ##
+# MAAT
+def maat(X_train, X_test, clf, ss, keyword, samples, rep, learner, dataset, yname):
+    X_train = deepcopy(X_train)
+    X_test = deepcopy(X_test)
+    y_train = X_train[yname].values
+    X_train.drop([yname], axis=1, inplace=True)
+    # y_test = X_test[yname].values
+    # X_test.drop([yname], axis=1, inplace=True)
+
+    inverse = ss.inverse_transform(X_train.values)
+    raw_xtrain = pd.DataFrame(inverse, columns = X_train.columns)
+    raw_xtrain[yname] = y_train 
+   
+    X_train_MAE = data_dis(raw_xtrain,keyword,dataset, yname)
+    y_train_MAE = X_train_MAE[yname].values
+    X_train_MAE.drop([yname], axis=1, inplace=True)
+
+    sc = MinMaxScaler().fit(X_train_MAE)
+    X_train_MAE = pd.DataFrame(sc.transform(X_train_MAE), columns = X_train.columns)
+    clf_MAE = RandomForestClassifier().fit(X_train_MAE,y_train_MAE)
+
+    y_test = X_test[yname].values
+    X_test.drop([yname], axis=1, inplace=True)
+    X_test_MAE = pd.DataFrame(sc.transform(X_test.values), columns = X_test.columns)
+
+    pred_de1 = clf.predict_proba(X_test)
+    pred_de2 = clf_MAE.predict_proba(X_test_MAE)
+
+    print(len(pred_de1), len(pred_de2))
+
+    pred = []
+    for i in range(len(pred_de1)):
+        prob_t = (pred_de1[i][1]+pred_de2[i][1])/2
+        if prob_t >= 0.5:
+            pred.append(1)
+        else:
+            pred.append(0)
+
+    y_pred = np.array(pred)
 
 
-def getMetrics(test_df, y_test, y_pred, biased_col, samples, yname, rep, learner, smoted):
+    res = getMetrics(X_test, y_test, y_pred, keyword, samples, yname, rep, learner)
+
+    return res
+
+
+def getMetrics(test_df, y_test, y_pred, biased_col, samples, yname, rep, learner):
 #extraction run
     recall = measure_final_score(test_df, y_test, y_pred, biased_col, 'recall', yname)
     precision = measure_final_score(test_df, y_test, y_pred, biased_col, 'precision', yname)
@@ -72,9 +121,12 @@ def getMetrics(test_df, y_test, y_pred, biased_col, samples, yname, rep, learner
     FA1 = measure_final_score(test_df, y_test, y_pred, biased_col, 'FA1', yname)
     DI = measure_final_score(test_df, y_test, y_pred, biased_col, 'DI', yname)
     MSE = round(mean_squared_error(y_test, y_pred),3)
+    MCC = round(matthews_corrcoef(y_test, y_pred), 3)
 
+    return [rep, learner, biased_col, samples, recall, precision, accuracy, F1, FA0, FA1, MCC, MSE, AOD, EOD, SPD, DI]
 
-    return [recall, precision, accuracy, F1, FA0, FA1, MSE, AOD, EOD, SPD, DI, biased_col, samples, rep, learner, smoted]
+## Fair-SMOTE
+#
 
 def flip(X_test,keyword):
     X_flip = X_test.copy()
@@ -169,25 +221,28 @@ def Fair_Smote(training_df, testing_df, base_clf, keyword, rep, samples, yname, 
 
     return res
 
+## to add: xFAIR?? maybe
+#
+
 
 
 def main():
-    datasets = ["communities", "heart", "diabetes", "studentperformance", "compas", "bankmarketing", "defaultcredit", "adultscensusincome"] #"germancredit" idk why but doesn;t work with SVC surrogate
-    keywords = {'adultscensusincome': ['race(', 'sex('],
-                'compas': ['race(','sex('],
-                'bankmarketing': ['Age('],
-                'communities': ['Racepctwhite('],
-                'defaultcredit': ['SEX('],
-                'diabetes': ['Age('],
-                'germancredit': ['sex('],
-                'heart': ['Age('],
-                'studentperformance': ['sex(']
+    datasets = ["communities", "heart", "diabetes", "germancredit", "studentperformance", "compas", "bankmarketing", "defaultcredit", "adultscensusincome"] #idk why but doesn;t work with SVC surrogate
+    keywords = {'adultscensusincome': ['race', 'sex'],
+                'compas': ['race','sex'],
+                'bankmarketing': ['Age'],
+                'communities': ['Racepctwhite'],
+                'defaultcredit': ['SEX'],
+                'diabetes': ['Age'],
+                'germancredit': ['sex'],
+                'heart': ['Age'],
+                'studentperformance': ['sex'],
+                'meps': ['race']
                 }
-
     pbar = tqdm(datasets)
     for dataset in pbar:
         klist = keywords[dataset]
-        results = []
+        results = []  
         for keyword in klist:
             pbar.set_description("Processing %s" % dataset)
             path =  "./datasets/processed/" + dataset + "_p.csv"
@@ -226,29 +281,32 @@ def main():
                 i += 1
 
                 xtrain,xtest,ytrain,ytest = train_test_split(X.values, y, test_size=0.2, random_state = i)
-
+                
+                # xtrain_copy = pd.DataFrame(copy.deepcopy(xtrain), columns = cols)
+                # xtrain_copy[yname] = copy.deepcopy(ytrain)
+                
                 ss = MinMaxScaler().fit(xtrain)
-                xtrain = ss.transform(xtrain)
-                xtest = ss.transform(xtest)
-
-
-                testing = pd.DataFrame(xtest, columns = cols)
-                training = pd.DataFrame(xtrain, columns = cols)
+                training = pd.DataFrame(ss.transform(xtrain), columns = cols)
                 training[yname] = deepcopy(ytrain)
+         
+
+                testing = pd.DataFrame(ss.transform(xtest), columns = cols)
                 testing[yname] = deepcopy(ytest)
 
                 full_RF = RandomForestClassifier()
                 full_RF.fit(xtrain, ytrain)
-                f_RF_pred = full_RF.predict(xtest)
-                results.append(getMetrics(testing, ytest, f_RF_pred, keyword, len(ytrain), yname, i, "RF",0 ))
-                results.append(Fair_Smote(training, testing, RandomForestClassifier(), keyword, i, len(ytrain), yname, "RF"))
+                # f_RF_pred = full_RF.predict(xtest)
+                # results.append(getMetrics(testing, ytest, f_RF_pred, keyword, len(ytrain), yname, i, "RF"))
+                # results.append(Fair_Smote(training, testing, full_RF, MAE_RF, keyword, i, len(ytrain), yname, "RF_s"))
+                results.append(maat(training, testing, full_RF, ss, keyword, len(ytrain), i, "RF_m", dataset, yname))
 
 
-                full_Slack = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
-                f_Slack_pred = full_Slack.predict(xtest)
-                results.append(getMetrics(testing, ytest, f_Slack_pred, keyword, len(ytrain), yname, i, "Slack", 0 ))
-                results.append(Fair_Smote(training, testing, LinearSVC(), keyword, i, len(ytrain), yname, "Slack"))
-
+                # full_Slack = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
+                # f_Slack_pred = full_Slack.predict(xtest)
+                # results.append(getMetrics(testing, ytest, f_Slack_pred, keyword, len(ytrain), yname, i, "Slack"))
+                # results.append(Fair_Smote(training, testing, LinearSVC(), keyword, i, len(ytrain), yname, "Slack_s"))
+                
+                print(training.head())
                 table = Table(i)
                 rows = deepcopy(training.values)
                 header = deepcopy(list(training.columns.values))
@@ -269,25 +327,27 @@ def main():
 
                     RF_probed_y = full_RF.predict(subset_x)
                     RF_surrogate = RandomForestClassifier().fit(subset_x, RF_probed_y)
-                    RF_surr_pred = RF_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, ytest, RF_surr_pred, keyword, len(subset_x), yname, i, "RF_RF", 0 ))
+                    # RF_surr_pred = RF_surrogate.predict(xtest)
+                    # results.append(getMetrics(testing, ytest, RF_surr_pred, keyword, len(subset_x), yname, i, "RF"))
 
                     subset_df[yname] = RF_probed_y
-                    results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, i, len(subset_x), yname, "RF_RF"))
-                    subset_df.drop([yname], axis=1, inplace=True)
+                    # results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, i, len(subset_x), yname, "RF_RF"))
+                    results.append(maat(subset_df, testing, RF_surrogate, ss, keyword, len(subset_x), i, "RF_m", dataset, yname))
+                    # subset_df.drop([yname], axis=1, inplace=True)
 
-                    Slack_probed_y = full_Slack.predict(subset_x)
-                    Slack_surrogate = RandomForestClassifier().fit(subset_x, Slack_probed_y)
-                    Slack_surr_pred = Slack_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, ytest, Slack_surr_pred, keyword, len(subset_x), yname, i, "Slack_RF", 0 ))
+                    # Slack_probed_y = full_Slack.predict(subset_x)
+                    # Slack_surrogate = RandomForestClassifier().fit(subset_x, Slack_probed_y)
+                    # Slack_surr_pred = Slack_surrogate.predict(xtest)
+                    # results.append(getMetrics(testing, ytest, Slack_surr_pred, keyword, len(subset_x), yname, i, "Slack_RF", 0 ))
 
-                    subset_df[yname] = Slack_probed_y
-                    results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, i, len(subset_x), yname, "RF_RF"))
-                    subset_df.drop([yname], axis=1, inplace=True) 
+                    # subset_df[yname] = Slack_probed_y
+                    # results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, i, len(subset_x), yname, "RF_RF"))
+                    # subset_df.drop([yname], axis=1, inplace=True) 
 
 
-        metrics = pd.DataFrame(results, columns = ["recall+", "precision+", "accuracy+", "F1+", "FA0-", "FA1-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-", "biased_col", "samples", "rep", "learner", "smoted", "Flip"] )
-        metrics.to_csv("./output/final/SMOTE/" +  dataset + ".csv", index=False)
+        metrics = pd.DataFrame(results, columns = ["rep", "learner","biased_col", "samples", "recall+", "precision+", "accuracy+", "F1+", "FA0-", "FA1-", "MCC-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-"] )
+       
+        metrics.to_csv("./output/final/maat/" +  dataset + ".csv", index=False)
         # print ('-'*55)
         # print("Finished " + dataset + " ; biased_model's FEATURE: ", str(sensitive_features[0]))
         # print ('-'*55)

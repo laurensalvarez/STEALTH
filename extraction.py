@@ -3,7 +3,7 @@ warnings.filterwarnings('ignore')
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder, MinMaxScaler, OneHotEncoder
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, matthews_corrcoef
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import LinearSVC
@@ -22,11 +22,12 @@ from slack.utils import *
 from slack.adversarial_models import *
 from cols import Table, Col, Sym, Num, leafmedians2, getLeafData2, getXY2
 from metrics.Measure import measure_final_score
+from maat.WAE import data_dis
 
 params = Params("./model_configurations/experiment_params.json")
 np.random.seed(params.seed)
 
-##
+## SLACK 
 ## The models f and psi.  We discriminate based on sensitive for f and consider innoc feature for explanation
 #
 # the biased model
@@ -52,6 +53,7 @@ class biased_model_f():
     def score(self, X,y):
         return np.sum(self.predict(X)==y) / len(X)
 
+##SLACK
 # the display model with one unrelated feature
 class innocuous_model_psi:
     def __init__(self, inno_indc):
@@ -59,8 +61,8 @@ class innocuous_model_psi:
     # Decision rule: classify according to innoc indc
     def predict_proba(self, X):
         return one_hot_encode(np.array([params.negative_outcome if x[self.inno_indc] > 0 else params.positive_outcome for x in X]))
-##
-###
+##SLACK
+#
 def explain(xtrain, xtest, learner, categorical, features, model, samples, rep):
     explainer = lime.lime_tabular.LimeTabularExplainer(xtrain, sample_around_instance=True, feature_names=features, categorical_features= categorical, discretize_continuous=False)
 
@@ -76,6 +78,7 @@ def explain(xtrain, xtest, learner, categorical, features, model, samples, rep):
         t.append(samples)
         t.append(rep)
     return L
+
 
 def clusterGroups(root, features, num_points):
     if num_points != 1:
@@ -102,11 +105,12 @@ def getMetrics(test_df, y_test, y_pred, biased_col, samples, yname, rep, learner
     FA1 = measure_final_score(test_df, y_test, y_pred, biased_col, 'FA1', yname)
     DI = measure_final_score(test_df, y_test, y_pred, biased_col, 'DI', yname)
     MSE = round(mean_squared_error(y_test, y_pred),3)
+    MCC = round(matthews_corrcoef(y_test, y_pred), 3)
 
-    return [rep, learner, biased_col, samples, recall, precision, accuracy, F1, FA0, FA1, MSE, AOD, EOD, SPD, DI]
+    return [rep, learner, biased_col, samples, recall, precision, accuracy, F1, FA0, FA1, MCC, MSE, AOD, EOD, SPD, DI]
 
 def main():
-    datasets = ["communities","heart", "diabetes", "germancredit", "studentperformance","compas", "bankmarketing", "defaultcredit", "adultscensusincome"] 
+    datasets = ["communities","heart", "diabetes", "germancredit", "studentperformance","compas", "bankmarketing", "defaultcredit", "adultscensusincome", 'meps'] 
     keywords = {'adultscensusincome': ['race', 'sex'],
                 'compas': ['race','sex'],
                 'bankmarketing': ['Age'],
@@ -115,7 +119,8 @@ def main():
                 'diabetes': ['Age'],
                 'germancredit': ['sex'],
                 'heart': ['Age'],
-                'studentperformance': ['sex']
+                'studentperformance': ['sex'],
+                'meps': ['race']
                 }
 
     pbar = tqdm(datasets)

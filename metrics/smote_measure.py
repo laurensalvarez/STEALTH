@@ -1,6 +1,6 @@
 import numpy as np
 import copy,math
-from sklearn.metrics import confusion_matrix,classification_report
+from sklearn.metrics import confusion_matrix,classification_report, matthews_corrcoef
 from sklearn.neighbors import KDTree
 from sklearn.neighbors import NearestNeighbors
 
