@@ -43,8 +43,8 @@ def data_dis(dataset_orig_test,protected_attribute,dataset_used, yname):
     if dataset_used == 'bankmarketing':
         zero_one_set = dataset_orig_test[(dataset_orig_test[yname] == 1) & (dataset_orig_test[protected_attribute] == 1)]
         one_zero_set = dataset_orig_test[(dataset_orig_test[yname] == 0) & (dataset_orig_test[protected_attribute] == 0)]
-        zero_zero_set = dataset_orig_test[(dataset_orig_test[yname] == 1) & (dataset_orig_test[protected_attribute] == 0)].sample(n=zero_zero_new)
-        one_one_set = dataset_orig_test[(dataset_orig_test[yname] == 0) & (dataset_orig_test[protected_attribute] == 1)].sample(n=one_one_new)
+        zero_zero_set = dataset_orig_test[(dataset_orig_test[yname] == 1) & (dataset_orig_test[protected_attribute] == 0)].sample(n=zero_zero_new, replace= True)
+        one_one_set = dataset_orig_test[(dataset_orig_test[yname] == 0) & (dataset_orig_test[protected_attribute] == 1)].sample(n=one_one_new, replace= True)
         new_set = zero_zero_set.append([zero_one_set, one_zero_set, one_one_set], ignore_index=True)
     else:
         zero_one_set = dataset_orig_test[
@@ -53,10 +53,10 @@ def data_dis(dataset_orig_test,protected_attribute,dataset_used, yname):
             (dataset_orig_test[yname] == 1) & (dataset_orig_test[protected_attribute] == 0)]
         zero_zero_set = dataset_orig_test[
             (dataset_orig_test[yname] == 0) & (dataset_orig_test[protected_attribute] == 0)].sample(
-            n=zero_zero_new)
+            n=zero_zero_new, replace= True)
         one_one_set = dataset_orig_test[
             (dataset_orig_test[yname] == 1) & (dataset_orig_test[protected_attribute] == 1)].sample(
-            n=one_one_new)
+            n=one_one_new, replace= True)
         new_set = zero_zero_set.append([zero_one_set, one_zero_set, one_one_set], ignore_index=True)
 
     zero_zero = len(new_set[(new_set[yname] == 0) & (new_set[protected_attribute] == 0)])

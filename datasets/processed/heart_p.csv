@@ -1,4 +1,4 @@
-Age,sex,Cp,Trestbps,Chol,Fbs,Restecg,Thalach,Exang,Oldpeak,Slope,Ca,Thal,!Probability
+Age(,sex,Cp,Trestbps,Chol,Fbs,Restecg,Thalach,Exang,Oldpeak,Slope,Ca,Thal,!Probability
 0,1,1,145,233,1,2,150,0,2.3,3,0,6,1
 0,1,4,160,286,0,2,108,1,1.5,2,3,3,0
 0,1,4,120,229,0,2,129,1,2.6,2,2,7,0

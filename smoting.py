@@ -90,15 +90,16 @@ def maat(X_train, X_test, clf, ss, keyword, samples, rep, learner, dataset, ynam
     pred_de1 = clf.predict_proba(X_test)
     pred_de2 = clf_MAE.predict_proba(X_test_MAE)
 
-    print(len(pred_de1), len(pred_de2))
+    # print(len(pred_de1), pred_de1[0])
+    # print(len(pred_de2), pred_de2[0])
 
     pred = []
     for i in range(len(pred_de1)):
-        prob_t = (pred_de1[i][1]+pred_de2[i][1])/2
-        if prob_t >= 0.5:
-            pred.append(1)
-        else:
+        c0_prob_t = (pred_de1[i][0]+pred_de2[i][0])/2
+        if c0_prob_t >= 0.5:
             pred.append(0)
+        else:
+            pred.append(1)
 
     y_pred = np.array(pred)
 
@@ -228,16 +229,16 @@ def Fair_Smote(training_df, testing_df, base_clf, keyword, rep, samples, yname, 
 
 def main():
     datasets = ["communities", "heart", "diabetes", "germancredit", "studentperformance", "compas", "bankmarketing", "defaultcredit", "adultscensusincome"] #idk why but doesn;t work with SVC surrogate
-    keywords = {'adultscensusincome': ['race', 'sex'],
-                'compas': ['race','sex'],
-                'bankmarketing': ['Age'],
-                'communities': ['Racepctwhite'],
-                'defaultcredit': ['SEX'],
-                'diabetes': ['Age'],
-                'germancredit': ['sex'],
-                'heart': ['Age'],
-                'studentperformance': ['sex'],
-                'meps': ['race']
+    keywords = {'adultscensusincome': ['race(', 'sex('],
+                'compas': ['race(','sex('],
+                'bankmarketing': ['Age('],
+                'communities': ['Racepctwhite('],
+                'defaultcredit': ['SEX('],
+                'diabetes': ['Age('],
+                'germancredit': ['sex('],
+                'heart': ['Age('],
+                'studentperformance': ['sex('],
+                'meps': ['race(']
                 }
     pbar = tqdm(datasets)
     for dataset in pbar:
@@ -266,6 +267,7 @@ def main():
 
             X = pd.get_dummies(data=X, columns=cat_features_not_encoded)
             cols = [c for c in X]
+            print(cols)
 
             cat_features_encoded = []
             for col in X.columns:
@@ -288,6 +290,7 @@ def main():
                 ss = MinMaxScaler().fit(xtrain)
                 training = pd.DataFrame(ss.transform(xtrain), columns = cols)
                 training[yname] = deepcopy(ytrain)
+                # print(training.head())
          
 
                 testing = pd.DataFrame(ss.transform(xtest), columns = cols)
@@ -306,7 +309,6 @@ def main():
                 # results.append(getMetrics(testing, ytest, f_Slack_pred, keyword, len(ytrain), yname, i, "Slack"))
                 # results.append(Fair_Smote(training, testing, LinearSVC(), keyword, i, len(ytrain), yname, "Slack_s"))
                 
-                print(training.head())
                 table = Table(i)
                 rows = deepcopy(training.values)
                 header = deepcopy(list(training.columns.values))
@@ -347,7 +349,7 @@ def main():
 
         metrics = pd.DataFrame(results, columns = ["rep", "learner","biased_col", "samples", "recall+", "precision+", "accuracy+", "F1+", "FA0-", "FA1-", "MCC-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-"] )
        
-        metrics.to_csv("./output/final/maat/" +  dataset + ".csv", index=False)
+        metrics.to_csv("./final/maat/" +  dataset + ".csv", index=False)
         # print ('-'*55)
         # print("Finished " + dataset + " ; biased_model's FEATURE: ", str(sensitive_features[0]))
         # print ('-'*55)

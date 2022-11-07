@@ -1,4 +1,4 @@
-credit_history,savings,employment,sex,Age,foreign_worker,!Probability
+credit_history,savings,employment,sex(,Age(,foreign_worker,!Probability
 3,3,2,1,1,0,1
 1,1,1,0,0,0,0
 3,1,2,1,1,0,1
