@@ -8,9 +8,6 @@ import numpy as np
 from copy import deepcopy
 from tqdm import tqdm
 
-from utils import *
-from adversarial_models import *
-
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix, mean_squared_error
@@ -18,14 +15,15 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import LinearSVC
 from sklearn.preprocessing import MinMaxScaler
 
-# sys.path.append(os.path.abspath('..'))
-
 from smote import smote
 from smote_measure import measure_final_score,calculate_recall,calculate_far,calculate_precision,calculate_accuracy
 from Generate_Samples import generate_samples
 from utils import *
 from cols import Table, Col, Sym, Num, leafmedians2, getLeafData2, getXY2
 from extraction import clusterGroups
+from adversarial_models import *
+
+sys.path.append(os.path.abspath('.'))
 params = Params("./model_configurations/experiment_params.json")
 np.random.seed(params.seed)
 

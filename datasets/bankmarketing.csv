@@ -1,4 +1,4 @@
-Age(,job,marital,education,default,Balance,housing,loan,contact,Day,month,Duration,Campaign,Pdays,Previous,poutcome,!probability
+Age,job,marital,education,default,Balance,housing,loan,contact,Day,month,Duration,Campaign,Pdays,Previous,poutcome,Probability
 59,admin.,married,secondary,no,2343,yes,no,unknown,5,may,1042,1,-1,0,unknown,yes
 56,admin.,married,secondary,no,45,no,no,unknown,5,may,1467,1,-1,0,unknown,yes
 41,technician,married,secondary,no,1270,yes,no,unknown,5,may,1389,1,-1,0,unknown,yes
