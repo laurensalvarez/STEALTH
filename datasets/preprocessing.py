@@ -3,10 +3,10 @@ from tqdm import tqdm
 import pandas as pd
 import numpy as np
 
-from utils import *
+from slack.utils import *
 
 # Set up experiment parameters
-params = Params("model_configurations/experiment_params.json")
+params = Params("./model_configurations/experiment_params.json")
 np.random.seed(params.seed)
 POSITIVE_OUTCOME = params.positive_outcome
 NEGATIVE_OUTCOME = params.negative_outcome

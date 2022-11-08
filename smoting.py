@@ -21,6 +21,7 @@ from slack.utils import *
 from cols import Table, Col, Sym, Num, leafmedians2, getLeafData2, getXY2
 from extraction import clusterGroups
 from slack.adversarial_models import *
+from datasets.preprocessing import classBal
 
 from maat.WAE import data_dis
 
@@ -228,7 +229,7 @@ def Fair_Smote(training_df, testing_df, base_clf, keyword, rep, samples, yname, 
 
 
 def main():
-    datasets = ["communities", "heart", "diabetes", "germancredit", "studentperformance", "compas", "bankmarketing", "defaultcredit", "adultscensusincome"] #idk why but doesn;t work with SVC surrogate
+    datasets = ["defaultcredit", "adultscensusincome"] #"communities", "heart", "diabetes", "germancredit", "studentperformance", "compas", 
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
