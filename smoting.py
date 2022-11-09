@@ -9,16 +9,14 @@ from copy import deepcopy
 from tqdm import tqdm
 
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, confusion_matrix, mean_squared_error, matthews_corrcoef
+from sklearn.metrics import confusion_matrix, mean_squared_error, matthews_corrcoef
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.svm import LinearSVC
 from sklearn.preprocessing import MinMaxScaler
 
-from metrics.Measure import measure_final_score,calculate_recall,calculate_far,calculate_precision,calculate_accuracy
+from metrics.Measure import measure_final_score
 from smote.Generate_Samples import generate_samples
 from slack.utils import *
-from cols import Table, Col, Sym, Num, leafmedians2, getLeafData2, getXY2
+from cols import Table
 from extraction import clusterGroups
 from slack.adversarial_models import *
 from datasets.preprocessing import classBal
@@ -35,16 +33,7 @@ class biased_model_f():
         self.sensa_indc = sensa_indc
     # Decision rule: classify negative outcome if underrepresented class
     def predict(self,X):
-        predictions = np.array([params.negative_outcome if x[self.sensa_indc] == 0 else params.positive_outcome for x in X])
-        #### if the class balance is unbalanced add the random flips to create examples in each class distribution ####
-        indices = np.random.choice(np.arange(predictions.size), replace = False, size = int(predictions.size * 0.10))
-        for i in indices:
-            if predictions[i] == params.negative_outcome:
-                predictions[i] = params.positive_outcome
-            else:
-                predictions[i] = params.negative_outcome
-
-        return predictions
+        return np.array([params.negative_outcome if x[self.sensa_indc] == 0 else params.positive_outcome for x in X])
 
     def predict_proba(self, X):
         return one_hot_encode(self.predict(X))
@@ -338,7 +327,7 @@ def main():
                 root = Table.clusters(table.rows, table, enough)
 
 
-                treatment = [2,3,4,5]
+                treatment = [0,1.2,3,4,5]
 
                 for num_points in treatment:
                     subset_x, clustered_y = clusterGroups(root, cols, num_points)
