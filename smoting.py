@@ -17,14 +17,12 @@ from metrics.Measure import measure_final_score
 from smote.Generate_Samples import generate_samples
 from slack.utils import *
 from cols import Table
-from extraction import clusterGroups
+from extraction import clusterGroups, getMetrics
 from slack.adversarial_models import *
 from datasets.preprocessing import classBal
 
 from maat.WAE import data_dis
 
-params = Params("./model_configurations/experiment_params.json")
-np.random.seed(params.seed)
 
 ##SLACK
 # 
@@ -52,7 +50,7 @@ class innocuous_model_psi():
 
 ##
 # MAAT
-def maat(X_train, X_test, clf, ss, keyword, samples, rep, learner, dataset, yname):
+def maat(X_train, X_test, clf, ss, keyword, num_points, samples, rep, learner, dataset, yname, start):
     X_train = deepcopy(X_train)
     X_test = deepcopy(X_test)
     y_train = X_train[yname].values
@@ -63,10 +61,12 @@ def maat(X_train, X_test, clf, ss, keyword, samples, rep, learner, dataset, ynam
     raw_xtrain[yname] = y_train 
 
     zero_zero, zero_one, one_zero, one_one = classBal(raw_xtrain, yname, keyword)
+    # print("MAAT (rep, samples):", (rep, samples ), "a:", str(zero_one+one_one), "\n class distribution:", (zero_zero, zero_one, one_zero, one_one))
 
-    if (zero_one+one_one == 0):
+    if (zero_one+one_one == 0) or zero_one < 0 or zero_zero < 0 or one_one < 0 or one_zero <0 :
         print("MAAT CANCELLED (rep, samples):", (rep, samples ), "a:", str(zero_one+one_one), "\n class distribution:", (zero_zero, zero_one, one_zero, one_one))
-        return [rep, learner, keyword, samples, None, None, None, None, None, None, None, None, None, None, None, None]
+        timer = round(time.time() - start, 2)
+        return [rep, learner, keyword, num_points, samples, timer, None, None, None, None, None, None, None, None, None, None, None, None]
    
     X_train_WAE = data_dis(raw_xtrain,keyword,dataset, yname)
     
@@ -101,27 +101,11 @@ def maat(X_train, X_test, clf, ss, keyword, samples, rep, learner, dataset, ynam
     y_pred = np.array(pred)
 
 
-    res = getMetrics(X_test, y_test, y_pred, keyword, samples, yname, rep, learner)
+    res = getMetrics(X_test, y_test, y_pred, keyword, num_points, samples, yname, rep, learner, start)
 
     return res
 
 
-def getMetrics(test_df, y_test, y_pred, biased_col, samples, yname, rep, learner):
-#extraction run
-    recall = measure_final_score(test_df, y_test, y_pred, biased_col, 'recall', yname)
-    precision = measure_final_score(test_df, y_test, y_pred, biased_col, 'precision', yname)
-    accuracy = measure_final_score(test_df, y_test, y_pred, biased_col, 'accuracy', yname)
-    F1 = measure_final_score(test_df, y_test, y_pred, biased_col, 'F1', yname)
-    AOD = measure_final_score(test_df, y_test, y_pred, biased_col, 'aod', yname)
-    EOD =measure_final_score(test_df, y_test, y_pred, biased_col, 'eod', yname)
-    SPD = measure_final_score(test_df, y_test, y_pred, biased_col, 'SPD', yname)
-    FA0 = measure_final_score(test_df, y_test, y_pred, biased_col, 'FA0', yname)
-    FA1 = measure_final_score(test_df, y_test, y_pred, biased_col, 'FA1', yname)
-    DI = measure_final_score(test_df, y_test, y_pred, biased_col, 'DI', yname)
-    MSE = round(mean_squared_error(y_test, y_pred),3)
-    MCC = round(matthews_corrcoef(y_test, y_pred), 3)
-
-    return [rep, learner, biased_col, samples, recall, precision, accuracy, F1, FA0, FA1, MCC, MSE, AOD, EOD, SPD, DI]
 
 ## Fair-SMOTE
 #
@@ -163,7 +147,7 @@ def situation(clf,X_train,y_train,keyword):
     return X_rest,y_rest
 
 
-def Fair_Smote(training_df, testing_df, base_clf, keyword, rep, samples, yname, learner):
+def Fair_Smote(training_df, testing_df, base_clf, keyword, num_points, rep, samples, yname, learner, start):
     train_df = deepcopy(training_df)
     test_df = deepcopy(testing_df)
     acc, pre, recall, f1 = [], [], [], []
@@ -181,7 +165,8 @@ def Fair_Smote(training_df, testing_df, base_clf, keyword, rep, samples, yname, 
     # print("class distribution:", (zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero))
     if (zero_zero_zero < 3) or (zero_one_zero < 3) or (one_zero_zero < 3) or (one_one_zero < 3):
         print("SMOTE CANCELLED (rep, samples):", (rep, samples ), "\n class distribution:", (zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero))
-        return [rep, learner, keyword, samples, None, None, None, None, None, None, None, None, None, None, None, None]
+        timer = round(time.time() - start, 2)
+        return [rep, learner, keyword, num_points, samples, timer, None, None, None, None, None, None, None, None, None, None, None, None]
 
     maximum = max(zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero)
     zero_zero_zero_to_be_incresed = maximum - zero_zero_zero
@@ -222,7 +207,7 @@ def Fair_Smote(training_df, testing_df, base_clf, keyword, rep, samples, yname, 
     y_pred = clf2.predict(X_test)
     cm = confusion_matrix(y_test, y_pred)
 
-    res = getMetrics(test_df, y_test, y_pred, keyword, samples, yname, rep, learner)
+    res = getMetrics(test_df, y_test, y_pred, keyword, num_points, samples, yname, rep, learner, start)
     # flip_rate = calculate_flip(clf2,X_test,keyword)
     # res.append(round(flip_rate,3))
 
@@ -235,7 +220,9 @@ def Fair_Smote(training_df, testing_df, base_clf, keyword, rep, samples, yname, 
 #
 
 def main():
-    datasets = ["bankmarketing", "defaultcredit", "adultscensusincome", 'meps'] #"communities","heart", "diabetes", "germancredit", "studentperformance","compas", 
+    params = Params("./model_configurations/experiment_params.json")
+    np.random.seed(params.seed)
+    datasets = ["communities","heart", "diabetes", "germancredit", "studentperformance","compas", "bankmarketing", "defaultcredit", "adultscensusincome"] # , 'meps'
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
@@ -274,7 +261,6 @@ def main():
 
             X = pd.get_dummies(data=X, columns=cat_features_not_encoded)
             cols = [c for c in X]
-            print(cols)
 
             cat_features_encoded = []
             for col in X.columns:
@@ -288,6 +274,7 @@ def main():
 
             for i in range(10):
                 i += 1
+                start = time.time()
 
                 xtrain,xtest,ytrain,ytest = train_test_split(X.values, y, test_size=0.2, random_state = i)
                 
@@ -307,11 +294,11 @@ def main():
                 full_RF.fit(xtrain, ytrain)
                 # f_RF_pred = full_RF.predict(xtest)
                 # results.append(getMetrics(testing, ytest, f_RF_pred, keyword, len(ytrain), yname, i, "RF"))
-                results.append(Fair_Smote(training, testing, full_RF, keyword, i, len(ytrain), yname, "RF_s"))
-                results.append(maat(training, testing, full_RF, ss, keyword, len(ytrain), i, "RF_m", dataset, yname))
+                results.append(Fair_Smote(training, testing, full_RF, keyword, 100, i, len(ytrain), yname, "RF_s", start))
+                results.append(maat(training, testing, full_RF, ss, keyword, 100, len(ytrain), i, "RF_m", dataset, yname, start))
 
 
-                # full_Slack = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
+                # full_Slack = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(cols.index(keyword)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
                 # f_Slack_pred = full_Slack.predict(xtest)
                 # results.append(getMetrics(testing, ytest, f_Slack_pred, keyword, len(ytrain), yname, i, "Slack"))
                 # results.append(Fair_Smote(training, testing, LinearSVC(), keyword, i, len(ytrain), yname, "Slack_s"))
@@ -327,7 +314,7 @@ def main():
                 root = Table.clusters(table.rows, table, enough)
 
 
-                treatment = [0,1.2,3,4,5]
+                treatment = [2,3,4,5]
 
                 for num_points in treatment:
                     subset_x, clustered_y = clusterGroups(root, cols, num_points)
@@ -340,8 +327,8 @@ def main():
                     # results.append(getMetrics(testing, ytest, RF_surr_pred, keyword, len(subset_x), yname, i, "RF"))
 
                     subset_df[yname] = RF_probed_y
-                    results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, i, len(subset_x), yname, "RF_s"))
-                    results.append(maat(subset_df, testing, RF_surrogate, ss, keyword, len(subset_x), i, "RF_m", dataset, yname))
+                    results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, num_points, i, len(subset_x), yname, "RF_s", start))
+                    results.append(maat(subset_df, testing, RF_surrogate, ss, keyword, num_points, len(subset_x), i, "RF_m", dataset, yname, start))
                     # subset_df.drop([yname], axis=1, inplace=True)
 
                     # Slack_probed_y = full_Slack.predict(subset_x)
@@ -354,7 +341,7 @@ def main():
                     # subset_df.drop([yname], axis=1, inplace=True) 
 
 
-        metrics = pd.DataFrame(results, columns = ["rep", "learner","biased_col", "samples", "rec+", "prec+", "acc+", "F1+", "FA0-", "FA1-", "MCC-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-"] )
+        metrics = pd.DataFrame(results, columns = ["rep", "learner","biased_col", "treatment", "runtime", "samples", "rec+", "prec+", "acc+", "F1+", "FA0-", "FA1-", "MCC-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-"] )
        
         metrics.to_csv("./final/maat/" +  dataset + ".csv", index=False)
         # print ('-'*55)

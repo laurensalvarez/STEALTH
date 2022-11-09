@@ -6,7 +6,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error, matthews_corrcoef
 from sklearn.ensemble import RandomForestClassifier
 
-import math
+import math, time
 import numpy as np
 import pandas as pd
 from copy import deepcopy
@@ -80,7 +80,7 @@ def clusterGroups(root, features, num_points):
 
     return df.to_numpy(), y
 
-def getMetrics(test_df, y_test, y_pred, biased_col, treatment, samples, yname, rep, learner):
+def getMetrics(test_df, y_test, y_pred, biased_col, treatment, samples, yname, rep, learner, start):
 
     recall = measure_final_score(test_df, y_test, y_pred, biased_col, 'recall', yname)
     precision = measure_final_score(test_df, y_test, y_pred, biased_col, 'precision', yname)
@@ -94,8 +94,9 @@ def getMetrics(test_df, y_test, y_pred, biased_col, treatment, samples, yname, r
     DI = measure_final_score(test_df, y_test, y_pred, biased_col, 'DI', yname)
     MSE = round(mean_squared_error(y_test, y_pred),2)
     MCC = round(matthews_corrcoef(y_test, y_pred), 2)
+    timer = round(time.time() - start, 2)
 
-    return [rep, learner, biased_col, treatment, samples, recall, precision, accuracy, F1, FA0, FA1, MCC, MSE, AOD, EOD, SPD, DI]
+    return [rep, learner, biased_col, treatment, timer, samples, recall, precision, accuracy, F1, FA0, FA1, MCC, MSE, AOD, EOD, SPD, DI]
 
 def main():
     datasets = ["communities","heart", "diabetes", "germancredit", "studentperformance","compas", "bankmarketing", "defaultcredit", "adultscensusincome", 'meps'] 
@@ -153,6 +154,7 @@ def main():
 
             for i in range(15):
                 i += 1
+                start = time.time()
 
                 xtrain,xtest,ytrain,ytest = train_test_split(X.values, y, test_size=0.2, random_state = i)
 
@@ -167,23 +169,22 @@ def main():
                 full_RF = RandomForestClassifier()
                 full_RF.fit(xtrain, ytrain)
                 f_RF_pred = full_RF.predict(xtest)
-                results.append(getMetrics(testing, ytest, f_RF_pred, keyword, 100, len(ytrain), yname, i, "RF"))
+                results.append(getMetrics(testing, ytest, f_RF_pred, keyword, 100, len(ytrain), yname, i, "RF", start))
 
-                full_LDF = explain(xtrain, xtest, full_RF, categorical, cols, "RF", keyword, 100, len(xtrain), i)
-                lime_results.extend(full_LDF)
+                # full_LDF = explain(xtrain, xtest, full_RF, categorical, cols, "RF", keyword, 100, len(xtrain), i)
+                # lime_results.extend(full_LDF)
 
-                full_import = full_RF.feature_importances_
-                sorted_indices = np.argsort(full_import)[::-1]
-                for feat in range(xtrain.shape[1]):
-                    feat_importance_tuple_list.append([i ,"RF", keyword, len(ytrain), cols[sorted_indices[feat]], round(full_import[sorted_indices[feat]],3)])
+                # full_import = full_RF.feature_importances_
+                # sorted_indices = np.argsort(full_import)[::-1]
+                # for feat in range(xtrain.shape[1]):
+                #     feat_importance_tuple_list.append([i ,"RF", keyword, len(ytrain), cols[sorted_indices[feat]], round(full_import[sorted_indices[feat]],3)])
 
                 full_Slack = Adversarial_Lime_Model(biased_model_f(cols.index(keyword)), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
                 f_Slack_pred = full_Slack.predict(xtest)
-                results.append(getMetrics(testing, ytest, f_Slack_pred, keyword, 100, len(ytrain), yname, i, "Slack"))
+                results.append(getMetrics(testing, ytest, f_Slack_pred, keyword, 100, len(ytrain), yname, i, "Slack", start))
 
-                print(type(xtest), xtest.shape)
-                full_LDF = explain(xtrain, xtest, full_Slack, categorical, cols, "Slack", keyword, 100, len(xtrain), i)
-                lime_results.extend(full_LDF)
+                # full_LDF = explain(xtrain, xtest, full_Slack, categorical, cols, "Slack", keyword, 100, len(xtrain), i)
+                # lime_results.extend(full_LDF)
 
                 table = Table(i)
                 rows = deepcopy(training.values)
@@ -203,36 +204,38 @@ def main():
                     RF_probed_y = full_RF.predict(subset_x)
                     RF_surrogate = RandomForestClassifier().fit(subset_x, RF_probed_y)
                     RF_surr_pred = RF_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, ytest, RF_surr_pred, keyword, num_points, len(subset_x), yname, i, "RF" ))
+                    results.append(getMetrics(testing, ytest, RF_surr_pred, keyword, num_points, len(subset_x), yname, i, "RF", start ))
 
                     Slack_probed_y = full_Slack.predict(subset_x)
                     Slack_surrogate = RandomForestClassifier().fit(subset_x, Slack_probed_y)
                     Slack_surr_pred = Slack_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, ytest, Slack_surr_pred, keyword, num_points, len(subset_x), yname, i, "Slack" ))
+                    results.append(getMetrics(testing, ytest, Slack_surr_pred, keyword, num_points, len(subset_x), yname, i, "Slack", start ))
 
-                    RF_surro_import = RF_surrogate.feature_importances_
-                    RF_sorted_indices = np.argsort(RF_surro_import)[::-1]
+                    # RF_surro_import = RF_surrogate.feature_importances_
+                    # RF_sorted_indices = np.argsort(RF_surro_import)[::-1]
 
-                    Slack_surro_import = Slack_surrogate.feature_importances_
-                    Slack_sorted_indices = np.argsort(Slack_surro_import)[::-1]
+                    # Slack_surro_import = Slack_surrogate.feature_importances_
+                    # Slack_sorted_indices = np.argsort(Slack_surro_import)[::-1]
 
-                    print(type(xtest), xtest.shape)
-                    RF_surro_LDF = explain(subset_x, xtest, RF_surrogate, categorical, cols, "RF", keyword, num_points, len(subset_x), i)
-                    lime_results.extend(RF_surro_LDF)
+                    # print(RF_surrogate.classes_ , Slack_surrogate.classes_)
+                    # RF_surro_LDF = explain(subset_x, xtest, RF_surrogate, categorical, cols, "RF", keyword, num_points, len(subset_x), i)
+                    # lime_results.extend(RF_surro_LDF)
 
-                    Slack_surro_LDF = explain(subset_x, xtest, Slack_surrogate, categorical, cols, "Slack", keyword, num_points, len(subset_x), i)
-                    lime_results.extend(Slack_surro_LDF)
+                    # Slack_surro_LDF = explain(subset_x, xtest, Slack_surrogate, categorical, cols, "Slack", keyword, num_points, len(subset_x), i)
+                    # lime_results.extend(Slack_surro_LDF)
 
-                    for feat in range(xtrain.shape[1]):
-                        feat_importance_tuple_list.append([i, "RF", keyword, num_points, len(subset_x), cols[RF_sorted_indices[feat]], round(RF_surro_import[RF_sorted_indices[feat]],3)])
-                        feat_importance_tuple_list.append([i, "Slack", keyword, num_points, len(subset_x),cols[Slack_sorted_indices[feat]], round(Slack_surro_import[Slack_sorted_indices[feat]],3)])
+                    # for feat in range(xtrain.shape[1]):
+                    #     feat_importance_tuple_list.append([i, "RF", keyword, num_points, len(subset_x), cols[RF_sorted_indices[feat]], round(RF_surro_import[RF_sorted_indices[feat]],3)])
+                    #     feat_importance_tuple_list.append([i, "Slack", keyword, num_points, len(subset_x),cols[Slack_sorted_indices[feat]], round(Slack_surro_import[Slack_sorted_indices[feat]],3)])
 
-        mets = pd.DataFrame(results, columns = ["rep", "learner", "biased_col","treatment", "samples","recall+", "precision+", "accuracy+", "F1+", "FA0-", "FA1-","MCC-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-"]) 
+
+
+        mets = pd.DataFrame(results, columns = ["rep", "learner", "biased_col","treatment", "samples", "runtime", "recall+", "precision+", "accuracy+", "F1+", "FA0-", "FA1-","MCC-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-"]) 
         mets.to_csv("./final/" +  dataset + "_metrics.csv", index=False)
-        feat_imp = pd.DataFrame(feat_importance_tuple_list, columns = ["rep", "learner", "biased_col", "treatment", "samples", "feature", "importance"])
-        feat_imp.to_csv("./final/" +  dataset + "_FI.csv", index=False)
-        all_L = pd.DataFrame(lime_results, columns = ["ranking","feature", "occurances_pct", "learner", "biased_col", "treatment", "samples", "rep",])
-        all_L.to_csv("./final/" +  dataset + "._LIME.csv", index=False)
+        # feat_imp = pd.DataFrame(feat_importance_tuple_list, columns = ["rep", "learner", "biased_col", "treatment", "samples", "feature", "importance"])
+        # feat_imp.to_csv("./final/" +  dataset + "_FI.csv", index=False)
+        # all_L = pd.DataFrame(lime_results, columns = ["ranking","feature", "occurances_pct", "learner", "biased_col", "treatment", "samples", "rep",])
+        # all_L.to_csv("./final/" +  dataset + "._LIME.csv", index=False)
 
 
 if __name__ == "__main__":
