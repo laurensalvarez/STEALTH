@@ -8,7 +8,7 @@ from cliffs_delta import cliffs_delta #https://pypi.org/project/cliffs-delta/
 # from scipy.stats import bootstrap
 import warnings
 warnings.filterwarnings('ignore')
-sys.path.append(os.path.abspath('.'))
+
 """
 Scott-Knot test + non parametric effect size + significance tests.
 Tim Menzies, 2019. Share and enjoy. No warranty. Caveat Emptor.
@@ -426,10 +426,10 @@ def jaccard_similarity(list1, list2):
 #     Rx.show(Rx.sk(skDemo(n)))
 #     n*=5
 from tqdm import tqdm
-from utils import *
+from slack.utils import *
 
 if __name__ == "__main__":
-  params = Params("model_configurations/experiment_params.json")
+  params = Params("./model_configurations/experiment_params.json")
   np.random.seed(params.seed)
   datasets = [ "communities" ,"heart","diabetes" ,"studentperformance", "compas", "bankmarketing", "defaultcredit", "adultscensusincome"]
   # "germancredit",
@@ -443,12 +443,12 @@ if __name__ == "__main__":
               'heart': ['Age('],
               'studentperformance': ['sex(']
               }
-  metrics = ['recall+', 'prec+', 'acc+', 'F1+', 'MSE-', 'FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
+  metrics = ['rec+', 'prec+', 'acc+', 'F1+', 'MCC-', 'MSE-', 'FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
   learners = ['RF']
   pbar = tqdm(datasets)
 
-  datasetsdf = pd.DataFrame(columns=["dataset", "order", "model", "metric", "median", "mean", "StandDev", "sk_rank"])
-  statsdf = pd.DataFrame(columns = ["dataset","order","model", "metric", "median", "mean", "StandDev", "sk_rank", "CD_res", "tm_bootstrap", "jacc", "tm_cliffsDelta", "cliffsDelta"])
+  datasetsdf = pd.DataFrame(columns=["order", "dataset", "model", "metric", "median", "mean", "StandDev", "sk_rank"])
+  statsdf = pd.DataFrame(columns = ["order", "dataset","model", "metric", "median", "mean", "StandDev", "sk_rank", "CD_res", "tm_bootstrap", "jacc", "tm_cliffsDelta", "cliffsDelta"])
   order = 0
   for dataset in pbar:
     order += 1

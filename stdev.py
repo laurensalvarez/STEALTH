@@ -5,7 +5,7 @@ import numpy as np
 
 import warnings
 warnings.filterwarnings('ignore')
-sys.path.append(os.path.abspath('.'))
+
 def getSmotedMedians(path,allmetrics):
     df = pd.read_csv(path)
     row = []
@@ -184,20 +184,22 @@ def printStdv(path, hmetrics, lmetrics, allmetrics, mediandf):
 
     cols = allmetrics + ["samples", "learner", "biased_col"]
     stdvdf = pd.DataFrame(row, columns = cols)
-    return stdvdf
+    return stdvdf, mediandf
 
 if __name__ == "__main__":
-    datasets =  ["communities", "heart", "diabetes", "studentperformance","compas",  "bankmarketing", "defaultcredit"] # "adultscensusincome"
+    datasets =  ["communities", "heart", "diabetes", "studentperformance","compas",  "bankmarketing"]#, "defaultcredit" "adultscensusincome"]
 
     # , "germancredit"
-    allmetrics = ['recall+', 'precision+', 'accuracy+', 'F1+','FA0-', 'FA1-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip']
+    allmetrics = ['recall+', 'precision+', 'accuracy+', 'F1+','FA0-', 'FA1-', 'MCC-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
     hmetrics = ['recall+', 'precision+', 'accuracy+', 'F1+']
-    lmetrics = ['FA0-', 'FA1-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
+    lmetrics = ['FA0-', 'FA1-','MCC-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
     pbar = tqdm(datasets)
 
-    columns = ['order','dataset', 'biased_col','learner', "samples", 'recall+', 'precision+', 'accuracy+', 'F1+', 'FA0-', 'FA1-','MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-', "Flip"]
+    columns = ['order','dataset', 'biased_col','learner', "samples", 'recall+', 'precision+', 'accuracy+', 'F1+', 'FA0-', 'FA1-','MCC-','MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
     fulldf = pd.DataFrame(columns=columns)
     datasetdf = pd.DataFrame(columns=columns)
+    meddatasetdf = pd.DataFrame(columns=columns)
+    medfulldf = pd.DataFrame(columns=columns)
     order = 0
 
     for dataset in pbar:
@@ -206,15 +208,20 @@ if __name__ == "__main__":
         pbar.set_description("Processing %s" % dataset)
         # mediandf = pd.DataFrame(columns=columns)
 
-        path =  "./output/final/SMOTE/" + dataset + ".csv"
+        path =  "./final/maat/" + dataset + ".csv"
         mediandf = getMedians(path, allmetrics)
-        stdvdf = printStdv(path, hmetrics, lmetrics, allmetrics, mediandf)
+        
+        stdvdf, mediandf = printStdv(path, hmetrics, lmetrics, allmetrics, mediandf)
 
-        # mediandf.to_csv("./medians/surro/" + dataset + "_medians.csv", index = False)
         stdvdf['dataset'] = dataset
         stdvdf['order'] = order
+        mediandf['dataset'] = dataset
+        mediandf['order'] = order
         datasetdf = pd.concat([datasetdf, stdvdf], ignore_index=True)
+        meddatasetdf = pd.concat([meddatasetdf, mediandf], ignore_index=True)
     # print(datasetdf)
 
     fulldf = datasetdf[columns]
-    fulldf.to_csv("./stdv/final/medians_smoted.csv", index = False)
+    medfulldf = meddatasetdf[columns]
+    medfulldf.to_csv("./stdv/final/baseline_medians.csv", index = False)
+    fulldf.to_csv("./stdv/final/marked_medians.csv", index = False)

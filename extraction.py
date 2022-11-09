@@ -36,16 +36,7 @@ class biased_model_f():
         self.sensa_indc = sensa_indc
     # Decision rule: classify negative outcome if underrepresented class
     def predict(self,X):
-        predictions = np.array([params.negative_outcome if x[self.sensa_indc] == 0 else params.positive_outcome for x in X])
-        #### if the class balance is unbalanced add the random flips to create examples in each class distribution ####
-        indices = np.random.choice(np.arange(predictions.size), replace = False, size = int(predictions.size * 0.10))
-        for i in indices:
-            if predictions[i] == params.negative_outcome:
-                predictions[i] = params.positive_outcome
-            else:
-                predictions[i] = params.negative_outcome
-
-        return predictions
+        return np.array([params.negative_outcome if x[self.sensa_indc] == 0 else params.positive_outcome for x in X])
 
     def predict_proba(self, X):
         return one_hot_encode(self.predict(X))
@@ -111,16 +102,16 @@ def getMetrics(test_df, y_test, y_pred, biased_col, samples, yname, rep, learner
 
 def main():
     datasets = ["communities","heart", "diabetes", "germancredit", "studentperformance","compas", "bankmarketing", "defaultcredit", "adultscensusincome", 'meps'] 
-    keywords = {'adultscensusincome': ['race', 'sex'],
-                'compas': ['race','sex'],
-                'bankmarketing': ['Age'],
-                'communities': ['Racepctwhite'],
-                'defaultcredit': ['SEX'],
-                'diabetes': ['Age'],
-                'germancredit': ['sex'],
-                'heart': ['Age'],
-                'studentperformance': ['sex'],
-                'meps': ['race']
+    keywords = {'adultscensusincome': ['race(', 'sex('],
+                'compas': ['race(','sex('],
+                'bankmarketing': ['Age('],
+                'communities': ['Racepctwhite('],
+                'defaultcredit': ['SEX('],
+                'diabetes': ['Age('],
+                'germancredit': ['sex('],
+                'heart': ['Age('],
+                'studentperformance': ['sex('],
+                'meps': ['race(']
                 }
 
     pbar = tqdm(datasets)
@@ -206,7 +197,7 @@ def main():
                 enough = int(math.sqrt(len(table.rows)))
                 root = Table.clusters(table.rows, table, enough)
 
-                treatment = [2,3,4,5]
+                treatment = [1,2,3,4,5]
 
                 for num_points in treatment:
                     subset_x, clustered_y = clusterGroups(root, cols, num_points)
@@ -214,12 +205,12 @@ def main():
                     RF_probed_y = full_RF.predict(subset_x)
                     RF_surrogate = RandomForestClassifier().fit(subset_x, RF_probed_y)
                     RF_surr_pred = RF_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, ytest, RF_surr_pred, keyword, len(subset_x), yname, i, "RF_RF" ))
+                    results.append(getMetrics(testing, ytest, RF_surr_pred, keyword, len(subset_x), yname, i, "RF" ))
 
                     Slack_probed_y = full_Slack.predict(subset_x)
                     Slack_surrogate = RandomForestClassifier().fit(subset_x, Slack_probed_y)
                     Slack_surr_pred = Slack_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, ytest, Slack_surr_pred, keyword, len(subset_x), yname, i, "Slack_RF" ))
+                    results.append(getMetrics(testing, ytest, Slack_surr_pred, keyword, len(subset_x), yname, i, "Slack" ))
 
                     RF_surro_import = RF_surrogate.feature_importances_
                     RF_sorted_indices = np.argsort(RF_surro_import)[::-1]
@@ -237,7 +228,7 @@ def main():
                         feat_importance_tuple_list.append([i, "RF", keyword, len(subset_x), cols[RF_sorted_indices[feat]], round(RF_surro_import[RF_sorted_indices[feat]],3)])
                         feat_importance_tuple_list.append([i, "Slack", keyword, len(subset_x),cols[Slack_sorted_indices[feat]], round(Slack_surro_import[Slack_sorted_indices[feat]],3)])
 
-        mets = pd.DataFrame(results, columns = ["rep", "learner", "biased_col", "samples","recall+", "precision+", "accuracy+", "F1+", "FA0-", "FA1-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-"]) 
+        mets = pd.DataFrame(results, columns = ["rep", "learner", "biased_col", "samples","recall+", "precision+", "accuracy+", "F1+", "FA0-", "FA1-","MCC-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-"]) 
         mets.to_csv("./final/" +  dataset + "_metrics.csv", index=False)
         feat_imp = pd.DataFrame(feat_importance_tuple_list, columns = ["rep", "learner", "biased_col", "samples", "feature", "importance"])
         feat_imp.to_csv("./final/" +  dataset + "_FI.csv", index=False)

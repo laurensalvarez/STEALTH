@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def main():
-    datasets = ["heart" , "diabetes", "communities", "compas", "studentperformance", "bankmarketing", "defaultcredit", "adultscensusincome"] #
+    datasets = ["communities","heart" , "diabetes", "compas", "studentperformance", "bankmarketing", "defaultcredit", "adultscensusincome"] #
 # "germancredit",
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
@@ -41,6 +41,7 @@ def main():
         FA0dict = defaultdict(dict)
         FA1dict = defaultdict(dict)
         MSEdict = defaultdict(dict)
+        MCCdict = defaultdict(dict)
         AODdict = defaultdict(dict)
         EODdict = defaultdict(dict)
         SPDdict = defaultdict(dict)
@@ -75,6 +76,7 @@ def main():
                     FA0 = dfRF4 ['FA0-']
                     FA1 = dfRF4 ['FA1-']
                     MSE = dfRF4 ['MSE-']
+                    MCC = dfRF4['MCC']
                     AOD = dfRF4 ['AOD-']
                     EOD = dfRF4 ['EOD-']
                     SPD = dfRF4 ['SPD-']
@@ -90,6 +92,7 @@ def main():
                     FA0dict[str(m) + "_" + l][f] = FA0.values
                     FA1dict[str(m) + "_" + l][f] = FA1.values
                     MSEdict[str(m) + "_" + l][f] = MSE.values
+                    MCCdict[str(m) + "_" + l][f] = MCC.values
                     AODdict[str(m) + "_" + l][f] = AOD.values
                     EODdict[str(m) + "_" + l][f] = EOD.values
                     SPDdict[str(m) + "_" + l][f] = SPD.values
@@ -128,6 +131,11 @@ def main():
 
         reformed_MSEdict = {}
         for outerKey, innerDict in MSEdict.items():
+            for innerKey, values in innerDict.items():
+                reformed_MSEdict[(outerKey,innerKey)] = values
+        
+        reformed_MCCdict = {}
+        for outerKey, innerDict in MCCdict.items():
             for innerKey, values in innerDict.items():
                 reformed_MSEdict[(outerKey,innerKey)] = values
 
@@ -178,6 +186,10 @@ def main():
         MSE_df = pd.DataFrame(reformed_MSEdict)
         MSE_df.columns = ['_'.join(map(str, x)) for x in MSE_df.columns]
         MSE_df.transpose().to_csv("./sk_data/final/" + dataset + "_MSE-_.csv", header = None, index=True, sep=' ')
+
+        MCC_df = pd.DataFrame(reformed_MCCdict)
+        MCC_df.columns = ['_'.join(map(str, x)) for x in MCC_df.columns]
+        MCC_df.transpose().to_csv("./sk_data/final/" + dataset + "_MCC-_.csv", header = None, index=True, sep=' ')
 
         AOD_df = pd.DataFrame(reformed_AODdict)
         AOD_df.columns = ['_'.join(map(str, x)) for x in AOD_df.columns]

@@ -1,6 +1,6 @@
 import warnings
 warnings.filterwarnings('ignore')
-import sys, random, statistics, math, copy
+import sys, random, statistics, math, copy, os
 import pandas as pd
 import numpy as np
 from tqdm import tqdm
@@ -8,8 +8,8 @@ from itertools import count, groupby, chain
 from collections import defaultdict
 from cliffs_delta import cliffs_delta #https://pypi.org/project/cliffs-delta/
 
-from sk import jaccard_similarity, cliffsDelta, bootstrap
-sys.path.append(os.path.abspath('.'))
+from metrics.sk import jaccard_similarity, cliffsDelta, bootstrap
+# sys.path.append(os.path.abspath('.'))
 
 def compareLIMERanks(path, dataset):
     df = pd.read_csv(path)
@@ -134,11 +134,79 @@ def compareRFRanks(path, dataset):
     print(prettydf.head(10))
     return prettydf
 
+def compareFair(distilledDF, baselineDF, metrics,keyword):
+    distilleddf1 = copy.deepcopy(distilledDF)
+    basedf1 = copy.deepcopy(baselineDF)
+    rows =[]
+    distilleddf1.drop(distilleddf1.loc[~distilleddf1['biased_col'].isin([keyword]) ].index, inplace=True)
+    basedf1.drop(basedf1.loc[~basedf1['biased_col'].isin([keyword]) ].index, inplace=True)
+    # print("distilleddf1", distilleddf1.head())
+
+    #compare the samples to each other 
+    # the comparison is always to surrogates scores 
+    # then the second is the same samples but from Fair-SMOTE & maat'
+    distilleddf1.drop(distilleddf1.loc[distilleddf1['learner'].isin(["Slack", "Slack_RF"]) ].index, inplace=True)
+    # print("distilleddf1", distilleddf1.head())
+
+    samples = copy.deepcopy(distilleddf1["samples"].tolist())
+    sortedsamples = sorted(set(samples), key = lambda ele: samples.count(ele))
+    sortedsamples = sorted(sortedsamples, reverse = True)
+
+    base_learners = copy.deepcopy(basedf1["learner"].tolist())
+    sortedlearners = sorted(set(base_learners), key = lambda ele: base_learners.count(ele))
+ 
+    for s in sortedsamples:
+        distilleddf2 = copy.deepcopy(distilleddf1)
+        basedf2 = copy.deepcopy(basedf1)
+        distilleddf2.drop(distilleddf2.loc[distilleddf2['samples']!= s].index, inplace=True)
+        basedf2.drop(basedf2.loc[basedf2['samples']!= s].index, inplace=True)
+        # print("distilleddf2", distilleddf2.head())
+        # print("basedf2", basedf2.head())
+
+        for l in sortedlearners:
+            
+            basedf3 = copy.deepcopy(basedf2)
+            basedf3.drop(basedf3.loc[basedf3['learner']!= l].index, inplace=True)
+            # print("basedf3", basedf3.head())
+
+            for m in metrics:
+                r = []
+                # print("distilleddf2", distilleddf2.head())
+                distilled_vals = distilleddf2[m].values
+                base_vals = basedf3[m].values
+
+                print("learner", l ,"distilled_vals", distilled_vals, len(distilled_vals), "\n \n base_vals", base_vals, len(base_vals))
+            
+                cdelta, res = cliffs_delta(distilled_vals,base_vals)
+                r.append(s)
+                r.append(l)
+                r.append(jaccard_similarity(distilled_vals,base_vals))
+                r.append(res)
+                r.append(round(cdelta,2))
+                r.append("same" if bootstrap(distilled_vals,base_vals) else 'different')
+                # r.append(cliffsDelta(distilled_vals,base_vals))
+
+            rows.append(r)
+    prettydf = pd.DataFrame(rows, columns = ["samples", "learner", "jacc", "CD_res", "CD", "BS"])
+    # print(prettydf.head(10))
+
+    return prettydf
+
 
 if __name__ == "__main__":
-    datasets = ["communities","heart", "diabetes", "studentperformance", "compas", "bankmarketing", "defaultcredit"]#, "adultscensusincome"]
+    datasets = ["communities","heart", "diabetes", "studentperformance", "compas"]#, "bankmarketing" "defaultcredit", "adultscensusincome"]
 # "germancredit"
-    metrics = ['recall+', 'prec+', 'acc+', 'F1+', 'FA0-', 'FA1-','MSE-', 'AOD-', 'EOD-', 'SPD-',  'DI-']
+    keywords = {'adultscensusincome': ['race(', 'sex('],
+                'compas': ['race(','sex('],
+                'bankmarketing': ['Age('],
+                'communities': ['Racepctwhite('],
+                'defaultcredit': ['SEX('],
+                'diabetes': ['Age('],
+                'germancredit': ['sex('],
+                'heart': ['Age('],
+                'studentperformance': ['sex(']
+                }
+    metrics = ['recall+', 'precision+', 'accuracy+', 'F1+', 'FA0-', 'FA1-', 'MSE-', 'AOD-', 'EOD-', 'SPD-',  'DI-']
     #LIME COls  ["ranking","feature", "occurances_pct","model_num", "rep"]
     pbar = tqdm(datasets)
     columns = ["order", "dataset", "samples", "learner", "jacc", "CD_res", "CD"]
@@ -146,15 +214,20 @@ if __name__ == "__main__":
     order = 0
 
     for dataset in pbar:
+        klist = keywords[dataset]
         order += 1
         pbar.set_description("Processing %s" % dataset)
+        for k in klist:
+            # jacdf = compareLIMERanks("./LIME_rankings/final/" + dataset + ".csv", dataset)
+            distilledpath = "./output/final/" + dataset + "_FM.csv"
+            distilledDF = pd.read_csv(distilledpath)
+            basepath = "./final/maat/" + dataset + ".csv"
+            baseDF = pd.read_csv(basepath)
+            jacdf = compareFair(distilledDF,baseDF, metrics,k)
 
-        path =  "./LIME_rankings/final/" + dataset + ".csv"
-        jacdf = compareLIMERanks(path, dataset)
-
-        jacdf['dataset'] = dataset
-        jacdf['order'] = order
-        datasetdf = pd.concat([datasetdf, jacdf], ignore_index=True)
+            jacdf['dataset'] = dataset
+            jacdf['order'] = order
+            datasetdf = pd.concat([datasetdf, jacdf], ignore_index=True)
 
         # print(prettydf.head())
-    datasetdf.to_csv("./LIME_rankings/final/all.csv", index = False)
+    datasetdf.to_csv("./stdv/final/baseline.csv", index = False)

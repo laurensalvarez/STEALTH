@@ -53,14 +53,13 @@ class biased_model_f():
         return np.sum(self.predict(X)==y) / len(X)
 
 # the display model with one unrelated feature
-class innocuous_model_psi:
+class innocuous_model_psi():
     def __init__(self, inno_indc):
         self.inno_indc = inno_indc
     # Decision rule: classify according to innoc indc
     def predict_proba(self, X):
         return one_hot_encode(np.array([params.negative_outcome if x[self.inno_indc] > 0 else params.positive_outcome for x in X]))
-## MAAT
-#
+
 
 ##
 # MAAT
@@ -69,38 +68,46 @@ def maat(X_train, X_test, clf, ss, keyword, samples, rep, learner, dataset, ynam
     X_test = deepcopy(X_test)
     y_train = X_train[yname].values
     X_train.drop([yname], axis=1, inplace=True)
-    # y_test = X_test[yname].values
-    # X_test.drop([yname], axis=1, inplace=True)
 
     inverse = ss.inverse_transform(X_train.values)
     raw_xtrain = pd.DataFrame(inverse, columns = X_train.columns)
     raw_xtrain[yname] = y_train 
+
+    zero_zero, zero_one, one_zero, one_one = classBal(raw_xtrain, yname, keyword)
+
+    if (zero_one+one_one == 0):
+        print("MAAT CANCELLED (rep, samples):", (rep, samples ), "a:", str(zero_one+one_one), "\n class distribution:", (zero_zero, zero_one, one_zero, one_one))
+        return [rep, learner, keyword, samples, None, None, None, None, None, None, None, None, None, None, None, None]
    
-    X_train_MAE = data_dis(raw_xtrain,keyword,dataset, yname)
-    y_train_MAE = X_train_MAE[yname].values
-    X_train_MAE.drop([yname], axis=1, inplace=True)
+    X_train_WAE = data_dis(raw_xtrain,keyword,dataset, yname)
+    
+    
 
-    sc = MinMaxScaler().fit(X_train_MAE)
-    X_train_MAE = pd.DataFrame(sc.transform(X_train_MAE), columns = X_train.columns)
-    clf_MAE = RandomForestClassifier().fit(X_train_MAE,y_train_MAE)
+    
+    y_train_WAE = X_train_WAE[yname].values
+    X_train_WAE.drop([yname], axis=1, inplace=True)
 
+    sc = MinMaxScaler().fit(X_train_WAE)
+    X_train_WAE = pd.DataFrame(sc.transform(X_train_WAE), columns = X_train.columns)
+    clf_WAE = RandomForestClassifier().fit(X_train_WAE,y_train_WAE)
+ 
     y_test = X_test[yname].values
     X_test.drop([yname], axis=1, inplace=True)
-    X_test_MAE = pd.DataFrame(sc.transform(X_test.values), columns = X_test.columns)
+    X_test_WAE = pd.DataFrame(sc.transform(X_test.values), columns = X_test.columns)
 
     pred_de1 = clf.predict_proba(X_test)
-    pred_de2 = clf_MAE.predict_proba(X_test_MAE)
+    pred_de2 = clf_WAE.predict_proba(X_test_WAE)
 
     # print(len(pred_de1), pred_de1[0])
     # print(len(pred_de2), pred_de2[0])
 
     pred = []
     for i in range(len(pred_de1)):
-        c0_prob_t = (pred_de1[i][0]+pred_de2[i][0])/2
-        if c0_prob_t >= 0.5:
-            pred.append(0)
-        else:
+        prob_t = (pred_de1[i][1]+pred_de2[i][1])/2
+        if prob_t >= 0.5:
             pred.append(1)
+        else:
+            pred.append(0)
 
     y_pred = np.array(pred)
 
@@ -129,6 +136,15 @@ def getMetrics(test_df, y_test, y_pred, biased_col, samples, yname, rep, learner
 
 ## Fair-SMOTE
 #
+def classBal(ds, yname, protected_attribute):
+    zero_zero_zero = len(ds[(ds[yname] == 0) & (ds[protected_attribute] == 0)])
+    zero_one_zero = len(ds[(ds[yname] == 0) & (ds[protected_attribute] == 1)])
+    one_zero_zero = len(ds[(ds[yname] == 1) & (ds[protected_attribute] == 0)])
+    one_one_zero = len(ds[(ds[yname] == 1) & (ds[protected_attribute] == 1)])
+
+    # print("Protected_attribute", protected_attribute, "\n class distribution: \n0 0: ", zero_zero_zero, "\n0 1: ",zero_one_zero, "\n1 0: ", one_zero_zero,"\n1 1: ",one_one_zero)
+    return zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero
+
 
 def flip(X_test,keyword):
     X_flip = X_test.copy()
@@ -175,8 +191,8 @@ def Fair_Smote(training_df, testing_df, base_clf, keyword, rep, samples, yname, 
 
     # print("class distribution:", (zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero))
     if (zero_zero_zero < 3) or (zero_one_zero < 3) or (one_zero_zero < 3) or (one_one_zero < 3):
-        print("CANCELLED for class distribution:", (zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero))
-        return [None, None, None, None, None, None, None, None, None, None, None, keyword, samples, rep, learner, None, None]
+        print("SMOTE CANCELLED (rep, samples):", (rep, samples ), "\n class distribution:", (zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero))
+        return [rep, learner, keyword, samples, None, None, None, None, None, None, None, None, None, None, None, None]
 
     maximum = max(zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero)
     zero_zero_zero_to_be_incresed = maximum - zero_zero_zero
@@ -217,19 +233,20 @@ def Fair_Smote(training_df, testing_df, base_clf, keyword, rep, samples, yname, 
     y_pred = clf2.predict(X_test)
     cm = confusion_matrix(y_test, y_pred)
 
-    res = getMetrics(test_df, y_test, y_pred, keyword, samples, yname, rep, learner, 1)
-    flip_rate = calculate_flip(clf2,X_test,keyword)
-    res.append(round(flip_rate,3))
+    res = getMetrics(test_df, y_test, y_pred, keyword, samples, yname, rep, learner)
+    # flip_rate = calculate_flip(clf2,X_test,keyword)
+    # res.append(round(flip_rate,3))
 
     return res
 
 ## to add: xFAIR?? maybe
 #
 
-
+## MAIN Experiment
+#
 
 def main():
-    datasets = ["defaultcredit", "adultscensusincome"] #"communities", "heart", "diabetes", "germancredit", "studentperformance", "compas", 
+    datasets = ["bankmarketing", "defaultcredit", "adultscensusincome", 'meps'] #"communities","heart", "diabetes", "germancredit", "studentperformance","compas", 
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
@@ -301,7 +318,7 @@ def main():
                 full_RF.fit(xtrain, ytrain)
                 # f_RF_pred = full_RF.predict(xtest)
                 # results.append(getMetrics(testing, ytest, f_RF_pred, keyword, len(ytrain), yname, i, "RF"))
-                # results.append(Fair_Smote(training, testing, full_RF, MAE_RF, keyword, i, len(ytrain), yname, "RF_s"))
+                results.append(Fair_Smote(training, testing, full_RF, keyword, i, len(ytrain), yname, "RF_s"))
                 results.append(maat(training, testing, full_RF, ss, keyword, len(ytrain), i, "RF_m", dataset, yname))
 
 
@@ -334,7 +351,7 @@ def main():
                     # results.append(getMetrics(testing, ytest, RF_surr_pred, keyword, len(subset_x), yname, i, "RF"))
 
                     subset_df[yname] = RF_probed_y
-                    # results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, i, len(subset_x), yname, "RF_RF"))
+                    results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, i, len(subset_x), yname, "RF_s"))
                     results.append(maat(subset_df, testing, RF_surrogate, ss, keyword, len(subset_x), i, "RF_m", dataset, yname))
                     # subset_df.drop([yname], axis=1, inplace=True)
 
@@ -348,7 +365,7 @@ def main():
                     # subset_df.drop([yname], axis=1, inplace=True) 
 
 
-        metrics = pd.DataFrame(results, columns = ["rep", "learner","biased_col", "samples", "recall+", "precision+", "accuracy+", "F1+", "FA0-", "FA1-", "MCC-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-"] )
+        metrics = pd.DataFrame(results, columns = ["rep", "learner","biased_col", "samples", "rec+", "prec+", "acc+", "F1+", "FA0-", "FA1-", "MCC-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-"] )
        
         metrics.to_csv("./final/maat/" +  dataset + ".csv", index=False)
         # print ('-'*55)

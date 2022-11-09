@@ -56,28 +56,28 @@ def get_data(dataset_used, protected,preprocessed = False):
         unprivileged_groups = [{'RACE': 0}]
         dataset_orig = MEPSDataset19().convert_to_dataframe()[0]
         dataset_orig.rename(columns={'UTILIZATION': 'Probability'}, inplace=True)
-    elif dataset_used == "communities" 
+    elif dataset_used == "communities":
         privileged_groups = [{'racePctWhite': 1}]
         unprivileged_groups = [{'racePctWhite': 0}]
         dataset_orig = pd.Dataframe(path = "./datasets/communities_p.csv") 
-    elif dataset_used == "heart", 
+    elif dataset_used == "heart":
         privileged_groups = [{'Age': 1}]
         unprivileged_groups = [{'Age': 0}]
         dataset_orig = pd.Dataframe(path = "./datasets/heart_p.csv") 
-    elif dataset_used == "diabetes", 
+    elif dataset_used == "diabetes":
         privileged_groups = [{'Age': 1}]
         unprivileged_groups = [{'Age': 0}]
         dataset_orig = pd.Dataframe(path = "./datasets/diabetes_p.csv")
-    elif dataset_used == "studentperformance"
+    elif dataset_used == "studentperformance":
         privileged_groups = [{'sex': 1}]
         unprivileged_groups = [{'sex': 0}]
         dataset_orig = pd.Dataframe(path = "./datasets/studentperformance_p.csv") 
-    elif dataset_used == "defaultcredit"
+    elif dataset_used == "defaultcredit":
         privileged_groups = [{'SEX': 1}]
         unprivileged_groups = [{'SEX': 0}]
         dataset_orig = pd.Dataframe(path = "./datasets/defaultcredit_p.csv")  
-   elif dataset_used == 'law'
-        if protected == 'sex'
+    elif dataset_used == 'law':
+        if protected == 'sex':
             privileged_groups = [{'sex': 1}]
             unprivileged_groups = [{'sex': 0}]
         else: 
@@ -87,7 +87,6 @@ def get_data(dataset_used, protected,preprocessed = False):
         dataset_orig.rename(columns={'pass_bar': 'Probability'}, inplace=True) 
     
     return dataset_orig, privileged_groups, unprivileged_groups
-
 
 def get_classifier(name):
     if name == "lr":

@@ -30,7 +30,7 @@ def data_dis(dataset_orig_test,protected_attribute,dataset_used, yname):
         one_one = len(
             dataset_orig_test[(dataset_orig_test[yname] == 1) & (dataset_orig_test[protected_attribute] == 1)])
 
-    print("Protected_attribute", protected_attribute, "\n class distribution: \n0 0: ", zero_zero, "\n0 1: ",zero_one, "\n1 0: ", one_zero,"\n1 1: ",one_one)
+    # print("Protected_attribute", protected_attribute, "\n class distribution: \n0 0: ", zero_zero, "\n0 1: ",zero_one, "\n1 0: ", one_zero,"\n1 1: ",one_one)
 
     a=zero_one+one_one
     b=-1*(zero_zero*zero_one+2*zero_zero*one_one+one_zero*one_one)
@@ -38,7 +38,7 @@ def data_dis(dataset_orig_test,protected_attribute,dataset_used, yname):
     x=(-b-math.sqrt(b*b-4*a*c))/(2*a)
     y=(zero_one+one_one)/(zero_zero+one_zero)*x
 
-    print("a:", a, " b:", b, " c", c, " x", x, " y", y)
+    # print("a:", a, " b:", b, " c", c, " x", x, " y", y)
     zero_zero_new =int(zero_zero-x)
     one_one_new = int(one_one-y)
 
