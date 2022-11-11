@@ -1,4 +1,4 @@
-Age(,default,housing,loan,Day_of_week,Campaign,Pdays,Previous,!Probability
+Age(,default,housing,loan,day_of_week,Campaign,Pdays,Previous,!Probability
 1,0,0,0,mon,1,999,0,0
 1,0,1,0,mon,1,999,0,0
 1,0,0,0,mon,1,999,0,0

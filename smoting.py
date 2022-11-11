@@ -50,7 +50,7 @@ class innocuous_model_psi():
 
 ##
 # MAAT
-def maat(X_train, X_test, clf, ss, keyword, num_points, samples, rep, learner, dataset, yname, start):
+def maat(X_train, X_test, clf, ss, keyword, num_points, samples, yname, rep, learner, dataset, start):
     X_train = deepcopy(X_train)
     X_test = deepcopy(X_test)
     y_train = X_train[yname].values
@@ -97,7 +97,7 @@ def maat(X_train, X_test, clf, ss, keyword, num_points, samples, rep, learner, d
     y_pred = np.array(pred)
 
 
-    res = getMetrics(X_test, y_pred, keyword, num_points, samples, yname, rep, learner, start)
+    res = getMetrics(X_test, keyword, num_points, samples, yname, rep, learner, start)
 
     return res
 
@@ -116,9 +116,7 @@ def classBal(ds, yname, protected_attribute):
 
 
 
-
-
-def Fair_Smote(training_df, testing_df, base_clf, keyword, num_points, rep, samples, yname, learner, start):
+def Fair_Smote(training_df, testing_df, base_clf, keyword, num_points, samples, yname, rep, learner, start):
     train_df = deepcopy(training_df)
     test_df = deepcopy(testing_df)
     acc, pre, recall, f1 = [], [], [], []

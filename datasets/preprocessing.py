@@ -143,7 +143,7 @@ def classBal(ds, yname, protected_attribute):
     one_zero_zero = len(ds[(ds[yname] == 1) & (ds[protected_attribute] == 0)])
     one_one_zero = len(ds[(ds[yname] == 1) & (ds[protected_attribute] == 1)])
 
-    print("Rows:",ds.index.size, "\nProtected_attribute", protected_attribute, "\nClass distribution: \n0 0: ", zero_zero_zero, "\n0 1: ",zero_one_zero, "\n1 0: ", one_zero_zero,"\n1 1: ",one_one_zero)
+    print("Rows:", ds.shape[0], "\nProtected_attribute", protected_attribute, "\nClass distribution: \n0 0: ", zero_zero_zero, "\n0 1: ",zero_one_zero, "\n1 0: ", one_zero_zero,"\n1 1: ",one_one_zero)
 
 
 if __name__ == "__main__":
