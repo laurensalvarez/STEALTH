@@ -48,6 +48,7 @@ def makeBinary(df, dataset):
         # df['marital('] = np.where((df['marital('] == 3), 1, 0)
         # df['education('] = np.where((df['education('] == 6) | (df['education('] == 7), 1, 0)
         df['!Probability'] = np.where((df['!Probability'] == "yes" ), POSITIVE_OUTCOME, NEGATIVE_OUTCOME)
+        df = df.replace(['no', 'yes'], [0,1])
 
     if dataset == "compas":
         df['race('] = np.where((df['race('] != 'Caucasian'), 0, 1)
@@ -121,7 +122,7 @@ def makeBinary(df, dataset):
     return df
 
 def preprocess(path,dataset):
-    raw_datadf = pd.read_csv(path, header=0, na_values=['?', ' ?'], sep =",")
+    raw_datadf = pd.read_csv(path, header=0, na_values=['?', ' ?', 'unknown'], sep =",")
     raw_copy = raw_datadf.copy()
     if dataset != "compas":
         """1: remove rows with missing values."""
@@ -146,7 +147,7 @@ def classBal(ds, yname, protected_attribute):
 
 
 if __name__ == "__main__":
-    datasets = ["communities","heart", "diabetes", "germancredit", "studentperformance", "compas", "defaultcredit", "bankmarketing","adultscensusincome"] # "meps"
+    datasets = ['bankmarketing']#["communities","heart", "diabetes", "germancredit", "studentperformance", "compas", "defaultcredit", "bankmarketing","adultscensusincome"] # "meps"
     pbar = tqdm(datasets)
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
