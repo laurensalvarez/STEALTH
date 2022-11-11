@@ -5,53 +5,45 @@ from sklearn.neighbors import KDTree
 from sklearn.neighbors import NearestNeighbors
 
 
-def get_counts(df, y_test, y_pred, biased_col, metric, yname):
+def get_counts(df, y_pred, biased_col, metric, yname):
 
-    # clf.fit(x_train, y_train)
-    # y_pred = clf.predict(x_test)
     # TN, FP, FN, TP = confusion_matrix(y_test,y_pred).ravel()
 
-
-    # print("GC:", y_test.shape, X_test.columns )
-    # print("y_pred", y_pred, len(y_pred))
-    # print("y_test",y_test.values, len(y_test.values))
-
     test_df_copy = copy.deepcopy(df)
-    test_df_copy['y_pred'] = y_pred
-    test_df_copy[yname] = y_test
+    test_df_copy['y_pred' + biased_col] = y_pred
 
     # print("test_df_copy:", test_df_copy.head())
 
     test_df_copy['TP_' + biased_col + "_1"] = np.where((test_df_copy[yname] == 1) &
-                                           (test_df_copy['y_pred'] == 1) &
+                                           (test_df_copy['y_pred' + biased_col] == 1) &
                                            (test_df_copy[biased_col] == 1), 1, 0)
 
     test_df_copy['TN_' + biased_col + "_1"] = np.where((test_df_copy[yname] == 0) &
-                                                  (test_df_copy['y_pred'] == 0) &
+                                                  (test_df_copy['y_pred' + biased_col] == 0) &
                                                   (test_df_copy[biased_col] == 1), 1, 0)
 
     test_df_copy['FN_' + biased_col + "_1"] = np.where((test_df_copy[yname] == 1) &
-                                                  (test_df_copy['y_pred'] == 0) &
+                                                  (test_df_copy['y_pred' + biased_col] == 0) &
                                                   (test_df_copy[biased_col] == 1), 1, 0)
 
     test_df_copy['FP_' + biased_col + "_1"] = np.where((test_df_copy[yname] == 0) &
-                                                  (test_df_copy['y_pred'] == 1) &
+                                                  (test_df_copy['y_pred' + biased_col] == 1) &
                                                   (test_df_copy[biased_col] == 1), 1, 0)
 
     test_df_copy['TP_' + biased_col + "_0"] = np.where((test_df_copy[yname] == 1) &
-                                                  (test_df_copy['y_pred'] == 1) &
+                                                  (test_df_copy['y_pred' + biased_col] == 1) &
                                                   (test_df_copy[biased_col] == 0), 1, 0)
 
     test_df_copy['TN_' + biased_col + "_0"] = np.where((test_df_copy[yname] == 0) &
-                                                  (test_df_copy['y_pred'] == 0) &
+                                                  (test_df_copy['y_pred' + biased_col] == 0) &
                                                   (test_df_copy[biased_col] == 0), 1, 0)
 
     test_df_copy['FN_' + biased_col + "_0"] = np.where((test_df_copy[yname] == 1) &
-                                                  (test_df_copy['y_pred'] == 0) &
+                                                  (test_df_copy['y_pred' + biased_col] == 0) &
                                                   (test_df_copy[biased_col] == 0), 1, 0)
 
     test_df_copy['FP_' + biased_col + "_0"] = np.where((test_df_copy[yname] == 0) &
-                                                  (test_df_copy['y_pred'] == 1) &
+                                                  (test_df_copy['y_pred' + biased_col] == 1) &
                                                   (test_df_copy[biased_col] == 0), 1, 0)
 
     a = test_df_copy['TP_' + biased_col + "_1"].sum()
@@ -182,26 +174,34 @@ def calculate_F1(TP,FP,FN,TN):
 def calculate_accuracy(TP,FP,FN,TN):
     return round((TP + TN)/(TP + TN + FP + FN),2)
 
-def consistency_score(X, y, n_neighbors=5):
+def flip(X_test,keyword):
+    X_flip = X_test.copy()
+    X_flip[keyword] = np.where(X_flip[keyword]==1, 0, 1)
+    return X_flip
 
-    num_samples = X.shape[0]
-    # y = y.values # Do it if it's not np array
-    # learn a KNN on the features
-    nbrs = NearestNeighbors(n_neighbors, algorithm='ball_tree').fit(X)
-    _, indices = nbrs.kneighbors(X)
+def calculate_flip(clf,X_test,keyword):
+    X_flip = flip(X_test,keyword)
+    a = np.array(clf.predict(X_test))
+    b = np.array(clf.predict(X_flip))
+    total = X_test.shape[0]
+    same = np.count_nonzero(a==b)
+    return (total-same)/total
 
-    # compute consistency score
-    consistency = 0.0
-    for i in range(num_samples):
-        consistency += np.abs(y[i] - np.mean(y[indices[i]]))
-    consistency = 1.0 - consistency/num_samples
-    return consistency
+def situation(clf,X_train,y_train,keyword):
+    X_flip = X_train.copy()
+    X_flip[keyword] = np.where(X_flip[keyword]==1, 0, 1)
+    a = np.array(clf.predict(X_train))
+    b = np.array(clf.predict(X_flip))
+    same = (a==b)
+    same = [1 if each else 0 for each in same]
+    X_train['same'] = same
+    X_train['y'] = y_train
+    X_rest = X_train[X_train['same']==1]
+    y_rest = X_rest['y']
+    X_rest = X_rest.drop(columns=['same','y'])
+    return X_rest,y_rest
 
 
-# def measure_final_score(test_df, y_pred, X_train, y_train, X_test, y_test, biased_col, metric, yname):
-#     df = copy.deepcopy(test_df)
-#     return get_counts(df, y_pred, X_train, y_train, X_test, y_test, biased_col, metric, yname)
-
-def measure_final_score(test_df, y_test, y_pred, biased_col, metric, yname):
+def measure_final_score(test_df, y_pred, biased_col, metric, yname):
     df = copy.deepcopy(test_df)
-    return get_counts(df, y_test, y_pred, biased_col, metric, yname)
+    return get_counts(df, y_pred, biased_col, metric, yname)

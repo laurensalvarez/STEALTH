@@ -80,26 +80,30 @@ def clusterGroups(root, features, num_points):
 
     return df.to_numpy(), y
 
-def getMetrics(test_df, y_test, y_pred, biased_col, treatment, samples, yname, rep, learner, start):
+def getMetrics(test_df, y_pred, biased_col, treatment, samples, yname, rep, learner, start, clf = None):
 
-    recall = measure_final_score(test_df, y_test, y_pred, biased_col, 'recall', yname)
-    precision = measure_final_score(test_df, y_test, y_pred, biased_col, 'precision', yname)
-    accuracy = measure_final_score(test_df, y_test, y_pred, biased_col, 'accuracy', yname)
-    F1 = measure_final_score(test_df, y_test, y_pred, biased_col, 'F1', yname)
-    AOD = measure_final_score(test_df, y_test, y_pred, biased_col, 'aod', yname)
-    EOD =measure_final_score(test_df, y_test, y_pred, biased_col, 'eod', yname)
-    SPD = measure_final_score(test_df, y_test, y_pred, biased_col, 'SPD', yname)
-    FA0 = measure_final_score(test_df, y_test, y_pred, biased_col, 'FA0', yname)
-    FA1 = measure_final_score(test_df, y_test, y_pred, biased_col, 'FA1', yname)
-    DI = measure_final_score(test_df, y_test, y_pred, biased_col, 'DI', yname)
-    MSE = round(mean_squared_error(y_test, y_pred),2)
-    MCC = round(matthews_corrcoef(y_test, y_pred), 2)
+    recall = measure_final_score(test_df, y_pred, biased_col, 'recall', yname)
+    precision = measure_final_score(test_df, y_pred, biased_col, 'precision', yname)
+    accuracy = measure_final_score(test_df, y_pred, biased_col, 'accuracy', yname)
+    F1 = measure_final_score(test_df, y_pred, biased_col, 'F1', yname)
+    AOD = measure_final_score(test_df, y_pred, biased_col, 'aod', yname)
+    EOD =measure_final_score(test_df, y_pred, biased_col, 'eod', yname)
+    SPD = measure_final_score(test_df, y_pred, biased_col, 'SPD', yname)
+    FA0 = measure_final_score(test_df, y_pred, biased_col, 'FA0', yname)
+    FA1 = measure_final_score(test_df, y_pred, biased_col, 'FA1', yname)
+    DI = measure_final_score(test_df, y_pred, biased_col, 'DI', yname)
+    MSE = round(mean_squared_error(test_df[yname], y_pred),2)
+    MCC = round(matthews_corrcoef(test_df[yname], y_pred), 2)
     timer = round(time.time() - start, 2)
+    if clf :
+        Flip = round(calculate_flip(clf, test_df[:, test_df.columns != yname],biased_col),2)
+    else:
+        Flip = None
 
-    return [rep, learner, biased_col, treatment, timer, samples, recall, precision, accuracy, F1, FA0, FA1, MCC, MSE, AOD, EOD, SPD, DI]
+    return [rep, learner, biased_col, treatment, samples, timer, recall, precision, accuracy, F1, FA0, FA1, MCC, MSE, AOD, EOD, SPD, DI, Flip]
 
 def main():
-    datasets = ["communities","heart", "diabetes", "germancredit", "studentperformance","compas", "bankmarketing", "defaultcredit", "adultscensusincome", 'meps'] 
+    datasets = ["communities","heart", "diabetes", "germancredit", "studentperformance", "meps", "compas", "bankmarketing", "defaultcredit", "adultscensusincome"] 
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
@@ -152,7 +156,7 @@ def main():
             sensa_indc = [cols.index(col) for col in sensitive_features]
             categorical = [cols.index(c) for c in cat_features_encoded]
 
-            for i in range(15):
+            for i in range(20):
                 i += 1
                 start = time.time()
 
@@ -163,13 +167,14 @@ def main():
                 xtest = ss.transform(xtest)
 
                 testing = pd.DataFrame(xtest, columns = cols)
+                testing[yname] = deepcopy(ytest)
                 training = pd.DataFrame(xtrain, columns = cols)
                 training[yname] = deepcopy(ytrain)
 
                 full_RF = RandomForestClassifier()
                 full_RF.fit(xtrain, ytrain)
                 f_RF_pred = full_RF.predict(xtest)
-                results.append(getMetrics(testing, ytest, f_RF_pred, keyword, 100, len(ytrain), yname, i, "RF", start))
+                results.append(getMetrics(testing, f_RF_pred, keyword, 100, len(ytrain), yname, i, "RF", start))
 
                 # full_LDF = explain(xtrain, xtest, full_RF, categorical, cols, "RF", keyword, 100, len(xtrain), i)
                 # lime_results.extend(full_LDF)
@@ -181,7 +186,7 @@ def main():
 
                 full_Slack = Adversarial_Lime_Model(biased_model_f(cols.index(keyword)), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
                 f_Slack_pred = full_Slack.predict(xtest)
-                results.append(getMetrics(testing, ytest, f_Slack_pred, keyword, 100, len(ytrain), yname, i, "Slack", start))
+                results.append(getMetrics(testing, f_Slack_pred, keyword, 100, len(ytrain), yname, i, "Slack", start))
 
                 # full_LDF = explain(xtrain, xtest, full_Slack, categorical, cols, "Slack", keyword, 100, len(xtrain), i)
                 # lime_results.extend(full_LDF)
@@ -204,12 +209,12 @@ def main():
                     RF_probed_y = full_RF.predict(subset_x)
                     RF_surrogate = RandomForestClassifier().fit(subset_x, RF_probed_y)
                     RF_surr_pred = RF_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, ytest, RF_surr_pred, keyword, num_points, len(subset_x), yname, i, "RF", start ))
+                    results.append(getMetrics(testing, RF_surr_pred, keyword, num_points, len(subset_x), yname, i, "RF", start ))
 
                     Slack_probed_y = full_Slack.predict(subset_x)
                     Slack_surrogate = RandomForestClassifier().fit(subset_x, Slack_probed_y)
                     Slack_surr_pred = Slack_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, ytest, Slack_surr_pred, keyword, num_points, len(subset_x), yname, i, "Slack", start ))
+                    results.append(getMetrics(testing, Slack_surr_pred, keyword, num_points, len(subset_x), yname, i, "Slack", start ))
 
                     # RF_surro_import = RF_surrogate.feature_importances_
                     # RF_sorted_indices = np.argsort(RF_surro_import)[::-1]

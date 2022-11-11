@@ -9,11 +9,11 @@ from copy import deepcopy
 from tqdm import tqdm
 
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix, mean_squared_error, matthews_corrcoef
+from sklearn.metrics import confusion_matrix,
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import MinMaxScaler
 
-from metrics.Measure import measure_final_score
+from metrics.Measure import situation, calculate_flip
 from smote.Generate_Samples import generate_samples
 from slack.utils import *
 from cols import Table
@@ -66,13 +66,9 @@ def maat(X_train, X_test, clf, ss, keyword, num_points, samples, rep, learner, d
     if (zero_one+one_one == 0) or zero_one < 0 or zero_zero < 0 or one_one < 0 or one_zero <0 :
         print("MAAT CANCELLED (rep, samples):", (rep, samples ), "a:", str(zero_one+one_one), "\n class distribution:", (zero_zero, zero_one, one_zero, one_one))
         timer = round(time.time() - start, 2)
-        return [rep, learner, keyword, num_points, samples, timer, None, None, None, None, None, None, None, None, None, None, None, None]
+        return [rep, learner, keyword, num_points, samples, timer, None, None, None, None, None, None, None, None, None, None, None, None,None]
    
     X_train_WAE = data_dis(raw_xtrain,keyword,dataset, yname)
-    
-    
-
-    
     y_train_WAE = X_train_WAE[yname].values
     X_train_WAE.drop([yname], axis=1, inplace=True)
 
@@ -101,7 +97,7 @@ def maat(X_train, X_test, clf, ss, keyword, num_points, samples, rep, learner, d
     y_pred = np.array(pred)
 
 
-    res = getMetrics(X_test, y_test, y_pred, keyword, num_points, samples, yname, rep, learner, start)
+    res = getMetrics(X_test, y_pred, keyword, num_points, samples, yname, rep, learner, start)
 
     return res
 
@@ -119,32 +115,7 @@ def classBal(ds, yname, protected_attribute):
     return zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero
 
 
-def flip(X_test,keyword):
-    X_flip = X_test.copy()
-    X_flip[keyword] = np.where(X_flip[keyword]==1, 0, 1)
-    return X_flip
 
-def calculate_flip(clf,X_test,keyword):
-    X_flip = flip(X_test,keyword)
-    a = np.array(clf.predict(X_test))
-    b = np.array(clf.predict(X_flip))
-    total = X_test.shape[0]
-    same = np.count_nonzero(a==b)
-    return (total-same)/total
-
-def situation(clf,X_train,y_train,keyword):
-    X_flip = X_train.copy()
-    X_flip[keyword] = np.where(X_flip[keyword]==1, 0, 1)
-    a = np.array(clf.predict(X_train))
-    b = np.array(clf.predict(X_flip))
-    same = (a==b)
-    same = [1 if each else 0 for each in same]
-    X_train['same'] = same
-    X_train['y'] = y_train
-    X_rest = X_train[X_train['same']==1]
-    y_rest = X_rest['y']
-    X_rest = X_rest.drop(columns=['same','y'])
-    return X_rest,y_rest
 
 
 def Fair_Smote(training_df, testing_df, base_clf, keyword, num_points, rep, samples, yname, learner, start):
@@ -166,7 +137,7 @@ def Fair_Smote(training_df, testing_df, base_clf, keyword, num_points, rep, samp
     if (zero_zero_zero < 3) or (zero_one_zero < 3) or (one_zero_zero < 3) or (one_one_zero < 3):
         print("SMOTE CANCELLED (rep, samples):", (rep, samples ), "\n class distribution:", (zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero))
         timer = round(time.time() - start, 2)
-        return [rep, learner, keyword, num_points, samples, timer, None, None, None, None, None, None, None, None, None, None, None, None]
+        return [rep, learner, keyword, num_points, samples, timer, None, None, None, None, None, None, None, None, None, None, None, None, None]
 
     maximum = max(zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero)
     zero_zero_zero_to_be_incresed = maximum - zero_zero_zero
@@ -205,11 +176,8 @@ def Fair_Smote(training_df, testing_df, base_clf, keyword, num_points, rep, samp
     clf2 = base_clf
     clf2.fit(X_train, y_train)
     y_pred = clf2.predict(X_test)
-    cm = confusion_matrix(y_test, y_pred)
 
-    res = getMetrics(test_df, y_test, y_pred, keyword, num_points, samples, yname, rep, learner, start)
-    # flip_rate = calculate_flip(clf2,X_test,keyword)
-    # res.append(round(flip_rate,3))
+    res = getMetrics(test_df, y_pred, keyword, num_points, samples, yname, rep, learner, start)
 
     return res
 
@@ -293,14 +261,14 @@ def main():
                 full_RF = RandomForestClassifier()
                 full_RF.fit(xtrain, ytrain)
                 # f_RF_pred = full_RF.predict(xtest)
-                # results.append(getMetrics(testing, ytest, f_RF_pred, keyword, len(ytrain), yname, i, "RF"))
+                # results.append(getMetrics(testing, f_RF_pred, keyword, len(ytrain), yname, i, "RF"))
                 results.append(Fair_Smote(training, testing, full_RF, keyword, 100, i, len(ytrain), yname, "RF_s", start))
                 results.append(maat(training, testing, full_RF, ss, keyword, 100, len(ytrain), i, "RF_m", dataset, yname, start))
 
 
                 # full_Slack = Adversarial_Lime_Model(biased_model_f(sensa_indc[0]), innocuous_model_psi(cols.index(keyword)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
                 # f_Slack_pred = full_Slack.predict(xtest)
-                # results.append(getMetrics(testing, ytest, f_Slack_pred, keyword, len(ytrain), yname, i, "Slack"))
+                # results.append(getMetrics(testing, f_Slack_pred, keyword, len(ytrain), yname, i, "Slack"))
                 # results.append(Fair_Smote(training, testing, LinearSVC(), keyword, i, len(ytrain), yname, "Slack_s"))
                 
                 table = Table(i)
@@ -324,7 +292,7 @@ def main():
                     RF_probed_y = full_RF.predict(subset_x)
                     RF_surrogate = RandomForestClassifier().fit(subset_x, RF_probed_y)
                     # RF_surr_pred = RF_surrogate.predict(xtest)
-                    # results.append(getMetrics(testing, ytest, RF_surr_pred, keyword, len(subset_x), yname, i, "RF"))
+                    # results.append(getMetrics(testing, RF_surr_pred, keyword, len(subset_x), yname, i, "RF"))
 
                     subset_df[yname] = RF_probed_y
                     results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, num_points, i, len(subset_x), yname, "RF_s", start))
@@ -334,7 +302,7 @@ def main():
                     # Slack_probed_y = full_Slack.predict(subset_x)
                     # Slack_surrogate = RandomForestClassifier().fit(subset_x, Slack_probed_y)
                     # Slack_surr_pred = Slack_surrogate.predict(xtest)
-                    # results.append(getMetrics(testing, ytest, Slack_surr_pred, keyword, len(subset_x), yname, i, "Slack_RF", 0 ))
+                    # results.append(getMetrics(testing, Slack_surr_pred, keyword, len(subset_x), yname, i, "Slack_RF", 0 ))
 
                     # subset_df[yname] = Slack_probed_y
                     # results.append(Fair_Smote(subset_df, testing, RandomForestClassifier(), keyword, i, len(subset_x), yname, "RF_RF"))
