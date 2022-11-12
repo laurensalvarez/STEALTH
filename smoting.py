@@ -9,48 +9,24 @@ from copy import deepcopy
 from tqdm import tqdm
 
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix,
+from sklearn.metrics import confusion_matrix
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import MinMaxScaler
 
-from metrics.Measure import situation, calculate_flip
+from metrics.Measure import situation, getMetrics
 from smote.Generate_Samples import generate_samples
 from slack.utils import *
-from cols import Table
-from extraction import clusterGroups, getMetrics
 from slack.adversarial_models import *
 from datasets.preprocessing import classBal
+
 
 from maat.WAE import data_dis
 
 
-##SLACK
-# 
-class biased_model_f():
-    def __init__(self, sensa_indc):
-        self.sensa_indc = sensa_indc
-    # Decision rule: classify negative outcome if underrepresented class
-    def predict(self,X):
-        return np.array([params.negative_outcome if x[self.sensa_indc] == 0 else params.positive_outcome for x in X])
-
-    def predict_proba(self, X):
-        return one_hot_encode(self.predict(X))
-
-    def score(self, X,y):
-        return np.sum(self.predict(X)==y) / len(X)
-
-# the display model with one unrelated feature
-class innocuous_model_psi():
-    def __init__(self, inno_indc):
-        self.inno_indc = inno_indc
-    # Decision rule: classify according to innoc indc
-    def predict_proba(self, X):
-        return one_hot_encode(np.array([params.negative_outcome if x[self.inno_indc] > 0 else params.positive_outcome for x in X]))
-
-
 ##
 # MAAT
-def maat(X_train, X_test, clf, ss, keyword, num_points, samples, yname, rep, learner, dataset, start):
+def maat(X_train, X_test, clf, ss, keyword, num_points, samples, yname, rep, learner, dataset):
+    start2 = time.time()
     X_train = deepcopy(X_train)
     X_test = deepcopy(X_test)
     y_train = X_train[yname].values
@@ -63,9 +39,9 @@ def maat(X_train, X_test, clf, ss, keyword, num_points, samples, yname, rep, lea
     zero_zero, zero_one, one_zero, one_one = classBal(raw_xtrain, yname, keyword)
     # print("MAAT (rep, samples):", (rep, samples ), "a:", str(zero_one+one_one), "\n class distribution:", (zero_zero, zero_one, one_zero, one_one))
 
-    if (zero_one+one_one == 0) or zero_one < 0 or zero_zero < 0 or one_one < 0 or one_zero <0 :
+    if (zero_one+one_one == 0) or (zero_one < 0) or (zero_zero < 0) or (one_one < 0) or (one_zero <0) :
         print("MAAT CANCELLED (rep, samples):", (rep, samples ), "a:", str(zero_one+one_one), "\n class distribution:", (zero_zero, zero_one, one_zero, one_one))
-        timer = round(time.time() - start, 2)
+        timer = round(time.time() - start2, 2)
         return [rep, learner, keyword, num_points, samples, timer, None, None, None, None, None, None, None, None, None, None, None, None,None]
    
     X_train_WAE = data_dis(raw_xtrain,keyword,dataset, yname)
@@ -79,12 +55,17 @@ def maat(X_train, X_test, clf, ss, keyword, num_points, samples, yname, rep, lea
     y_test = X_test[yname].values
     X_test.drop([yname], axis=1, inplace=True)
     X_test_WAE = pd.DataFrame(sc.transform(X_test.values), columns = X_test.columns)
-
+    
     pred_de1 = clf.predict_proba(X_test)
     pred_de2 = clf_WAE.predict_proba(X_test_WAE)
 
     # print(len(pred_de1), pred_de1[0])
     # print(len(pred_de2), pred_de2[0])
+
+    if (len(clf_WAE.classes_) != 2) or (len(clf.classes_) != 2) :
+        print("MAAT CANCELLED for inbalanced class preds (rep, samples):", (rep, samples ), "\nclf_WAE classes:", clf_WAE.classes_, "clf classes:", clf.classes_, "\n class distribution:", (zero_zero, zero_one, one_zero, one_one))
+        timer = round(time.time() - start2, 2)
+        return [rep, learner, keyword, num_points, samples, timer, None, None, None, None, None, None, None, None, None, None, None, None,None]
 
     pred = []
     for i in range(len(pred_de1)):
@@ -96,8 +77,9 @@ def maat(X_train, X_test, clf, ss, keyword, num_points, samples, yname, rep, lea
 
     y_pred = np.array(pred)
 
-
-    res = getMetrics(X_test, keyword, num_points, samples, yname, rep, learner, start)
+    X_test[yname] = y_test
+    res = getMetrics(X_test, y_pred, keyword, num_points, samples, yname, rep, learner, start2)
+    print("MAAT Round", (rep), "finished.")
 
     return res
 
@@ -116,7 +98,8 @@ def classBal(ds, yname, protected_attribute):
 
 
 
-def Fair_Smote(training_df, testing_df, base_clf, keyword, num_points, samples, yname, rep, learner, start):
+def Fair_Smote(training_df, testing_df, base_clf, keyword, num_points, samples, yname, rep, learner):
+    start2 = time.time()
     train_df = deepcopy(training_df)
     test_df = deepcopy(testing_df)
     acc, pre, recall, f1 = [], [], [], []
@@ -134,7 +117,7 @@ def Fair_Smote(training_df, testing_df, base_clf, keyword, num_points, samples, 
     # print("class distribution:", (zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero))
     if (zero_zero_zero < 3) or (zero_one_zero < 3) or (one_zero_zero < 3) or (one_one_zero < 3):
         print("SMOTE CANCELLED (rep, samples):", (rep, samples ), "\n class distribution:", (zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero))
-        timer = round(time.time() - start, 2)
+        timer = round(time.time() - start2, 2)
         return [rep, learner, keyword, num_points, samples, timer, None, None, None, None, None, None, None, None, None, None, None, None, None]
 
     maximum = max(zero_zero_zero, zero_one_zero, one_zero_zero, one_one_zero)
@@ -175,8 +158,8 @@ def Fair_Smote(training_df, testing_df, base_clf, keyword, num_points, samples, 
     clf2.fit(X_train, y_train)
     y_pred = clf2.predict(X_test)
 
-    res = getMetrics(test_df, y_pred, keyword, num_points, samples, yname, rep, learner, start)
-
+    res = getMetrics(test_df, y_pred, keyword, num_points, samples, yname, rep, learner, start2)
+    print("Fair-SMOTE Round", (rep), "finished.")
     return res
 
 ## to add: xFAIR?? maybe

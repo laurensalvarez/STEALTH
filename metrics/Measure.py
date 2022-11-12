@@ -1,8 +1,6 @@
 import numpy as np
-import copy,math
-from sklearn.metrics import confusion_matrix,classification_report
-from sklearn.neighbors import KDTree
-from sklearn.neighbors import NearestNeighbors
+import copy,math, time
+from sklearn.metrics import mean_squared_error, matthews_corrcoef
 
 
 def get_counts(df, y_pred, biased_col, metric, yname):
@@ -205,3 +203,26 @@ def situation(clf,X_train,y_train,keyword):
 def measure_final_score(test_df, y_pred, biased_col, metric, yname):
     df = copy.deepcopy(test_df)
     return get_counts(df, y_pred, biased_col, metric, yname)
+
+def getMetrics(test_df, y_pred, biased_col, treatment, samples, yname, rep, learner, start, clf = None):
+
+    recall = measure_final_score(test_df, y_pred, biased_col, 'recall', yname)
+    precision = measure_final_score(test_df, y_pred, biased_col, 'precision', yname)
+    accuracy = measure_final_score(test_df, y_pred, biased_col, 'accuracy', yname)
+    F1 = measure_final_score(test_df, y_pred, biased_col, 'F1', yname)
+    AOD = measure_final_score(test_df, y_pred, biased_col, 'aod', yname)
+    EOD =measure_final_score(test_df, y_pred, biased_col, 'eod', yname)
+    SPD = measure_final_score(test_df, y_pred, biased_col, 'SPD', yname)
+    FA0 = measure_final_score(test_df, y_pred, biased_col, 'FA0', yname)
+    FA1 = measure_final_score(test_df, y_pred, biased_col, 'FA1', yname)
+    DI = measure_final_score(test_df, y_pred, biased_col, 'DI', yname)
+    MSE = round(mean_squared_error(test_df[yname], y_pred),2)
+    MCC = round(matthews_corrcoef(test_df[yname], y_pred), 2)
+    timer = round(time.time() - start, 2)
+    if clf :
+        Flip = round(calculate_flip(clf, test_df[:, test_df.columns != yname],biased_col),2)
+    else:
+        Flip = None
+
+    return [rep, learner, biased_col, treatment, samples, timer, recall, precision, accuracy, F1, FA0, FA1, MCC, MSE, AOD, EOD, SPD, DI, Flip]
+

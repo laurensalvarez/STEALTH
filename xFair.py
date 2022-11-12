@@ -18,7 +18,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn import tree
 import sys
 sys.path.append(os.path.abspath('..'))
-from Measure import *
+from metrics.Measure import *
 
 
 def reg2clf(protected_pred,threshold=.5):
@@ -30,90 +30,91 @@ def reg2clf(protected_pred,threshold=.5):
     return out
 
 
-def xFAIR(traindf, testdf, base_clf, base2, keyword, yname, treatment, rep, learner, ratio=.2, smote1=True, verbose=False, thresh=.5):
+def xFAIR(traindf, testdf, base_clf, base2, keyword, yname, treatment, learner, rep, ratio=.2, smote1=True, verbose=False, thresh=.5):
     # dataset_orig = df.dropna()
     # scaler = MinMaxScaler()
     # dataset_orig = pd.DataFrame(scaler.fit_transform(dataset_orig), columns=dataset_orig.columns)
     acc, pre, recall, f1 = [], [], [], []
     aod, eod, spd, di = [], [], [], []
 
-    for i in range(rep):
-        start = time.time()
-        # dataset_orig_train, dataset_orig_test = train_test_split(dataset_orig, test_size=ratio, random_state=i)
-        X_train = copy.deepcopy(traindf.loc[:, traindf.columns != yname])
-        y_train = copy.deepcopy(traindf[yname])
-        X_test = copy.deepcopy(testdf.loc[:, testdf.columns != yname])
-        y_test = copy.deepcopy(testdf[yname])
+    # for i in range(rep):
+    start = time.time()
+    # dataset_orig_train, dataset_orig_test = train_test_split(dataset_orig, test_size=ratio, random_state=i)
+    X_train = copy.deepcopy(traindf.loc[:, traindf.columns != yname])
+    y_train = copy.deepcopy(traindf[yname])
+    X_test = copy.deepcopy(testdf.loc[:, testdf.columns != yname])
+    y_test = copy.deepcopy(testdf[yname])
 
-        reduced = list(X_train.columns)
-        reduced.remove(keyword)
-        X_reduced, y_reduced = X_train.loc[:, reduced], X_train[keyword]
-        # Build model to predict the protect attribute
-        clf1 = copy.deepcopy(base2)
-        if smote1:
-            sm = SMOTE()
-            X_trains, y_trains = sm.fit_resample(X_reduced, y_reduced)
-            clf = copy.deepcopy(base_clf)
-            clf.fit(X_trains, y_trains)
-            y_proba = clf.predict_proba(X_trains)
-            y_proba = [each[1] for each in y_proba]
-            if isinstance(clf1, DecisionTreeClassifier) or isinstance(clf1, LogisticRegression):
-                clf1.fit(X_trains, y_trains)
-            else:
-                clf1.fit(X_trains, y_proba)
+    reduced = list(X_train.columns)
+    reduced.remove(keyword)
+    X_reduced, y_reduced = X_train.loc[:, reduced], X_train[keyword]
+    # Build model to predict the protect attribute
+    clf1 = copy.deepcopy(base2)
+    if smote1:
+        sm = SMOTE()
+        X_trains, y_trains = sm.fit_resample(X_reduced, y_reduced)
+        clf = copy.deepcopy(base_clf)
+        clf.fit(X_trains, y_trains)
+        y_proba = clf.predict_proba(X_trains)
+        y_proba = [each[1] for each in y_proba]
+        if isinstance(clf1, DecisionTreeClassifier) or isinstance(clf1, LogisticRegression):
+            clf1.fit(X_trains, y_trains)
         else:
-            clf = copy.deepcopy(base_clf)
-            clf.fit(X_reduced, y_reduced)
-            y_proba = clf.predict_proba(X_reduced)
-            y_proba = [each[1] for each in y_proba]
-            if isinstance(clf1, DecisionTreeClassifier) or isinstance(clf1, LogisticRegression):
-                clf1.fit(X_reduced, y_reduced)
-            else:
-                clf1.fit(X_reduced, y_proba)
-        #             clf1.fit(X_reduced,y_reduced)
+            clf1.fit(X_trains, y_proba)
+    else:
+        clf = copy.deepcopy(base_clf)
+        clf.fit(X_reduced, y_reduced)
+        y_proba = clf.predict_proba(X_reduced)
+        y_proba = [each[1] for each in y_proba]
+        if isinstance(clf1, DecisionTreeClassifier) or isinstance(clf1, LogisticRegression):
+            clf1.fit(X_reduced, y_reduced)
+        else:
+            clf1.fit(X_reduced, y_proba)
+    #             clf1.fit(X_reduced,y_reduced)
 
-        if verbose:
-            if isinstance(clf1, LinearRegression):
-                importances = (clf1.coef_)
-            elif isinstance(clf1, LogisticRegression):
-                importances = (clf1.coef_[0])
-                print("coef:", clf1.coef_[0], "intercept:", clf1.intercept_)
-            else:
-                importances = clf1.feature_importances_
-            indices = np.argsort(importances)
-            features = X_reduced.columns
+    if verbose:
+        if isinstance(clf1, LinearRegression):
+            importances = (clf1.coef_)
+        elif isinstance(clf1, LogisticRegression):
+            importances = (clf1.coef_[0])
+            print("coef:", clf1.coef_[0], "intercept:", clf1.intercept_)
+        else:
+            importances = clf1.feature_importances_
+        indices = np.argsort(importances)
+        features = X_reduced.columns
 
-            plt.rcParams.update({'font.size': 14})
-            plt.title('Feature Importances on sensitive attribute')
-            plt.barh(range(len(indices)), importances[indices], color='b', align='center')
-            plt.yticks(range(len(indices)), [features[i] for i in indices])
-            plt.xlabel('Relative Importance')
-            plt.show()
+        plt.rcParams.update({'font.size': 14})
+        plt.title('Feature Importances on sensitive attribute')
+        plt.barh(range(len(indices)), importances[indices], color='b', align='center')
+        plt.yticks(range(len(indices)), [features[i] for i in indices])
+        plt.xlabel('Relative Importance')
+        plt.show()
 
-        X_test_reduced = X_test.loc[:, X_test.columns != keyword]
-        protected_pred = clf1.predict(X_test_reduced)
-        if isinstance(clf1, DecisionTreeRegressor) or isinstance(clf1, LinearRegression):
-            protected_pred = reg2clf(protected_pred, threshold=thresh)
-        # Build model to predict the taget attribute Y
-        clf2 = copy.deepcopy(base_clf)
+    X_test_reduced = X_test.loc[:, X_test.columns != keyword]
+    protected_pred = clf1.predict(X_test_reduced)
+    if isinstance(clf1, DecisionTreeRegressor) or isinstance(clf1, LinearRegression):
+        protected_pred = reg2clf(protected_pred, threshold=thresh)
+    # Build model to predict the taget attribute Y
+    clf2 = copy.deepcopy(base_clf)
 
-        X_test.loc[:, keyword] = protected_pred
-        y_pred = clf2.predict(X_test)
+    X_test.loc[:, keyword] = protected_pred
+    y_pred = clf2.predict(X_test)
 
-        re1.append(getMetrics(X_test, y_pred, keyword, treatment, len(ytrain), yname, i, learner, start))
-        # cm = confusion_matrix(y_test, y_pred)
-        # acc.append(accuracy_score(y_test, y_pred))
-        # pre.append(precision_score(y_test, y_pred))
-        # recall.append(recall_score(y_test, y_pred))
-        # f1.append(f1_score(y_test, y_pred))
-        # aod.append(measure_final_score(dataset_orig_test, y_pred, cm, X_train, y_train, X_test, y_test, keyword, 'aod'))
-        # eod.append(measure_final_score(dataset_orig_test, y_pred, cm, X_train, y_train, X_test, y_test, keyword, 'eod'))
-        # spd.append(measure_final_score(dataset_orig_test, y_pred, cm, X_train, y_train, X_test, y_test, keyword, 'SPD'))
-        # di.append(measure_final_score(dataset_orig_test, y_pred, cm, X_train, y_train, X_test, y_test, keyword, 'DI'))
-        print("Round", (i + 1), "finished.")
-        print('Time', time.time() - start)
-    # res1 = [acc, pre, recall, f1, aod, eod, spd, di]
-    return res1
+    X_test[yname] = y_test
+    res = getMetrics(X_test, y_pred, keyword, treatment, len(y_train), yname, rep, learner, start)
+    # cm = confusion_matrix(y_test, y_pred)
+    # acc.append(accuracy_score(y_test, y_pred))
+    # pre.append(precision_score(y_test, y_pred))
+    # recall.append(recall_score(y_test, y_pred))
+    # f1.append(f1_score(y_test, y_pred))
+    # aod.append(measure_final_score(dataset_orig_test, y_pred, cm, X_train, y_train, X_test, y_test, keyword, 'aod'))
+    # eod.append(measure_final_score(dataset_orig_test, y_pred, cm, X_train, y_train, X_test, y_test, keyword, 'eod'))
+    # spd.append(measure_final_score(dataset_orig_test, y_pred, cm, X_train, y_train, X_test, y_test, keyword, 'SPD'))
+    # di.append(measure_final_score(dataset_orig_test, y_pred, cm, X_train, y_train, X_test, y_test, keyword, 'DI'))
+    print("XFAIR Round", (rep), "finished.")
+    # print('Time', time.time() - start)
+    # res = [acc, pre, recall, f1, aod, eod, spd, di]
+    return res
 
 
 if __name__ == "__main__":

@@ -17,8 +17,9 @@ import lime.lime_tabular
 from slack.utils import *
 from slack.adversarial_models import *
 from cols import Table,leafmedians2, getLeafData2, getXY2
-from metrics.Measure import measure_final_score
+from metrics.Measure import getMetrics
 from xFair import *
+from smoting import Fair_Smote, maat
 
 params = Params("./model_configurations/experiment_params.json")
 np.random.seed(params.seed)
@@ -81,30 +82,9 @@ def clusterGroups(root, features, num_points):
 
     return df.to_numpy(), y
 
-def getMetrics(test_df, y_pred, biased_col, treatment, samples, yname, rep, learner, start, clf = None):
-
-    recall = measure_final_score(test_df, y_pred, biased_col, 'recall', yname)
-    precision = measure_final_score(test_df, y_pred, biased_col, 'precision', yname)
-    accuracy = measure_final_score(test_df, y_pred, biased_col, 'accuracy', yname)
-    F1 = measure_final_score(test_df, y_pred, biased_col, 'F1', yname)
-    AOD = measure_final_score(test_df, y_pred, biased_col, 'aod', yname)
-    EOD =measure_final_score(test_df, y_pred, biased_col, 'eod', yname)
-    SPD = measure_final_score(test_df, y_pred, biased_col, 'SPD', yname)
-    FA0 = measure_final_score(test_df, y_pred, biased_col, 'FA0', yname)
-    FA1 = measure_final_score(test_df, y_pred, biased_col, 'FA1', yname)
-    DI = measure_final_score(test_df, y_pred, biased_col, 'DI', yname)
-    MSE = round(mean_squared_error(test_df[yname], y_pred),2)
-    MCC = round(matthews_corrcoef(test_df[yname], y_pred), 2)
-    timer = round(time.time() - start, 2)
-    if clf :
-        Flip = round(calculate_flip(clf, test_df[:, test_df.columns != yname],biased_col),2)
-    else:
-        Flip = None
-
-    return [rep, learner, biased_col, treatment, samples, timer, recall, precision, accuracy, F1, FA0, FA1, MCC, MSE, AOD, EOD, SPD, DI, Flip]
 
 def main():
-    datasets = ["communities","heart"]#, "diabetes", "germancredit", "studentperformance", "meps", "compas", "defaultcredit","bankmarketing", "adultscensusincome"] 
+    datasets = [ "bankmarketing", "adultscensusincome"] #"communities","heart", "diabetes", "germancredit", "studentperformance", "meps", "compas", "defaultcredit",
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
@@ -138,7 +118,7 @@ def main():
             X['Unrelated_column_one'] = np.random.choice([0,1],size=X.shape[0])
 
             sensitive_features = [col for col in X.columns if "(" in col]
-            sorted(sensitive_features)
+            sensitive_features.sort()
 
             cat_features_not_encoded = []
             for col in X.columns:
@@ -180,9 +160,9 @@ def main():
                 results.append(getMetrics(testing, f_RF_pred, keyword, 100, len(ytrain), yname, i, "RF", start)) #original/raw/baseline performance
                 
                 #Baseline Fairness Tools for full set
-                results.append(Fair_Smote(training, testing, full_RF, keyword, 100, len(ytrain), yname, i, "RF_s", start))
-                results.append(maat(training, testing, full_RF, ss, keyword, 100, len(ytrain), yname, i, "RF_m", dataset, start))
-                results.append(xFair(training, testing, RandomForestClassifier(), DecisionTreeRegressor(), keyword, yname, treatment, rep = i, "RF_x"))
+                results.append(Fair_Smote(training, testing, full_RF, keyword, 100, len(ytrain), yname, i, "RF_s"))
+                results.append(maat(training, testing, full_RF, ss, keyword, 100, len(ytrain), yname, i, "RF_m", dataset))
+                results.append(xFAIR(training, testing, full_RF, DecisionTreeRegressor(), keyword, yname, 100, "RF_x", rep = i))
 
                 #Explanations
                 # full_LDF = explain(xtrain, xtest, full_RF, categorical, cols, "RF", keyword, 100, len(xtrain), i)
@@ -198,10 +178,17 @@ def main():
                 full_Slack = Adversarial_Lime_Model(biased_model_f(cols.index(keyword)), innocuous_model_psi(inno_indc)).train(xtrain, ytrain, feature_names=cols, perturbation_multiplier=2, categorical_features=categorical)
                 f_Slack_pred = full_Slack.predict(xtest)
                 results.append(getMetrics(testing, f_Slack_pred, keyword, 100, len(ytrain), yname, i, "Slack", start))
+
+                # results.append(Fair_Smote(training, testing, full_Slack, keyword, 100, len(ytrain), yname, i, "Slack_s"))
+                # results.append(maat(training, testing, full_Slack, ss, keyword, 100, len(ytrain), yname, i, "Slack_m", dataset))
+                # results.append(xFAIR(training, testing, full_Slack, DecisionTreeRegressor(), keyword, yname, 100, "Slack_x", rep = i))
                 
 
                 # full_LDF = explain(xtrain, xtest, full_Slack, categorical, cols, "Slack", keyword, 100, len(xtrain), i)
                 # lime_results.extend(full_LDF)
+
+                
+                start2 = time.time()
 
                 table = Table(i)
                 rows = deepcopy(training.values)
@@ -213,35 +200,38 @@ def main():
                 enough = int(math.sqrt(len(table.rows)))
                 root = Table.clusters(table.rows, table, enough)
 
-                treatment = [0,1,2,3,4,5]
+                treatment = [2]
 
                 for num_points in treatment:
                     subset_x, clustered_y = clusterGroups(root, cols, num_points)
+                    subset_df = pd.DataFrame(subset_x, columns = cols)
 
                     RF_probed_y = full_RF.predict(subset_x)
                     RF_surrogate = RandomForestClassifier().fit(subset_x, RF_probed_y)
                     RF_surr_pred = RF_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, RF_surr_pred, keyword, num_points, len(subset_x), yname, i, "RF", start ))
+                    results.append(getMetrics(testing, RF_surr_pred, keyword, num_points, len(RF_probed_y), yname, i, "RF", start2 )) #surro performance
                     
-                    # results.append(getMetrics(testing, f_RF_pred, keyword, 100, len(ytrain), yname, i, "RF", start)) #surro performance
-                    # #Baseline Fairness Tools for distilled set
-                    # results.append(Fair_Smote(training, testing, full_RF, keyword, 100, len(ytrain), yname, i, "RF_s", start))
-                    # results.append(maat(training, testing, full_RF, ss, keyword, 100, len(ytrain), yname, i, "RF_m", dataset, start))
-                    # results.append(xFair(training, testing, RandomForestClassifier(), DecisionTreeRegressor(), keyword, yname, treatment, rep = i, "RF_x"))
-
+                    #Baseline Fairness Tools for distilled set
+                    subset_df[yname] = RF_probed_y
+                    results.append(Fair_Smote(subset_df, testing, full_RF, keyword, num_points, len(RF_probed_y), yname, i, "RF_s"))
+                    results.append(maat(subset_df, testing, full_RF, ss, keyword, num_points, len(RF_probed_y), yname, i, "RF_m", dataset))
+                    results.append(xFAIR(subset_df, testing, RF_surrogate, DecisionTreeRegressor(), keyword, yname, num_points, "RF_x", rep = i))
+                    subset_df.drop([yname], axis=1, inplace=True)
 
 
                     Slack_probed_y = full_Slack.predict(subset_x)
                     Slack_surrogate = RandomForestClassifier().fit(subset_x, Slack_probed_y)
                     Slack_surr_pred = Slack_surrogate.predict(xtest)
-                    results.append(getMetrics(testing, Slack_surr_pred, keyword, num_points, len(subset_x), yname, i, "Slack", start ))
+                    results.append(getMetrics(testing, Slack_surr_pred, keyword, num_points, len(Slack_probed_y), yname, i, "Slack", start2 ))
                     
                     # SLACK SURRO
-                    # results.append(getMetrics(testing, f_RF_pred, keyword, 100, len(ytrain), yname, i, "RF", start)) #surro performance
-                    # #Baseline Fairness Tools for distilled set
-                    # results.append(Fair_Smote(training, testing, full_RF, keyword, 100, len(ytrain), yname, i, "RF_s", start))
-                    # results.append(maat(training, testing, full_RF, ss, keyword, 100, len(ytrain), yname, i, "RF_m", dataset, start))
-                    # results.append(xFair(training, testing, RandomForestClassifier(), DecisionTreeRegressor(), keyword, yname, treatment, rep = i, "RF_x"))
+                    results.append(getMetrics(testing, f_RF_pred, keyword, 100, len(Slack_probed_y), yname, i, "Slack", start2)) 
+                    
+                    # subset_df[yname] = Slack_probed_y
+                    # results.append(Fair_Smote(subset_df, testing, full_RF, keyword, num_points, len(ytrain), yname, i, "Slack_s"))
+                    # results.append(maat(subset_df, testing, full_RF, ss, keyword, num_points, len(ytrain), yname, i, "Slack_m", dataset))
+                    # results.append(xFAIR(subset_df, testing, Slack_surrogate, DecisionTreeRegressor(), keyword, yname, num_points, "Slack_x", rep = i))
+                    # subset_df.drop([yname], axis=1, inplace=True)
 
                     # Explanations 
                     # RF_surro_import = RF_surrogate.feature_importances_
@@ -264,8 +254,8 @@ def main():
 
 
 
-        mets = pd.DataFrame(results, columns = ["rep", "learner", "biased_col","treatment", "samples", "runtime", "rec+", "prec+", "acc+", "F1+", "FA0-", "FA1-","MCC-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-"]) 
-        mets.to_csv("./final/" +  dataset + "_metrics.csv", index=False)
+        mets = pd.DataFrame(results, columns = ["rep", "learner", "biased_col","treatment", "samples", "runtime", "rec+", "prec+", "acc+", "F1+", "FA0-", "FA1-","MCC-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-", "Flip"]) 
+        mets.to_csv("./final/" +  dataset +"_metrics.csv", index=False)
         # feat_imp = pd.DataFrame(feat_importance_tuple_list, columns = ["rep", "learner", "biased_col", "treatment", "samples", "feature", "importance"])
         # feat_imp.to_csv("./final/" +  dataset + "_FI.csv", index=False)
         # all_L = pd.DataFrame(lime_results, columns = ["ranking","feature", "occurances_pct", "learner", "biased_col", "treatment", "samples", "rep",])
