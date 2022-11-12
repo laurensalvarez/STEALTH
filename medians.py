@@ -74,10 +74,10 @@ def printStdv(path, hmetrics, lmetrics, allmetrics, mediandf):
 
     df1 = copy.deepcopy(df)
     # print(df1.head)
-    mediandf = mediandf[~mediandf['learner'].isin(['Slack', 'Slack_RF'])]
+    # mediandf = mediandf[~mediandf['learner'].isin(['Slack', 'Slack_RF'])]
     # mediandf["learner"].replace(["RF_RF", "SVC_RF","LSR_RF" ],["RF", "SVC", "LSR"], inplace = True)
-    mediandf["learner"].replace(["RF_RF"],["RF"], inplace = True)
-    df1 = df1[~df1['learner'].isin(['Slack', 'Slack_RF'])]
+    # mediandf["learner"].replace(["RF_RF"],["RF"], inplace = True)
+    # df1 = df1[~df1['learner'].isin(['Slack', 'Slack_RF'])]
 
     features = copy.deepcopy(df1["biased_col"].tolist())
     sortedfeatures = sorted(set(features), key = lambda ele: features.count(ele))
@@ -138,15 +138,13 @@ def printStdv(path, hmetrics, lmetrics, allmetrics, mediandf):
     return stdvdf, mediandf
 
 if __name__ == "__main__":
-    datasets =  ["communities", "heart", "diabetes", "studentperformance","compas",  "bankmarketing", "defaultcredit", "adultscensusincome"]
-
-    # , "germancredit"
-    allmetrics = ['rec+', 'prec+', 'acc+', 'F1+','FA0-', 'FA1-',  'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-'] #'MCC-',
-    hmetrics = ['rec+', 'prec+', 'acc+', 'F1+']
-    lmetrics = ['FA0-', 'FA1-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-'] #'MCC-',
+    datasets =  ["communities", "heart", "diabetes",  "germancredit", "studentperformance", 'meps',"compas",   "bankmarketing", "defaultcredit", "adultscensusincome"]
+    allmetrics = ['runtime', 'rec+', 'prec+', 'acc+', 'F1+','FA0-', 'FA1-', 'MCC-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip'] #
+    hmetrics = ['rec+', 'prec+', 'acc+', 'F1+', 'Flip']
+    lmetrics = ['FA0-', 'FA1-', 'MCC-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-'] #'MCC-',
     pbar = tqdm(datasets)
 
-    columns = ['order','dataset',"learner","biased_col","samples", 'rec+', 'prec+', 'acc+', 'F1+', 'FA0-', 'FA1-','MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-'] #,'MCC-'
+    columns = ['order','dataset',"learner","biased_col","samples", 'runtime', 'rec+', 'prec+', 'acc+', 'F1+', 'FA0-', 'FA1-','MCC-','MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip'] #,'MCC-'
     fulldf = pd.DataFrame(columns=columns)
     datasetdf = pd.DataFrame(columns=columns)
     # meddatasetdf = pd.DataFrame(columns=columns)
@@ -158,7 +156,7 @@ if __name__ == "__main__":
 
         pbar.set_description("Processing %s" % dataset)
         # mediandf = pd.DataFrame(columns=columns)
-        path = "./output/final/" + dataset + "_FM.csv"
+        path = "./final/" + dataset + "_metrics.csv"
         # basedf = pd.read_csv("./final/maat/" + dataset + ".csv")
         # disdf = pd.read_csv("./output/final/" + dataset + "_FM.csv")
         
@@ -176,5 +174,5 @@ if __name__ == "__main__":
 
     fulldf = datasetdf[columns]
     # medfulldf = meddatasetdf[columns]
-    # medfulldf.to_csv("./stdv/final/baseline_medians.csv", index = False)
-    fulldf.to_csv("./stdv/final/m_medians.csv", index = False)
+    # medfulldf.to_csv("./stdv/final/medians.csv", index = False)
+    fulldf.to_csv("./stdv/final/marked_medians.csv", index = False)
