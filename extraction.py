@@ -68,6 +68,8 @@ def explain(xtrain, xtest, learner, categorical, features, model, keyword, treat
         t.append(treatment)
         t.append(samples)
         t.append(rep)
+
+    print("LIME Round", (rep), "finished.", round(time.time() - rt, 2) )
     return L
 
 
@@ -85,7 +87,7 @@ def clusterGroups(root, features, num_points):
 
 
 def main():
-    datasets = [ "bankmarketing", "adultscensusincome"] #"communities","heart", "diabetes", "germancredit", "studentperformance", "meps", "compas", "defaultcredit",
+    datasets = ["communities","heart", "diabetes", "germancredit", "studentperformance", "meps", "compas", "defaultcredit", "bankmarketing", "adultscensusincome"] #"communities","heart", "diabetes", "germancredit", "studentperformance", "meps", "compas", "defaultcredit",
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
@@ -138,7 +140,7 @@ def main():
             sensa_indc = [cols.index(col) for col in sensitive_features]
             categorical = [cols.index(c) for c in cat_features_encoded]
 
-            for i in range(20):
+            for i in range(2):
                 i += 1
                 start = time.time()
 
@@ -165,11 +167,11 @@ def main():
                 # results.append(maat(training, testing, full_RF, ss, keyword, 100, len(ytrain), yname, i, "RF_m", dataset))
                 # results.append(xFAIR(training, testing, full_RF, DecisionTreeRegressor(), keyword, yname, 100, "RF_x", rep = i))
 
-                Explanations
+                # Explanations
                 full_LDF = explain(xtrain, xtest, full_RF, categorical, cols, "RF", keyword, 100, len(xtrain), i, start)
                 lime_results.extend(full_LDF)
 
-                RF Explanations
+                # RF Explanations
                 full_import = full_RF.feature_importances_
                 sorted_indices = np.argsort(full_import)[::-1]
                 for feat in range(xtrain.shape[1]):
@@ -235,15 +237,15 @@ def main():
                     # results.append(xFAIR(subset_df, testing, Slack_surrogate, DecisionTreeRegressor(), keyword, yname, num_points, "Slack_x", rep = i))
                     # subset_df.drop([yname], axis=1, inplace=True)
 
-                    Explanations 
+                    # Explanations 
                     RF_surro_import = RF_surrogate.feature_importances_
                     RF_sorted_indices = np.argsort(RF_surro_import)[::-1]
 
                     Slack_surro_import = Slack_surrogate.feature_importances_
                     Slack_sorted_indices = np.argsort(Slack_surro_import)[::-1]
 
-                    RF 
-                    print(RF_surrogate.classes_ , Slack_surrogate.classes_)
+                    # RF 
+                    # print(RF_surrogate.classes_ , Slack_surrogate.classes_)
                     full_LDF = explain(xtrain, xtest, full_RF, categorical, cols, "RF", keyword, 100, len(xtrain), i, start)
                     RF_surro_LDF = explain(subset_x, xtest, RF_surrogate, categorical, cols, "RF", keyword, num_points, len(subset_x), i, start2)
                     lime_results.extend(RF_surro_LDF)
