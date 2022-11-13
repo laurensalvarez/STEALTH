@@ -57,8 +57,17 @@ def explain(xtrain, xtest, learner, categorical, features, model, keyword, treat
     explanations = []
     for i in range(xtest.shape[0]):
         explanations.append(explainer.explain_instance(xtest[i], learner.predict_proba).as_list())
-
+        
+    
+    instance_toshow = np.random.randint(0, xtest.shape[0])
+    exp = explainer.explain_instance(xtest[instance_toshow], learner.predict_proba)
+    plt = exp.as_pyplot_figure()
+    plt.savefig('./figures/lime_slackst.jpg', pad_inches = 4)
+    # exp.show_in_notebook(show_table=True, show_all=False)
+    print("pic")
     exp_dict = experiment_summary(explanations, features)
+    sys.exit()
+
 
     L = [[k, *t] for k, v in exp_dict.items() for t in v]
     for t in L:
@@ -87,7 +96,7 @@ def clusterGroups(root, features, num_points):
 
 
 def main():
-    datasets = ["communities","heart", "diabetes", "germancredit", "studentperformance", "meps", "compas", "defaultcredit", "bankmarketing", "adultscensusincome"] #"communities","heart", "diabetes", "germancredit", "studentperformance", "meps", "compas", "defaultcredit",
+    datasets = [ "heart"] #"communities","heart", "diabetes", "germancredit", "studentperformance", "meps", "compas", "defaultcredit", "bankmarketing", "adultscensusincome"
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
@@ -118,7 +127,7 @@ def main():
             X.drop([yname], axis=1, inplace=True)
 
             # needed for the SLACK adv_model so add unrelated columns
-            X['Unrelated_column_one'] = np.random.choice([0,1],size=X.shape[0])
+            X['Unrelated'] = np.random.choice([0,1],size=X.shape[0])
 
             sensitive_features = [col for col in X.columns if "(" in col]
             sensitive_features.sort()
@@ -136,7 +145,7 @@ def main():
                 if col not in sensitive_features and col[0].islower():
                     cat_features_encoded.append(col)
 
-            inno_indc = cols.index('Unrelated_column_one')
+            inno_indc = cols.index('Unrelated')
             sensa_indc = [cols.index(col) for col in sensitive_features]
             categorical = [cols.index(c) for c in cat_features_encoded]
 
@@ -168,8 +177,8 @@ def main():
                 # results.append(xFAIR(training, testing, full_RF, DecisionTreeRegressor(), keyword, yname, 100, "RF_x", rep = i))
 
                 # Explanations
-                full_LDF = explain(xtrain, xtest, full_RF, categorical, cols, "RF", keyword, 100, len(xtrain), i, start)
-                lime_results.extend(full_LDF)
+                # full_LDF = explain(xtrain, xtest, full_RF, categorical, cols, "RF", keyword, 100, len(xtrain), i, start)
+                # lime_results.extend(full_LDF)
 
                 # RF Explanations
                 full_import = full_RF.feature_importances_
@@ -188,8 +197,8 @@ def main():
                 # results.append(xFAIR(training, testing, full_Slack, DecisionTreeRegressor(), keyword, yname, 100, "Slack_x", rep = i))
                 
 
-                full_LDF = explain(xtrain, xtest, full_Slack, categorical, cols, "Slack", keyword, 100, len(xtrain), i, start)
-                lime_results.extend(full_LDF)
+                # full_LDF = explain(xtrain, xtest, full_Slack, categorical, cols, "Slack", keyword, 100, len(xtrain), i, start)
+                # lime_results.extend(full_LDF)
 
                 
                 start2 = time.time()
@@ -246,12 +255,12 @@ def main():
 
                     # RF 
                     # print(RF_surrogate.classes_ , Slack_surrogate.classes_)
-                    full_LDF = explain(xtrain, xtest, full_RF, categorical, cols, "RF", keyword, 100, len(xtrain), i, start)
-                    RF_surro_LDF = explain(subset_x, xtest, RF_surrogate, categorical, cols, "RF", keyword, num_points, len(subset_x), i, start2)
-                    lime_results.extend(RF_surro_LDF)
+                    # full_LDF = explain(xtrain, xtest, full_RF, categorical, cols, "RF", keyword, 100, len(xtrain), i, start)
+                    # RF_surro_LDF = explain(subset_x, xtest, RF_surrogate, categorical, cols, "RF", keyword, num_points, len(subset_x), i, start2)
+                    # lime_results.extend(RF_surro_LDF)
 
                     Slack_surro_LDF = explain(subset_x, xtest, Slack_surrogate, categorical, cols, "Slack", keyword, num_points, len(subset_x), i, start2)
-                    lime_results.extend(Slack_surro_LDF)
+                    # lime_results.extend(Slack_surro_LDF)
 
                     for feat in range(xtrain.shape[1]):
                         timer2 = time.time() - start
@@ -259,7 +268,7 @@ def main():
                         feat_importance_tuple_list.append([i, "Slack", keyword, num_points, timer2, len(subset_x),cols[Slack_sorted_indices[feat]], round(Slack_surro_import[Slack_sorted_indices[feat]],3)])
 
 
-
+        sys.exit()
         # mets = pd.DataFrame(results, columns = ["rep", "learner", "biased_col","treatment", "samples", "runtime", "rec+", "prec+", "acc+", "F1+", "FA0-", "FA1-","MCC-", "MSE-", "AOD-", "EOD-", "SPD-", "DI-", "Flip"]) 
         # mets.to_csv("./final/" +  dataset +"_metrics.csv", index=False)
         feat_imp = pd.DataFrame(feat_importance_tuple_list, columns = ["rep", "learner", "biased_col","runtime", "treatment", "samples", "feature", "importance"])

@@ -90,27 +90,28 @@ def getMedians(path,metrics):
 
 
 if __name__ == "__main__":
-    datasets = ["communities", "heart" , "diabetes",  "studentperformance","compas", "bankmarketing", "defaultcredit"]
-    # , "germancredit", "adultscensusicome"
-    metrics = ['recall+', 'precision+', 'accuracy+', 'F1+','MSE-', 'FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip'] #feature,sample_size,model_num,smoted
+    datasets =  ["communities", "heart", "diabetes",  "germancredit", "studentperformance", 'meps',"compas",   "bankmarketing", "defaultcredit", "adultscensusincome"]
+    metrics = ['runtime', 'rec+', 'prec+', 'acc+', 'F1+','FA0-', 'FA1-', 'MCC-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip'] #
     pbar = tqdm(datasets)
 
-    columns = ['dataset','recall+', 'precision+', 'accuracy+', 'F1+', 'MSE-', 'FA0-', 'FA1-','AOD-', 'EOD-', 'SPD-', 'DI-','biased_col','samples', "learner"]
+    columns = ['order','dataset',"learner","biased_col","samples", 'runtime', 'rec+', 'prec+', 'acc+', 'F1+', 'FA0-', 'FA1-','MCC-','MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip'] #,'MCC-'
     fulldf = pd.DataFrame(columns=columns)
     datasetdf = pd.DataFrame(columns=columns)
-
+    order = 0
     for dataset in pbar:
+        order += 1
         pbar.set_description("Processing %s" % dataset)
         # mediandf = pd.DataFrame(columns=columns)
 
-        path =  "./output/final/SMOTE/" + dataset + ".csv"
+        path =  "./final/" + dataset + "_metrics.csv"
         mediandf = getMedians(path, metrics)
         # print(mediandf)
 
         # mediandf.to_csv("./medians/surro/" + dataset + "_medians.csv", index = False)
         mediandf['dataset'] = dataset
+        mediandf['order'] = order
         datasetdf = pd.concat([datasetdf, mediandf], ignore_index=True)
     # print(datasetdf)
 
     fulldf = datasetdf[columns]
-    fulldf.to_csv("./medians/final/allmedians_smoted.csv", index = False)
+    fulldf.to_csv("./medians/all_medians.csv", index = False)

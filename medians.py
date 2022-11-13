@@ -53,12 +53,12 @@ def twinsies(maxdict, stdvdict, val, col, hmetrics):
     # print("col:", col, "  val:", val, "  high:", high, "  low:", low)
 
     if col in hmetrics:
-        if low <= val and val >=high or val <= high:
+        if (low <= val and val <=high) or val >= high:
             newval = str(val) + "Y"
         else:
             newval = str(val) + "N"
     else:
-        if low >= val or low <=val and val <= high:
+        if low >= val or (low <=val and val <= high):
             newval = str(val) + "Y"
         else:
             newval = str(val) + "N"
@@ -74,10 +74,10 @@ def printStdv(path, hmetrics, lmetrics, allmetrics, mediandf):
 
     df1 = copy.deepcopy(df)
     # print(df1.head)
-    # mediandf = mediandf[~mediandf['learner'].isin(['Slack', 'Slack_RF'])]
+    mediandf = mediandf[~mediandf['learner'].isin(['Slack', 'Slack_RF'])]
     # mediandf["learner"].replace(["RF_RF", "SVC_RF","LSR_RF" ],["RF", "SVC", "LSR"], inplace = True)
     # mediandf["learner"].replace(["RF_RF"],["RF"], inplace = True)
-    # df1 = df1[~df1['learner'].isin(['Slack', 'Slack_RF'])]
+    df1 = df1[~df1['learner'].isin(['Slack', 'Slack_RF'])]
 
     features = copy.deepcopy(df1["biased_col"].tolist())
     sortedfeatures = sorted(set(features), key = lambda ele: features.count(ele))
@@ -86,6 +86,7 @@ def printStdv(path, hmetrics, lmetrics, allmetrics, mediandf):
     for f in sortedfeatures:
         df4 = copy.deepcopy(df1)
         df4.drop(df4.loc[df4['biased_col']!= f].index, inplace=True)
+        # print(df4.head())
         stddf = round(df4.std()*0.35,2)
         stdd = stddf.to_dict()
         del stdd['rep']
@@ -105,7 +106,7 @@ def printStdv(path, hmetrics, lmetrics, allmetrics, mediandf):
 
             samples = copy.deepcopy(df2["samples"].tolist())
             sortedsamples = sorted(set(samples), key = lambda ele: samples.count(ele))
-            sortedsamples = sorted(sortedsamples, reverse = True)
+            sortedsamples.sort(reverse = True)
             # print("sortedsamples", sortedsamples)
             # fulllearner = sortedsamples[0]
             df3 = copy.deepcopy(df2)
@@ -114,11 +115,12 @@ def printStdv(path, hmetrics, lmetrics, allmetrics, mediandf):
             for col in allmetrics:
                 fulldict[col] = df3[col].values[0]
             # print("sortedsamples", sortedsamples)
-            # print("fulldict:", fulldict)
-            for s in sortedsamples:
+            # print(m + " fulldict:", fulldict)
+            for s in sortedsamples[1:]:
                 r = []
                 df5 = copy.deepcopy(df2)
                 df5.drop(df5.loc[df5['samples']!= s].index, inplace=True)
+                # print(df5)
 
                 for col in allmetrics:
                     val = df5[col].values[0]
