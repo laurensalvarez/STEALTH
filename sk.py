@@ -270,29 +270,20 @@ class Rx(Mine):
     "pretty print set of treatments"
     tmp=Rx.sum(rxs)
     mlist = []
-    ranklist =[]
-    sdlist =[]
     medlist = []
-    avglist = []
-    # clist = []
-    skdf = pd.DataFrame(columns=["dataset", "model", "metric", "median", "StandDev", "mean", "sk_rank"])
+    ranklist =[]
+    skdf = pd.DataFrame(columns=["dataset", "model", "metric", "median", "sk_rank"])
     # lo,hi=tmp.vals[0], tmp.vals[-1]
     for rx in sorted(rxs):
         mlist.append(rx.rx)
-        ranklist.append(rx.rank)
-        sdlist.append(round(rx.sd,3))
         medlist.append(rx.med)
-        avglist.append(round(rx.mu,3))
-        # clist.append(round(rx.cohen,3))
+        ranklist.append(rx.rank)
         print(THE.rx.show % (rx.rank, rx.rx,
               rx.tiles(lo=lo,hi=hi)))
 
     skdf["model"] = mlist
     skdf["sk_rank"] = ranklist
     skdf["median"] = medlist
-    skdf["mean"] = avglist
-    skdf["StandDev"] = sdlist
-    # skdf["cohens"] = clist
     return skdf
 
   @staticmethod
@@ -431,8 +422,7 @@ from slack.utils import *
 if __name__ == "__main__":
   params = Params("./model_configurations/experiment_params.json")
   np.random.seed(params.seed)
-  datasets = [ "communities" ,"heart","diabetes" ,"studentperformance", "compas", "bankmarketing", "defaultcredit", "adultscensusincome"]
-  # "germancredit",
+  datasets = [ "heart","communities","heart", "diabetes", "germancredit", "studentperformance", "meps", "compas", "defaultcredit", "bankmarketing", "adultscensusincome"]
   keywords = {'adultscensusincome': ['race(', 'sex('],
               'compas': ['race(','sex('],
               'bankmarketing': ['Age('],
@@ -441,45 +431,45 @@ if __name__ == "__main__":
               'diabetes': ['Age('],
               'germancredit': ['sex('],
               'heart': ['Age('],
-              'studentperformance': ['sex(']
+              'studentperformance': ['sex('],
+              'meps': ['race(']
               }
-  metrics = ['rec+', 'prec+', 'acc+', 'F1+', 'MCC-', 'MSE-', 'FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
-  learners = ['RF']
+  metrics = ['recall+', 'prec+', 'acc+', 'F1+', 'MCC-', 'MSE-', 'FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
   pbar = tqdm(datasets)
 
-  datasetsdf = pd.DataFrame(columns=["order", "dataset", "model", "metric", "median", "mean", "StandDev", "sk_rank"])
-  statsdf = pd.DataFrame(columns = ["order", "dataset","model", "metric", "median", "mean", "StandDev", "sk_rank", "CD_res", "tm_bootstrap", "jacc", "tm_cliffsDelta", "cliffsDelta"])
+  datasetsdf = pd.DataFrame(columns=["order", "dataset", "model", "metric", "median", "StandDev", "sk_rank"])
+  statsdf = pd.DataFrame(columns = ["order", "dataset","model", "metric", "median", "sk_rank", "CD_res", "tm_bootstrap", "jacc", "tm_cliffsDelta", "cliffsDelta"])
   order = 0
   for dataset in pbar:
     order += 1
     pbar.set_description("Processing %s" % dataset)
     klist = keywords[dataset]
     metricdf = pd.DataFrame(columns=["dataset","model", "metric", "median", "mean", "StandDev", "sk_rank"])
-    # statdf = pd.DataFrame(columns = ["model", "cliffsDelta", "bootstrap"])
-    for m in metrics:
-      df = pd.read_csv(r'./sk_data/final/' + dataset + "_" + m +"_.csv", sep=' ', header = None)
-      df = df.transpose()
-      df.columns = df.iloc[0]
-      df = df[1:]
-      for l in learners:
-        learner_cols = [col for col in df.columns if l in col]
-        output = df[learner_cols]
-        output.transpose().to_csv("./sk_data/final/learners/" + l + "/" + dataset + "_" +  l +"_" + m +"_.csv", header = None, index=True, sep=' ')
+    statdf = pd.DataFrame(columns = ["model", "cliffsDelta", "bootstrap"])
+    # for m in metrics:
+    #   df = pd.read_csv(r'./sk_data/final/' + dataset + "_" + m +"_.csv", sep=' ', header = None)
+    #   df = df.transpose()
+    #   df.columns = df.iloc[0]
+    #   df = df[1:]
+    #   for l in learners:
+    #     learner_cols = [col for col in df.columns if l in col]
+    #     output = df[learner_cols]
+    #     output.transpose().to_csv("./sk_data/final/learners/" + l + "/" + dataset + "_" +  l +"_" + m +"_.csv", header = None, index=True, sep=' ')
 
-    for l in learners:
-      for m in metrics:
-        print("\n" +"-" + dataset +"-" + l +"-"+ m + "\n"  )
-        metric2df, statdf = Rx.fileIn("./sk_data/final/learners/" + l + "/" + dataset + "_" +  l + "_" + m +"_.csv", metricdf, klist)
-        metric2df["metric"] = [m] * metric2df.index.size
-        metric2df["dataset"] = [dataset] * metric2df.index.size
-        metric2df["order"] = [order] * metric2df.index.size
-        statdf["metric"] = [m] * statdf.index.size
-        df_merged = pd.merge(metric2df, statdf, on = ["model", "metric"], how = "left")
-        # print("df_merged",df_merged.index.size )
-        statsdf = pd.concat([statsdf, df_merged], ignore_index=True)
-        # print("statsdf",statsdf.index.size )
+    # for l in learners:
+    for m in metrics:
+      print("\n" +"-" + dataset +"-"+ m + "\n"  )
+      metric2df, statdf = Rx.fileIn("./sk_data/final/" + dataset + "_" + m +"_.csv", metricdf, klist)
+      metric2df["metric"] = [m] * metric2df.index.size
+      metric2df["dataset"] = [dataset] * metric2df.index.size
+      metric2df["order"] = [order] * metric2df.index.size
+      statdf["metric"] = [m] * statdf.index.size
+      df_merged = pd.merge(metric2df, statdf, on = ["model", "metric"], how = "left")
+      # print("df_merged",df_merged.index.size )
+      statsdf = pd.concat([statsdf, df_merged], ignore_index=True)
+      # print("statsdf",statsdf.index.size )
 
   datasetsdf = pd.concat([datasetsdf, statsdf], ignore_index=True)
   # print("datasetdf",datasetsdf.index.size )
-  datasetsdf.to_csv("./sk_graphs/final/FM_RF.csv", index = False)
+  datasetsdf.to_csv("./sk_graphs/all_sk.csv", index = False)
   print("-"*100)

@@ -23,6 +23,7 @@ def main():
     for dataset in pbar:
         pbar.set_description("Processing %s" % dataset)
         df = pd.read_csv('./final/' + dataset + "_metrics.csv")
+        klist = keywords[dataset]
 
         df1 = copy.deepcopy(df)
         df1 = df1[~df1['learner'].isin(['Slack', 'Slack_RF'])]
@@ -37,6 +38,8 @@ def main():
 
         model_num = copy.deepcopy(df1["samples"].tolist())
         sortedmodels = sorted(set(model_num), key = lambda ele: model_num.count(ele))
+        sortedmodels.sort(reverse = True)  
+        max_samples =  sortedmodels[0]
 
         recalldict = defaultdict(dict)
         precisiondict = defaultdict(dict)
@@ -58,7 +61,6 @@ def main():
             learner = copy.deepcopy(dfRF2["learner"].tolist())
             sortedlearner = sorted(set(learner), key = lambda ele: learner.count(ele))
 
-            print(sortedlearner)
 
             for l in sortedlearner:
                 dfRF3 = copy.deepcopy(dfRF2)
@@ -103,69 +105,16 @@ def main():
                     DIdict[str(m) + "_" + l + "_" + f] = DI.values
                     # FLIPdict[m][f] = FLIP.values
 
-        # reformed_recalldict = {}
-        # for outerKey, innerDict in recalldict.items():
-        #     for innerKey, values in innerDict.items():
-        #         reformed_recalldict[(outerKey,innerKey)] = values
+        dictionaries = [recalldict,precisiondict, accdict,F1dict, FA0dict, FA1dict, MSEdict, MCCdict, AODdict, EODdict, SPDdict, DIdict]
+        for k in klist:
+            removeThese = [str(max_samples) + "_RFx_" + k, str(max_samples) + "_RFm_" + k, str(max_samples) + "_RFs_" + k]
+            print(removeThese)
 
-        # reformed_predict = {}
-        # for outerKey, innerDict in precisiondict.items():
-        #     for innerKey, values in innerDict.items():
-        #         reformed_predict[(outerKey,innerKey)] = values
+            for d in dictionaries:
+                for r in removeThese:
+                    del d[r] 
 
-        # reformed_accdict = {}
-        # for outerKey, innerDict in accdict.items():
-        #     for innerKey, values in innerDict.items():
-        #         reformed_accdict[(outerKey,innerKey)] = values
 
-        # reformed_F1dict = {}
-        # for outerKey, innerDict in F1dict.items():
-        #     for innerKey, values in innerDict.items():
-        #         reformed_F1dict[(outerKey,innerKey)] = values
-
-        # reformed_FA0dict = {}
-        # for outerKey, innerDict in FA0dict.items():
-        #     for innerKey, values in innerDict.items():
-        #         reformed_FA0dict[(outerKey,innerKey)] = values
-
-        # reformed_FA1dict = {}
-        # for outerKey, innerDict in FA1dict.items():
-        #     for innerKey, values in innerDict.items():
-        #         reformed_FA1dict[(outerKey,innerKey)] = values
-
-        # reformed_MSEdict = {}
-        # for outerKey, innerDict in MSEdict.items():
-        #     for innerKey, values in innerDict.items():
-        #         reformed_MSEdict[(outerKey,innerKey)] = values
-        
-        # reformed_MCCdict = {}
-        # for outerKey, innerDict in MCCdict.items():
-        #     for innerKey, values in innerDict.items():
-        #         reformed_MSEdict[(outerKey,innerKey)] = values
-
-        # reformed_AODdict = {}
-        # for outerKey, innerDict in AODdict.items():
-        #     for innerKey, values in innerDict.items():
-        #         reformed_AODdict[(outerKey,innerKey)] = values
-
-        # reformed_EODdict = {}
-        # for outerKey, innerDict in EODdict.items():
-        #     for innerKey, values in innerDict.items():
-        #         reformed_EODdict[(outerKey,innerKey)] = values
-
-        # reformed_SPDdict = {}
-        # for outerKey, innerDict in SPDdict.items():
-        #     for innerKey, values in innerDict.items():
-        #         reformed_SPDdict[(outerKey,innerKey)] = values
-
-        # reformed_DIdict = {}
-        # for outerKey, innerDict in DIdict.items():
-        #     for innerKey, values in innerDict.items():
-        #         reformed_DIdict[(outerKey,innerKey)] = values
-
-        pprint.pprint(recalldict)
-       
-        
         recall_df = pd.DataFrame.from_dict(recalldict, orient = 'index')
         recall_df.to_csv("./sk_data/final/" + dataset + "_recall+_.csv", header = None, index=True, sep=' ')
         
