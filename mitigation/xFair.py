@@ -1,23 +1,12 @@
 import pandas as pd
-import random,time,csv
+import time,copy
 import numpy as np
-import math,copy,os
 from imblearn.over_sampling import SMOTE
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeRegressor,DecisionTreeClassifier
-from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import precision_score
-from sklearn.metrics import recall_score
-from sklearn.metrics import f1_score
-from sklearn.metrics import confusion_matrix
-from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
-from sklearn import tree
-import sys
-sys.path.append(os.path.abspath('..'))
 from metrics.Measure import *
 
 
@@ -31,15 +20,8 @@ def reg2clf(protected_pred,threshold=.5):
 
 
 def xFAIR(traindf, testdf, base_clf, base2, keyword, yname, treatment, learner, rep, ratio=.2, smote1=True, verbose=False, thresh=.5):
-    # dataset_orig = df.dropna()
-    # scaler = MinMaxScaler()
-    # dataset_orig = pd.DataFrame(scaler.fit_transform(dataset_orig), columns=dataset_orig.columns)
-    acc, pre, recall, f1 = [], [], [], []
-    aod, eod, spd, di = [], [], [], []
 
-    # for i in range(rep):
     start = time.time()
-    # dataset_orig_train, dataset_orig_test = train_test_split(dataset_orig, test_size=ratio, random_state=i)
     X_train = copy.deepcopy(traindf.loc[:, traindf.columns != yname])
     y_train = copy.deepcopy(traindf[yname])
     X_test = copy.deepcopy(testdf.loc[:, testdf.columns != yname])
@@ -70,7 +52,6 @@ def xFAIR(traindf, testdf, base_clf, base2, keyword, yname, treatment, learner, 
             clf1.fit(X_reduced, y_reduced)
         else:
             clf1.fit(X_reduced, y_proba)
-    #             clf1.fit(X_reduced,y_reduced)
 
     if verbose:
         if isinstance(clf1, LinearRegression):
@@ -102,30 +83,24 @@ def xFAIR(traindf, testdf, base_clf, base2, keyword, yname, treatment, learner, 
 
     X_test[yname] = y_test
     res = getMetrics(X_test, y_pred, keyword, treatment, len(y_train), yname, rep, learner, start)
-    # cm = confusion_matrix(y_test, y_pred)
-    # acc.append(accuracy_score(y_test, y_pred))
-    # pre.append(precision_score(y_test, y_pred))
-    # recall.append(recall_score(y_test, y_pred))
-    # f1.append(f1_score(y_test, y_pred))
-    # aod.append(measure_final_score(dataset_orig_test, y_pred, cm, X_train, y_train, X_test, y_test, keyword, 'aod'))
-    # eod.append(measure_final_score(dataset_orig_test, y_pred, cm, X_train, y_train, X_test, y_test, keyword, 'eod'))
-    # spd.append(measure_final_score(dataset_orig_test, y_pred, cm, X_train, y_train, X_test, y_test, keyword, 'SPD'))
-    # di.append(measure_final_score(dataset_orig_test, y_pred, cm, X_train, y_train, X_test, y_test, keyword, 'DI'))
+   
     print("XFAIR Round", (rep), "finished.")
     # print('Time', time.time() - start)
-    # res = [acc, pre, recall, f1, aod, eod, spd, di]
     return res
 
 
 if __name__ == "__main__":
-    filenames = ['adult', 'compas-scores-two-years', 'GermanData', 'bank', 'heart', 'default', 'h181']
-    keywords = {'adult': ['sex', 'race'],
-                'compas-scores-two-years': ['sex', 'race'],
-                'bank': ['age'],
-                'default': ['sex'],
-                'GermanData': ['sex'],
-                'h181': ['race'],
-                'heart': ['age']
+    datasets =  ['communities', 'heart', 'diabetes',  'german', 'student', 'meps', 'compas', 'bank', 'default', 'adult']
+    keywords = {'adult': ['race(', 'sex('],
+                'compas': ['race(','sex('],
+                'bank': ['Age('],
+                'communities': ['Racepctwhite('],
+                'default': ['SEX('],
+                'diabetes': ['Age('],
+                'german': ['sex('],
+                'heart': ['Age('],
+                'student': ['sex('],
+                'meps': ['race(']
                 }
     base = RandomForestClassifier()
     base2 = DecisionTreeRegressor()

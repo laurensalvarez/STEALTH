@@ -17,8 +17,8 @@ from cols import Table,leafmedians2, getLeafData2, getXY2
 from slack.utils import *
 from slack.adversarial_models import *
 from metrics.Measure import getMetrics
-from xFair import *
-from mitigation import fair_smote, maat
+from mitigation.xFair import *
+from mitigation import Fair_Smote, maat
 
 params = Params("./model_configurations/experiment_params.json")
 np.random.seed(params.seed)

@@ -198,21 +198,19 @@ def compareFair(distilledDF, baselineDF, metrics,keyword):
 
 
 if __name__ == "__main__":
-    datasets = ["communities","heart", "diabetes", "germancredit", "studentperformance", "meps", "compas", "bankmarketing"]#, "defaultcredit" "adultscensusincome"]
-
-    keywords = {'adultscensusincome': ['race(', 'sex('],
+    datasets =  ['communities', 'heart', 'diabetes',  'german', 'student', 'meps', 'compas', 'bank', 'default', 'adult']
+    keywords = {'adult': ['race(', 'sex('],
                 'compas': ['race(','sex('],
-                'bankmarketing': ['Age('],
+                'bank': ['Age('],
                 'communities': ['Racepctwhite('],
-                'defaultcredit': ['SEX('],
+                'default': ['SEX('],
                 'diabetes': ['Age('],
-                'germancredit': ['sex('],
+                'german': ['sex('],
                 'heart': ['Age('],
-                'studentperformance': ['sex('],
+                'student': ['sex('],
                 'meps': ['race(']
                 }
     metrics = ['rec+','prec+','acc+', 'F1+', 'FA0-', 'FA1-', 'MCC-', 'MSE-', 'AOD-', 'EOD-', 'SPD-',  'DI-']
-    #LIME COls  ["ranking","feature", "occurances_pct","model_num", "rep"] #ranking,feature,occurances_pct,learner,biased_col,runtime,treatment,samples,rep
     pbar = tqdm(datasets)
     columns = ["order", "dataset","learner","biased_col", "samples", "jacc"]
     datasetdf = pd.DataFrame(columns=columns)
@@ -223,7 +221,7 @@ if __name__ == "__main__":
         order += 1
         pbar.set_description("Processing %s" % dataset)
         for k in klist:
-            jacdf = compareLIMERanks("./LIME_rankings/final/" + dataset + "._LIME.csv", dataset, k)
+            jacdf = compareLIMERanks("./LIME_rankings/final/" + dataset + "_LIME.csv", dataset, k)
             # distilledpath = "./output/final/" + dataset + "_metrics.csv"
             # distilledDF = pd.read_csv(distilledpath)
             # basepath = "./final/maat/" + dataset + ".csv"
