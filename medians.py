@@ -174,7 +174,7 @@ if __name__ == "__main__":
         # meddatasetdf = pd.concat([meddatasetdf, mediandf], ignore_index=True)
     # print(datasetdf)
 
-    fulldf = datasetdf[columns]
+    # fulldf = datasetdf[columns]
     # medfulldf = meddatasetdf[columns]
     # medfulldf.to_csv("./stdv/final/medians.csv", index = False)
-    fulldf.to_csv("./stdv/final/marked_medians.csv", index = False)
+    # fulldf.to_csv("./stdv/final/marked_medians.csv", index = False)

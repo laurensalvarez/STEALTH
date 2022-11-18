@@ -8,41 +8,43 @@ from itertools import count, groupby, chain
 from collections import defaultdict
 from cliffs_delta import cliffs_delta #https://pypi.org/project/cliffs-delta/
 
-from metrics.sk import jaccard_similarity, cliffsDelta, bootstrap
+from sk import jaccard_similarity, cliffsDelta, bootstrap
 # sys.path.append(os.path.abspath('.'))
 
-def compareLIMERanks(path, dataset):
+def compareLIMERanks(path, dataset, k):
     df = pd.read_csv(path)
     df1 = copy.deepcopy(df)
 
     rows = []
     reslist, cDlist, blist, jlist, = [], [], [], []
-    full_names = ['RF', "Slack"] #"LSR", ]
-    surro_names = ['RF_RF', 'Slack_RF'] #'LSR_RF',
+    names = ['RF', "Slack"] 
 
     # if dataset in ["compas", "bankmarketing", "defaultcredit", "adultscensusincome"]:
     #     treatment = range(7)
     # else:
     #     treatment = range(4)
-    treatment = [2,3,4,5]
+
+    # df1 = df1[~df1['learner'].isin(['Slack', 'Slack_RF'])]
+    # df1["learner"].replace(["RF_s", "RF_m","RF_x" ],["RFs", "RFm", "RFx"], inplace = True)
 
     samples = copy.deepcopy(df1["samples"].tolist())
     sortedsamples = sorted(set(samples), key = lambda ele: samples.count(ele))
-    sortedsamples = sorted(sortedsamples, reverse = True)
+    sortedsamples.sort(reverse = True)
 
-    for n in range(2):
 
+    for n in names:
         df2 = copy.deepcopy(df1)
-        df2.drop(df2.loc[df2['learner']!= full_names[n]].index, inplace=True)
-        df2.drop(df2.loc[df2['samples']!= sortedsamples[0]].index, inplace=True)
+        df2.drop(df2.loc[df2['treatment']!= 100].index, inplace=True)
+        df2.drop(df2.loc[df2['learner']!= n].index, inplace=True)
         df2.drop(df2.loc[df2['ranking']!= 1].index, inplace=True)
+        df2.drop(df2.loc[df2['biased_col']!= k].index, inplace=True)
 
         # print(df2.head(10))
 
         full_rank_1 = df2['feature'].values
 
         df3 = copy.deepcopy(df1)
-        df3.drop(df3.loc[df3['learner']!= surro_names[n]].index, inplace=True)
+        df3.drop(df3.loc[df3['learner']!= n].index, inplace=True)
         for t in sortedsamples[1:]:
             r = []
             df4 = copy.deepcopy(df3)
@@ -53,20 +55,21 @@ def compareLIMERanks(path, dataset):
 
             surro_rank_1 = df4['feature'].values
 
-            print("full_rank_1", full_rank_1, "\n \n surro_rank_1", surro_rank_1)
+            # print("full_rank_1", full_rank_1, "\n \n surro_rank_1", surro_rank_1)
 
             # cdelta, res = cliffs_delta(full_rank_1,surro_rank_1)
 
             r.append(t)
-            r.append(surro_names[n])
+            r.append(n)
+            r.append(k)
             r.append(jaccard_similarity(full_rank_1,surro_rank_1))
-            r.append(res)
-            r.append(round(cdelta,2))
+            # r.append(res)
+            # r.append(round(cdelta,2))
             # r.append("same" if bootstrap(full_rank_1,surro_rank_1) else 'different')
             # r.append(cliffsDelta(full_rank_1,surro_rank_1))
 
             rows.append(r)
-    prettydf = pd.DataFrame(rows, columns = ["samples", "learner", "jacc", "CD_res", "CD"])
+    prettydf = pd.DataFrame(rows, columns = ["samples", "learner", "biased_col", "jacc"])
     print(prettydf.head(10))
     return prettydf
 
@@ -195,8 +198,8 @@ def compareFair(distilledDF, baselineDF, metrics,keyword):
 
 
 if __name__ == "__main__":
-    datasets = ["communities","heart", "diabetes", "studentperformance", "compas", "bankmarketing", "defaultcredit", "adultscensusincome"]
-# "germancredit"
+    datasets = ["communities","heart", "diabetes", "germancredit", "studentperformance", "meps", "compas", "bankmarketing"]#, "defaultcredit" "adultscensusincome"]
+
     keywords = {'adultscensusincome': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bankmarketing': ['Age('],
@@ -205,12 +208,13 @@ if __name__ == "__main__":
                 'diabetes': ['Age('],
                 'germancredit': ['sex('],
                 'heart': ['Age('],
-                'studentperformance': ['sex(']
+                'studentperformance': ['sex('],
+                'meps': ['race(']
                 }
-    metrics = ['rec+','prec+','acc+', 'F1+', 'FA0-', 'FA1-', 'MSE-', 'AOD-', 'EOD-', 'SPD-',  'DI-']
-    #LIME COls  ["ranking","feature", "occurances_pct","model_num", "rep"]
+    metrics = ['rec+','prec+','acc+', 'F1+', 'FA0-', 'FA1-', 'MCC-', 'MSE-', 'AOD-', 'EOD-', 'SPD-',  'DI-']
+    #LIME COls  ["ranking","feature", "occurances_pct","model_num", "rep"] #ranking,feature,occurances_pct,learner,biased_col,runtime,treatment,samples,rep
     pbar = tqdm(datasets)
-    columns = ["order", "dataset","learner","metric", "samples", "jacc", "CD_res", "CD"]
+    columns = ["order", "dataset","learner","biased_col", "samples", "jacc"]
     datasetdf = pd.DataFrame(columns=columns)
     order = 0
 
@@ -219,16 +223,16 @@ if __name__ == "__main__":
         order += 1
         pbar.set_description("Processing %s" % dataset)
         for k in klist:
-            # jacdf = compareLIMERanks("./LIME_rankings/final/" + dataset + ".csv", dataset)
-            distilledpath = "./output/final/" + dataset + "_FM.csv"
-            distilledDF = pd.read_csv(distilledpath)
-            basepath = "./final/maat/" + dataset + ".csv"
-            baseDF = pd.read_csv(basepath)
-            jacdf = compareFair(distilledDF,baseDF, metrics,k)
+            jacdf = compareLIMERanks("./LIME_rankings/final/" + dataset + "._LIME.csv", dataset, k)
+            # distilledpath = "./output/final/" + dataset + "_metrics.csv"
+            # distilledDF = pd.read_csv(distilledpath)
+            # basepath = "./final/maat/" + dataset + ".csv"
+            # baseDF = pd.read_csv(basepath)
+            # jacdf = compareFair(distilledDF,baseDF, metrics,k)
 
             jacdf['dataset'] = dataset
             jacdf['order'] = order
             datasetdf = pd.concat([datasetdf, jacdf], ignore_index=True)
 
         # print(prettydf.head())
-    datasetdf.to_csv("./stdv/final/baseline.csv", index = False)
+    datasetdf.to_csv("./LIME_rankings/final/all_jac.csv", index = False)

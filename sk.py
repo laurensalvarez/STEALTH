@@ -422,7 +422,7 @@ from slack.utils import *
 if __name__ == "__main__":
   params = Params("./model_configurations/experiment_params.json")
   np.random.seed(params.seed)
-  datasets = [ "heart","communities","heart", "diabetes", "germancredit", "studentperformance", "meps", "compas", "defaultcredit", "bankmarketing", "adultscensusincome"]
+  datasets = ["communities","heart", "diabetes", "germancredit", "studentperformance", "meps", "compas", "defaultcredit", "bankmarketing", "adultscensusincome"]
   keywords = {'adultscensusincome': ['race(', 'sex('],
               'compas': ['race(','sex('],
               'bankmarketing': ['Age('],
@@ -434,18 +434,18 @@ if __name__ == "__main__":
               'studentperformance': ['sex('],
               'meps': ['race(']
               }
-  metrics = ['recall+', 'prec+', 'acc+', 'F1+', 'MCC-', 'MSE-', 'FA0-', 'FA1-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
+  metrics = ['recall+', 'prec+', 'acc+', 'F1+', 'FA0-', 'AOD-', 'EOD-', 'SPD-', 'DI-']
   pbar = tqdm(datasets)
 
-  datasetsdf = pd.DataFrame(columns=["order", "dataset", "model", "metric", "median", "StandDev", "sk_rank"])
-  statsdf = pd.DataFrame(columns = ["order", "dataset","model", "metric", "median", "sk_rank", "CD_res", "tm_bootstrap", "jacc", "tm_cliffsDelta", "cliffsDelta"])
+  datasetsdf = pd.DataFrame(columns=["order", "dataset", "model", "metric", "median", "sk_rank"])
+  statsdf = pd.DataFrame(columns = ["order", "dataset","model", "metric", "median", "sk_rank",])
   order = 0
   for dataset in pbar:
     order += 1
     pbar.set_description("Processing %s" % dataset)
     klist = keywords[dataset]
-    metricdf = pd.DataFrame(columns=["dataset","model", "metric", "median", "mean", "StandDev", "sk_rank"])
-    statdf = pd.DataFrame(columns = ["model", "cliffsDelta", "bootstrap"])
+    metricdf = pd.DataFrame(columns=["dataset","model", "metric", "median", "sk_rank"])
+    # statdf = pd.DataFrame(columns = ["model", "cliffsDelta", "bootstrap"])
     # for m in metrics:
     #   df = pd.read_csv(r'./sk_data/final/' + dataset + "_" + m +"_.csv", sep=' ', header = None)
     #   df = df.transpose()

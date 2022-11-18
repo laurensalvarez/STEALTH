@@ -113,5 +113,5 @@ if __name__ == "__main__":
         datasetdf = pd.concat([datasetdf, mediandf], ignore_index=True)
     # print(datasetdf)
 
-    fulldf = datasetdf[columns]
-    fulldf.to_csv("./medians/all_medians.csv", index = False)
+    # fulldf = datasetdf[columns]
+    # fulldf.to_csv("./medians/all_medians.csv", index = False)
