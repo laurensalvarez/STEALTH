@@ -198,7 +198,7 @@ def compareFair(distilledDF, baselineDF, metrics,keyword):
 
 
 if __name__ == "__main__":
-    datasets =  ['communities', 'heart', 'diabetes',  'german', 'student', 'meps', 'compas', 'bank', 'default', 'adult']
+    datasets =  ['communities', 'heart', 'diabetes',  'german', 'student', 'meps', 'compas', 'bank', 'default','adult']#
     keywords = {'adult': ['race(', 'sex('],
                 'compas': ['race(','sex('],
                 'bank': ['Age('],
