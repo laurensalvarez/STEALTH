@@ -5,4 +5,4 @@ The output of extraction.py will be the metric scores and LIME explanations for 
 
 To get the results summarizations, compareRanks.py computes the jaccard coefficient, and sk.py computes the Scott Knott procedure. To run, sk.py the results have to be a specified format which can be created using sksetup.py.
 
-For more information, contact me at lalvare@ncsu.edu with STEALTH github in the subject line. 
+For more information, contact lalvare@ncsu.edu with STEALTH github in the subject line. 
