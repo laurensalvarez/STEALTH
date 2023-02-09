@@ -4,7 +4,7 @@
 ## Overview
 
 - `datasets` folder contains all datasets (raw and processed) and the pre-processing script used in this paper.
-- `slack` folder contains the necessary files for [Fooling LIME and SHAP: Adversarial Attacks on Post hoc Explanation Methods Slack et. al.](https://dl.acm.org/doi/pdf/10.1145/3375627.3375830).
+- `slack` folder contains the necessary files for the lying model from [Fooling LIME and SHAP: Adversarial Attacks on Post hoc Explanation Methods by Slack et. al.](https://dl.acm.org/doi/pdf/10.1145/3375627.3375830).
 - `baselines` folder contains all the baselines used in the paper.  
     - `FairSMOTE` contains [Fair-SMOTE](https://arxiv.org/abs/2105.12195), which rebalances the protected attributes by generating additional
         synthetic training data. In Fair-SMOTE, `Generate_Samples.py` is used to generate synthetic data.
