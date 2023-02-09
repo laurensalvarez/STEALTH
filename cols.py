@@ -1,21 +1,6 @@
-import math, re, random, statistics, sys
-import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
-import cProfile
-import collections
+import math, re, random, sys
 from collections import defaultdict
-from copy import deepcopy
 from itertools import count
-from tqdm import tqdm
-
-from sklearn import preprocessing
-from sklearn.svm import SVC
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.model_selection import train_test_split, KFold, cross_val_score, RepeatedKFold, RepeatedStratifiedKFold
-from sklearn.metrics import classification_report, confusion_matrix
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -28,10 +13,10 @@ tiny = 1 / big
 # ------------------------------------------------------------------------------
 class Col:
     def __init__(self,
-                 name):  # The __init__ method lets the class initialize the object's attributes and serves no other purpose
-        self._id = 0  # underscore means hidden var
-        self.name = name  # self is an instance of the class with all of the attributes & methods
-
+                 name):
+        self._id = 0 
+        self.name = name  
+        
     def __add__(self, v):
         return v
 
@@ -53,42 +38,39 @@ class Col:
 # Symbolic Column Class
 # ------------------------------------------------------------------------------
 class Sym(Col):
-    def __init__(self, name, uid, data=None):  # will override Col inheritance (could use super() to inherit)
+    def __init__(self, name, uid, data=None):
         Col.__init__(self,
-                     name)  # invoking the __init__ of the parent class; If you forget to invoke the __init__() of the parent class then its instance variables would not be available to the child class.
+                     name)
         self.n = 0
         self.most = 0
         self.mode = ""
-        self.uid = uid  # uid --> it allows for permanence and recalling necessary subtables
-        self.count = defaultdict(int)  # will never throw a key error bc it will guve default value as missing key
+        self.uid = uid 
+        self.count = defaultdict(int)
         # self.encoder = preprocessing.LabelEncoder()
         self.coltype = 0
         self.vals = []
-        if data != None:  # initializes the empty col with val
+        if data != None:
             for val in data:
-                self + val  # calls __add__
+                self + val
 
     # def __str__(self):
     # print to a sym; overrides print(); could replace dump() TBD
 
     def __add__(self, v):
-        return self.add(v, 1)  # need to adds? i forgot why
+        return self.add(v, 1)
 
-    def add(self, v, inc=1):  # want to be able to control the increments
-        self.n += inc  # add value to the count
+    def add(self, v, inc=1):
+        self.n += inc
         self.vals.append(v)
-        self.count[v] += inc  # add value to the dictionary with count +1
+        self.count[v] += inc
         tmp = self.count[v]
-        if tmp > self.most:  # check which is the most seen; if it's the most then assign and update mode
-            self.most, self.mode = tmp, v  # a,b = b,a
+        if tmp > self.most: 
+            self.most, self.mode = tmp, v
         return v
 
     def diversity(self):  # entropy of all of n
-        # is a measure of the randomness in the information being processed.
-        # The higher the entropy, the harder it is to draw any conclusions from
-        # that information.
         e = 0
-        for k, v in self.count.items():  # iterate through a list of tuples (key, value)
+        for k, v in self.count.items():
             p = v / self.n
             e -= p * math.log(p) / math.log(2)
         return e
@@ -97,7 +79,7 @@ class Sym(Col):
         return self.mode
 
     def dist(self, x, y):  # Aha's distance between two syms
-        if (x == "?" or x == "") or (y == "?" or y == ""):  # check if the empty is just a bug
+        if (x == "?" or x == "") or (y == "?" or y == ""):
             return 1
         return 0 if x == y else 1
 
@@ -108,7 +90,7 @@ class Num(Col):
     def __init__(self, name, uid, data=None):
         Col.__init__(self, name)
         self.n = 0
-        self.mu = 0  #
+        self.mu = 0
         self.m2 = 0  # for moving std dev
         self.sd = 0
         self.lo = big  # float('inf')
@@ -121,35 +103,31 @@ class Num(Col):
         self.coltype = 1
         if data != None:
             for val in data:
-                self + val  # calls __add__
+                self + val
 
     def __add__(self, v):
         # add the column; calculate the new lo/hi, get the sd using the 'chasing the mean'
         self.n += 1
-        self.vals.append(v)  # add value to a list
-        self.count[v] += 1  # add value to the dictionary with count +1
+        self.vals.append(v)
+        self.count[v] += 1 
         tmp = self.count[v]
         if tmp > self.most:  # check which is the most seen; if it's the most then assign and update mode
-            self.most, self.mode = tmp, v  # a,b = b,a
+            self.most, self.mode = tmp, v
         try:
-            if v < self.lo:  # if the val is < the lowest; reassign
+            if v < self.lo: 
                 self.lo = v
-            if v > self.hi:  # if the val is > the highest; reassign
+            if v > self.hi:
                 self.hi = v
             d = v - self.mu  # distance to the mean
             self.mu += d / self.n  # normalize it
             self.m2 += d * (v - self.mu)  # calculate momentumn of the series in realtionship to the distance
-            self.sd = self._numSd()  #
+            self.sd = self._numSd()
             self.median = self.mid()
         except:
             print("failed col name:", self.name, "id:", self.uid)
         return v
 
-    def _numSd(self):
-        # Standard deviation is a number that describes how
-        # spread out the values are. A low standard deviation
-        # means that most of the numbers are close to the mean (average) value.
-        # A high standard deviation means that the values are spread out over a wider range.
+    def _numSd(self):        
         if self.m2 < 0:  # means there's is no momentum to the series
             return 0
         if self.n < 2:  # if there's two items
@@ -160,7 +138,6 @@ class Num(Col):
         return self.sd
 
     def mid(self):  # get midpoint for nums (median)
-        # NO statistics.median(self.vals)
         listLen = len(self.vals)
         self.vals.sort()
 
@@ -215,16 +192,16 @@ class Table:
         self.protected = []
         self.w = defaultdict(int)
         self.x = []
-        self.xnums = []  # num x points (not including goals/klass)
-        self.xsyms = []  # sym x points
+        self.xnums = [] 
+        self.xsyms = []
         self.header = ""
         self.clabels = []
 
     # ------------------------------------------------------------------------------
     # Table Class: Helper Functions
     # ------------------------------------------------------------------------------
-    @staticmethod  # helper function; not to create or instantiate; don't use with instantiated obj
-    def compiler(x):  # checks & compiles data type; a python thing
+    @staticmethod 
+    def compiler(x): 
         try:
             int(x)
             return int(x)
@@ -240,7 +217,7 @@ class Table:
         datalines = []
         finallines = []
 
-        with open(file) as f:  # ensures that the file will be closed when control leaves the block
+        with open(file) as f:
             curline = ""
             for line in f:
                 line = line.strip()  # get rid of all the white space
@@ -256,17 +233,17 @@ class Table:
             line = re.sub(doomed, '', line)  # uses regular exp package to replace substrings in strings
             if line:
                 finallines.append([Table.compiler(x) for x in line.split(sep)])
-        return finallines  # returns all the pretty readable lines
+        return finallines
 
     # ------------------------------------------------------------------------------
     # Table Class: Class Methods
     # ------------------------------------------------------------------------------
     def __add__(self, line):
-        if len(self.header) > 0:  # if line has a header
-            self.insert_row(line)  # insert the row
+        if len(self.header) > 0: 
+            self.insert_row(line)
         else:
-            self.create_cols(line)  # if not; create a col
-
+            self.create_cols(line) 
+            
     def create_cols(self, line):
         self.header = line  # since add recognized no header, assign first line as a header.
         index = 0
@@ -275,10 +252,10 @@ class Table:
             val = self.compiler(val)  # compile the val datatype
 
             if val[0] == ":" or val[
-                0] == "?":  # do we skip? if we skip then it doesn't matter what we do? bc it'll never be populated?
+                0] == "?":
                 if val[0].isupper():
                     self.skip.append(Num(''.join(c for c in val),
-                                         index))  # take all the items in val as long as it's not ?/: ;join()takes all items in an iterable and joins them as a string
+                                         index))
                 else:
                     self.skip.append(Sym(''.join(c for c in val), index))
 
@@ -329,9 +306,9 @@ class Table:
             realline = []
             index = 0
             for val in line:
-                if index not in self.skip:  # check if it needs to be skipped
+                if index not in self.skip:
                     if val == "?" or val == "":
-                        realline.append(val)  # add to realline
+                        realline.append(val)
                         index += 1
                         continue
                     self.cols[index] + self.compiler(val)
@@ -340,34 +317,9 @@ class Table:
 
             self.rows.append(realline)
             self.count += 1
-        # else:
-        # print("Line", self.fileline, "has missing values")
-
-    # def encode_lines(self):
-    #     # for all Syms
-    #     # initialize the LabelEncoder
-    #     # fit from all dictionary keys
-    #     encodedrows = []
-    #     for col in self.cols:
-    #         if col.coltype == 0:
-    #             keys = list(col.count.keys())
-    #             col.encoder.fit(keys)
-    #     for line in self.rows:
-    #         newline = []
-    #         for i, val in enumerate(line):
-    #             newval = val
-    #             if self.cols[i].coltype == 0:
-    #                 newval = self.cols[i].encoder.transform([val])[-1]
-    #             else:
-    #                 newval = self.compiler(val)
-    #             newline.append(newval)
-    #         encodedrows.append(newline)
-    #     self.encodedrows = encodedrows
-        # for all lines, if col of line is Sym encode with le.transform([val])
-        # store all encoded lines
 
     # ------------------------------------------------------------------------------
-    # Clustering Fastmap;still in table class (change to it's own class???)
+    # Clustering Fastmap;still in table class
     # ------------------------------------------------------------------------------
     def split(self, top=None):  # Implements continous space Fastmap for bin chop on data
         if top == None:
@@ -394,7 +346,7 @@ class Table:
 
     def distance(self, rowA, rowB):  # distance between two points
         distance = 0
-        if len(rowA) != len(rowB):  # catch if they can't be compared?? why??
+        if len(rowA) != len(rowB):
             return -big
         # for i, (a,b) in enumerate(zip(rowA, rowB)):#to iterate through an interable: an get the index with enumerate(), and get the elements of multiple iterables with zip()
         for col in self.x:  # to include y self.cols ; for just x vals self.x
@@ -454,7 +406,6 @@ class Table:
         rightTable + table.header
         for item in rightItems:
             rightTable + item
-        # print(rightTable.rows)
         leftNode = Table.clusters(leftItems, leftTable, enough, top, depth=depth + 1)
         rightNode = Table.clusters(rightItems, rightTable, enough, top, depth=depth + 1)
         root = TreeNode(left, right, leftTable, rightTable, table, leftNode, rightNode, False, table.header)
@@ -483,7 +434,7 @@ class TreeNode:
 # ------------------------------------------------------------------------------
 def nodes(root):  # gets all the leaf nodes
     if root:
-        for node in nodes(root.leftNode): yield node  # yield returns from a function without destroying it
+        for node in nodes(root.leftNode): yield node
         if root.leaf:  yield root
         for node in nodes(root.rightNode): yield node
 
@@ -505,8 +456,6 @@ def leafmedians(root, how=None):  # for all of the leaves from smallest to large
         t = leaf.leftTable
         mid = [col.mid() for col in t.cols]
         MedianTable + mid
-        # print(len(t.rows), [col.mid() for col in t.cols], t.cols[-1].count)
-    # MedianTable.encode_lines()
     return MedianTable
 
 def leafmedians2(root, how=None):  # for all of the leaves from smallest to largest print len of rows & median
@@ -517,8 +466,6 @@ def leafmedians2(root, how=None):  # for all of the leaves from smallest to larg
         t = leaf.leftTable
         mid = [float(col.mid()) for col in t.cols]
         MedianTable + mid
-        # print(len(t.rows), [col.mid() for col in t.cols], t.cols[-1].count)
-    # MedianTable.encode_lines()
     return MedianTable
 
 def getLeafData2(root, samples_per_leaf, how=None):  # for all of the leaves from smallest to largest print len of rows & median
@@ -532,7 +479,6 @@ def getLeafData2(root, samples_per_leaf, how=None):  # for all of the leaves fro
             randomrow = random.choice(t.rows)
             EDT + randomrow
             counter += 1
-    # EDT.encode_lines()
     return EDT
 
 def getLeafData(root, samples_per_leaf, how=None):  # for all of the leaves from smallest to largest print len of rows & median
@@ -546,7 +492,6 @@ def getLeafData(root, samples_per_leaf, how=None):  # for all of the leaves from
             randomrow = random.choice(t.rows)
             EDT + randomrow
             counter += 1
-    # EDT.encode_lines()
     return EDT
 
 def getLeafMedClass(root, samples_per_leaf,how=None):  # for all of the leaves from smallest to largest get x samples per leaf with median class label
@@ -567,7 +512,6 @@ def getLeafMedClass(root, samples_per_leaf,how=None):  # for all of the leaves f
     numrows = len(EDT.rows)
     newy = [mid for r in numrows]
     EDT.y = newy
-    # EDT.encode_lines()
     return EDT
 
 def getLeafModes(root, samples_per_leaf,how=None):  # for all of the leaves from smallest to largest get x samples per leaf with median class label
@@ -585,33 +529,32 @@ def getLeafModes(root, samples_per_leaf,how=None):  # for all of the leaves from
             randomrow = random.choice(t.rows)
             EDT + randomrow
     EDT.y[-1].vals = newy
-    # EDT.encode_lines()
     return EDT
 
-    def dump(self, f):
-        # DFS
-        if self.leaf:
-            f.write("Dump Leaf Node: " + str(self.uid) + "\n")
-            f.write("Dump Leaf Table: " + "\n")
-            self.leftTable.dump(f)
-            return
+def dump(self, f):
+    # DFS
+    if self.leaf:
+        f.write("Dump Leaf Node: " + str(self.uid) + "\n")
+        f.write("Dump Leaf Table: " + "\n")
+        self.leftTable.dump(f)
+        return
 
-        if self.leftNode is not None:
-            self.leftNode.dump(f)
-        if self.rightNode is not None:
-            self.rightNode.dump(f)
+    if self.leftNode is not None:
+        self.leftNode.dump(f)
+    if self.rightNode is not None:
+        self.rightNode.dump(f)
 
-    def csvDump(self, f):
-        # DFS
-        if self.leaf:
-            self.leftTable.csvDump(f)
-            return
+def csvDump(self, f):
+    # DFS
+    if self.leaf:
+        self.leftTable.csvDump(f)
+        return
 
-        if self.leftNode is not None:
-            self.leftNode.csvDump(f)
+    if self.leftNode is not None:
+        self.leftNode.csvDump(f)
 
-        if self.rightNode is not None:
-            self.rightNode.csvDump(f)
+    if self.rightNode is not None:
+        self.rightNode.csvDump(f)
 
 
 def isValid(self, row):
@@ -619,24 +562,6 @@ def isValid(self, row):
         if val == '?':
             return False
     return True
-
-
-# def getXY(table):
-#     X = []
-#     y = []
-#     y_index = table.y[-1].uid
-#
-#     for row in table.encodedrows:
-#         X_row = []
-#         y_row = -1
-#         for i, val in enumerate(row):
-#             if i == y_index:  # for multiple y if i in y_indexes:
-#                 y_row = val
-#             else:
-#                 X_row.append(val)
-#         X.append(X_row)
-#         y.append(y_row)
-#     return X,y
 
 def getXY2(table):
     X = []
@@ -655,69 +580,6 @@ def getXY2(table):
         y.append(y_row)
     return X,y
 
-
-def classify(table, df, X_test, y_test, samples, total_pts, f, enough_multiplier):
-    # i = 1
-    full = []
-    X_train, y_train = getXY(table)
-
-    #LR RF SVC
-    # clf = LogisticRegression(random_state=0)
-    clf = RandomForestClassifier(random_state=0)
-    # clf = SVC(kernel='linear')
-    clf.fit(X_train, y_train)
-    y_pred = clf.predict(X_test)
-
-    y_pred_list = y_pred.tolist()
-    y_test_list = y_test.tolist()
-    for x in list(X_test.values):
-        full.append(deepcopy(x))
-    for j in range(len(y_test_list)):
-        full[j] = np.append(full[j],y_test_list[j])
-        full[j] = np.append(full[j],y_pred_list[j])
-        full[j] = np.append(full[j], samples)
-        full[j] = np.append(full[j], total_pts)
-        full[j] = np.append(full[j], f)
-        full[j] = np.append(full[j], enough_multiplier)
-        # full[j] = np.append(full[j], i)
-    for row in full:
-        a_series = pd.Series(row, index=df.columns)
-        df = df.append(a_series, ignore_index=True)
-    return df
-
-def fullclassify(df, X_train, y_train, X_test, y_test, samples, total_pts, f, enough_multiplier):
-    # i = 1
-    full = []
-    # X_train, y_train = getXY(table)
-
-    #LR RF SVC
-    clf = LogisticRegression(random_state=0)
-    # clf = RandomForestClassifier(random_state=0)
-    # clf = SVC(kernel='linear')
-    clf.fit(X_train, y_train)
-    y_pred = clf.predict(X_test)
-
-
-    y_pred_list = y_pred.tolist()
-    y_test_list = y_test.tolist()
-    for x in list(X_test.values):
-        full.append(deepcopy(x))
-    for j in range(len(y_test_list)):
-        full[j] = np.append(full[j],y_test_list[j])
-        full[j] = np.append(full[j],y_pred_list[j])
-        full[j] = np.append(full[j], samples)
-        full[j] = np.append(full[j], total_pts)
-        full[j] = np.append(full[j], f)
-        full[j] = np.append(full[j], enough_multiplier)
-        # full[j] = np.append(full[j], i)
-    for row in full:
-        a_series = pd.Series(row, index=df.columns)
-        df = df.append(a_series, ignore_index=True)
-    return df
-
-# -----------------------------------------------------------------------------
-# Main
-# ------------------------------------------------------------------------------
 
 def getTable(csv, limiter = None):
     dataset = csv
@@ -738,102 +600,5 @@ def getTable(csv, limiter = None):
 
     return table, filename
 
-def clusterandclassify(table, filename):
-    # table.encode_lines()
-    y_index = table.y[-1].name
-    tcolumns = deepcopy(table.header)
-    # trows = deepcopy(table.encodedrows)
-    dsdf = pd.DataFrame(data= trows, columns=tcolumns)
-
-    tcols = deepcopy(table.header)
-    tcols.append("predicted")
-    tcols.append("samples")
-    tcols.append("total_pts")
-    tcols.append("fold")
-    tcols.append("enough_multiplier")
-    # tcols.append("run_num")
-    sampledf = pd.DataFrame(columns=tcols)
-    full_df = pd.DataFrame(columns=tcols)
-    onedf = pd.DataFrame(columns=tcols)
-    rkf = RepeatedKFold(n_splits=5, n_repeats=5, random_state=222)
-
-    f = 1 #do we want to count the folds??
-    for train_index, test_index in rkf.split(dsdf):
-        X_train = dsdf.iloc[train_index]
-        X_test = dsdf.iloc[test_index].drop(columns = [y_index])
-        y_test = dsdf.iloc[test_index][y_index]
-
-        X_train_for_all_pts = dsdf.iloc[train_index].drop(columns = [y_index])
-        y_train_for_all_pts = dsdf.iloc[train_index][y_index]
-
-        num_rows = len(X_train_for_all_pts.values)
-        onedf = fullclassify(onedf, X_train_for_all_pts, y_train_for_all_pts, X_test, y_test, num_rows, num_rows, f, 100)
-        full_df = full_df.append(onedf)
-
-        table2 = Table(10)
-        nprows = X_train.values
-        header = list(X_train.columns.values)
-        table2 + header
-        for l in nprows:
-            table2 + l
-
-        mtreatments = [1,2,3,5]
-        for m in mtreatments:
-            enough = int(m * math.sqrt(len(table2.rows)))
-            root = Table.clusters(table2.rows, table2, enough)
-
-            treatments = [1,2,3,5]
-            for samples in treatments:
-                if samples == 1:
-                    MedianTable = leafmedians(root)
-                    sampledf = classify(MedianTable, sampledf, X_test, y_test, samples, len(MedianTable.rows), f, m)
-                else:
-                    # EDT = getLeafModes(root, samples)
-                    EDT = getLeafData(root,samples) #gets rand points with real label
-                    sampledf = classify(EDT, sampledf, X_test, y_test, samples, len(EDT.rows), f, m)
-                full_df = full_df.append(sampledf)
-        print("f:", f)
-        f += 1
-
-    final_columns = []
-    for col in table.protected:
-        final_columns.append(col.name)
-    for col in table.klass:
-        final_columns.append(col.name)
-    final_columns.append("predicted")
-    final_columns.append("samples")
-    final_columns.append("total_pts")
-    final_columns.append("fold")
-    final_columns.append("enough_multiplier")
-    # final_columns.append("run_num")
-    output_df = full_df[final_columns]
-    output_df.to_csv("./output/RAND/" + filename + "_RF.csv", index=False)
-
-def main():
-    random.seed(10039)
-    datasets = ["adultscensusincome.csv", "bankmarketing.csv", "diabetes.csv", "CleanCOMPAS53.csv", "GermanCredit.csv", "defaultcredit.csv"]
-    pbar = tqdm(datasets)
-
-    for dataset in pbar:
-        pbar.set_description("Processing %s" % dataset)
-        table, filename = getTable(dataset, limiter=1000)
-        clusterandclassify(table, filename)
 
 
-    # clusterandclassify("diabetes.csv") #clusters
-    # clusterandclassify("adultscensusincome.csv") #clusters
-    # clusterandclassify("bankmarketing.csv") #clusters
-    # clusterandclassify("CleanCOMPAS53.csv") #problem with empty cols?
-    # clusterandclassify("GermanCredit.csv") #clusters
-    # clusterandclassify("processed.clevelandhearthealth.csv") #clusters
-    # clusterandclassify("defaultcredit.csv") #clusters
-    # clusterandclassify("homecreditapplication_train.csv") # loaded 266113 rows after 2 hours; error on compiling sym/num cols
-
-
-# self = options(__doc__)
-if __name__ == '__main__':
-    # pr = cProfile.Profile()
-    # pr.enable()
-    main()
-    # pr.disable()
-    # pr.print_stats(sort='time')

@@ -1,14 +1,13 @@
-import copy,math,sys, random, statistics
+import copy,statistics
 from tqdm import tqdm
 import pandas as pd
-import numpy as np
 
 import warnings
 warnings.filterwarnings('ignore')
 
 
-def getMedians(path,allmetrics):
-    mdf = pd.read_csv(path)
+def getMedians(mdf,allmetrics):
+    # mdf = pd.read_csv(path)
     row = []
 
     mdf1 = copy.deepcopy(mdf)
@@ -22,24 +21,29 @@ def getMedians(path,allmetrics):
 
         samples = copy.deepcopy(mdf2["samples"].tolist())
         sortedsamples = sorted(set(samples), key = lambda ele: samples.count(ele))
+        
+        for t in [0,1,2,5,10,100]:
+            mdf32 = copy.deepcopy(mdf2)
+            mdf32.drop(mdf32.loc[mdf32["treatment"]!= t].index, inplace=True)
 
-        for s in sortedsamples:
-            mdf3 = copy.deepcopy(mdf2)
-            mdf3.drop(mdf3.loc[mdf3['samples']!= s].index, inplace=True)
+            for s in sortedsamples:
+                mdf3 = copy.deepcopy(mdf32)
+                mdf3.drop(mdf3.loc[mdf3["samples"]!= s].index, inplace=True)
 
-            features = copy.deepcopy(mdf3["biased_col"].tolist())
-            sortedfeatures = sorted(set(features), key = lambda ele: features.count(ele))
+                features = copy.deepcopy(mdf3["biased_col"].tolist())
+                sortedfeatures = sorted(set(features), key = lambda ele: features.count(ele))
 
-            for f in sortedfeatures:
-                mdf4 = copy.deepcopy(mdf3)
-                mdf4.drop(mdf4.loc[mdf4['biased_col']!= f].index, inplace=True)
-                r = [round(statistics.median(mdf4[col].values),2) for col in allmetrics]
-                r.append(f)
-                r.append(int(s))
-                r.append(m)
-                row.append(r)
+                for f in sortedfeatures:
+                    mdf4 = copy.deepcopy(mdf3)
+                    mdf4.drop(mdf4.loc[mdf4['biased_col']!= f].index, inplace=True)
+                    r = [round(statistics.median(mdf4[col].values),2) for col in allmetrics]
+                    r.append(f)
+                    r.append(t)
+                    r.append(int(s))
+                    r.append(m)
+                    row.append(r)
 
-    cols = allmetrics + ["biased_col", "samples", "learner"]
+    cols = allmetrics + ["biased_col", "treatment", "samples", "learner"]
     mediandf = pd.DataFrame(row, columns = cols)
 
     return mediandf
@@ -63,14 +67,14 @@ def twinsies(maxdict, stdvdict, val, col, hmetrics):
     return newval
 
 
-def printStdv(path, hmetrics, lmetrics, allmetrics, mediandf):
-    df = pd.read_csv(path)
+def printStdv(df, hmetrics, lmetrics, allmetrics, mediandf):
+    # df = pd.read_csv(path)
     row = []
     valss = []
 
     df1 = copy.deepcopy(df)
-    mediandf = mediandf[~mediandf['learner'].isin(['Slack', 'Slack_RF'])]
-    df1 = df1[~df1['learner'].isin(['Slack', 'Slack_RF'])]
+    mediandf = mediandf[~mediandf['learner'].isin(['Slack'])]
+    df1 = df1[~df1['learner'].isin(['Slack'])]
 
     features = copy.deepcopy(df1["biased_col"].tolist())
     sortedfeatures = sorted(set(features), key = lambda ele: features.count(ele))
@@ -83,7 +87,7 @@ def printStdv(path, hmetrics, lmetrics, allmetrics, mediandf):
         stddf = round(df4.std()*0.35,2)
         stdd = stddf.to_dict()
         del stdd['rep']
-        del stdd['samples']
+        del stdd["treatment"]
         # del stdd['treatment']
         # del stdd['runtime']
         print("stdev dict:", stdd)
@@ -101,14 +105,14 @@ def printStdv(path, hmetrics, lmetrics, allmetrics, mediandf):
             sortedsamples = sorted(set(samples), key = lambda ele: samples.count(ele))
             sortedsamples.sort(reverse = True)
             df3 = copy.deepcopy(df2)
-            df3.drop(df3.loc[df3['samples'] != sortedsamples[0]].index, inplace=True)
+            df3.drop(df3.loc[df3["samples"] != sortedsamples[0]].index, inplace=True)
 
             for col in allmetrics:
                 fulldict[col] = df3[col].values[0]
             for s in sortedsamples[1:]:
                 r = []
                 df5 = copy.deepcopy(df2)
-                df5.drop(df5.loc[df5['samples']!= s].index, inplace=True)
+                df5.drop(df5.loc[df5["samples"]!= s].index, inplace=True)
 
                 for col in allmetrics:
                     val = df5[col].values[0]
@@ -124,13 +128,13 @@ def printStdv(path, hmetrics, lmetrics, allmetrics, mediandf):
     return stdvdf, mediandf
 
 if __name__ == "__main__":
-    datasets =  ["communities", "heart", "diabetes",  "germancredit", "studentperformance", 'meps',"compas",   "bankmarketing", "defaultcredit", "adultscensusincome"]
+    datasets =  [ "diabetes",  "german", "student", 'meps', "compas", "bank", "default", "adult"] #
     allmetrics = ['runtime', 'rec+', 'prec+', 'acc+', 'F1+','FA0-', 'FA1-', 'MCC-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip'] #
     hmetrics = ['rec+', 'prec+', 'acc+', 'F1+', 'Flip']
     lmetrics = ['FA0-', 'FA1-', 'MCC-', 'MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-'] #'MCC-',
     pbar = tqdm(datasets)
 
-    columns = ['order','dataset',"learner","biased_col","samples", 'runtime', 'rec+', 'prec+', 'acc+', 'F1+', 'FA0-', 'FA1-','MCC-','MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip'] #,'MCC-'
+    columns = ['order','dataset',"learner","biased_col","treatment", 'samples', 'runtime', 'rec+', 'prec+', 'acc+', 'F1+', 'FA0-', 'FA1-','MCC-','MSE-', 'AOD-', 'EOD-', 'SPD-', 'DI-', 'Flip'] #,'MCC-'
     fulldf = pd.DataFrame(columns=columns)
     datasetdf = pd.DataFrame(columns=columns)
     meddatasetdf = pd.DataFrame(columns=columns)
@@ -139,23 +143,23 @@ if __name__ == "__main__":
 
     for dataset in pbar:
         order += 1
-
         pbar.set_description("Processing %s" % dataset)
-        path = "./final/" + dataset + "_metrics.csv"
+        path = "./paper/" + dataset + "_metrics1.csv"
+        df = pd.read_csv(path)
         
-        mediandf = getMedians(path, allmetrics)
+        for v in range(20):
+            v += 1
+            path = "./paper/" + dataset + "_metrics" + str(v) + ".csv"
+            df2 = pd.read_csv(path)
+            df = pd.concat([df, df2], ignore_index=True)
+ 
+        mediandf = getMedians(df, allmetrics)
         
-        stdvdf, mediandf = printStdv(path, hmetrics, lmetrics, allmetrics, mediandf)
-
-        stdvdf['dataset'] = dataset
-        stdvdf['order'] = order
+ 
         mediandf['dataset'] = dataset
         mediandf['order'] = order
-        datasetdf = pd.concat([datasetdf, stdvdf], ignore_index=True)
         meddatasetdf = pd.concat([meddatasetdf, mediandf], ignore_index=True)
-    # print(datasetdf)
 
-    fulldf = datasetdf[columns]
     medfulldf = meddatasetdf[columns]
-    medfulldf.to_csv("./stdv/final/medians.csv", index = False)
-    fulldf.to_csv("./stdv/final/marked_medians.csv", index = False)
+    medfulldf.to_csv("./output/medians.csv", index = False)
+    
