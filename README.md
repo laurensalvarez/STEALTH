@@ -54,9 +54,13 @@ and selected relevant features. To replicate our experiment, please use the proc
 ## Experiment
 
 To answer RQs presented in our paper, one can easily replicate our results:
+
 RQ1: Does our method prevent lying?
+
 RQ2: Does the surrogate model perform as well as the original model?
+
 RQ3: How does STEALTH compare against other bias mitigation algorithms?
+
 
 - Run `STEALTH.py` and set your run number in the terminal (see `STEALTH.sh` for an example). In the paper, we repeated the experiment for 20 runs using the same random seed for all models. We ran each iteration with HPC cluster computing rather than consecutively in a loop. However, the adjustment is an easy change. 
 - Each run will have the RF baseline, Slack baseline, RF surrogate, and Slack surrogate performance, fairness, and LIME results for each dataset and protected attribute(s). It will also include the fairness `baselines`, and for the edge cases that aren't applicable, an error will print with some details about the problem and which dataset and model it occured with.  
